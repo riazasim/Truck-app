@@ -1,0 +1,33 @@
+<div class="tw-px-4 tw-py-4 min-xl:tw-px-16 min-xl:tw-py-8">
+    <div class="tw-mb-8">
+        <h1 class="heading-1 tw-text-columnCell tw-text-center tw-py-10">PICK ANOTHER LOCATION</h1>
+        <div class="tw-flex max-xl:tw-flex-col tw-justify-between">
+            <p>You can also search for a specific location or choose from the list below</p>
+            <searchbar [minWidth]="500">
+                <fa-icon icon="search"></fa-icon>
+                <input input type="text" placeholder="Search Location" [(ngModel)]="search">
+            </searchbar>
+        </div>
+        <div class="tw-flex tw-flex-wrap max-xl:tw-flex-col tw-w-full tw-h-full tw-gap-4 tw-p-2" *ngIf="data?.locations && data?.locations?.length">
+            <div (click)="selectLocation(i, item.id)" 
+            [ngClass]="{'tw-border tw-border-primary': selectedLocations.includes(item.id)}"
+            class="tw-flex tw-grow min-xl:tw-w-1/4 tw-flex-col tw-shadow-lg tw-cursor-pointer" 
+            *ngFor="let item of data.locations | filter: search : 'name'; let i = index;">
+                <div class="tw-text-center">
+                    <div [title]="item.name" class="tw-bg-center tw-bg-no-repeat tw-bg-cover tw-min-h-[219px]"
+                    [style.background-image]="'url(' + item.image + ')'"></div>
+                </div>
+                <div class="tw-font-bold tw-text-center tw-py-4">{{item.name}}</div>
+            </div>
+            <div class="tw-w-full" *ngIf="(data.locations | filter: search : 'name').length === 0">
+                <p class="tw-text-center tw-text-columnCell">There's no such location found...</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="tw-flex tw-justify-center tw-flex-wrap-reverse tw-gap-4">
+        <button tabIndex="-1" (click)="cancel()" class="btn btn-outline-primary tw-min-w-[130px]">Cancel</button>
+        <button [disabled]="!id" tabIndex="-1" (click)="confirm()" class="btn btn-primary tw-min-w-[130px]">Confirm</button>
+    </div>
+    </div>
+    

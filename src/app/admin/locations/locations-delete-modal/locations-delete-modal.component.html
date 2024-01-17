@@ -1,0 +1,16 @@
+<div class="tw-max-w-sm tw-px-4 tw-py-4 min-sm:tw-px-16 min-sm:tw-py-8">
+<div class="tw-whitespace-pre-line  tw-max-w-xs tw-mb-8">
+    <p class="tw-font-bold tw-text-muted tw-text-xl tw-text-center tw-mb-4 tw-text-columnCell">
+    Are you sure you want to delete this location {{data?.name}}?
+    </p>
+    <p class="tw-font-bold tw-max-w-xs tw-text-center tw-text-sm tw-text-columnCell">
+        You can also edit the record
+        using the icon in the right column of the table.
+    </p>
+</div>
+
+<div class="tw-flex tw-justify-around tw-flex-wrap-reverse tw-gap-4">
+    <button tabIndex="-1" (click)="cancel()" class="btn btn-outline-primary tw-min-w-[130px]">Cancel</button>
+    <button tabIndex="-1" (click)="confirm()" class="btn btn-primary tw-min-w-[130px]">Delete</button>
+</div>
+</div>

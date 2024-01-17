@@ -1,0 +1,46 @@
+<edit-container headerTitle="Add operation">
+    <app-loader *ngIf="(isLoading$ | async)" [isContainer]="true" [fullScreen]="false"></app-loader>
+    <form *ngIf="!(isLoading$ | async)" [formGroup]="operationForm">
+        <div>
+            <div>
+                <div class="tw-flex tw-flex-col tw-mx-auto tw-max-w-[440px] tw-gap-5">
+                    <div class="tw-h-[90px]">
+                        <label for="operationName">Operation Name</label>
+                        <div iconic-input-wrapper leftIcon="grip">
+                            <input inputRef type="text" id="operationName" formControlName="name">
+                        </div>
+                    </div>
+                    <div class="tw-h-[90px]">
+                        <label for="allocatedTime">Allocated Time (minutes)</label>
+                        <div iconic-input-wrapper leftIcon="timer">
+                            <input inputRef type="number" id="allocatedTime" formControlName="allocatedTime">
+                        </div>
+                    </div>
+                    <div class="tw-h-[90px]">
+                        <label for="description">Description</label>
+                        <div textarea-wrapper leftIcon="file-lines">
+                            <textarea inputRef type="text" id="description" formControlName="description"></textarea>
+                        </div>
+                    </div>
+                    <div for="type" class="tw-h-[90px]">
+                        <div iconic-select-wrapper leftIcon="envelope" [rightIcon]="['fas', 'caret-down']">
+                            <select inputRef name="type" id="type" formControlName="type">
+                                <option value="" disabled>Select type</option>
+                                <option value="loading">Loading</option>
+                                <option value="unloading">Unloading</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tw-flex tw-justify-end tw-pt-5">
+            <div class="tw-flex tw-gap-4">
+                <button [routerLink]="id ? '../../list' : '../list'" class="btn btn-outline-primary"
+                    type="button">Cancel</button>
+                <button class="btn btn-primary" type="button" (click)="saveOperation()">Save</button>
+            </div>
+        </div>
+    </form>
+</edit-container>

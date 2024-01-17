@@ -1,0 +1,54 @@
+<div admin-layout version="latest">
+<!--    [companyName$]="companyName$"-->
+  <admin-header header optionsTitle="Menu">
+    <ul menu class="header-menu-list">
+      <li class="header-menu-list-item">
+        <fa-icon icon="bell" size="lg"
+                 class="menu-icon" tabindex="0"
+                 role="button">
+        </fa-icon>
+        <div *ngIf="notificationsCount !== null && notificationsCount > 0"
+             [matBadge]="notificationsCount" matBadgeColor="warn"
+             class="tw-h-full tw-top-0 min-md:tw-top-[-10px] tw-right-[5px]">
+        </div>
+        <span class="menu-label">Notificări</span>
+      </li>
+      <li class="header-menu-list-item">
+        <fa-icon icon="user" size="lg"
+                 class="menu-icon" tabindex="0"
+                 role="button" [cdkMenuTriggerFor]="profile">
+        </fa-icon>
+        <ng-template #profile>
+          <div class="tw-bg-white tw-shadow-md tw-p-4 tw-min-w-[100px]">
+            <ul>
+              <li>Profile</li>
+              <li>Fullname: </li>
+              <li>Age:</li>
+              <li>Phone:</li>
+            </ul>
+          </div>
+        </ng-template>
+        <span class="menu-label">Account</span>
+      </li>
+      <li class="header-menu-list-item" (click)="logout()">
+        <fa-icon icon="sign-out" size="lg" class="menu-icon" tabindex="0" role="button"></fa-icon>
+        <span class="menu-label">Logout</span>
+      </li>
+    </ul>
+  </admin-header>
+
+  <navigation-menu aside [logoSrc]="logoImgSrc">
+  </navigation-menu>
+
+
+    <div main class="tw-p-4 min-md:tw-px-10 min-md:tw-pb-8 tw-min-h-full tw-flex tw-flex-col">
+      <router-outlet class="tw-hidden"></router-outlet>
+    </div>
+  </div>
+
+<ng-container *ngIf="showLoader$ | async">
+  <app-loader
+    [fullScreen]="true"
+    message="Loading"
+  ></app-loader>
+</ng-container>

@@ -1,0 +1,161 @@
+.iconic-layout-wrapper {
+  --form-control-font-size: 1rem;
+
+  --disabled-bg-color: var(--muted-light-color);
+
+  &.disabled {
+    .input-container {
+      background-color: var(--disabled-bg-color);
+
+      input[spaccessinputref],
+      select[spaccessinputref] {
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  &.valid {
+    > .input-container {
+      border-color: var(--valid-color);
+    }
+  }
+
+  &.invalid {
+    > .input-container {
+      border-color: var(--invalid-color);
+    }
+
+    > .errors-container {
+      width: 100%;
+
+      .invalid {
+        font-size: 90%;
+        color: var(--invalid-color);
+      }
+    }
+  }
+
+  > .input-container {
+    background-color: white;
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    border: 1px solid #A0A0A0;
+    border-radius: var(--app-border-radius);
+
+    padding: 0.5rem;
+    min-height: var(--control-height, 50px);
+
+    &:focus-within {
+      border-color: var(--primary-color);
+    }
+
+    > input[inputref],
+    select[inputref],
+    textarea[inputRef] {
+      border: unset;
+      outline: 0;
+      box-shadow: unset;
+      padding: unset;
+      background-color: transparent;
+      flex-grow: 1;
+      font-size: var(--form-control-font-size);
+      width: 100%;
+
+
+      &[type=number] {
+        -moz-appearance: textfield;
+
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+
+      }
+
+    }
+
+    select[inputref] {
+      z-index: 2;
+      background: unset;
+
+      > option {
+        color: black;
+      }
+    }
+
+    > .icon {
+
+      &.valid {
+        color: var(--valid-color);
+      }
+
+      &:first-child {
+        margin-left: 10px;
+        margin-right: 10px;
+      }
+
+      &:not(:first-child):not(:last-child) {
+        margin-right: 10px;
+      }
+
+      &:last-child {
+        margin-right: 1px;
+      }
+    }
+  }
+}
+
+thumbnail-load-input-wrapper {
+  input[type=file] {
+    display: none;
+  }
+}
+
+.bootstrap-form {
+
+  .errors-container {
+    width: 100%;
+    margin-top: 0.2rem;
+
+    .invalid {
+      font-size: 90%;
+      color: var(--invalid-color);
+    }
+  }
+
+  label {
+    &.form-label {
+      font-weight: 400;
+      color: #696969;
+      font-size: 1rem;
+      margin-bottom: 0.3rem;
+    }
+  }
+
+  input, select {
+    &.form-control {
+      background-color: #FFFFFF;
+      border: 1px solid #DFDFDF;
+      border-radius: var(--app-border-radius);
+      height: 45px;
+
+      &:focus {
+        --tw-ring-color: var(--primary-color);
+      }
+
+      &[type=number] {
+        -moz-appearance: textfield;
+
+        &::-webkit-outer-spin-button, &::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+
+      }
+
+    }
+  }
+}

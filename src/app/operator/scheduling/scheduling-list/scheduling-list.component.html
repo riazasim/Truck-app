@@ -1,0 +1,168 @@
+<section *ngIf="(isLoading$ | async) || originalSource.length; else empty">
+    <material-panel-table [showSearchbar]="false" [showHeader]="true" 
+                        buttonLabel="Add Scheduling" tableTitle="Partners list" (buttonClicked)="redirectAddPartner()">
+    <div table class="tw-w-full tw-shadow-lg">
+        <ng-scrollbar track="horizontal" [autoHeightDisabled]="false">
+          <table class="material-table no-wrap tw-overflow-hidden" matSort (matSortChange)="sortData($event)"
+                 [class.loading]="(isLoading$ | async)" aria-label="Usage Table"
+                 cdk-table [dataSource]="dataSource">
+      
+            <ng-container cdkColumnDef="shipmentId" >
+              <th cdk-header-cell *cdkHeaderCellDef scope="col">
+                  <section class="tw-flex tw-flex-col">
+                    <div mat-sort-header="status">Shipment ID</div>
+                </section>
+              </th>
+              <td cdk-cell *cdkCellDef="let row">{{row.shipmentId}}</td>
+            </ng-container>
+
+            <ng-container cdkColumnDef="status">
+              <th cdk-header-cell *cdkHeaderCellDef scope="col">
+                  <section class="tw-flex tw-flex-col">
+                      <div mat-sort-header="status">Status</div>
+                      <searchbar [maxWidth]="152">
+                        <fa-icon icon="search"></fa-icon>
+                        <input #searchStatus input type="text" (keyup)="applyFilter($event.target, 'status')">
+                        <div *ngIf="searchStatus.value" close (click)="searchStatus.value=''; applyFilter({ value: '' }, 'status')">
+                          <fa-icon icon="close"></fa-icon>
+                        </div>
+                    </searchbar>
+                  </section>
+              </th>
+              <td cdk-cell *cdkCellDef="let row">{{row.status}}</td>
+            </ng-container>
+      
+            <ng-container cdkColumnDef="loadingPoint">
+              <th cdk-header-cell *cdkHeaderCellDef scope="col">
+                  <section class="tw-flex tw-flex-col">
+                      <div mat-sort-header="loadingPoint">Loading Point</div>
+                      <searchbar [maxWidth]="152">
+                        <fa-icon icon="search"></fa-icon>
+                        <input #searchLoadingPoint input type="text" (keyup)="applyFilter($event.target, 'loadingPoint')">
+                        <div *ngIf="searchLoadingPoint.value" close (click)="searchLoadingPoint.value=''; applyFilter({ value: '' }, 'loadingPoint')">
+                          <fa-icon icon="close"></fa-icon>
+                        </div>
+                    </searchbar>
+                  </section>
+              </th>
+              <td cdk-cell *cdkCellDef="let row">{{row.loadingPoint}}</td>
+            </ng-container>
+
+            <ng-container cdkColumnDef="unloadingPoint">
+              <th cdk-header-cell *cdkHeaderCellDef scope="col">
+                  <section class="tw-flex tw-flex-col">
+                    <div mat-sort-header="address">Unloading Point</div>
+                    <searchbar [maxWidth]="76">
+                      <fa-icon icon="search"></fa-icon>
+                      <input #searchUnloadingPoint input type="text" (keyup)="applyFilter($event.target, 'unloadingPoint')">
+                      <div *ngIf="searchUnloadingPoint.value" close (click)="searchUnloadingPoint.value=''; applyFilter({ value: '' }, 'unloadingPoint')">
+                        <fa-icon icon="close"></fa-icon>
+                      </div>
+                  </searchbar>
+                </section>
+              </th>
+              <td cdk-cell *cdkCellDef="let row">{{row.unloadingPoint || '-'}}</td>
+            </ng-container>
+
+            <ng-container cdkColumnDef="driver">
+              <th cdk-header-cell *cdkHeaderCellDef scope="col">
+                  <section class="tw-flex tw-flex-col">
+                    <div mat-sort-header="driver">Driver</div>
+                    <searchbar [maxWidth]="76">
+                      <fa-icon icon="search"></fa-icon>
+                      <input #searchDriver input type="text" (keyup)="applyFilter($event.target, 'driver')">
+                        <div *ngIf="searchDriver.value" close (click)="searchDriver.value=''; applyFilter({ value: '' }, 'driver')">
+                          <fa-icon icon="close"></fa-icon>
+                        </div>
+                  </searchbar>
+                </section>
+              </th>
+              <td cdk-cell *cdkCellDef="let row">{{row.driver || '-'}}</td>
+            </ng-container>
+
+            <ng-container cdkColumnDef="frontNr">
+                <th cdk-header-cell *cdkHeaderCellDef scope="col">
+                    <section class="tw-flex tw-flex-col">
+                      <div mat-sort-header="frontNr">Front Nr</div>
+                      <searchbar [maxWidth]="76">
+                        <fa-icon icon="search"></fa-icon>
+                        <input #searchFrontNr input type="text" (keyup)="applyFilter($event.target, 'frontNr')">
+                        <div *ngIf="searchFrontNr.value" close (click)="searchFrontNr.value=''; applyFilter({ value: '' }, 'frontNr')">
+                          <fa-icon icon="close"></fa-icon>
+                        </div>
+                    </searchbar>
+                  </section>
+                </th>
+                <td cdk-cell *cdkCellDef="let row">{{row.frontNr || '-'}}</td>
+              </ng-container>
+
+            <ng-container cdkColumnDef="backNr">
+                <th cdk-header-cell *cdkHeaderCellDef scope="col">
+                    <section class="tw-flex tw-flex-col">
+                      <div mat-sort-header="backNr">Back Nr</div>
+                      <searchbar [maxWidth]="76">
+                        <fa-icon icon="search"></fa-icon>
+                        <input #searchBackNr input type="text" (keyup)="applyFilter($event.target, 'backNr')">
+                        <div *ngIf="searchBackNr.value" close (click)="searchBackNr.value=''; applyFilter({ value: '' }, 'backNr')">
+                          <fa-icon icon="close"></fa-icon>
+                        </div>
+                    </searchbar>
+                  </section>
+                </th>
+                <td cdk-cell *cdkCellDef="let row">{{row.frontNr || '-'}}</td>
+              </ng-container>
+
+            <ng-container cdkColumnDef="notice">
+                <th cdk-header-cell *cdkHeaderCellDef scope="col">
+                    <section class="tw-flex tw-flex-col">
+                      <div mat-sort-header="notice">Notice</div>
+                      <searchbar [maxWidth]="76">
+                        <fa-icon icon="search"></fa-icon>
+                        <input #searchNotice input type="text" (keyup)="applyFilter($event.target, 'notice')">
+                        <div *ngIf="searchNotice.value" close (click)="searchNotice.value=''; applyFilter({ value: '' }, 'notice')">
+                          <fa-icon icon="close"></fa-icon>
+                        </div>
+                    </searchbar>
+                  </section>
+                </th>
+                <td cdk-cell *cdkCellDef="let row">{{row.notice || '-'}}</td>
+              </ng-container>
+      
+            <ng-container cdkColumnDef="actions">
+              <th cdk-header-cell *cdkHeaderCellDef scope="col">
+                <section class="tw-flex tw-flex-col">
+                  <div>Actions</div>
+                  <button type="button" class="btn btn-outline-primary">Mass update</button>
+                </section>
+              </th>
+              <td cdk-cell *cdkCellDef="let row" class="tw-flex tw-gap-4">
+                <fa-icon icon="eye" class="tw-text-primary tw-cursor-pointer" size="lg" [routerLink]="['../edit', row.id]"></fa-icon>
+                <fa-icon icon="trash-can" class="tw-text-primary tw-cursor-pointer" size="lg" (click)="openDeleteModal(row.id)"></fa-icon>
+              </td>
+            </ng-container>
+
+            <!-- Header and Row Declarations -->
+            <tr cdk-header-row *cdkHeaderRowDef="displayedColumns"></tr>
+            <tr cdk-row *cdkRowDef="let row; columns: displayedColumns"></tr>
+            <tr *cdkNoDataRow>
+              <td [colSpan]="displayedColumns.length">
+                <app-loader *ngIf="(isLoading$ | async)" [isContainer]="true" [fullScreen]="false"></app-loader>
+                <span
+                  *ngIf="dataSource.length === 0 && !(isLoading$ | async)">Nu există înregistrări</span>
+                <span
+                  *ngIf="dataSource.length > 0  && !(isLoading$ | async)">Nicio înregistrare nu corespunde criteriilor de căutare</span>
+              </td>
+            </tr>
+          </table>
+        </ng-scrollbar>
+      
+        <!-- <mat-paginator [class.!tw-hidden]="dataSource.data.length === 0" class="paginator tw-rounded-b-[10px]"
+                       hidePageSize
+                       aria-label="Select page" pageSize="10">
+        </mat-paginator> -->
+      </div>
+    </material-panel-table>
+</section>
+<ng-template #empty>
+  <no-scheduling></no-scheduling>
+</ng-template>

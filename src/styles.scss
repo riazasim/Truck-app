@@ -1,0 +1,70 @@
+/* Vendors first */
+@import "assets/scss/vendors/tailwind";
+@import "assets/scss/vendors/material";
+
+/* Theme second */
+@import "assets/scss/theme/vars";
+@import "assets/scss/theme/typography";
+@import "assets/scss/theme/setup";
+
+/* Components third */
+@import "assets/scss/button";
+@import "assets/scss/forms";
+@import "assets/scss/header-menu";
+@import "assets/scss/table";
+@import "assets/scss/icons";
+@import "assets/scss/typography";
+@import "assets/scss/anchors";
+
+@import "swiper/swiper.min.css";
+@import "swiper/css/navigation";
+@import "swiper/css/pagination";
+@import "assets/scss/variables";
+
+@import 'flag-icons/sass/flag-icons';
+
+:root {
+  --app-border-radius: 3px;
+  --control-height: 53px;
+  --body-bg: #F4F6F8;
+  --offcanvas-bg: #F4F6F8;
+  --secondary-color: #17A0B5;
+  font-size: 14px;
+}
+
+div.mat-autocomplete-panel {
+  box-shadow: 1px 6px 4px 0px #ccc;
+  mat-option.mat-option:hover {
+    background: #f5f5f5;
+  }
+
+  mat-option.mat-option.mat-selected:not(.mat-option-multiple):not(.mat-option-disabled),
+  mat-option.mat-option {
+    background: #FFF;
+  }
+}
+
+/* MatSnackBar Module */
+.error-snackbar {
+  background: #FFF;
+  color: #000;
+  border-left: 5px solid #ff5968;
+  width: 370px;
+}
+
+.success-snackbar {
+  background: #FFF;
+  color: #000;
+  border-left: 5px solid #22c52a;
+  width: 370px;
+}
+/* End MatSnackBar Module */
+
+/* Fix Mat calendar hover text color */
+.mat-calendar-body-cell:not(.mat-calendar-body-disabled):focus > 
+.mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical),
+.mat-calendar-body-cell:not(.mat-calendar-body-disabled):hover > 
+.mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical) {
+  color: #FFF;
+}
+/* Fix Mat calendar hover text color */

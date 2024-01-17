@@ -1,0 +1,20 @@
+<div class="tw-w-full tw-px-4">
+  <h1 class="heading-2 tw-text-center tw-mb-8">Sign In</h1>
+
+  <form [formGroup]="loginForm" class="tw-w-full tw-min-w-xs tw-flex tw-flex-col">
+
+    <div iconic-input-wrapper leftIcon="user" class="tw-w-full" [withCheckmark]="true">
+      <input formControlName="username" type="text" inputRef placeholder="Email" class="tw-text-center" />
+    </div>
+    <div iconic-password-wrapper [withCheckmark]="true" leftIcon="lock" class="tw-w-full">
+      <input formControlName="password" type="password" inputRef placeholder="Password" class="tw-text-center">
+    </div>
+  </form>
+  <div class="tw-text-right tw-pt-2 tw-pb-6">
+    <a class="tw-font-bold" routerLink="../forgot-password">Forgot Password</a>
+  </div>
+
+  <div class="tw-text-center">
+    <button [disabled]="isLoading$ | async" type="submit" class="btn btn-primary tw-min-w-xs" (click)="sigIn()">Sign In</button>
+  </div>
+</div>

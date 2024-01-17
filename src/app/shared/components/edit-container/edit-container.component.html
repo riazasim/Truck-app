@@ -1,0 +1,14 @@
+<section>
+    <header class="tw-flex min-md:tw-flex-row tw-flex-col tw-justify-between tw-pb-2">
+        <h3 class="heading-3 tw-font-bold">{{headerTitle}}</h3>
+        <div class="tw-flex min-md:tw-flex-row tw-flex-col tw-gap-4">
+            <button class="btn btn-primary min-md:tw-min-w-[4rem] tw-min-w-full min-md:tw-ml-auto max-md:tw-self-center" matRipple
+              *ngIf="buttonLabel" (click)="buttonClicked.emit()">{{buttonLabel}}</button>
+            <button class="btn btn-primary min-md:tw-min-w-[4rem] tw-min-w-full min-md:tw-ml-auto max-md:tw-self-center" matRipple
+              *ngIf="secondButtonLabel" (click)="secondButtonClicked.emit()">{{secondButtonLabel}}</button>
+        </div>
+    </header>
+    <main>
+        <ng-content></ng-content>
+    </main>
+</section>

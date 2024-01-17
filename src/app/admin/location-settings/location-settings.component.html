@@ -1,0 +1,38 @@
+<div class="tw-flex-grow tw-flex tw-flex-col tw-gap-8">
+    <div class="tw-flex sm:tw-justify-center md:tw-flex-row max-md:tw-flex-col">
+        <h4 class="heading-4 tw-mr-3">Settings</h4>
+        <searchbar [minWidth]="500">
+          <fa-icon icon="search"></fa-icon>
+          <input input class="tw-rounded" type="text" placeholder="Search" [(ngModel)]="search">
+        </searchbar>
+    </div>
+    <div class="max-md:tw-grid tw-gap-8 min-lg:tw-columns-4 max-md:tw-columns-1">
+        <div class="slide-in-bottom tw-max-w-sm tw-rounded-[20px] tw-overflow-hidden tw-shadow-lg tw-bg-white tw-p-5 tw-min-h-[280px]">
+            <ul>
+                <li><h5 class="tw-text-xl tw-font-bold">General</h5></li>
+                <li *ngFor="let item of general | filter: search : 'name'">
+                    <a *ngIf="!item.link" href="javascript:void(0)">{{item.name}}</a>
+                    <a *ngIf="item.link" [routerLink]="item.link">{{item.name}}</a>
+                </li>
+            </ul>
+        </div>
+        <div class="slide-in-bottom tw-max-w-sm tw-rounded-[20px] tw-overflow-hidden tw-shadow-lg tw-bg-white tw-p-5 tw-min-h-[280px]">
+            <ul>
+                <li><h5 class="tw-text-xl tw-font-bold">Advanced</h5></li>
+                <li *ngFor="let item of operations | filter: search : 'name'">
+                    <a *ngIf="!item.link" href="javascript:void(0)">{{item.name}}</a>
+                    <a *ngIf="item.link" [routerLink]="item.link">{{item.name}}</a>
+                </li>
+            </ul>
+        </div>
+        <div class="slide-in-bottom tw-max-w-sm tw-rounded-[20px] tw-overflow-hidden tw-shadow-lg tw-bg-white tw-p-5 tw-min-h-[280px]">
+            <ul>
+                <li><h5 class="tw-text-xl tw-font-bold">Developers</h5></li>
+                <li *ngFor="let item of developers | filter: search : 'name'">
+                    <a *ngIf="!item.link" href="javascript:void(0)">{{item.name}}</a>
+                    <a *ngIf="item.link" [routerLink]="item.link">{{item.name}}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+  </div>

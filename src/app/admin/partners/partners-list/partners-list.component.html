@@ -1,0 +1,139 @@
+<section *ngIf="false && (isLoading$ | async) && originalSource.length; else empty">
+    <material-panel-table [showSearchbar]="false" [showHeader]="true"
+                        buttonLabel="Add Partner" tableTitle="Partners list" (buttonClicked)="redirectAddPartner()">
+    <div table class="tw-w-full tw-shadow-lg">
+        <ng-scrollbar track="horizontal" [autoHeightDisabled]="false">
+          <table class="material-table no-wrap tw-overflow-hidden" matSort (matSortChange)="sortData($event)"
+                 [class.loading]="(isLoading$ | async)" aria-label="Usage Table"
+                 cdk-table [dataSource]="dataSource">
+
+            <ng-container cdkColumnDef="status" >
+              <th cdk-header-cell *cdkHeaderCellDef scope="col">
+                  <section class="tw-flex tw-flex-col">
+                    <div mat-sort-header="status">Status</div>
+                </section>
+              </th>
+              <td cdk-cell *cdkCellDef="let row">
+                  <fa-icon *ngIf="!row.status" icon="star" class="tw-text-primary" size="lg"></fa-icon>
+                  <fa-icon *ngIf="row.status" [icon]="faStarSolid" class="tw-text-primary" size="lg"></fa-icon>
+                </td>
+            </ng-container>
+
+            <ng-container cdkColumnDef="fullName">
+              <th cdk-header-cell *cdkHeaderCellDef scope="col">
+                  <section class="tw-flex tw-flex-col">
+                      <div mat-sort-header="fullName">Name</div>
+                      <searchbar [maxWidth]="152">
+                        <fa-icon icon="search"></fa-icon>
+                        <input #searchName input type="text" (keyup)="applyFilter($event.target, 'fullName')">
+                        <div *ngIf="searchName.value" close (click)="searchName.value=''; applyFilter({ value: '' }, 'fullName')">
+                          <fa-icon icon="close"></fa-icon>
+                        </div>
+                    </searchbar>
+                  </section>
+              </th>
+              <td cdk-cell *cdkCellDef="let row">{{row.fullName}}</td>
+            </ng-container>
+
+            <ng-container cdkColumnDef="partnerType">
+              <th cdk-header-cell *cdkHeaderCellDef scope="col">
+                  <section class="tw-flex tw-flex-col">
+                      <div mat-sort-header="partnerType">Partner Type</div>
+                      <searchbar [maxWidth]="152">
+                        <fa-icon icon="search"></fa-icon>
+                        <input #searchPartnerType input type="text" (keyup)="applyFilter($event.target, 'partnerType')">
+                        <div *ngIf="searchPartnerType.value" close (click)="searchPartnerType.value=''; applyFilter({ value: '' }, 'partnerType')">
+                          <fa-icon icon="close"></fa-icon>
+                        </div>
+                    </searchbar>
+                  </section>
+              </th>
+              <td cdk-cell *cdkCellDef="let row">{{row.partnerType}}</td>
+            </ng-container>
+
+            <ng-container cdkColumnDef="address">
+              <th cdk-header-cell *cdkHeaderCellDef scope="col">
+                  <section class="tw-flex tw-flex-col">
+                    <div mat-sort-header="address">Address</div>
+                    <searchbar [maxWidth]="76">
+                      <fa-icon icon="search"></fa-icon>
+                      <input #searchAddress input type="text" (keyup)="applyFilter($event.target, 'address')">
+                      <div *ngIf="searchAddress.value" close (click)="searchAddress.value=''; applyFilter({ value: '' }, 'address')">
+                        <fa-icon icon="close"></fa-icon>
+                      </div>
+                  </searchbar>
+                </section>
+              </th>
+              <td cdk-cell *cdkCellDef="let row">{{row.address || '-'}}</td>
+            </ng-container>
+
+            <ng-container cdkColumnDef="contactNumber">
+              <th cdk-header-cell *cdkHeaderCellDef scope="col">
+                  <section class="tw-flex tw-flex-col">
+                    <div mat-sort-header="contactNumber">Phone</div>
+                    <searchbar [maxWidth]="76">
+                      <fa-icon icon="search"></fa-icon>
+                      <input #searchContactNumber input type="text" (keyup)="applyFilter($event.target, 'contactNumber')">
+                        <div *ngIf="searchContactNumber.value" close (click)="searchContactNumber.value=''; applyFilter({ value: '' }, 'contactNumber')">
+                          <fa-icon icon="close"></fa-icon>
+                        </div>
+                  </searchbar>
+                </section>
+              </th>
+              <td cdk-cell *cdkCellDef="let row">{{row.contactNumber || '-'}}</td>
+            </ng-container>
+
+            <ng-container cdkColumnDef="email">
+                <th cdk-header-cell *cdkHeaderCellDef scope="col">
+                    <section class="tw-flex tw-flex-col">
+                      <div mat-sort-header="email">Email</div>
+                      <searchbar [maxWidth]="76">
+                        <fa-icon icon="search"></fa-icon>
+                        <input #searchEmail input type="text" (keyup)="applyFilter($event.target, 'email')">
+                        <div *ngIf="searchEmail.value" close (click)="searchEmail.value=''; applyFilter({ value: '' }, 'email')">
+                          <fa-icon icon="close"></fa-icon>
+                        </div>
+                    </searchbar>
+                  </section>
+                </th>
+                <td cdk-cell *cdkCellDef="let row">{{row.email || '-'}}</td>
+              </ng-container>
+
+            <ng-container cdkColumnDef="actions">
+              <th cdk-header-cell *cdkHeaderCellDef scope="col">
+                <section class="tw-flex tw-flex-col">
+                  <div>Actions</div>
+                  <button type="button" class="btn btn-outline-primary">Mass update</button>
+                </section>
+              </th>
+              <td cdk-cell *cdkCellDef="let row" class="tw-flex tw-gap-4">
+                <fa-icon icon="eye" class="tw-text-primary tw-cursor-pointer" size="lg" [routerLink]="['../edit', row.id]"></fa-icon>
+                <fa-icon icon="trash-can" class="tw-text-primary tw-cursor-pointer" size="lg" (click)="openDeleteModal(row.id)"></fa-icon>
+              </td>
+            </ng-container>
+
+            <!-- Header and Row Declarations -->
+            <tr cdk-header-row *cdkHeaderRowDef="displayedColumns"></tr>
+            <tr cdk-row *cdkRowDef="let row; columns: displayedColumns"></tr>
+            <tr *cdkNoDataRow>
+              <td [colSpan]="displayedColumns.length">
+                <app-loader *ngIf="(isLoading$ | async)" [isContainer]="true" [fullScreen]="false"></app-loader>
+                <span
+                  *ngIf="dataSource.length === 0 && !(isLoading$ | async)">Nu există înregistrări</span>
+                <span
+                  *ngIf="dataSource.length > 0  && !(isLoading$ | async)">Nicio înregistrare nu corespunde criteriilor de căutare</span>
+              </td>
+            </tr>
+          </table>
+        </ng-scrollbar>
+
+        <!-- <mat-paginator [class.!tw-hidden]="dataSource.data.length === 0" class="paginator tw-rounded-b-[10px]"
+                       hidePageSize
+                       aria-label="Select page" pageSize="10">
+        </mat-paginator> -->
+      </div>
+    </material-panel-table>
+</section>
+<ng-template #empty>
+  <no-partners></no-partners>
+</ng-template>

@@ -1,0 +1,33 @@
+<div class="tw-px-4 tw-py-4 min-xl:tw-px-16 min-xl:tw-py-8">
+    <div class="tw-mb-8">
+        <h1 class="heading-1 tw-text-columnCell tw-text-center tw-py-10">{{ 'location.pick-another-location' | translate }}</h1>
+        <div class="tw-flex max-xl:tw-flex-col tw-justify-between">
+            <p>{{ 'location.you-can-also-search-for' | translate }}</p>
+            <searchbar [minWidth]="500">
+                <fa-icon icon="search" leftIcon></fa-icon>
+                <input input type="text" [placeholder]="'location.search-location' | translate" [(ngModel)]="search">
+            </searchbar>
+        </div>
+        <div class="tw-flex tw-flex-wrap max-xl:tw-flex-col tw-justify-center tw-items-center tw-w-full tw-h-full tw-gap-4 tw-p-2" *ngIf="data?.locations && data?.locations?.length">
+            <div (click)="selectLocation(i, item.id)" 
+            [ngClass]="{'tw-border tw-border-primary': selectedLocations.includes(item.id)}"
+            class="tw-flex tw-grow min-xl:tw-w-1/4 tw-flex-col tw-shadow-lg tw-cursor-pointer min-lg:tw-max-w-[390px] max-md:tw-w-full" 
+            *ngFor="let item of data.locations | filter: search : 'name'; let i = index;">
+                <div class="tw-text-center">
+                    <div [title]="item.name" class="tw-bg-center tw-bg-no-repeat tw-bg-cover tw-min-h-[219px] min-md:tw-min-w-[320px]"
+                    [style.background-image]="'url(' + item.image + ')'"></div>
+                </div>
+                <div class="tw-font-bold tw-text-center tw-py-4">{{item.name}}</div>
+            </div>
+            <div class="tw-w-full" *ngIf="(data.locations | filter: search : 'name').length === 0">
+                <p class="tw-text-center tw-text-columnCell">{{ 'location.no-location-found' | translate }}</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="tw-flex tw-justify-center tw-flex-wrap-reverse tw-gap-4 max-sm:tw-flex-col max-sm:tw-w-full">
+        <button tabIndex="-1" (click)="cancel()" class="btn btn-outline-primary system-button max-sm:tw-w-full">{{'button.cancel' | translate}}</button>
+        <button [disabled]="!id" tabIndex="-1" (click)="confirm()" class="btn btn-primary system-button max-sm:tw-w-full">{{'button.confirm' | translate}}</button>
+    </div>
+    </div>
+    

@@ -1,0 +1,109 @@
+<section *ngIf="(isLoading$ | async) || originalSource.length; else empty">
+  <material-panel-table [showSearchbar]="false" [showHeader]="true" buttonLabel="Add status"
+                        [tableTitle]="listTitle" (buttonClicked)="redirectAddList()">
+    <div table class="tw-w-full tw-shadow-lg">
+      <ng-scrollbar track="horizontal" [autoHeightDisabled]="false">
+        <table class="material-table no-wrap tw-overflow-hidden"
+               [class.loading]="(isLoading$ | async)" aria-label="Usage Table"
+               cdk-table [dataSource]="dataSource" cdkDropList (cdkDropListDropped)="drop($event)">
+
+          <ng-container cdkColumnDef="name">
+            <th cdk-header-cell *cdkHeaderCellDef scope="col">
+              <section class="tw-flex tw-flex-col">
+                <div>List Name</div>
+                <searchbar>
+                  <fa-icon icon="search"></fa-icon>
+                  <input #searchName input type="text" (keyup)="applyFilter($event.target, 'name')">
+                  <div *ngIf="searchName.value" close (click)="searchName.value=''; applyFilter({ value: '' }, 'name')">
+                    <fa-icon icon="close"></fa-icon>
+                  </div>
+                </searchbar>
+              </section>
+            </th>
+            <td cdk-cell *cdkCellDef="let row">{{row.name}}</td>
+          </ng-container>
+
+          <ng-container cdkColumnDef="type" >
+            <th cdk-header-cell *cdkHeaderCellDef scope="col">
+              <section class="tw-flex tw-flex-col">
+                <div>Type of List</div>
+                <searchbar>
+                  <fa-icon icon="search"></fa-icon>
+                  <input #searchType input type="text" (keyup)="applyFilter($event.target, 'type')">
+                  <div *ngIf="searchType.value" close (click)="searchType.value=''; applyFilter({ value: '' }, 'type')">
+                    <fa-icon icon="close"></fa-icon>
+                  </div>
+                </searchbar>
+              </section>
+            </th>
+            <td cdk-cell *cdkCellDef="let row;let i = index;" class="tw-flex tw-justify-center">
+              <app-loader *ngIf="isLoadingColor$.value[i]" size="lg"></app-loader>
+              <ng-container *ngIf="!isLoadingColor$.value[i]">
+                <input #colorTrigger [style.visibility]="'hidden'" type="color" [value]="transformHex(row.color)" (change)="handleUpdateColor($event, row.id, i)">
+                <div (click)="colorTrigger.click()" [ngStyle]="{'background-color': row.color}" class="tw-w-5 tw-h-5 tw-rounded-full tw-mx-4 tw-cursor-pointer"></div>
+                <div>{{row.type}}</div>
+              </ng-container>
+            </td>
+          </ng-container>
+
+          <ng-container cdkColumnDef="description">
+            <th cdk-header-cell *cdkHeaderCellDef scope="col">
+              <section class="tw-flex tw-flex-col">
+                <div>Description</div>
+                <searchbar>
+                  <fa-icon icon="search"></fa-icon>
+                  <input #searchDescription input type="text" (keyup)="applyFilter($event.target, 'description')">
+                  <div *ngIf="searchDescription.value" close (click)="searchDescription.value=''; applyFilter({ value: '' }, 'description')">
+                    <fa-icon icon="close"></fa-icon>
+                  </div>
+                </searchbar>
+              </section>
+            </th>
+            <td cdk-cell *cdkCellDef="let row">{{row.description}}</td>
+          </ng-container>
+
+          <ng-container cdkColumnDef="actions">
+            <th cdk-header-cell *cdkHeaderCellDef scope="col">
+              <section class="tw-flex tw-flex-col"></section>
+            </th>
+            <td cdk-cell *cdkCellDef="let row" class="tw-flex tw-gap-4">
+              <fa-icon *ngIf="statusType !== statusTypeEnum.TIMESLOT" icon="grip-lines" class="tw-text-primary tw-cursor-pointer" size="lg"></fa-icon>
+              <fa-icon *ngIf="statusType !== statusTypeEnum.TIMESLOT" icon="eye" class="tw-text-primary tw-cursor-pointer" size="lg" [routerLink]="['../edit', row.id]"
+              [queryParams]="{type: statusType === statusTypeEnum.SID ? 'sid' :
+              statusType === statusTypeEnum.GOODS ? 'goods' : 0 }"></fa-icon>
+              <fa-icon *ngIf="statusType !== statusTypeEnum.TIMESLOT" icon="trash-can" class="tw-text-primary tw-cursor-pointer" size="lg" (click)="openDeleteModal(row)"></fa-icon>
+            </td>
+          </ng-container>
+
+          <!-- Header and Row Declarations -->
+          <tr cdk-header-row *cdkHeaderRowDef="displayedColumns"></tr>
+          <tr cdkDrag [cdkDragDisabled]="statusType === statusTypeEnum.TIMESLOT" [cdkDragData]="{index: i, position: row.position, id: row.id }" cdk-row *cdkRowDef="let row; let i = index; columns: displayedColumns"></tr>
+          <tr *cdkDragPreview class="tw-bg-white tw-flex">
+            <td *cdkCellDef="let row" class="tw-bg-white">{{row.name}}</td>
+            <td *cdkCellDef="let row" class="tw-bg-white">{{row.type}}</td>
+            <td *cdkCellDef="let row" class="tw-bg-white">{{row.description}}</td>
+            <td *cdkCellDef="let row;" class="tw-bg-white">
+              <fa-icon *ngIf="statusType !== statusTypeEnum.TIMESLOT" icon="grip-lines" class="tw-text-primary tw-cursor-pointer" size="lg"></fa-icon>
+              <fa-icon *ngIf="statusType !== statusTypeEnum.TIMESLOT" icon="eye" class="tw-text-primary tw-cursor-pointer" size="lg" [routerLink]="['../edit', row.id]"
+              [queryParams]="{type: statusType === statusTypeEnum.SID ? 'sid' :
+                                    statusType === statusTypeEnum.GOODS ? 'goods' : 0 }"></fa-icon>
+              <fa-icon *ngIf="statusType !== statusTypeEnum.TIMESLOT" icon="trash-can" class="tw-text-primary tw-cursor-pointer" size="lg" (click)="openDeleteModal(row)"></fa-icon>
+            </td>
+          </tr>
+          <tr *cdkNoDataRow>
+            <td [colSpan]="displayedColumns.length">
+              <app-loader *ngIf="(isLoading$ | async)" [isContainer]="true" [fullScreen]="false"></app-loader>
+              <span
+                *ngIf="dataSource.length === 0 && !(isLoading$ | async)">Nu există înregistrări</span>
+              <span
+                *ngIf="dataSource.length > 0  && !(isLoading$ | async)">Nicio înregistrare nu corespunde criteriilor de căutare</span>
+            </td>
+          </tr>
+        </table>
+      </ng-scrollbar>
+    </div>
+  </material-panel-table>
+</section>
+<ng-template #empty>
+  <no-list-management></no-list-management>
+</ng-template>

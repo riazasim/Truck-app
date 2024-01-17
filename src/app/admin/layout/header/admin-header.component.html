@@ -1,0 +1,38 @@
+<header class="layout-wrapper">
+  <app-loader class="tw-m-auto tw-flex-grow" *ngIf="(isLoading$ | async)" [fullScreen]="false"></app-loader>
+  <div *ngIf="!(isLoading$ | async)" class="tw-flex tw-flex-grow tw-justify-center tw-items-center tw-gap-2">
+    <fa-icon (click)="openChangeLocationModal()" icon="location-dot" class="tw-text-primary tw-cursor-pointer"></fa-icon>
+    <span class="tw-text-3xl tw-font-bold">{{(locationName$ | async) || 'No location set'}}</span>
+  </div>
+  <div class="logo-container" *ngIf="logoSrc" [routerLink]="logoRedirect" [relativeTo]="activatedRoute.parent">
+    <img [src]="logoSrc" alt="logo">
+  </div>
+  
+  <div class="current-location-container">
+    <h2 class="heading-4 current-location">
+      <span [matMenuTriggerFor]="menu" #trigger="matMenuTrigger"
+      [ngClass]="{'fi-gb': (language$ | async) === 'en', 'fi-ro': (language$ | async) === 'ro'}"
+      class="fi tw-cursor-pointer"></span>
+      <mat-menu #menu="matMenu" class="!tw-bg-white">
+        <menu mat-menu-item (click)="localizeService.changeLanguage('ro')"><div class="tw-flex tw-gap-3"><span class="fi fi-ro"></span> Română</div></menu>
+        <menu mat-menu-item (click)="localizeService.changeLanguage('en')"><div class="tw-flex tw-gap-3"><span class="fi fi-gb"></span> English</div></menu>
+      </mat-menu>
+    </h2>
+  </div>
+
+  <button class="expand-btn" (click)="isMenuClosed = false">
+    <fa-icon [icon]="expandBtnIcon" size="lg"></fa-icon>
+  </button>
+
+  <div [class.closed]="isMenuClosed"
+    class="menu-container">
+    <div class="title-row">
+      <h4>{{optionsTitle}}</h4>
+      <fa-icon [icon]="closeBtnIcon" size="lg" role="button" (click)="isMenuClosed = true"></fa-icon>
+    </div>
+    <div class="menu-row">
+      <ng-content select="[menu]"></ng-content>
+    </div>
+
+  </div>
+</header>

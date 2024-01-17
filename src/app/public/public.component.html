@@ -1,0 +1,26 @@
+<section app-public-layout decorationMinWidth="55%"
+         decorationMaxWidth="min(45vw,80vh)">
+  <div decoration class="tw-w-full tw-h-full">
+    <div class="tw-h-full tw-w-full tw-object-fill coverBackground"></div>
+  </div>
+  <div content class="tw-h-full tw-flex tw-flex-col tw-bg-white">
+    <div class="min-lg:tw-px-8 tw-h-full tw-max-w-sm tw-mx-auto
+          tw-items-center tw-flex tw-flex-col tw-flex-grow">
+
+      <div class="tw-w-full tw-my-auto">
+        <router-outlet class="tw-hidden"></router-outlet>
+      </div>
+    </div>
+    <div class="tw-text-right tw-pr-3 tw-pb-2 min-md:tw-pb-3">
+      <!-- <comvex-shared-operated-by-itruck></comvex-shared-operated-by-itruck> -->
+    </div>
+  </div>
+
+</section>
+
+<!-- <ng-container *ngIf="showLoader$ | async">
+  <app-loader
+    [fullScreen]="true"
+    message="Please wait"
+  ></app-loader>
+</ng-container> -->

@@ -1,0 +1,26 @@
+<div
+  [class.valid]="isValid === true && isTouched"
+  [class.invalid]="isValid === false && isTouched"
+  [class.disabled]="isDisabled"
+  class="iconic-layout-wrapper" [ngClass]="{'tw-h-full': isFullHeight}">
+  <div class="input-container" [ngClass]="{'tw-h-full': isFullHeight}" style="align-items: flex-start;">
+    <fa-icon *ngIf="leftIcon" [icon]="leftIcon" size="lg" class="icon"></fa-icon>
+    <ng-content select="textarea[inputRef]"></ng-content>
+    <ng-container *ngIf="appendedTemplate" [ngTemplateOutlet]="appendedTemplate"></ng-container>
+    <fa-icon *ngIf="rightIcon" [icon]="rightIcon" size="lg" class="icon"></fa-icon>
+    <fa-icon *ngIf="isValid && withCheckmark && isTouched" [icon]="checkmark" size="lg"
+             class="icon valid">
+    </fa-icon>
+  </div>
+  <ng-container *ngIf="isTouched && showValidationMessages">
+    <div class="errors-container" *ngIf="errors as validationErrors">
+      <div *ngFor="let error of (validationErrors | keyvalue)">
+        <span class="invalid">Invalid value</span>
+      </div>
+    </div>
+  </ng-container>
+
+</div>
+
+
+<ng-content select="[auxiliary]"></ng-content>

@@ -1,0 +1,164 @@
+﻿<!--<edit-container headerTitle="Add location">-->
+    <edit-container [headerTitle]="id ?  'Edit location details':'Add location details'">
+    <app-loader *ngIf="(isLoading$ | async)" [isContainer]="true" [fullScreen]="false"></app-loader>
+    <form *ngIf="!(isLoading$ | async)" [formGroup]="locationForm">
+        <div>
+            <div>
+                <h6 class="tw-font-bold">Details</h6>
+                <div class="min-xl:tw-columns-3">
+                    <div class="tw-h-[90px]">
+                        <div iconic-input-wrapper leftIcon="location-dot">
+                            <input placeholder="Location Name" inputRef type="text" id="locationName" formControlName="name">
+                        </div>
+                    </div>
+                    <div class="tw-h-[90px]">
+                        <div iconic-input-wrapper leftIcon="compass">
+                            <input placeholder="Google Maps coordinates (Plus code)" inputRef type="text" formControlName="addrCoordinates">
+                        </div>
+                    </div>
+                    <div class="tw-h-[90px]">
+                        <div *ngIf="(location$ | async)?.imgPreview">
+                            <label >&nbsp;</label>
+                            <div class="tw-relative tw-w-[50px]">
+                                <span class="tw-absolute tw-top-1/2 tw-left-1/2
+                                tw-transform tw--translate-x-1/2 tw--translate-y-1/2 tw-text-gray tw-text-3xl
+                                tw-cursor-pointer"
+                                (click)="clearImgPreview()">&times;</span>
+                                <img [src]="(location$ | async)?.imgPreview" alt="imgPreview" width="50" height="50">
+                            </div>
+                        </div>
+                        <div *ngIf="!(location$ | async)?.imgPreview">
+                            <div iconic-input-wrapper leftIcon="camera" class="tw-cursor-pointer" (click)="triggerFile.click()">
+                                <input inputRef type="text" placeholder="Picture (480 x 300 px)" readonly #inputReference>
+                                <input style="display: none;" type="file"  #triggerFile accept="image/*" (change)="setImgPreview($event.target, inputReference)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="min-xl:tw-columns-3">
+                <div>&nbsp;</div>
+                <div><div class="tw-text-right tw-font-bold tw-cursor-pointer">How do I find Google maps coordinates?</div></div>
+                <div>&nbsp;</div>
+            </div>
+            <div>
+                <h6 class="tw-font-bold">Address</h6>
+                <div class="min-xl:tw-columns-3">
+                    <div class="tw-h-[110px]">
+                        <div iconic-input-wrapper leftIcon="location-crosshairs">
+                            <input placeholder="Street" inputRef type="text" id="addrStreet" formControlName="addrStreet">
+                        </div>
+                    </div>
+                    <div class="tw-h-[110px]">
+                        <div class="min-md:tw-flex tw-gap-2">
+                            <div class="tw-flex-2">
+                                <div iconic-input-wrapper>
+                                    <input placeholder="No." inputRef type="text" formControlName="addrNumber">
+                                </div>
+                            </div>
+                            <div class="tw-flex-1">
+                                <div iconic-input-wrapper>
+                                    <input placeholder="City" inputRef type="text" formControlName="addrCity">
+                                </div>
+                            </div>
+                            <div class="tw-flex-1">
+                                <div iconic-input-wrapper>
+                                    <input placeholder="County" inputRef type="text" formControlName="addrCounty">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tw-h-[110px]">
+                        <div class="min-md:tw-flex tw-gap-2">
+                            <div class="tw-flex-1">
+                                <div iconic-input-wrapper>
+                                    <input placeholder="Country" inputRef type="text" formControlName="addrCountry">
+                                </div>
+                            </div>
+                                <div class="tw-flex-1">
+                                <div iconic-input-wrapper>
+                                    <input placeholder="Zip Code" inputRef type="text" formControlName="addrZipCode">
+                                </div>
+                                </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h6 class="tw-font-bold">Contact</h6>
+                <div class="min-xl:tw-columns-4">
+                  <div>
+                    <div iconic-input-wrapper leftIcon="user">
+                      <input inputRef placeholder="First Name" type="text" id="contactFirstName" formControlName="contactFirstName">
+                    </div>
+                  </div>
+                  <div class="tw-flex tw-flex-col">
+                    <div iconic-input-wrapper leftIcon="user">
+                      <input inputRef placeholder="Last Name" type="text" id="contactLastName" formControlName="contactLastName">
+                    </div>
+                  </div>
+                  <div>
+                    <div iconic-input-wrapper leftIcon="mobile">
+                      <input inputRef placeholder="Phone" type="text" id="contactPhone" formControlName="contactPhone">
+                    </div>
+                  </div>
+
+                    <div>
+                        <div iconic-input-wrapper leftIcon="mobile">
+                            <input inputRef placeholder="Phone Region Code" type="text" id="contactPhoneRegionCode" formControlName="contactPhoneRegionCode">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div>
+                    <div>
+                        <div iconic-input-wrapper leftIcon="envelope">
+                            <input inputRef placeholder="Email" type="text" id="contactEmail" formControlName="contactEmail">
+                        </div>
+                    </div>
+
+
+
+                    <div>
+                        <div iconic-select-wrapper leftIcon="eye" [rightIcon]="['fas', 'caret-down']">
+                            <select inputRef name="addrTimezone" id="timezone" formControlName="addrTimezone">
+                                <option value="" disabled>Select Timezone</option>
+                                <option value="Europe/Bucharest">Europe/Bucharest</option>
+                                <option value="Asia/Karachi">Asia/Karachi</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+
+
+
+                    <div>
+                        <div textarea-wrapper leftIcon="message-lines">
+                            <textarea inputRef cols="137" rows="10" type="text" placeholder="Comments" formControlName="comments"></textarea>
+                        </div>
+                        <!--                        <div textarea-wrapper class="min-xl:tw-columns-12">-->
+                        <!--                            <textarea style="width: auto" placeholder="Comments" inputRef type="textarea" formControlName="comments"></textarea>-->
+                        <!--                        </div>-->
+                    </div>
+
+            </div>
+<!--          <div>-->
+<!--            <h6 class="tw-font-bold">Custom Fileds</h6>-->
+<!--            <h6 *ngIf="true">There are no custom fields defined for this form</h6>-->
+<!--          </div>-->
+        </div>
+
+        <div class="tw-flex tw-justify-end tw-pt-5">
+            <div class="tw-flex tw-gap-4">
+                <button [routerLink]="id ? '../../list': '../list'" class="btn btn-outline-primary" type="button" [disabled]="(isLoading$ | async)">Cancel</button>
+                <button class="btn btn-primary" type="button" (click)="saveLocation()" [disabled]="locationForm.invalid || (isLoading$ | async)">Save</button>
+            </div>
+        </div>
+    </form>
+</edit-container>

@@ -1,0 +1,91 @@
+<div class="tw-max-w-lg min-sm:tw-min-w-[500px]">
+    <app-loader *ngIf="(isLoading$ | async)" [isContainer]="true" [fullScreen]="false"></app-loader>
+    <form [formGroup]="customFieldGroup" *ngIf="!(isLoading$ | async)">
+        <div class="tw-flex tw-justify-between">
+          <h2 mat-dialog-title>Edit</h2>
+          <div class="close-button tw-text-[25px] tw-cursor-pointer" (click)="cancel()">&times;</div>
+        </div>
+        <div class="tw-mb-8">
+            <p class="tw-text-gray tw-text-center tw-pb-4">Name your field and choose desired type</p>
+          <div class="tw-flex tw-justify-between tw-mb-2 tw-gap-4">
+              <div class="tw-w-full">
+                <div iconic-input-wrapper>
+                  <input inputRef type="text" placeholder="Field Name" formControlName="name">
+                </div>
+              </div>
+              <div class="tw-w-full">
+                <div iconic-select-wrapper [rightIcon]="['fas', 'caret-down']">
+                    <select inputRef name="type" id="type" formControlName="type">
+                        <option value="" disabled>Select type</option>
+                        <option value="text">Text</option>
+                        <option value="number">Number</option>
+                        <option value="textarea">Paragraph</option>
+                        <option value="date">Date</option>
+                        <option value="time">Time</option>
+                        <option value="checkbox">Checkbox</option>
+                        <option value="radio">Radio</option>
+                    </select>
+                </div>
+                <div *ngIf="(inputType$ | async) === 'date'" class="tw-pt-4" iconic-select-wrapper [rightIcon]="['fas', 'caret-down']">
+                  <select inputRef name="type" id="type" formControlName="format">
+                      <option value="" disabled>Select format</option>
+                      <option value="dd-MMM-yyyy">dd-MMM-yyyy</option>
+                      <option value="MM/dd/yyyy">MM/dd/yyyy</option>
+                      <option value="dd.MM.yyyy">dd.MM.yyyy</option>
+                      <option value="yyyy-MM-dd">yyyy-MM-dd</option>
+                  </select>
+                </div>
+                <div *ngIf="(inputType$ | async) === 'time'" class="tw-pt-4" iconic-select-wrapper [rightIcon]="['fas', 'caret-down']">
+                  <select inputRef name="type" id="type" formControlName="format">
+                      <option value="" disabled>Select format</option>
+                      <option value="HH:mm:ss">HH:mm:ss</option>
+                      <option value="HH:mm">HH:mm</option>
+                  </select>
+                </div>
+              </div>
+          </div>
+          <div class="tw-mb-4">
+            <label class="tw-cursor-pointer tw-mr-3" for="isrequired">Required</label>
+            <input id="isrequired" type="checkbox" class="tw-mr-2 tw-h-[25px] tw-w-[25px] tw-cursor-pointer" formControlName="required">
+          </div>
+          <div *ngIf="['text', 'number', 'paragraph'].includes((inputType$ | async) ?? '')" iconic-input-wrapper>
+            <input inputRef type="text" placeholder="Input placeholder" formControlName="placeholder">
+          </div>
+          <div class="tw-mb-4 tw-border-gray" textarea-wrapper>
+            <textarea class="tw-text-gray" inputRef placeholder="Description" formControlName="description">
+              </textarea>
+          </div>
+          <div *ngIf="['checkbox', 'radio'].includes((inputType$ | async) ?? '')" formArrayName="customFieldLists" class="tw-flex tw-gap-2 tw-flex-wrap tw-max-w-[640px]">
+            <div *ngFor="let field of customFieldsList.controls; let i = index" class="button-container tw-flex tw-items-center">
+              <ng-container [formGroupName]="i">
+                <input type="text" formControlName="value">
+                <fa-icon (menuClosed)="updateLabel(i)" [matMenuTriggerFor]="menu" #trigger="matMenuTrigger" (click)="openMenu(trigger, i)" class="tw-text-primary tw-cursor-pointer tw-pr-1" icon="pen" size="lg"></fa-icon>
+                <fa-icon (click)="removeCustomFieldList(i)" class="tw-text-primary tw-cursor-pointer" icon="square-xmark" size="lg"></fa-icon>
+                <mat-menu #menu="matMenu" yPosition="above" [hasBackdrop]="false">
+                  <div class="tw-p-4 tw-flex tw-flex-col tw-gap-2">
+                    <div (click)="$event.stopPropagation();">
+                      <label>Label</label>
+                      <input class="tw-w-full" type="text" placeholder="Label" formControlName="label">
+                    </div>
+                    <div (click)="$event.stopPropagation();">
+                      <label>Value</label>
+                      <input class="tw-w-full" type="text" placeholder="Value" formControlName="value">
+                    </div>
+                    <button class="tw-text-primary" (click)="updateLabel(i)">Save</button>
+                  </div>
+                </mat-menu>
+              </ng-container>
+            </div>
+            <fa-icon *ngIf="customFieldsList.length < 30" (click)="addCustomFieldList()" class="tw-text-primary tw-cursor-pointer tw-self-center" icon="square-plus" size="lg"></fa-icon>
+          </div>
+        </div>
+      
+        <div class="tw-flex tw-justify-between tw-flex-wrap-reverse tw-gap-4">
+          <button (click)="cancel()"
+            class="tw-border tw-border-primary tw-py-2 tw-text-primary tw-min-w-[130px] tw-rounded-full">Cancel</button>
+          <button (click)="save()"
+            class="tw-bg-primary tw-py-2 tw-text-white tw-min-w-[130px] tw-rounded-full">{{data.id ? 'Save' : 'Add'}}</button>
+        </div>
+    </form>
+  </div>
+  

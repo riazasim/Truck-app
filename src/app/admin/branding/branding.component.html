@@ -1,0 +1,90 @@
+<section>
+    <main>
+        <app-loader *ngIf="(isLoading$ | async)" [isContainer]="true" [fullScreen]="false"></app-loader>
+        <ng-container *ngIf="!(isLoading$ | async)">
+            <div class="tw-flex tw-justify-center tw-items-center tw-gap-20 max-md:tw-flex-col">
+                <fa-icon icon="camera" class="tw-text-primary tw-text-[160px]"></fa-icon>
+            </div>
+            <!-- <div class="tw-flex tw-justify-center tw-items-center tw-gap-20 max-md:tw-flex-col">
+                <div>
+                    <fa-icon *ngIf="!logo" icon="camera" class="tw-text-primary tw-text-[160px]"></fa-icon>
+                    <div [ngClass]="{'photo-container': logo}">
+                        <span class="x" (click)="logo = ''; logoFile.value = ''; isChangedLogo = false">&times;</span>
+                        <div class="tw-shadow-md" [ngStyle]="{ 'background': 'center/cover url(' + logo + ') no-repeat', 'height.px': 360, 'width.px': 360}"></div>
+                    </div>
+                </div>
+                <div>
+                    <fa-icon *ngIf="!cover" icon="camera" class="tw-text-primary tw-text-[160px]"></fa-icon>
+                    <div [ngClass]="{'photo-container': cover}">
+                        <span class="x" (click)="cover = ''; coverFile.value = ''; isChangedCover = false">&times;</span>
+                        <div class="tw-shadow-md" [ngStyle]="{ 'background': 'center/cover url(' + cover + ') no-repeat', 'height.px': 360, 'width.px': 360}"></div>
+                    </div>
+                </div>
+            </div> -->
+
+            <div class="tw-mt-10">
+                <h4 class="heading-4 tw-text-center tw-pb-10">{{'branding.customize-you-experience' | translate }}</h4>
+                <div class="tw-flex tw-justify-center min-2xl:tw-gap-36 max-2xl:tw-gap-20 max-md:tw-flex-col">
+                    <div>
+                        <div class="tw-flex tw-justify-center">
+<!--                            leftIcon="arrow-trend-up"-->
+                            <div iconic-input-wrapper>
+                                <input inputRef type="text" autocomplete="off" [formControl]="companyName" [placeholder]="'branding.insert-company-name' | translate" class="min-xl:tw-min-w-[339px]">
+                            </div>
+                        </div>
+                        <p class="heading-6 tw-text-center tw-text-descriptionColor">{{'branding.add-your-own-logo' | translate}}</p>
+                        <p class="heading-6 tw-text-center tw-text-descriptionColor" [innerHTML]="'branding.make-sure-to-use-a-500x500-logo' | translate"></p>
+                        <div class="tw-text-center tw-pt-10 tw-flex tw-justify-center tw-px-10">
+                            <button #btn type="button" class="btn min-lg:tw-min-w-[200px] btn-primary" (click)="isChangedImgLogo ? uploadFile(logoFileElement, 'imgLogo') : triggerFile(btn, logoFileElement)">
+                                <span *ngIf="isChangedImgLogo" class="tw-text-lg tw-flex-col tw-items-center tw-justify-center">{{ imgLogoFile?.name }} <span class="tw-pl-2 tw-text-2xl">&times;</span></span>
+                                <span *ngIf="!isChangedImgLogo" class="tw-text-lg">{{ 'branding.upload-logo' | translate }}</span>
+                                <input #logoFileElement hidden type="file" (change)="loadImage($event.target, 'imgLogo')" accept="image/*">
+                            </button>
+                        </div>
+                        <div class="tw-flex tw-flex-col tw-pt-10">
+                            &nbsp;
+                            <!-- <div class="tw-flex tw-items-center tw-gap-4">
+                                <input id="check" type="checkbox" name="publicBookingForm" [formControl]="bookingFormActivation" class="tw-h-[28px] tw-w-[28px] tw-border-[3px] tw-border-black tw-cursor-pointer">
+                                <label for="check" class="tw-text-textDefault heading-5">{{'branding.activate-public-booking-form' | translate }}</label>
+                            </div>
+                            <div *ngFor="let location of locations">
+                                {{location.name}}: <a class="tw-pl-[43px] tw-text-descriptionColor" target="_blank" href="{{origin}}/UI/#/{{translateService.currentLang}}/booking/{{(organization$ | async)?.userId}}/{{location.id}}">{{origin}}/UI/#/{{translateService.currentLang}}/booking/{{(organization$ | async)?.userId}}/{{location.id}}</a>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div>
+                        <div class="tw-flex tw-justify-center">
+<!--                            leftIcon="arrow-trend-up"-->
+                            <div iconic-input-wrapper>
+                                <input inputRef type="text" autocomplete="off" [formControl]="privacyLink" [placeholder]="'branding.insert-privacy-link' | translate" class="min-xl:tw-min-w-[339px]">
+                            </div>
+                        </div>
+                        <p class="heading-6 tw-text-center tw-text-descriptionColor">{{'branding.add-your-own-cover' | translate}}</p>
+                        <p class="heading-6 tw-text-center tw-text-descriptionColor" [innerHTML]="'branding.make-sure-to-use-a-1920x1080-cover' | translate"></p>
+                        <div class="tw-text-center tw-pt-10 tw-flex tw-justify-center tw-px-10">
+                            <button #btn type="button" class="btn min-lg:tw-min-w-[200px] btn-primary" (click)="isChangedImgCover ? uploadFile(coverFileElement, 'imgCover') : triggerFile(btn, coverFileElement)">
+                                <span *ngIf="isChangedImgCover" class="tw-text-lg tw-flex-col tw-items-center tw-justify-center">{{ (imgCoverFile?.name) }} <span class="tw-pl-2 tw-text-2xl">&times;</span></span>
+                                <span *ngIf="!isChangedImgCover" class="tw-text-lg">{{ 'branding.upload-cover' | translate }}</span>
+                                <input #coverFileElement hidden type="file" (change)="loadImage($event.target, 'imgCover')" accept="image/*">
+                            </button>
+                        </div>
+
+                        <div class="tw-flex tw-justify-center tw-pt-10">
+                            <button [disabled]="isLoading$ | async" class="btn min-lg:tw-min-w-[200px] btn-lg btn-primary" (click)="submit()">
+                                <span class="tw-text-lg">{{ 'button.save' | translate }}</span>
+
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="tw-flex tw-justify-center min-xl:tw-gap-36 max-xl:tw-gap-10 max-md:tw-flex-col tw-pt-5 max-xl:tw-p-10">
+                    <div class="tw-flex tw-justify-center tw-grow[3]">
+                        <div iconic-input-wrapper leftIcon="user">
+                            <input inputRef type="text" autocomplete="off" [formControl]="privacyLink" [placeholder]="'branding.insert-privacy-link' | translate" class="min-xl:tw-min-w-[339px]">
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </ng-container>
+    </main>
+</section>
