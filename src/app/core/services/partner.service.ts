@@ -27,7 +27,7 @@ export class PartnerService {
                         map((p: PartnerModel) => {
 
                           if ((<DockOnlyRelationship[]>p.partnerDockRelationships).length) {
-                            p['docks'] = (<DockOnlyRelationship[]>p.partnerDockRelationships).flatMap((p) => 
+                            p['docks'] = (<DockOnlyRelationship[]>p.partnerDockRelationships).flatMap((p) =>
                                                                           p.attributes.dock.map(x => (<number>x.attributes.id)));
                           } else {
                             p['docks'] = [];
@@ -43,7 +43,7 @@ export class PartnerService {
   }
 
   list(data: any): Observable<PartnerModel[]> {
-    return this.http.get<ResponseArrayWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}${this.route}`)
+    return this.http.get<ResponseArrayWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/admin/partners`)
                     .pipe(pluckArrayWrapperData<any, ResponseArrayWrapper<any>>(),
                       map((l: PartnerModel[]) => l.map((p: PartnerModel) => {
                         if ((<PartnerDockRelationships[]>p.partnerDockRelationships).length) {

@@ -32,3 +32,26 @@ export function phoneNumberValidator(type: PhoneNumberType): ValidatorFn {
     return match ? null : validationError();
   };
 }
+export const decideParsePhoneNumber = (phoneCountry: string, phoneNumber: string): string => {
+    if (phoneCountry === 'ro') {
+      return phoneNumber.split(' ').join('').startsWith('+40') ? phoneNumber : `+40${phoneNumber}`;
+    }
+
+    if (phoneCountry === 'en' || phoneCountry === 'us') {
+      return phoneNumber.split(' ').join('').startsWith('+1') ? phoneNumber : `+1${phoneNumber}`;
+    }
+
+    return phoneNumber;
+  };
+
+  export const extractPhoneNumber = (phoneNumber: string, phoneRegionCode: string = ''): string => {
+    if (!phoneNumber) {
+      return ''
+    }
+
+    if (phoneRegionCode && phoneRegionCode === '+40' && phoneNumber.startsWith('0')) {
+      return phoneNumber.slice(1).replace(/[\)\(\- ]/g, '').trim();
+    }
+
+    return phoneNumber.replace(/[\)\(\- ]/g, '').trim();
+  }

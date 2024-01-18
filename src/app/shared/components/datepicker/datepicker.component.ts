@@ -8,7 +8,6 @@ import { FormGroup } from '@angular/forms';
 })
 export class DatepickerComponent implements OnInit {
   @Input() formGroup: FormGroup;
-  @Input() field: string;
   @Input() placeholder: string = 'Pick a date';
 
   @Input() height: number;

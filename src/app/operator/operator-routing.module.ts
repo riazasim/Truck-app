@@ -4,7 +4,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { OperatorComponent } from './operator.component';
 
 const routes: Routes = [
-  { 
+  {
     path: '',
     component: OperatorComponent,
     children: [
@@ -16,7 +16,11 @@ const routes: Routes = [
       {
         path: 'dashboard',
         component: DashboardComponent
-      }
+      },
+      {
+        path: 'scheduling',
+        loadChildren: () => import('./scheduling/scheduling.module').then(m => m.SchedulingModule),
+      },
     ]
   }
 ];
