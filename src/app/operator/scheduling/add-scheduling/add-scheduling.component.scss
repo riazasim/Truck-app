@@ -1,0 +1,37 @@
+.mat-stepper-horizontal {
+    margin-top: 8px;
+    ::ng-deep div.mat-horizontal-stepper-header-container {
+        padding: 0 15%;
+        margin: 0 auto;
+    }
+  }
+
+  ul li {
+    @apply tw-px-5 tw-my-2 hover:tw-bg-lightgray tw-cursor-pointer;
+  }
+:host {
+  ::ng-deep.mat-menu-panel {
+    max-width: none !important;
+    overflow: unset !important;
+  }
+
+  ::ng-deep.select-client-input::placeholder {
+      color: black;
+    }
+  textarea::-webkit-input-placeholder {
+      text-align: center;
+      line-height: 200px;
+  }
+  textarea:-moz-placeholder {
+    text-align: center;
+      line-height: 200px;
+  }
+  textarea::-moz-placeholder {
+    text-align: center;
+      line-height: 200px;
+  }
+  textarea:-ms-input-placeholder {
+      text-align: center;
+      line-height: 200px;
+  }
+}

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, map, of } from 'rxjs';
+import { BehaviorSubject, Observable, map, of, shareReplay, tap } from 'rxjs';
 import { StatusListModel, StatusListTable } from '../models/status-list.model';
 import { HttpClient } from '@angular/common/http';
 import { ResponseArrayPaginationWrapper, ResponseArrayWrapper, ResponseItemWrapper } from '../models/response-wrappers.types';
@@ -14,6 +14,7 @@ export class StatusListService {
   private readonly statusRoute: string = '/admin/status-lists';
   private readonly sidRoute: string = '/admin/sid-statuses';
   private readonly dockRoute: string = '/admin/dock-statuses';
+  sidStatuses$: BehaviorSubject<StatusListModel[]> = new BehaviorSubject<StatusListModel[]>([]);
   private readonly goodsRoute: string = '/admin/goods-statuses';
   constructor(private readonly http: HttpClient) { }
 
@@ -41,9 +42,19 @@ export class StatusListService {
     return this.http.post(`${environment.apiUrl}${environment.apiVersion}/deleteSidStatus`, wrapJsonForRequest(data))
   }
 
-  listSid(data: any): Observable<StatusListModel[]> {
-    return this.http.post<ResponseArrayWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/paginateSidStatuses`, wrapJsonForRequest(data))
-      .pipe(pluckArrayWrapperData<any, ResponseArrayWrapper<any>>())
+//   listSid(data: any): Observable<StatusListModel[]> {
+//     return this.http.post<ResponseArrayWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/paginateSidStatuses`, wrapJsonForRequest(data))
+//       .pipe(pluckArrayWrapperData<any, ResponseArrayWrapper<any>>())
+//   }
+listSid(): Observable<StatusListModel[]> {
+    if (this.sidStatuses$.getValue()?.length) return of(this.sidStatuses$.getValue());
+
+    return this.http.get<ResponseArrayWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}${this.sidRoute}`)
+                    .pipe(pluckArrayWrapperData<any, ResponseArrayWrapper<any>>(),
+                    tap({
+                      next: (r) => {
+                      this.sidStatuses$.next(r);
+                    }}), shareReplay())
   }
 
 

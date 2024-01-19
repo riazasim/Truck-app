@@ -23,7 +23,7 @@ export type LocationModel = {
     imgPreview: File;
 
    // locations?: ResponseDataItem<LocationModel> | LocationModel;
-   // warehouses?: ResponseDataItem<BuildingModel>[] | BuildingModel[] | number[];
+   warehouses?: ResponseDataItem<BuildingModel>[] | BuildingModel[] | number[];
    // customFields?: ResponseDataItem<CustomFieldModel>[] | CustomFieldModel;
 }
 

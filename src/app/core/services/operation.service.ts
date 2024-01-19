@@ -38,14 +38,14 @@ export class OperationService {
     }
 
     list(data: any): Observable<OperationModel[]> {
-      return this.http.post<ResponseArrayWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/paginateOperations`, wrapJsonForRequest(data))
+      return this.http.get<ResponseArrayWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/admin/operations`)
         .pipe(pluckArrayWrapperData<any, ResponseArrayWrapper<any>>())
     }
 
 
 
     pagination(data: any): Observable<OperationTable> {
-      return this.http.post<ResponseArrayPaginationWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/paginateOperations`, wrapJsonForRequest(data))
+      return this.http.get<ResponseArrayPaginationWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/paginateOperations`)
           .pipe(pluckArrayPaginationWrapperData<any, ResponseArrayPaginationWrapper<any>>(),
                           map((u: OperationTable) => {
                                u.items = (<any>u.items).map(((c: CustomFieldData) => c.attributes));

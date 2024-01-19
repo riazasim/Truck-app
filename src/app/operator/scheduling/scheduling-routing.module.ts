@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SchedulingComponent } from './scheduling.component';
-import { SchedulingListComponent } from './scheduling-list/scheduling-list.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 import { AddSchedulingComponent } from './add-scheduling/add-scheduling.component';
 import { SchedulingSuccessComponent } from './scheduling-success/scheduling-success.component';
 
@@ -13,11 +13,11 @@ const routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'list'
+        redirectTo: 'dashboard'
       },
       {
-        path: 'list',
-        component: SchedulingListComponent
+        path: 'dashboard',
+        component: DashboardComponent
       },
       {
         path: 'add',
