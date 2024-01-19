@@ -1,6 +1,6 @@
  <mat-stepper labelPosition="bottom" [linear]="isLinear" #stepper>
 
-    <mat-step label="Scheduling" [completed]="stepOne$ | async">
+    <mat-step label="Route Details" [completed]="stepOne$ | async">
       <app-loader *ngIf="(isLoading$ | async)" [isContainer]="true" [fullScreen]="false"></app-loader>
       <div *ngIf="!(isLoading$ | async)" class="min-md:tw-min-h-[calc(100vh-260px)]">
         <div class="tw-flex tw-flex-col">
@@ -8,28 +8,28 @@
           <div class="tw-grid min-lg:tw-grid-cols-2 tw-grid-cols-1 tw-gap-x-10 tw-gap-y-4 tw-pt-[100px] tw-px-[50px]">
               <div class="tw-flex tw-flex-col tw-gap-x-10 tw-gap-y-4 tw-px-[50px]">
               <div iconic-input-wrapper leftIcon="user">
-                <input inputRef type="text" placeholder="Convoy type" formControlName="convyType">
+                <input inputRef type="text" placeholder="Convoy type" formControlName="convoyType">
             </div>
-              <div iconic-input-wrapper leftIcon="user">
+              <div iconic-input-wrapper leftIcon="clock">
                 <input inputRef type="text" placeholder="ETA" formControlName="eta">
             </div>
-              <div iconic-input-wrapper leftIcon="user">
+              <div iconic-input-wrapper leftSvg="assets/images/map-pin.svg">
                 <input inputRef type="text" placeholder="Location port" formControlName="locationPort">
             </div>
             <div iconic-select-wrapper leftIcon="clock" [rightIcon]="['fas', 'caret-down']">
-                <select inputRef name="warehouse" id="warehouse" formControlName="warehouse">
+                <select inputRef name="zone" id="zone" formControlName="zone">
                     <option value="null" disabled>Zone</option>
                     <option *ngFor="let building of buildings" [value]="building.id">{{building.name}}</option>
                 </select>
               </div>
             <div iconic-select-wrapper leftIcon="clock" [rightIcon]="['fas', 'caret-down']">
-                <select inputRef name="warehouse" id="warehouse" formControlName="warehouse">
+                <select inputRef name="departurePort" id="departurePort" formControlName="departurePort">
                     <option value="null" disabled>Departure port</option>
                     <option *ngFor="let building of buildings" [value]="building.id">{{building.name}}</option>
                 </select>
               </div>
             <div iconic-select-wrapper leftIcon="clock" [rightIcon]="['fas', 'caret-down']">
-                <select inputRef name="warehouse" id="warehouse" formControlName="warehouse">
+                <select inputRef name="arrivalPort" id="arrivalPort" formControlName="arrivalPort">
                     <option value="null" disabled>Arrival port</option>
                     <option *ngFor="let building of buildings" [value]="building.id">{{building.name}}</option>
                 </select>
@@ -56,7 +56,7 @@
                     <input inputRef type="text" placeholder="Capacity max (m)*" formControlName="capacityMax">
                 </div>
                 <div iconic-select-wrapper leftIcon="clock" [rightIcon]="['fas', 'caret-down']">
-                  <select inputRef name="warehouse" id="warehouse" formControlName="warehouse">
+                  <select inputRef name="typeOfLock" id="typeOfLock" formControlName="typeOfLock">
                       <option value="null" disabled>Type of lock</option>
                       <option *ngFor="let building of buildings" [value]="building.id">{{building.name}}</option>
                   </select>
@@ -70,7 +70,7 @@
         </div>
       </div>
     </mat-step>
-    <mat-step label="Transport Data" [completed]="stepTwo$ | async">
+    <mat-step label="Convoy" [completed]="stepTwo$ | async">
       <app-loader *ngIf="(isLoading$ | async)" [isContainer]="true" [fullScreen]="false"></app-loader>
       <form *ngIf="!(isLoading$ | async)" [formGroup]="schedulingForm">
         <div class="tw-grid min-lg:tw-grid-cols-2 tw-grid-cols-1 tw-gap-x-10 tw-gap-y-4 tw-pt-[100px] tw-px-[50px]">
@@ -79,13 +79,13 @@
                     <input inputRef type="text" placeholder="Navigation type*" formControlName="navigationType">
                 </div>
                 <div iconic-select-wrapper leftIcon="grid-2" [rightIcon]="['fas', 'caret-down']">
-                  <select inputRef name="operation" id="operation" formControlName="operation">
+                  <select inputRef name="ship" id="ship" formControlName="ship">
                       <option value="null" disabled>Ship</option>
                       <option *ngFor="let operation of operations" [value]="operation.id">{{operation.name}}</option>
                   </select>
                 </div>
                 <div iconic-select-wrapper leftIcon="grid-2" [rightIcon]="['fas', 'caret-down']">
-                  <select inputRef name="operation" id="operation" formControlName="operation">
+                  <select inputRef name="shipType" id="shipType" formControlName="shipType">
                       <option value="null" disabled>Ship type*</option>
                       <option *ngFor="let operation of operations" [value]="operation.id">{{operation.name}}</option>
                   </select>
@@ -109,7 +109,7 @@
                     <input inputRef type="text" placeholder="C.max (t)*" formControlName="capacityMax">
                 </div>
                 <div iconic-select-wrapper leftIcon="id-card" [rightIcon]="['fas', 'caret-down']">
-                  <select inputRef name="customer" id="customer" formControlName="customer">
+                  <select inputRef name="agent" id="agent" formControlName="agent">
                       <option value="null" disabled>Agent</option>
                       <option *ngFor="let customer of customers" [value]="customer.id">{{customer.fullName}}</option>
                   </select>
@@ -500,7 +500,7 @@
         </div>
         <div class="tw-flex tw-justify-center min-md:tw-gap-20 tw-gap-3 tw-py-3">
           <button type="button" class="btn btn-primary min-md:tw-min-w-[436px] tw-min-h-[50px] !tw-text-[18px]" matStepperPrevious>{{'button.back' | translate}}</button>
-          <button type="button" class="btn btn-primary min-md:tw-min-w-[436px] tw-min-h-[50px] !tw-text-[18px]" (click)="next(stepFour$)">{{'button.next' | translate}}</button>
+          <button type="button" class="btn btn-primary min-md:tw-min-w-[436px] tw-min-h-[50px] !tw-text-[18px]" (click)="saveScheduling()">{{'button.next' | translate}}</button>
         </div>
       </div>
     </mat-step>
