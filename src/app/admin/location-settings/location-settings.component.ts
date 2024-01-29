@@ -13,8 +13,8 @@ export class LocationSettingsComponent {
     name: 'Users',
     link: '../users'
   },{
-    name: 'Vehicles',
-    link: '../vehicles'
+    name: 'Fleet',
+    link: '../fleet'
   }, {
     name: 'Operations',
     link: '../operations'
@@ -46,10 +46,7 @@ export class LocationSettingsComponent {
     name: 'Report builder ⚠️',
     link: null
   }, {
-    name: 'Report automation⚠️',
-    link: null
-  }, {
-    name: 'Watchlist⚠️',
+    name: 'Alerts⚠️',
     link: null
   }
 ]
@@ -75,15 +72,18 @@ export class LocationSettingsComponent {
       name: 'API documentation⚠️',
       link: null
     }, {
-      name: 'Lares Access Integration⚠️',
+      name: 'SMS Integration⚠️',
       link: null
     }, {
-      name: 'SMS Integration⚠️',
+      name: 'Yard Access Integration⚠️',
+      link: null
+    }, {
+      name: 'Access Managenent Integration⚠️',
       link: null
     }, {
       name: 'Custom Integration⚠️',
       link: null
-    }, {
+    },{
       name: 'Webhooks⚠️',
       link: null
     }

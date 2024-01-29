@@ -1,8 +1,11 @@
 <header class="layout-wrapper">
   <app-loader class="tw-m-auto tw-flex-grow" *ngIf="(isLoading$ | async)" [fullScreen]="false"></app-loader>
-  <div *ngIf="!(isLoading$ | async)" class="tw-flex tw-flex-grow tw-justify-center tw-items-center tw-gap-2">
+  <!-- <div *ngIf="(companyName$ | async) && !(isLoading$ | async)" class="tw-flex tw-flex-grow tw-justify-center tw-items-center tw-gap-2">
     <fa-icon (click)="openChangeLocationModal()" icon="location-dot" class="tw-text-primary tw-cursor-pointer"></fa-icon>
-    <span class="tw-text-3xl tw-font-bold">{{(locationName$ | async) || 'No location set'}}</span>
+    <span class="tw-text-3xl tw-font-bold">{{(companyName$ | async)}}</span>
+  </div> -->
+  <div class="tw-flex tw-flex-grow tw-justify-center tw-items-center tw-gap-2" *ngIf="!(companyName$ | async)">
+    <span class="tw-text-3xl tw-font-bold">Truck App</span>
   </div>
   <div class="logo-container" *ngIf="logoSrc" [routerLink]="logoRedirect" [relativeTo]="activatedRoute.parent">
     <img [src]="logoSrc" alt="logo">

@@ -3,7 +3,7 @@
   [class.invalid]="isValid === false && isTouched"
   [class.disabled]="isDisabled"
   class="iconic-layout-wrapper">
-  <div class="input-container" [ngStyle]="{'paddingLeft.rem': leftIcon ? 'inherit' : 1.2 }">
+  <div class="input-container" >
     <img *ngIf="leftSvg" [src]="leftSvg" alt="icon" class="tw-mx-2">
     <fa-icon *ngIf="leftIcon" [icon]="leftIcon" size="lg" class="icon"></fa-icon>
     <ng-content select="input[inputRef]"></ng-content>

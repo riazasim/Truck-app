@@ -2,9 +2,8 @@ import {ChangeDetectionStrategy, Component} from '@angular/core';
 import { BehaviorSubject, combineLatest } from "rxjs";
 import {FormGroup, UntypedFormBuilder, UntypedFormGroup, Validators} from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { createEmailValidator } from "../../../shared/validators/generic-validators";
-import { VehicleService } from "../../../core/services/vehicle.service";
-import { VehicleModel } from "../../../core/models/vehicle.model";
+import { VehicleService } from 'src/app/core/services/vehicle.service';
+import { VehicleModel } from 'src/app/core/models/vehicle.model';
 
 @Component({
   selector: "app-vehicles-add-edit",

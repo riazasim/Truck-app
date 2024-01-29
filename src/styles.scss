@@ -68,3 +68,31 @@ div.mat-autocomplete-panel {
   color: #FFF;
 }
 /* Fix Mat calendar hover text color */
+
+/* Paginator fixing*/
+.mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline .mdc-notched-outline__leading, .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline .mdc-notched-outline__notch, .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline .mdc-notched-outline__trailing {
+  border-width: thin !important;
+}
+.mdc-text-field--outlined {
+  padding-right: max(20px) !important;
+}
+.mdc-text-field--outlined {
+   padding-left: max(20px) !important;
+}
+.mat-mdc-paginator-page-size {
+  display: flex;
+  align-items: baseline;
+  margin-right: 0px;
+}
+.mat-mdc-paginator-range-label {
+   margin: 0px !important; 
+}
+html {
+  --mat-paginator-container-text-font: Roboto, sans-serif;
+  --mat-paginator-container-text-line-height: 20px;
+  --mat-paginator-container-text-size: 12px;
+  --mat-paginator-container-text-tracking: 0.0333333333em;
+  --mat-paginator-container-text-weight: 400;
+  --mat-paginator-select-trigger-text-size: 14px;
+}
+/* Paginator fixing end*/

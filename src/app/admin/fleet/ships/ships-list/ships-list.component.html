@@ -1,0 +1,113 @@
+<section *ngIf="(isLoading$ | async) || originalSource.length; else empty">
+  <material-panel-table [showSearchbar]="false" [showHeader]="true" buttonLabel="Add Ship" tableTitle="Ships list" (buttonClicked)="redirectAddVehicle()">
+    <div table class="tw-w-full tw-shadow-lg">
+      <ng-scrollbar track="horizontal" [autoHeightDisabled]="false">
+        <table class="material-table no-wrap tw-overflow-hidden" matSort (matSortChange)="sortData($event)"
+               [class.loading]="(isLoading$ | async)" aria-label="Usage Table"
+               cdk-table [dataSource]="dataSource">
+
+          <ng-container cdkColumnDef="licensePlate">
+            <th cdk-header-cell *cdkHeaderCellDef scope="col">
+              <section class="tw-flex tw-flex-col">
+                <div mat-sort-header="licensePlate">License Plate</div>
+                <searchbar>
+                  <fa-icon icon="search"></fa-icon>
+                  <input #searchName input type="text" (keyup)="applyFilter($event.target, 'licensePlate')">
+                  <div *ngIf="searchName.value" close (click)="searchName.value=''; applyFilter({ value: '' }, 'licensePlate')">
+                    <fa-icon icon="close"></fa-icon>
+                  </div>
+                </searchbar>
+              </section>
+            </th>
+            <td cdk-cell *cdkCellDef="let row">{{row.licensePlate}}</td>
+          </ng-container>
+
+          <ng-container cdkColumnDef="type">
+            <th cdk-header-cell *cdkHeaderCellDef scope="col">
+              <section class="tw-flex tw-flex-col">
+                <div mat-sort-header="type">Type</div>
+                <select (change)="filterByType($event)" filter-select>
+                  <option value="" selected>Select</option>
+                  <option *ngFor="let type of VehicleTypeEnum">{{type}}</option>
+                </select>
+              </section>
+            </th>
+            <td cdk-cell *cdkCellDef="let row">{{row.type}}</td>
+          </ng-container>
+
+          <ng-container cdkColumnDef="status">
+            <th cdk-header-cell *cdkHeaderCellDef scope="col">
+              <section class="tw-flex tw-flex-col">
+                <div mat-sort-header="status">Status</div>
+                <select (change)="filterByStatus($event)" filter-select>
+                  <option value="" selected>Select</option>
+                  <option value="true">ACTIVE</option>
+                  <option value="false">INACTIVE</option>
+                </select>
+              </section>
+            </th>
+             <td cdk-cell *cdkCellDef="let row">{{row.status ? 'ACTIVE': 'INACTIVE'}}</td>
+          </ng-container>
+
+          <ng-container cdkColumnDef="loadingCapacity">
+            <th cdk-header-cell *cdkHeaderCellDef scope="col">
+              <section class="tw-flex tw-flex-col">
+                <div mat-sort-header="loadingCapacity">Loading Capacity</div>
+                <searchbar>
+                  <fa-icon icon="search"></fa-icon>
+                  <input #searchName input type="text" (keyup)="applyFilter($event.target, 'loadingCapacity')">
+                  <div *ngIf="searchName.value" close (click)="searchName.value=''; applyFilter({ value: '' }, 'loadingCapacity')">
+                    <fa-icon icon="close"></fa-icon>
+                  </div>
+                </searchbar>
+              </section>
+            </th>
+            <td cdk-cell *cdkCellDef="let row">{{row.loadingCapacity}}</td>
+          </ng-container>
+
+          <ng-container cdkColumnDef="actions">
+            <th cdk-header-cell *cdkHeaderCellDef scope="col">
+              <section class="tw-flex tw-flex-col">
+                <div>Actions</div>
+                <button type="button" class="btn btn-outline-primary">Mass update</button>
+              </section>
+            </th>
+            <td cdk-cell *cdkCellDef="let row" class="tw-flex tw-gap-4">
+              <fa-icon icon="eye" class="tw-text-primary tw-cursor-pointer" size="lg" [routerLink]="['../edit', row.id]"></fa-icon>
+              <fa-icon icon="trash-can" class="tw-text-primary tw-cursor-pointer" size="lg" (click)="openDeleteModal(row.id)"></fa-icon>
+            </td>
+          </ng-container>
+
+
+          <!-- Header and Row Declarations -->
+          <tr cdk-header-row *cdkHeaderRowDef="displayedColumns"></tr>
+          <tr cdk-row *cdkRowDef="let row; columns: displayedColumns"></tr>
+          <tr *cdkNoDataRow>
+            <td [colSpan]="displayedColumns.length">
+                <span *ngIf="(isLoading$ | async)">
+                  <app-loader *ngIf="(isLoading$ | async)" [isContainer]="true" [fullScreen]="false"></app-loader>
+                </span>
+              <span
+                      *ngIf="dataSource.length === 0 && !(isLoading$ | async)">Nu există înregistrări</span>
+              <span
+                      *ngIf="dataSource.length > 0  && !(isLoading$ | async)">Nicio înregistrare nu corespunde criteriilor de căutare</span>
+            </td>
+          </tr>
+        </table>
+      </ng-scrollbar>
+
+              <mat-paginator [class.!tw-hidden]="dataSource.length === 0"
+                             [pageSizeOptions]="pageSizeOptions"
+                             [length]="length"
+                             [pageIndex]="pageIndex"
+                             (page)="onPaginateChange($event)"
+                             [pageSize]="pageSize"
+                             showFirstLastButtons>
+
+              </mat-paginator>
+    </div>
+  </material-panel-table>
+</section>
+<ng-template #empty>
+  <app-no-ships></app-no-ships>
+</ng-template>

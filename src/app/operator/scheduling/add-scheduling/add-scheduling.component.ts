@@ -111,28 +111,29 @@ export class AddSchedulingComponent implements OnInit, OnDestroy {
     this.id = this.route.snapshot.params['id'];
 
     combineLatest([
-      this.retrieveCustomers(),
-      this.retrieveDocks(),
-      this.retrieveBuildings(),
-      this.retrieveOperations(),
-      this.retrieveProducts()
+    //   this.retrieveCustomers(),
+    //   this.retrieveDocks(),
+    //   this.retrieveBuildings(),
+    //   this.retrieveOperations(),
+    //   this.retrieveProducts()
     ])
-    .subscribe(([partners, docks, buildings, operations, products]) => {
-      this.customers = partners.sort((a,b) => +b.status - +a.status);
-      this.docks = docks;
-      this.buildings = buildings;
-      this.operations = operations;
-      this.listProducts = products;
+    .subscribe(() => {
+    //   this.customers = partners.sort((a,b) => +b.status - +a.status);
+    //   this.docks = docks;
+    //   this.buildings = buildings;
+    //   this.operations = operations;
+    //   this.listProducts = products;
       this.initForm();
-      this.subscribeForOperationChanges();
+    //   this.subscribeForOperationChanges();
       this.subscribeForSchedulingChanges();
-      this.subscribeForDockChanges();
-      this.filterName = this.filterName.bind(this);
+    //   this.subscribeForDockChanges();
+    //   this.filterName = this.filterName.bind(this);
       this.isLoading$.next(false);
     });
   }
 
   next(step$: BehaviorSubject<boolean>): void {
+    debugger
     step$.pipe(delay(150), take(1)).subscribe(() => {
       this.matStepper.next();
       if (this.matStepper.selectedIndex === 4) {
@@ -178,13 +179,13 @@ export class AddSchedulingComponent implements OnInit, OnDestroy {
     console.log(this.statusListStatus,'listSid')
     return this.statusListStatus.listSid();
   }
-  retrieveDocks(): Observable<DockModel[]> {
-    return this.dockService.list({});
-  }
+//   retrieveDocks(): Observable<DockModel[]> {
+//     return this.dockService.list({});
+//   }
 
-  retrieveBuildings(): Observable<BuildingModel[]> {
-    return this.buildingService.list({});
-  }
+//   retrieveBuildings(): Observable<BuildingModel[]> {
+//     return this.buildingService.list({});
+//   }
 
   getCustomerName(): string {
     if (this.schedulingForm.get('customer')?.value) {
@@ -287,10 +288,10 @@ export class AddSchedulingComponent implements OnInit, OnDestroy {
             this.customInputsFetched = true;
           });
         }
-        this.retrieveProducts().subscribe((products: ProductModel[]) => {
-          this.listProducts = products;
-          this.isLoading$.next(false);
-        })
+        // this.retrieveProducts().subscribe((products: ProductModel[]) => {
+        //   this.listProducts = products;
+        //   this.isLoading$.next(false);
+        // })
         break;
       case 3:
         this.isLoading$.next(true);
@@ -303,17 +304,17 @@ export class AddSchedulingComponent implements OnInit, OnDestroy {
     return this.partnerService.list({});
   }
 
-  retrieveOperations(): Observable<OperationModel[]> {
-    return this.operationService.list({});
-  }
+//   retrieveOperations(): Observable<OperationModel[]> {
+//     return this.operationService.list({});
+//   }
 
   retrieveCustomFields(): Observable<ResponseCustomField|null> {
     return this.customFieldService.list();
   }
 
-  retrieveProducts(): Observable<ProductModel[]> {
-    return this.productService.list({});
-  }
+//   retrieveProducts(): Observable<ProductModel[]> {
+//     return this.productService.list({});
+//   }
 
   filterFavorites(customer: PartnerModel): boolean {
     return !!customer.status;
@@ -420,11 +421,15 @@ export class AddSchedulingComponent implements OnInit, OnDestroy {
         aerialGuage:this.fb.control(''),
         capacityMax:this.fb.control(''),
         typeOfLock:this.fb.control(''),
+        length:this.fb.control(''),
         ship:this.fb.control(''),
+        shipType:this.fb.control(''),
         pavilion:this.fb.control(''),
         enginePower:this.fb.control(''),
         loa:this.fb.control(''),
         agent:this.fb.control(''),
+        navigationType:this.fb.control(''),
+        manevra:this.fb.control(''),
         shipOwner:this.fb.control(''),
         purpose:this.fb.control(''),
         trafficType:this.fb.control(''),

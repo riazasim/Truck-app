@@ -1,21 +1,15 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { BehaviorSubject, skip, startWith, switchMap } from "rxjs";
 import { faStar } from "@fortawesome/pro-solid-svg-icons";
-import { PartnerModel } from "../../../core/models/partner.model";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
-import { PartnerService } from "../../../core/services/partner.service";
 import { MatSort, Sort } from "@angular/material/sort";
-import { compare } from "../../../shared/utils/sort.function";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { VehiclesDeleteModalComponent } from "../vehicles-delete-modal/vehicles-delete-modal.component";
-import { VehicleService } from "../../../core/services/vehicle.service";
-import { VehicleModel, VehicleTable } from "../../../core/models/vehicle.model";
-import { MatTableDataSource } from "@angular/material/table";
 import { MatPaginator, PageEvent } from "@angular/material/paginator";
-
-import { catchError, map } from 'rxjs/operators';
-import { CustomFieldData } from "../../../core/models/custom-field.model";
+import { VehicleModel } from 'src/app/core/models/vehicle.model';
+import { VehicleService } from 'src/app/core/services/vehicle.service';
+import { compare } from 'src/app/shared/utils/sort.function';
 
 @Component({
   selector: 'app-vehicles-list',
