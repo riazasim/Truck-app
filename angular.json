@@ -71,15 +71,15 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ui-truck-app:build",
-            "proxyConfig": "proxy.conf.json"
+            "proxyConfig": "proxy.conf.json",
+            "buildTarget": "ui-truck-app:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "ui-truck-app:build:production"
+              "buildTarget": "ui-truck-app:build:production"
             },
             "development": {
-              "browserTarget": "ui-truck-app:build:development"
+              "buildTarget": "ui-truck-app:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -87,7 +87,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ui-truck-app:build"
+            "buildTarget": "ui-truck-app:build"
           }
         },
         "test": {
