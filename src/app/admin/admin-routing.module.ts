@@ -29,12 +29,12 @@ const routes: Routes = [
         component: LocationSettingsComponent
       },
       {
-        path: 'users',
-        loadChildren: () => import('./users/users.module').then(m => m.UsersModule),
+        path: 'fleet',
+        loadChildren: () => import('./fleet/fleet.module').then(m => m.FleetModule),
       },
       {
-        path: 'vehicles',
-        loadChildren: () => import('./vehicles/vehicles.module').then(m => m.VehiclesModule),
+        path: 'users',
+        loadChildren: () => import('./users/users.module').then(m => m.UsersModule),
       },
       {
         path: 'locations',

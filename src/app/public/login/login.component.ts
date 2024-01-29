@@ -9,6 +9,7 @@ import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { handleError } from 'src/app/shared/utils/error-handling.function';
 import {handleSuccess} from "../../shared/utils/success-handling.function";
+import { SESSION_TOKEN } from 'src/app/core/constants/auth.constant';
 
 @Component({
   selector: 'app-login',

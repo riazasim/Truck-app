@@ -36,6 +36,8 @@ export class AdminHeaderComponent {
 
   @Input()
   public locationName$: BehaviorSubject<string>;
+  @Input()
+  public companyName$: BehaviorSubject<string>;
 
   public readonly expandBtnIcon: IconProp = faBars as any;
   public readonly closeBtnIcon = faTimes as any; 

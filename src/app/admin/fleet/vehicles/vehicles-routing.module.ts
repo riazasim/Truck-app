@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { VehiclesSuccessComponent } from "./vehicles-success/vehicles-success.component";
 import { VehiclesListComponent } from "./vehicles-list/vehicles-list.component";
 import { VehiclesComponent } from "./vehicles.component";
-import {UsersAddEditComponent} from "../users/users-add-edit/users-add-edit.component";
 import {VehiclesAddEditComponent} from "./vehicles-add-edit/vehicles-add-edit.component";
 
 
