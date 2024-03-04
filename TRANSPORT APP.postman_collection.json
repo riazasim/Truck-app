@@ -1,0 +1,2131 @@
+{
+	"info": {
+		"_postman_id": "f89f340e-a976-4410-a10e-0ddad970016b",
+		"name": "TRANSPORT APP",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3048755"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "signIn",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"mrumari@gmail.com\",\r\n    \"password\": \"12345678\"//testare123\r\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/signIn",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"signIn"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "signUp",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user\":{\r\n        \"email\": \"mrumaredseRTRTFFeee@gmail.com\"\r\n    },\r\n    \"userSetting\":{\r\n        \"timezone\": \"Europe/Bucharest\",\r\n        \"firstName\": \"Firstname\",\r\n        \"lastName\": \"Lastname\",\r\n        \"language\": \"EN\",\r\n        \"phone\": \"3007766453\",\r\n        \"phoneRegionCode\": \"92\"\r\n    }\r\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/signUp",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"signUp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "setPassword",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\":\"12345678\",\r\n    \"confirm_password\":\"12345678\"\r\n\r\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/setPassword?token=mIOfV9v5uZRzKwkkbXJVfKavHcVtwTQXfK6AtQGxLqA",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"setPassword"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "mIOfV9v5uZRzKwkkbXJVfKavHcVtwTQXfK6AtQGxLqA"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "forgotPassword",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"iqbalchannar796@gmail.com\"\r\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/forgotPassword",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"forgotPassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "resetPassword",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\":\"12345678\",\r\n    \"confirm_password\":\"12345678\"\r\n\r\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/resetPassword?token=C2sVUSlv4s1SbbiSkcKHljyVpsHW_fkBYTJmjeXiaoQ",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"resetPassword"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "C2sVUSlv4s1SbbiSkcKHljyVpsHW_fkBYTJmjeXiaoQ"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "checkCredentials",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/api/checkAPICredentials",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"checkAPICredentials"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/security/api/logout",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"security",
+								"api",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Profile",
+			"item": [
+				{
+					"name": "getUserSettings",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/api/getUserSettings",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"getUserSettings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "setUserSettings",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"timezone\": \"Europe/Bucharest\",\r\n    \"first_name\": \"Umar1\",\r\n    \"last_name\": \"Farooq\",\r\n    \"language\": \"EN\",\r\n    \"phone\": \"3335643234\",\r\n    \"phone_region_code\": \"92\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/setUserSettings",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"setUserSettings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "setOrganizationDetails",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "imgLogo",
+									"type": "file",
+									"src": "/C:/Users/Grace/Desktop/Screenshot_1.png"
+								},
+								{
+									"key": "imgCover",
+									"type": "file",
+									"src": "/C:/Users/Grace/Desktop/Screenshot_1.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/setOrganizationDetails",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"setOrganizationDetails"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "createUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user\":{\r\n        \"email\": \"mrumRfRd788rdfd78t434gyy@gmail.com\",\r\n        \"roles\": [\"ROLE_USER_OPERATOR\"], //ROLE_USER_OPERATOR, ROLE_USER_DRIVER, ROLE_USER_PARTNER\r\n        \"userRole\":\"ROLE_USER_OPERATOR\",\r\n        \"status\": \"ACTIVE\"\r\n    },\r\n    \"userSetting\":{\r\n        \"timezone\": \"Europe/Bucharest\",\r\n        \"firstName\": \"umar\",\r\n        \"lastName\": \"Lastname\",\r\n        \"language\": \"EN\",\r\n        \"phone\": \"3007766453\",\r\n        \"phoneRegionCode\": \"92\",\r\n        \"identityDocumentType\": \"New\",\r\n        \"idNumber\": \"23432423-234234-34\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/createUser",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"createUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user_id\": 37\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/getUser",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"getUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "setUserInfo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user_id\": 37,\r\n    \"timezone\": \"Europe/Bucharest\",\r\n    \"first_name\": \"Umar2\",\r\n    \"last_name\": \"Farooq\",\r\n    \"language\": \"EN\",\r\n    \"phone\": \"3335643234\",\r\n    \"phone_region_code\": \"92\",\r\n    \"identity_document_type\": \"New\",\r\n    \"id_number\": \"23432423-234234-34\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/setUserInfo",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"setUserInfo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user_id\":37\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/deleteUser",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"deleteUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "paginateUsers",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"start\": 0,\r\n    \"length\": 0,\r\n    \"filters\": [\"\",\"\",\"\",\"\",\"\"],//[\"firstname/lastname\", \"status\", \"role\", \"phone\", \"email\"]\r\n    \"order\": [{\"dir\": \"DESC\", \"column\": 0}]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/paginateUsers",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"paginateUsers"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Upload",
+			"item": [
+				{
+					"name": "upload",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/uploads",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"uploads"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Vehicle",
+			"item": [
+				{
+					"name": "createVehicle",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"licensePlate\": \"TestResident\",\r\n    \"type\": \"Truck\", //Truck and Trailer\r\n    \"status\": \"ACTIVE\",\r\n    \"loadingCapacities\": [\"34\",\"54\",\"65\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/createVehicle",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"createVehicle"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getVehicle",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"vehicleId\": 17\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/getVehicle",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"getVehicle"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "setVehicleInfo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"vehicle_id\": 1,\r\n     \"license_plate\": \"TestResident 343\",\r\n    \"type\": \"Trailer\", //Truck and Trailer\r\n    \"status\": \"ACTIVE\",\r\n    \"loading_capacities\": [\"34\",\"54\",\"60\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/setVehicleInfo",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"setVehicleInfo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteVehicle",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"vehicle_id\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/deleteVehicle",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"deleteVehicle"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "paginateVehicles",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"start\": 0,\r\n    \"length\": 0,\r\n    \"filters\": [\"TestResident\",\"\",\"\",\"\",\"\",true],\r\n    \"order\": [{\"dir\": \"DESC\", \"column\": 0}]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/paginateVehicles",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"paginateVehicles"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Report Builder",
+			"item": [
+				{
+					"name": "createReportBuilder",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"TestResident\",\r\n    \"type\": \"Piechart\", //Piechart, Barchart, Radarchart and Listbar \r\n    \"report_dimentions\": [\"34\",\"54\",\"65\"],\r\n    \"report_filters\":[\r\n                {\r\n                \"key\":\"operation_type\",\r\n                \"condition\":\"IS\",\r\n                \"value\":\"Loading\"\r\n                },\r\n                    {\r\n                \"key\":\"destination\",\r\n                \"condition\":\"IS NOT\",\r\n                \"value\":\"Bahawalpur\"\r\n                },\r\n                {\r\n                \"key\":\"driver_contact_number\",\r\n                \"condition\":\"IS\",\r\n                \"value\":\"3338143114\"\r\n                },\r\n                    {\r\n                \"key\":\"customer\",\r\n                \"condition\":\"CONTAINS\",\r\n                \"value\":\"umar\"\r\n                },\r\n                {\r\n                \"key\":\"truck_license_plate_front\",\r\n                \"condition\":\"IS\",\r\n                \"value\":\"BRA 2324343\"\r\n                },\r\n                {\r\n                \"key\":\"scheduling_date\",\r\n                \"condition\":\"IS BETWEEN\",\r\n                \"start_value\":\"2015-04-01 04:23:50\",\r\n                \"end_value\":\"2018-04-01 04:23:50\"\r\n                }\r\n            ],\r\n            \"automation_bit\":1,\r\n            \"automation_date\":\"2015-04-01 04:23:50\",\r\n            \"repeat_option\":1,\r\n            \"waiting_period\":30                \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/createReportBuilder",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"createReportBuilder"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getReportBuilder",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"report_builder_id\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/getReportBuilder",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"getReportBuilder"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "setReportBuilderInfo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"report_builder_id\": 1,\r\n    \"name\": \"TestResident\",\r\n    \"type\": \"Piechart\", //Piechart, Barchart, Radar and List \r\n    \"report_dimentions\": [\"34\",\"54\"],\r\n    \"report_filters\":[\r\n                {\r\n                \"key\":\"operation_type\",\r\n                \"condition\":\"IS\",\r\n                \"value\":\"Loading\"\r\n                },\r\n                    {\r\n                \"key\":\"destination\",\r\n                \"condition\":\"IS NOT\",\r\n                \"value\":\"Bahawalpur\"\r\n                },\r\n                {\r\n                \"key\":\"driver_contact_number\",\r\n                \"condition\":\"IS\",\r\n                \"value\":\"3338143114\"\r\n                },\r\n                    {\r\n                \"key\":\"customer\",\r\n                \"condition\":\"CONTAINS\",\r\n                \"value\":\"umar\"\r\n                },\r\n                {\r\n                \"key\":\"truck_license_plate_front\",\r\n                \"condition\":\"IS\",\r\n                \"value\":\"BRA 2324343\"\r\n                },\r\n                {\r\n                \"key\":\"scheduling_date\",\r\n                \"condition\":\"IS BETWEEN\",\r\n                \"start_value\":\"2015-04-01 04:23:50\",\r\n                \"end_value\":\"2018-04-01 04:23:50\"\r\n                }\r\n            ],\r\n            \"automation_bit\":1,\r\n            \"automation_date\":\"2015-04-01 04:23:50\",\r\n            \"repeat_option\":1,\r\n            \"waiting_period\":30                \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/setReportBuilderInfo",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"setReportBuilderInfo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteReportBuilder",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"report_builder_id\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/deleteReportBuilder",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"deleteReportBuilder"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "paginateReportBuilders",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"start\": 0,\r\n    \"length\": 0,\r\n    \"filters\": [\"TestResident\",\"\",\"\",\"\",\"\",\"\",\"\"],\r\n    \"order\": [{\"dir\": \"DESC\", \"column\": 0}]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/paginateReportBuilders",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"paginateReportBuilders"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Location",
+			"item": [
+				{
+					"name": "createLocation",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "ddd",
+									"type": "text"
+								},
+								{
+									"key": "addrStreet",
+									"value": "ddd",
+									"type": "text"
+								},
+								{
+									"key": "addrNumber",
+									"value": "ddd",
+									"type": "text"
+								},
+								{
+									"key": "addrCity",
+									"value": "ddd",
+									"type": "text"
+								},
+								{
+									"key": "addrCountry",
+									"value": "ddd",
+									"type": "text"
+								},
+								{
+									"key": "addrCounty",
+									"value": "ddd",
+									"type": "text"
+								},
+								{
+									"key": "addrZipCode",
+									"value": "ddd",
+									"type": "text"
+								},
+								{
+									"key": "addrCoordinates",
+									"value": "ddd",
+									"type": "text"
+								},
+								{
+									"key": "addrTimezone",
+									"value": "ddd",
+									"type": "text"
+								},
+								{
+									"key": "contactFirstName",
+									"value": "ddd",
+									"type": "text"
+								},
+								{
+									"key": "contactLastName",
+									"value": "ddd",
+									"type": "text"
+								},
+								{
+									"key": "contactEmail",
+									"value": "mrumari445@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "contactphone",
+									"value": "ddd",
+									"type": "text"
+								},
+								{
+									"key": "contactPhoneRegionCode",
+									"value": "ddd",
+									"type": "text"
+								},
+								{
+									"key": "comments",
+									"value": "not mentioned",
+									"type": "text"
+								},
+								{
+									"key": "imgPreview",
+									"type": "file",
+									"src": "/C:/Users/Grace/Desktop/Screenshot_2.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/createLocation",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"createLocation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getLocation",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"location_id\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/getLocation",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"getLocation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "setLocationInfo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"location_id\":1,  \r\n  \"name\": \"ddd111\",\r\n  \"addr_street\": \"ddd\",\r\n  \"addr_number\": \"ddd\",\r\n  \"addr_city\": \"ddd\",\r\n  \"addr_country\": \"ddd\",\r\n  \"addr_county\": \"ddd\",\r\n  \"addr_zip_code\": \"ddd\",\r\n  \"addr_coordinates\": \"ddd\",\r\n  \"addr_timezone\": \"ddd\",\r\n  \"contact_firstname\": \"ddd\",\r\n  \"contact_lastname\": \"ddd\",\r\n  \"contact_email\": \"mrumari@gmail.com\",\r\n  \"contact_phone\": \"ddd\",\r\n  \"contact_phone_region_code\": \"ddd\",\r\n  \"comments\":\"not mentioned\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/setLocationInfo",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"setLocationInfo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteLocation",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"location_id\":1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/deleteLocation",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"deleteLocation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "paginateLocations",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"start\": 0,\r\n    \"length\": 0,\r\n    \"filters\": [\"ddd\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",true],\r\n    \"order\": [{\"dir\": \"DESC\", \"column\": 0}]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/paginateLocations",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"paginateLocations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "importLocationsJson",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"data\": {\r\n        \"type\": \"list\",\r\n        \"items\": [\r\n                {\r\n                \"type\": \"location\",\r\n                \"attributes\": {\r\n                    \"contactEmail\": \"UmarfarodfofgfgeeFGFGrewerwrtrerewrererq@gmail.com\"\r\n                   }\r\n                 },\r\n                {\r\n                \"type\": \"location\",\r\n                \"attributes\": {\r\n                    \"contactFirstName\": \"Umar\",\r\n                    \"contactLastName\": \"Farooq\",\r\n                    \"contactEmail\":\"UmarfarooqdfrfgfgrewrweFGFrwerererrrr@gmail.com\"\r\n                }\r\n                }\r\n              \r\n        ]\r\n    }\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/importLocationsJson",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"importLocationsJson"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Template",
+			"item": [
+				{
+					"name": "createTemplate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"SID-CREATED\",\r\n    \"message\": \"Your booking request ID [ORGANIZATION] was approved. Allocated timeslot: [TIMESLOT]\",\r\n    \"tags\":[\"[ORGANIZATION]\",\"[TIMESOLT]\", \"[LOCATION]\",\"[WAREHOUSE]\",\"[DOCK]\",\"[S_ID]\",\"[SCHEDULING_DATE]\",\"[OPERATION_TYPE]\",\"[CUSTOMER]\",\"[DESTINATION]\",\"[LOADING_ADDRESS]\",\"[TRUCK_LICENSE_PLATE_FRONT]\",\"[TRUCK_LICENSE_PLATE_BACK]\",\"[DRIVER_ID]\",\"[DRIVER_NAME]\",\"[DRIVER_CONTACT_NUMBER]\"],\r\n    \"requiresResponseBit\":1,\r\n    \"automationBit\":1,\r\n    \"messageAutomationEvent\":\"SID-CREATED\",\r\n    \"automationDate\":\"2015-04-01 04:23:50\",\r\n    \"repeatOption\":1,\r\n    \"waitingPeriod\":30,\r\n    \"whereQuery\":[\r\n                {\r\n                \"key\":\"operation_type\",\r\n                \"condition\":\"IS\",\r\n                \"value\":\"Loading\"\r\n                },\r\n                    {\r\n                \"key\":\"destination\",\r\n                \"condition\":\"IS NOT\",\r\n                \"value\":\"Bahawalpur\"\r\n                },\r\n                {\r\n                \"key\":\"driver_contact_number\",\r\n                \"condition\":\"IS\",\r\n                \"value\":\"3338143114\"\r\n                },\r\n                    {\r\n                \"key\":\"customer\",\r\n                \"condition\":\"CONTAINS\",\r\n                \"value\":\"umar\"\r\n                },\r\n                {\r\n                \"key\":\"truck_license_plate_front\",\r\n                \"condition\":\"IS\",\r\n                \"value\":\"BRA 2324343\"\r\n                },\r\n                {\r\n                \"key\":\"scheduling_date\",\r\n                \"condition\":\"IS BETWEEN\",\r\n                \"start_value\":\"2015-04-01 04:23:50\",\r\n                \"end_value\":\"2018-04-01 04:23:50\"\r\n                }\r\n            ]                 \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/createTemplate",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"createTemplate"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Add New Template",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"data\":{\r\n        \"attributes\":{\r\n                    \"name\":\"dfd\",\r\n                    \"message\": \"DELETED REQUEST Please go to the building [LOCATION], gate [S_ID]\",\r\n                    \"tags\":[\"[LOCATION]\",\"[WAREHOUSE]\",\"[DOCK]\",\"[S_ID]\",\"[SCHEDULING_DATE]\",\"[OPERATION_TYPE]\",\"[CUSTOMER]\",\"[DESTINATION]\",\"[LOADING_ADDRESS]\",\"[TRUCK_LICENSE_PLATE_FRONT]\",\"[TRUCK_LICENSE_PLATE_BACK]\",\"[DRIVER_ID]\",\"[DRIVER_NAME]\",\"[DRIVER_CONTACT_NUMBER]\"],\r\n                    \"requiresResponseBit\":1,\r\n                    \"automationBit\":1,\r\n                    \"messageAutomationEvent\":\"SID-DELETED\",\r\n                    \"automationDate\":\"2015-04-01 04:23:50\",\r\n                    \"repeatOption\":1,\r\n                    \"waitingPeriod\":30,\r\n                    \"whereQuery\":[\r\n                                    {\r\n                                    \"key\":\"operation_type\",\r\n                                    \"condition\":\"IS\",\r\n                                    \"value\":\"Loading\"\r\n                                    },\r\n                                     {\r\n                                    \"key\":\"destination\",\r\n                                    \"condition\":\"IS NOT\",\r\n                                    \"value\":\"Bahawalpur\"\r\n                                    },\r\n                                    {\r\n                                    \"key\":\"driver_contact_number\",\r\n                                    \"condition\":\"IS\",\r\n                                    \"value\":\"3338143114\"\r\n                                    },\r\n                                     {\r\n                                    \"key\":\"customer\",\r\n                                    \"condition\":\"CONTAINS\",\r\n                                    \"value\":\"umar\"\r\n                                    },\r\n                                    {\r\n                                    \"key\":\"truck_license_plate_front\",\r\n                                    \"condition\":\"IS\",\r\n                                    \"value\":\"BRA 2324343\"\r\n                                    },\r\n                                    {\r\n                                    \"key\":\"scheduling_date\",\r\n                                    \"condition\":\"IS BETWEEN\",\r\n                                    \"start_value\":\"2015-04-01 04:23:50\",\r\n                                    \"end_value\":\"2018-04-01 04:23:50\"\r\n                                    }\r\n                                ]                 \r\n        \r\n            }\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/admin/templates",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"templates"
+									]
+								}
+							},
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "getTemplate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"templateId\": 2\r\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/getTemplate",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"getTemplate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "setTemplateInfo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"templateId\": 2,\r\n    \"name\":\"dfd\",\r\n    \"message\": \"DELETED REQUEST Please go to the building [LOCATION], gate [S_ID]\",\r\n    \"tags\":[\"[LOCATION]\",\"[WAREHOUSE]\",\"[DOCK]\",\"[S_ID]\",\"[SCHEDULING_DATE]\",\"[OPERATION_TYPE]\",\"[CUSTOMER]\",\"[DESTINATION]\",\"[LOADING_ADDRESS]\",\"[TRUCK_LICENSE_PLATE_FRONT]\",\"[TRUCK_LICENSE_PLATE_BACK]\",\"[DRIVER_ID]\",\"[DRIVER_NAME]\",\"[DRIVER_CONTACT_NUMBER]\"],\r\n    \"requiresResponseBit\":1,\r\n    \"automation_bit\":1,\r\n    \"messageAutomationEvent\":\"SID-DELETED\",\r\n    \"automationDate\":\"2015-04-01 04:23:50\",\r\n    \"repeatOption\":1,\r\n    \"waitingPeriod\":30,\r\n    \"whereQuery\":[\r\n                    {\r\n                    \"key\":\"operation_type\",\r\n                    \"condition\":\"IS\",\r\n                    \"value\":\"Loading\"\r\n                    },\r\n                        {\r\n                    \"key\":\"destination\",\r\n                    \"condition\":\"IS NOT\",\r\n                    \"value\":\"Bahawalpur\"\r\n                    },\r\n                    {\r\n                    \"key\":\"driver_contact_number\",\r\n                    \"condition\":\"IS\",\r\n                    \"value\":\"3338143114\"\r\n                    },\r\n                        {\r\n                    \"key\":\"customer\",\r\n                    \"condition\":\"CONTAINS\",\r\n                    \"value\":\"umar\"\r\n                    },\r\n                    {\r\n                    \"key\":\"truck_license_plate_front\",\r\n                    \"condition\":\"IS\",\r\n                    \"value\":\"BRA 2324343\"\r\n                    },\r\n                    {\r\n                    \"key\":\"scheduling_date\",\r\n                    \"condition\":\"IS BETWEEN\",\r\n                    \"start_value\":\"2015-04-01 04:23:50\",\r\n                    \"end_value\":\"2018-04-01 04:23:50\"\r\n                    }\r\n                ]                 \r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/setTemplateInfo",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"setTemplateInfo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteTemplate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"templateId\":2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/deleteTemplate",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"deleteTemplate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "paginateTemplates",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"start\": 0,\r\n    \"length\": 0,\r\n    \"filters\": [\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"2015-04-01 04:23:50\",\"\"],\r\n    \"order\": [{\"dir\": \"DESC\", \"column\": 0}]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/paginateTemplates",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"paginateTemplates"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Operation",
+			"item": [
+				{
+					"name": "createOperation",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Incarcare camion\",\r\n    \"type\":\"Loading\",\r\n    \"allocatedTime\":30,\r\n    \"description\": \"Please go to the building, gate.\"    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/createOperation",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"createOperation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOperation",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"operationId\":1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/getOperation",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"getOperation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "setOperationInfo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"operationId\":1,\r\n    \"name\":\"Farooq Bright\",\r\n    \"type\":\"Loading\",\r\n    \"allocatedTime\":30,\r\n    \"description\": \"Please go to the building, gate.\"    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/setOperationInfo",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"setOperationInfo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteOperation",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"operationId\":1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/deleteOperation",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"deleteOperation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "paginateOperations",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"start\": 0,\r\n    \"length\": 0,\r\n    \"filters\": [\"\",\"\",\"\",\"\"],\r\n    \"order\": [{\"dir\": \"DESC\", \"column\": 0}]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/paginateOperations",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"paginateOperations"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Status List Of List",
+			"item": [
+				{
+					"name": "SID Statuses",
+					"item": [
+						{
+							"name": "createSidStatus",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\":\"Plannedr233\",\r\n    \"color\":\"#54545\",\r\n    \"description\":\"description go here\"\r\n        \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/createSidStatus",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"createSidStatus"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getSidStatus",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"statusListStatusId\":3\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/getSidStatus",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"getSidStatus"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "setSidStatusInfo",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"statusListStatusId\":3,\r\n    \"name\":\"Dock 9\",\r\n    \"color\":\"#54545\",\r\n    \"description\":\"description go here\"\r\n                     \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/setSidStatusInfo",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"setSidStatusInfo"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deleteSidStatus",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"statusListStatusId\":3\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/deleteSidStatus",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"deleteSidStatus"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "paginateSidStatuses",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"start\": 0,\r\n    \"length\": 0,\r\n    \"filters\": [\"\",\"\",\"\",\"\"],\r\n    \"order\": [{\"dir\": \"DESC\", \"column\": 0}]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/paginateSidStatuses",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"paginateSidStatuses"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "changeSidStatusColor",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"statusListStatusId\":3,\r\n  \"color\":\"#878989\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/changeSidStatusColor",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"changeSidStatusColor"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "changeSidStatusPosition",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"statusListStatusId\":3,\r\n  \"position\":3\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/changeSidStatusPosition",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"changeSidStatusPosition"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Planning",
+			"item": [
+				{
+					"name": "Get All Plannings By scheduling Date",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/plannings?query={\"schedulingDate\":\"2023-05-31\"}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"plannings"
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "{\"schedulingDate\":\"2023-05-31\"}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Download All Plannings",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/plannings/download",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"plannings",
+								"download"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createPlanning",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "routingDetail[convoyType]",
+									"value": "new Routing",
+									"type": "text"
+								},
+								{
+									"key": "routingDetail[estimatedTimeArrival]",
+									"value": "2024-03-02 12:46:25",
+									"type": "text"
+								},
+								{
+									"key": "routingDetail[locationPort]",
+									"value": "11:00 - 12:00",
+									"type": "text"
+								},
+								{
+									"key": "routingDetail[zone]",
+									"value": "5",
+									"type": "text"
+								},
+								{
+									"key": "routingDetail[departurePort]",
+									"value": "Gugrawala",
+									"type": "text"
+								},
+								{
+									"key": "routingDetail[arrivalPort]",
+									"value": "Near Gugrawala Bus Stop",
+									"type": "text"
+								},
+								{
+									"key": "routingDetail[pilotCompany]",
+									"value": "BRA 2324343",
+									"type": "text"
+								},
+								{
+									"key": "routingDetail[length]",
+									"value": "43",
+									"type": "text"
+								},
+								{
+									"key": "routingDetail[width]",
+									"value": "56",
+									"type": "text"
+								},
+								{
+									"key": "routingDetail[maxDraft]",
+									"value": "55",
+									"type": "text"
+								},
+								{
+									"key": "routingDetail[arrivalGauge]",
+									"value": "47",
+									"type": "text"
+								},
+								{
+									"key": "routingDetail[maxCapacity]",
+									"value": "55",
+									"type": "text"
+								},
+								{
+									"key": "routingDetail[lockType]",
+									"value": "new client instruction",
+									"type": "text"
+								},
+								{
+									"key": "convoyDetail[0][navigationType]",
+									"value": "new operator mention",
+									"type": "text"
+								},
+								{
+									"key": "convoyDetail[0][ship]",
+									"value": "wer",
+									"type": "text"
+								},
+								{
+									"key": "convoyDetail[0][shipType]",
+									"value": "jhjh",
+									"type": "text"
+								},
+								{
+									"key": "convoyDetail[0][pavilion]",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "convoyDetail[0][enginePower]",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "convoyDetail[0][lengthOverall]",
+									"value": "76",
+									"type": "text"
+								},
+								{
+									"key": "convoyDetail[0][width]",
+									"value": "66",
+									"type": "text"
+								},
+								{
+									"key": "convoyDetail[0][maxDraft]",
+									"value": "87",
+									"type": "text"
+								},
+								{
+									"key": "convoyDetail[0][maxQuantity]",
+									"value": "67",
+									"type": "text"
+								},
+								{
+									"key": "convoyDetail[0][agent]",
+									"value": "erwer",
+									"type": "text"
+								},
+								{
+									"key": "convoyDetail[0][maneuvering]",
+									"value": "wer",
+									"type": "text"
+								},
+								{
+									"key": "convoyDetail[0][shipowner]",
+									"value": "wer",
+									"type": "text"
+								},
+								{
+									"key": "convoyDetail[0][purpose]",
+									"value": "r",
+									"type": "text"
+								},
+								{
+									"key": "convoyDetail[0][operator]",
+									"value": "wer",
+									"type": "text"
+								},
+								{
+									"key": "convoyDetail[0][trafficType]",
+									"value": "werwe",
+									"type": "text"
+								},
+								{
+									"key": "convoyDetail[0][operatonType]",
+									"value": "erw",
+									"type": "text"
+								},
+								{
+									"key": "convoyDetail[0][cargo]",
+									"value": "r",
+									"type": "text"
+								},
+								{
+									"key": "convoyDetail[0][quantity]",
+									"value": "65",
+									"type": "text"
+								},
+								{
+									"key": "convoyDetail[0][unitNo]",
+									"value": "rwe",
+									"type": "text"
+								},
+								{
+									"key": "convoyDetail[0][originPort]",
+									"value": "werew",
+									"type": "text"
+								},
+								{
+									"key": "convoyDetail[0][destination]",
+									"value": "werew",
+									"type": "text"
+								},
+								{
+									"key": "convoyDetail[0][observation]",
+									"value": "erewr",
+									"type": "text"
+								},
+								{
+									"key": "convoyDetail[0][additionalOperator]",
+									"value": "rwer",
+									"type": "text"
+								},
+								{
+									"key": "convoyDetail[0][clientComments]",
+									"value": "werwer",
+									"type": "text"
+								},
+								{
+									"key": "convoyDetail[0][operatorComments]",
+									"value": "werewr",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/createPlanning",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"createPlanning"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getPlanning",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"planningId\":5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/getPlanning",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"getPlanning"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "setPlanningInfo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data[attributes][schedulingDate]",
+									"value": "2023-05-23",
+									"type": "text"
+								},
+								{
+									"key": "data[attributes][auto]",
+									"value": "DEWDS34324",
+									"type": "text"
+								},
+								{
+									"key": "data[attributes][timeSlot]",
+									"value": "11:00 - 11:30",
+									"type": "text"
+								},
+								{
+									"key": "data[attributes][customer]",
+									"value": "8",
+									"type": "text"
+								},
+								{
+									"key": "data[attributes][destination]",
+									"value": "Gugrawala",
+									"type": "text"
+								},
+								{
+									"key": "data[attributes][loadingAddress]",
+									"value": "Near Gugrawala Bus Stop",
+									"type": "text"
+								},
+								{
+									"key": "data[attributes][truckLicensePlateFront]",
+									"value": "BRA 2324343",
+									"type": "text"
+								},
+								{
+									"key": "data[attributes][truckLicensePlateBack]",
+									"value": "BRRA 3434343",
+									"type": "text"
+								},
+								{
+									"key": "data[attributes][driverName]",
+									"value": "Farooq Bright Driver Name",
+									"type": "text"
+								},
+								{
+									"key": "data[attributes][driverId]",
+									"value": "Driver ID",
+									"type": "text"
+								},
+								{
+									"key": "data[attributes][driverContactNumber]",
+									"value": "734738180",
+									"type": "text"
+								},
+								{
+									"key": "data[attributes][customFieldTransportData]",
+									"value": "[{\"customField\":5, \"name\":\"last_name\",\"value\":\"Umar1\"},\n{\"customField\":6, \"name\":\"first_name\",\"value\":\"Farooq1\"},\n{\"customField\":17, \"name\":\"order_type_radio_option\",\"value\":\"option1\"},\n{\"customField\":19, \"name\":\"order_type_radio_v_option\",\"value\":\"option3\"},\n{\"customField\":20, \"name\":\"order_type_checkbox_v_option\",\"value\":[\"option4\",\"option2\",\"option3\"]}\n]",
+									"type": "text"
+								},
+								{
+									"key": "data[attributes][products]",
+									"value": "[{\"name\":\"Bere pet\", \"size\":\"80X80X80\",\"brand\":\"Timisoreana\",\"batch\":\"L100\",\"amount\":1000,\"weight\":100},\n{\"name\":\"Bere sticla\", \"size\":\"100X80X80\",\"brand\":\"Ursus\",\"batch\":\"L100\",\"amount\":5000,\"weight\":1000}]",
+									"type": "text"
+								},
+								{
+									"key": "data[attributes][customFieldCargoData]",
+									"value": " [{\"customField\":7, \"name\":\"place_order_date\",\"value\":\"2023-04-01T22:00:48.131Z\"},\n{\"customField\":8, \"name\":\"place_order_time\",\"value\":\"16:34:00\"},{\"customField\":16, \"name\":\"order_type_checkbox_option\",\"value\":[\"option4\",\"option2\",\"option3\"]\n}]",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "data[attributes][operator]",
+									"value": "new operator",
+									"type": "text"
+								},
+								{
+									"key": "data[attributes][clientInstruction]",
+									"value": "new client instruction",
+									"type": "text"
+								},
+								{
+									"key": "data[attributes][operatorMention]",
+									"value": "new operator mention",
+									"type": "text"
+								},
+								{
+									"key": "documents[]",
+									"type": "file",
+									"src": [
+										"/C:/Users/Grace/Downloads/contracts.csv",
+										"/C:/Users/Grace/Downloads/Directory forms.pdf",
+										"/C:/Users/Grace/Downloads/70215628-directory-hub-listing-classified-platform-license.pdf"
+									]
+								},
+								{
+									"key": "data[attributes][customFieldAdditionalData]",
+									"value": "[{\"customField\":9, \"name\":\"additional_description\",\"value\":\"additional data will be come here\"},\n{\"customField\":18, \"name\":\"order_type_select_option\",\"value\":\"option3\"}\n]",
+									"type": "text"
+								},
+								{
+									"key": "data[attributes][location]",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "data[attributes][warehouse]",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "data[attributes][dock]",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "data[attributes][operation]",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "data[attributes][statusListStatus]",
+									"value": "21",
+									"type": "default"
+								},
+								{
+									"key": "data[attributes][goodsStatusListStatus]",
+									"value": "42",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/setPlanningInfo",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"setPlanningInfo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deletePlanning",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"planningId\":1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/deletePlanning",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"deletePlanning"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "paginatePlannings",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"start\": 0,\r\n    \"length\": 0,\r\n    \"filters\": [\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\"],\r\n    \"order\": [{\"dir\": \"DESC\", \"column\": 0}]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/paginatePlannings",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"paginatePlannings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Dummy Import Planning From Excel Sheet",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/D:/wamp64/www/php80/yard_management_system/Planning Sheet.xlsx"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/plannings/import",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"plannings",
+								"import"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Shipment Logs",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/shipment-logs/157757",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"shipment-logs",
+								"157757"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Assigning Dock to Planning By Changing DOCK/TIMESLOT/LIST-STATUS",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"data\":{\r\n        \"attributes\":{\r\n                    \"assigningDate\":\"2023-06-01\",\r\n                    \"hour\":\"09:00:00\",\r\n                    \"planning\":50,\r\n                    \"dock\":71,\r\n                    \"statusListStatus\":17\r\n                      }\r\n        }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/assigning-dock-to-plannings",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"assigning-dock-to-plannings"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BASE_URL",
+			"value": "http://54.163.49.57:8080",
+			"type": "string"
+		}
+	]
+}
