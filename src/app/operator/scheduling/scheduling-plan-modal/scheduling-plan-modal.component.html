@@ -1,0 +1,20 @@
+<div class="tw-max-w-lg min-sm:tw-min-w-[500px]">
+  <div class="tw-flex tw-items-center tw-justify-between tw-px-4 tw-py-4">
+    <h2 class="tw-text-textDefault tw-text-xl tw-font-bold">{{data?.name}} - Plan operation</h2>
+    <div class="close-button tw-text-[25px] tw-cursor-pointer" (click)="cancel()">&times;</div>
+  </div>
+  <div mat-dialog-body class="tw-px-4">
+    <div class="tw-flex tw-justify-between tw-mb-2">
+        <div><span class="tw-font-bold">Date:</span> {{data?.date | date : 'dd.MM.yyyy'}}</div>
+        <div><span class="tw-font-bold">Time Slot:</span> {{data?.timeSlot || '-'}}</div>
+    </div>
+    <div iconic-input-wrapper rightIcon="browser">
+      <input #inputSID inputRef type="text" placeholder="Insert SID (Shipment ID)">
+    </div>
+  </div>
+
+  <div class="tw-flex tw-justify-between tw-flex-wrap-reverse tw-gap-4 tw-px-4 tw-pb-4">
+    <button tabIndex="-1" (click)="confirm()" class="tw-bg-primary tw-py-2 tw-text-white tw-min-w-[130px] tw-rounded-full">Add manually</button>
+    <button tabIndex="-1" (click)="confirm()" class="tw-bg-primary tw-py-2 tw-text-white tw-min-w-[130px] tw-rounded-full">Save</button>
+  </div>
+</div>

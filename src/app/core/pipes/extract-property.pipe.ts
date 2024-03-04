@@ -10,6 +10,10 @@ export class ExtractPropertyPipe implements PipeTransform {
       return '-';
     }
 
+    if (list.length === 1) {
+      return list[0][property];
+    }
+
     return list.map(e => e[property]).join(', ');
   }
 

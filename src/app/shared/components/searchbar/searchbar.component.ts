@@ -18,6 +18,8 @@ export class SearchbarComponent implements OnInit {
   @Input()
   public minWidth: number | null = null;
 
+  @Input() disabled: boolean;
+
   @Input()
   public height: string | null = null;
 

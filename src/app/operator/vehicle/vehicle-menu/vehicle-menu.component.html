@@ -1,0 +1,53 @@
+<div class="tw-flex-grow tw-flex tw-flex-col tw-gap-8">
+    <div class="tw-flex min-md:tw-justify-between sm:tw-justify-center md:tw-flex-row max-md:tw-flex-col tw-gap-4">
+        <div class="tw-flex tw-gap-4 max-md:tw-flex-col">
+            <searchbar [minWidth]="500">
+              <fa-icon icon="search" leftIcon></fa-icon>
+              <input input class="tw-rounded" type="text" placeholder="Search">
+            </searchbar>
+            <searchbar>
+                <input input class="tw-rounded" type="text" placeholder="Tip operatiune">
+              </searchbar>
+        </div>
+        <div>
+            <button
+            routerLink="../scheduling/add" [relativeTo]="route.parent"
+            class="btn btn-primary min-md:tw-min-w-[150px] max-sm:tw-w-full" type="button">{{'operator.add-sid' | translate}}</button>
+        </div>
+    </div>
+    <div class="max-md:tw-grid tw-gap-8 min-lg:tw-columns-3 max-md:tw-columns-1">
+        <div class="slide-in-bottom tw-max-w-sm tw-rounded-lg tw-overflow-hidden tw-shadow-lg tw-bg-white tw-p-20 tw-min-h-[480px] tw-cursor-pointer" routerLink="../list">
+            <div class="tw-flex tw-justify-center tw-p-10 tw-border tw-border-gray tw-rounded-full tw-h-[150px] tw-w-[150px] tw-items-center tw-m-auto">
+                <fa-icon icon="truck" size="3x" class="tw-text-primary"></fa-icon>
+            </div>
+            <div class="tw-flex tw-justify-center tw-pt-5 tw-pb-10">
+                <h4 class="heading-4 tw-text-panelColor">History</h4>
+            </div>
+            <div class="tw-flex tw-justify-center">
+                <p class="heading-5 tw-text-panelColor">Afișează lista cu istoricul din baza de date.</p>
+            </div>
+        </div>
+        <div class="slide-in-bottom tw-max-w-sm tw-rounded-lg tw-overflow-hidden tw-shadow-lg tw-bg-white tw-p-20 tw-min-h-[480px] tw-cursor-pointer" routerLink="../list">
+            <div class="tw-flex tw-justify-center tw-p-10 tw-border tw-border-gray tw-rounded-full tw-h-[150px] tw-w-[150px] tw-items-center tw-m-auto">
+                <fa-icon icon="truck" size="3x" class="tw-text-primary"></fa-icon>
+            </div>
+            <div class="tw-flex tw-justify-center tw-pt-5 tw-pb-10">
+                <h4 class="heading-4 tw-text-panelColor">Today</h4>
+            </div>
+            <div class="tw-flex tw-justify-center">
+                <p class="heading-5 tw-text-panelColor">Afișează cu toate autovehiculele din ziua curentă și statutul lor.</p>
+            </div>
+        </div>
+        <div class="slide-in-bottom tw-max-w-sm tw-rounded-lg tw-overflow-hidden tw-shadow-lg tw-bg-white tw-p-20 tw-min-h-[480px] tw-cursor-pointer" routerLink="../list">
+            <div class="tw-flex tw-justify-center tw-p-10 tw-border tw-border-gray tw-rounded-full tw-h-[150px] tw-w-[150px] tw-items-center tw-m-auto">
+                <fa-icon icon="truck" size="3x" class="tw-text-primary"></fa-icon>
+            </div>
+            <div class="tw-flex tw-justify-center tw-pt-5 tw-pb-10">
+                <h4 class="heading-4 tw-text-panelColor">Later</h4>
+            </div>
+            <div class="tw-flex tw-justify-center">
+                <p class="heading-5 tw-text-panelColor">Afișează lista cu programările viitoare.</p>
+            </div>
+        </div>
+    </div>
+</div>

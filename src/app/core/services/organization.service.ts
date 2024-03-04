@@ -13,6 +13,9 @@ export class OrganizationService {
   private route: string = '/getUserSettings';
   organization: BehaviorSubject<OrganizationModel|null> = new BehaviorSubject<OrganizationModel|null>(null);
   publicOrganization: BehaviorSubject<OrganizationModel|null> = new BehaviorSubject<OrganizationModel|null>(null);
+  isUmexOrganization$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  isChimpexOrganization$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  isComvexOrganization$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   constructor(private http: HttpClient) { }
 
   get(): Observable<OrganizationModel|null> {

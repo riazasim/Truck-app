@@ -2,9 +2,6 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'no-scheduling',
-  templateUrl: './no-scheduling.component.html',
-  styleUrls: ['./no-scheduling.component.scss']
+  templateUrl: './no-scheduling.component.html'
 })
-export class NoSchedulingComponent {
-
-}
+export class NoSchedulingComponent {}

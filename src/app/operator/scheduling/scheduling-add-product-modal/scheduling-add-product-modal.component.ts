@@ -7,18 +7,19 @@ import { SchedulingCustomField } from 'src/app/core/models/scheduling.model';
 @Component({
   selector: 'app-scheduling-add-product-modal',
   templateUrl: './scheduling-add-product-modal.component.html',
+  styleUrls: ['./scheduling-add-product-modal.component.scss']
 })
 export class SchedulingAddProductModalComponent {
   product: ProductModel|null;
   productId: number|null = null;
   constructor(private readonly dialogRef: MatDialogRef<any>,
               @Inject(MAT_DIALOG_DATA) public data: {
-                product: ProductModel,
+                product: ProductModel, 
                 products: ProductModel[],
                 customFieldCargoData: SchedulingCustomField[],
                 cargoData: CustomFieldModel[]
-            }) {
-                  if (this.data.product) {
+              }) {
+                if (this.data.product) {
                   this.productId = <number>this.data.product.id;
                   this.setProduct({ target: { value: <number>this.data.product.id }} as any)
                 }

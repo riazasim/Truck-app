@@ -1,0 +1,16 @@
+<div class="tw-flex tw-justify-between">
+    <div class="tw-flex">
+        <div class="circle">
+            <fa-icon *ngIf="icon" [icon]="icon" size="lg"></fa-icon>
+        </div>
+        <div class="tw-ml-2">
+            <div class="tw-font-bold">Operation Type: {{shipmentLog?.operationType || '-'}}</div>
+            <div><span class="tw-font-bold">User</span> {{shipmentLog?.userFullName || '-'}}</div>
+            <div class="tw-max-w-[500px]"><span class="tw-font-bold">Details</span> {{shipmentLog?.message || '-'}}</div>
+        </div>
+    </div>
+    <div class="tw-text-gray tw-italic">
+        {{(shipmentLog?.createdAt | date : 'dd.MM.yyyy h:mm a') || '-'}}
+    </div>
+</div>
+<div *ngIf="!isEnd" class="bar"></div>

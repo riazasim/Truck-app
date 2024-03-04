@@ -19,6 +19,18 @@ import { ButtonComponent } from './components/button/button.component';
 import { FilterSelectComponent } from './components/filter-select/filter-select.component';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import { TextareaWrapperComponent } from './components/textarea-wrapper/textarea-wrapper.component';
+import { DatepickerComponent } from './components/datepicker/datepicker.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { OpenImageModalComponent } from './components/open-image-modal/open-image-modal.component';
+import { ExtractPropertyPipe } from '../core/pipes/extract-property.pipe';
+import { ActivityLogComponent } from './components/activity-log/activity-log.component';
+import { CustomTooltipComponent } from './components/custom-tooltip/custom-tooltip.component';
+import { CustomTooltipDirective } from './directives/custom-tooltip.directive';
+import { SafeHtmlPipe } from '../core/pipes/safe-html.pipe';
+import { ToggleComponent } from './components/toggle/toggle.component';
+import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
+import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 
@@ -27,6 +39,7 @@ import { TextareaWrapperComponent } from './components/textarea-wrapper/textarea
     IconicInputWrapperComponent,
     IconicPasswordWrapperComponent,
     IconicSelectWrapperComponent,
+    DatepickerComponent,
     LoaderComponent,
     SelectRefDirective,
     PublicLayoutComponent,
@@ -38,7 +51,14 @@ import { TextareaWrapperComponent } from './components/textarea-wrapper/textarea
     CallbackPipe,
     ButtonComponent,
     FilterSelectComponent,
-    TextareaWrapperComponent
+    TextareaWrapperComponent,
+    OpenImageModalComponent,
+    ExtractPropertyPipe,
+    ActivityLogComponent,
+    CustomTooltipComponent,
+    CustomTooltipDirective,
+    SafeHtmlPipe,
+    ToggleComponent,
   ],
     imports: [
         CommonModule,
@@ -46,12 +66,15 @@ import { TextareaWrapperComponent } from './components/textarea-wrapper/textarea
         FormsModule,
         ReactiveFormsModule,
         SearchbarModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        MatDatepickerModule,
+        TranslateModule
     ],
   exports: [
     IconicInputWrapperComponent,
     IconicPasswordWrapperComponent,
     IconicSelectWrapperComponent,
+    DatepickerComponent,
     LoaderComponent,
     SelectRefDirective,
     PublicLayoutComponent,
@@ -63,7 +86,18 @@ import { TextareaWrapperComponent } from './components/textarea-wrapper/textarea
     CallbackPipe,
     ButtonComponent,
     FilterSelectComponent,
-    TextareaWrapperComponent
+    TextareaWrapperComponent,
+    OpenImageModalComponent,
+    ExtractPropertyPipe,
+    ActivityLogComponent,
+    CustomTooltipComponent,
+    CustomTooltipDirective,
+    SafeHtmlPipe,
+    ToggleComponent,
+  ],
+  providers: [
+    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+    { provide: MAT_DATE_FORMATS, useValue: MAT_DATE_FORMATS }
   ]
 })
 export class SharedModule { }
