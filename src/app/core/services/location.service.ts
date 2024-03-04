@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {Observable, catchError, map} from 'rxjs';
+import {BehaviorSubject, Observable, catchError, map, of, shareReplay, tap} from 'rxjs';
 import {
     convertJsonToFormData,
     pluckArrayPaginationWrapperData,
@@ -9,7 +9,7 @@ import {
     wrapJsonForRequest, wrapJsonListForRequest
 } from 'src/app/shared/utils/api.functions';
 import { environment } from 'src/environments/environment';
-import {LocationModel, LocationTable} from '../models/location.model';
+import {CountryModel, LocationModel, LocationTable} from '../models/location.model';
 import {
   ResponseArrayPaginationWrapper,
   ResponseArrayWrapper,
@@ -24,6 +24,8 @@ import {CustomFieldData} from "../models/custom-field.model";
 export class LocationService {
   private route: string = '/admin/locations';
   private locations: string = '/admin/change-locations';
+  locationByUser$: BehaviorSubject<LocationModel|null> = new BehaviorSubject<LocationModel|null>(null);
+  countries$: BehaviorSubject<CountryModel[]|null> = new BehaviorSubject<CountryModel[]|null>(null);
   constructor(private http: HttpClient) {}
 
   create(data: LocationModel): Observable<any> {
@@ -99,5 +101,14 @@ export class LocationService {
 
     importLocaitons(list: LocationModel[]): Observable<any> {
         return this.http.post(`${environment.apiUrl}${environment.apiVersion}/importLocationsJson`, wrapJsonListForRequest('location', list));
+    }
+
+    listCountries(): Observable<CountryModel[]> {
+      if (this.countries$.getValue()) return of(<CountryModel[]>this.countries$.getValue());
+  
+      return this.http.get<CountryModel[]>('assets/countries.json').pipe(
+        tap((countries: CountryModel[]) => this.countries$.next(countries)),
+        shareReplay()
+        );
     }
 }

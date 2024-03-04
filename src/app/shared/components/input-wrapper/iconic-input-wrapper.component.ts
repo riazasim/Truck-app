@@ -16,6 +16,8 @@ export class IconicInputWrapperComponent extends GenericWrapperComponent<HTMLInp
   @Input()
   public leftSvg: string | undefined;
 
+  @Input() inputContainerClass: string;
+
   @ContentChild(InputRefDirective)
   override set inputRef(ref: InputRefDirective) {
     this._inputRef = ref;

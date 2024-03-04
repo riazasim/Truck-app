@@ -1,10 +1,8 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   selector: 'app-scheduling-success',
   templateUrl: './scheduling-success.component.html',
-  styleUrls: ['./scheduling-success.component.scss']
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SchedulingSuccessComponent {
-
-}
+export class SchedulingSuccessComponent {}

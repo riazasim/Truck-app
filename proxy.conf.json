@@ -1,6 +1,6 @@
 {
   "/api": {
-    "target": "http://3.237.30.70:8080",
+    "target": "http://3.236.213.226:8080",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true

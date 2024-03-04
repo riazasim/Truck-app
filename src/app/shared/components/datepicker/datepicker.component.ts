@@ -8,7 +8,9 @@ import { FormGroup } from '@angular/forms';
 })
 export class DatepickerComponent implements OnInit {
   @Input() formGroup: FormGroup;
+  @Input() field: string;
   @Input() placeholder: string = 'Pick a date';
+  @Input() disabled: boolean;
 
   @Input() height: number;
   @Input() isHeaderPosition: boolean;
@@ -16,6 +18,9 @@ export class DatepickerComponent implements OnInit {
   @Input() model: string | Date;
 
   @Input() textAlign: string;
+
+  @Input() maxDate: Date;
+  @Input() minDate: Date;
 
   @Output() dateChanged: EventEmitter<string|Date> = new EventEmitter<string|Date>();
 

@@ -1,0 +1,49 @@
+<section class="tw-bg-white max-md:tw-min-w-100 min-lg:tw-min-w-[850px] tw-h-full tw-p-[50px] tw-overflow-auto">
+    <div class="tw-flex tw-justify-between min-lg:tw-items-center max-lg:tw-flex-col">
+        <div><h2 class="heading-2 tw-font-bold tw-text-primary">Shipment ID - {{ (planning$ | async)?.sId}}</h2></div>
+        <div class="tw-flex tw-gap-10">
+            <fa-icon icon="print" class="tw-text-primary tw-text-[35px] tw-cursor-pointer"></fa-icon>
+            <fa-icon icon="file-pdf" class="tw-text-primary tw-text-[35px] tw-cursor-pointer"></fa-icon>
+            <fa-icon icon="envelope" class="tw-text-primary tw-text-[35px] tw-cursor-pointer"></fa-icon>
+        </div>
+    </div>
+    <div class="tw-py-10">
+        <div class="tw-flex min-lg:tw-justify-between min-lg:tw-items-center max-lg:tw-flex-col">
+            <div><h4 class="heading-4 tw-text-primary">Shipment Details</h4></div>
+        </div>
+        <div class="tw-grid min-lg:tw-grid-rows-3 min-lg:tw-grid-cols-2 max-md:tw-grid-rows-6 max-md:tw-grid-cols-1 tw-py-2">
+            <div><span class="tw-font-bold">Status: </span> <mat-chip [ngStyle]="{
+                'background': (planning$ | async)?.statusColor
+            }">{{(planning$ | async)?.status || 'No status'}}</mat-chip></div>
+            <div><span class="tw-font-bold">Driver: </span> {{ (planning$ | async)?.driverName || '-'}}</div>
+            <div><span class="tw-font-bold">Operation: </span> {{ (planning$ | async)?.operation || '-'}}</div>
+            <div><span class="tw-font-bold">Auto License Plate: </span> {{ (planning$ | async)?.truckLicensePlateFront || '-'}}</div>
+            <div><span class="tw-font-bold">Products: </span> {{ (planning$ | async)?.products || '-'}}</div>
+            <div><span class="tw-font-bold">Avize marfa: </span> -</div>
+        </div>
+    </div>
+    <div>
+        <h4 class="heading-4 tw-font-bold tw-text-primary tw-mb-3">Send Message</h4>
+        <div class="tw-flex tw-flex-col tw-items-center tw-justify-center">
+            <div textarea-wrapper leftIcon="message-lines">
+                <textarea inputRef cols="50" rows="10" placeholder="Message"></textarea>
+            </div>
+            <div class="tw-flex tw-justify-center tw-w-full tw-py-5">
+                <p class="tw-w-[400px]">Requires response</p>
+            </div>
+            <div class="tw-flex tw-items-center tw-w-[400px]">
+                <div>
+                    <input inputRef type="radio" name="requiresResponse">
+                    <label class="tw-ml-2" for="">Yes</label>
+                </div>
+                <div class="tw-ml-5">
+                    <input inputRef type="radio" name="requiresResponse">
+                    <label class="tw-ml-2" for="">No</label>
+                </div>
+            </div>
+            <div class="tw-flex tw-justify-end tw-w-full">
+                <button type="button" class="btn btn-primary" (click)="triggerPlanUpgradeWarning.emit()">Next</button>
+            </div>
+        </div>
+    </div>
+</section>

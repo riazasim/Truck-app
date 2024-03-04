@@ -1,0 +1,28 @@
+<div class="tw-flex">
+    <input  class="tw-rounded-l tw-min-w-[180px] tw-w-full" 
+            type="text" 
+            [placeholder]="'button.search' | translate" 
+            maxlength="100" 
+            name="searchValue"
+            [formControl]="searchValue">
+
+    <button [disabled]="isLoading || disabled" 
+    [ngClass]="{'tw-bg-primary hover:tw-bg-primary-dark': !disabled, 'tw-bg-gray-500': disabled }"
+    class="tw-min-h-[35px] min-md:tw-min-w-[30px] max-sm:tw-w-full tw-rounded-r" type="button" [matMenuTriggerFor]="searchByMenu">
+        <fa-icon [icon]="['fas', 'caret-down']" size="2x" class="tw-mx-2 tw-cursor-pointer tw-text-white">
+        </fa-icon>
+    </button>
+    <mat-menu #searchByMenu="matMenu" class="!tw-bg-white !tw-min-w-[180px]">
+        <div class="tw-flex tw-flex-col tw-bg-gray-50">
+            <div class="tw-block tw-px-4 tw-font-medium tw-text-gray-700 tw-rounded-t-lg tw-bg-gray-50 dark:tw-bg-gray-800 dark:tw-text-white">
+                {{'generics.filter-by' | translate}}:
+            </div>
+            <button class="tw-flex tw-justify-between tw-items-center tw-w-full tw-px-4 hover:tw-bg-gray-200 tw-min-h-[2.5rem]" [disabled]="isLoading" (click)="setFilter(1)"><span>SID</span>  <fa-icon class="tw-text-primary" *ngIf="(selectedFilter$ | async)?.curr === 1" icon="check"></fa-icon> </button>
+            <button class="tw-flex tw-justify-between tw-items-center tw-w-full tw-px-4 hover:tw-bg-gray-200 tw-min-h-[2.5rem]" [disabled]="isLoading" (click)="setFilter(2)">{{'booking.front-plate-license-number' | translate}} <fa-icon class="tw-text-primary" *ngIf="(selectedFilter$ | async)?.curr === 2" icon="check"></fa-icon></button>
+            <button class="tw-flex tw-justify-between tw-items-center tw-w-full tw-px-4 hover:tw-bg-gray-200 tw-min-h-[2.5rem]" [disabled]="isLoading" (click)="setFilter(3)">{{'booking.back-plate-license-number' | translate}} <fa-icon class="tw-text-primary" *ngIf="(selectedFilter$ | async)?.curr === 3" icon="check"></fa-icon></button>
+            <button class="tw-flex tw-justify-between tw-items-center tw-w-full tw-px-4 hover:tw-bg-gray-200 tw-min-h-[2.5rem]" [disabled]="isLoading" (click)="setFilter(4)">{{'docks.dock' | translate}} <fa-icon class="tw-text-primary" *ngIf="(selectedFilter$ | async)?.curr === 4" icon="check"></fa-icon></button>
+            <button class="tw-flex tw-justify-between tw-items-center tw-w-full tw-px-4 hover:tw-bg-gray-200 tw-min-h-[2.5rem]" [disabled]="isLoading" (click)="setFilter(5)">{{'generics.status' | translate}} <fa-icon class="tw-text-primary" *ngIf="(selectedFilter$ | async)?.curr === 5" icon="check"></fa-icon></button>
+            <button class="tw-flex tw-justify-between tw-items-center tw-w-full tw-px-4 hover:tw-bg-gray-200 tw-min-h-[2.5rem]" [disabled]="isLoading" (click)="setFilter(6)">Timeslot <fa-icon class="tw-text-primary" *ngIf="(selectedFilter$ | async)?.curr === 6" icon="check"></fa-icon></button>
+        </div>
+    </mat-menu>
+</div>
