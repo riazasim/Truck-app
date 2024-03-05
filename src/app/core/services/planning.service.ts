@@ -154,7 +154,6 @@ export class PlanningService {
   }
 
   pagination(data: any): Observable<PlanningTable> {
-    debugger
     return this.http.post<ResponseArrayPaginationWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/paginatePlannings`, wrapJsonForRequest(data))
       .pipe(pluckArrayPaginationWrapperData<any, ResponseArrayPaginationWrapper<any>>(),
         map((u: PlanningTable) => {
@@ -180,14 +179,14 @@ export class PlanningService {
    * 11 = statusUpdatedAt filter
    * 12 = timeSlot filter
    * 13 = phoneNumber filter
-   * 
+   *
    * "order": [{"dir": "DESC", "column": 0}]
-   * 
+   *
    * start = start index (e .g daca vrei sa incepi cu 11 sau whatever -by default e 0);
    * length = nr de items per page
-   * 
-   * @param data 
-   * @returns 
+   *
+   * @param data
+   * @returns
    */
   list(data: any): Observable<SchedulingPreviewModel[]> {
     let params = new URLSearchParams();
@@ -259,14 +258,14 @@ export class PlanningService {
    * 11 = statusUpdatedAt filter
    * 12 = timeSlot filter
    * 13 = phoneNumber filter
-   * 
+   *
    * "order": [{"dir": "DESC", "column": 0}]
-   * 
+   *
    * start = start index (e .g daca vrei sa incepi cu 11 sau whatever -by default e 0);
    * length = nr de items per page
-   * 
-   * @param data 
-   * @returns 
+   *
+   * @param data
+   * @returns
    */
   listComvex(data: any): Observable<SchedulingPreviewModel[]> {
     let params = new URLSearchParams();

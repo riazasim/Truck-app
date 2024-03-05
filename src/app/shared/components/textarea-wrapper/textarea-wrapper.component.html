@@ -3,7 +3,7 @@
   [class.invalid]="isValid === false && isTouched"
   [class.disabled]="isDisabled"
   class="iconic-layout-wrapper" [ngClass]="{'tw-h-full': isFullHeight}">
-  <div class="input-container" [ngClass]="{'tw-h-full': isFullHeight}" style="align-items: flex-start;">
+  <div class="input-container" [ngClass]="{'tw-h-full': isFullHeight}" style="align-items: center;">
     <fa-icon *ngIf="leftIcon" [icon]="leftIcon" size="lg" class="icon"></fa-icon>
     <ng-content select="textarea[inputRef]"></ng-content>
     <ng-container *ngIf="appendedTemplate" [ngTemplateOutlet]="appendedTemplate"></ng-container>
