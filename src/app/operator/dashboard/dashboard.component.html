@@ -1,25 +1,64 @@
-<div class="tw-flex-grow tw-flex tw-flex-col tw-gap-8">
-  <div class="tw-flex tw-justify-between sm:tw-justify-center md:tw-flex-row max-md:tw-flex-col">
-      <h3 class="heading-3">{{'menu.dashboard' | translate }}</h3>
-      <searchbar [minWidth]="500">
-        <fa-icon icon="search" leftIcon></fa-icon>
-        <input input class="tw-rounded" type="text" placeholder="Search Client">
-      </searchbar>
-  </div>
-  <div class="tw-flex tw-flex-wrap tw-gap-8">
-    <div statistic-card-v2 icon="truck" class="tw-flex-grow slide-in-bottom" label="No. of routes" [numericValue]="(totalVehiclesToday$ | async)!"
-      textColor="orange" colorStyle="orange"></div>
-    <div statistic-card-v2 icon="truck-ramp-box" class="tw-flex-grow slide-in-bottom" label="No. of touchpoints" [numericValue]="(totalVehiclesInside$ | async)!"
-      textColor="#A32314" colorStyle="#A32314"></div>
-    <div statistic-card-v2 icon="calendar-alt" class="tw-flex-grow slide-in-bottom" label="No. of SID" [numericValue]="(totalVehiclesPlanned$ | async)!" 
-      textColor="#17A0B5" colorStyle="#17A0B5"></div>
-  </div>
+<app-loader
+    *ngIf="isLoading$ | async"
+    [isContainer]="true"
+    [fullScreen]="false"
+></app-loader>
+<div
+    class="tw-flex-grow tw-flex tw-flex-col tw-gap-8"
+    *ngIf="!(isLoading$ | async)"
+>
+    <div
+        class="tw-flex tw-justify-between sm:tw-justify-center md:tw-flex-row max-md:tw-flex-col"
+    >
+        <h3 class="heading-3">{{ "menu.dashboard" | translate }}</h3>
+        <searchbar [minWidth]="500">
+            <fa-icon icon="search" leftIcon></fa-icon>
+            <input
+                input
+                class="tw-rounded"
+                type="text"
+                placeholder="Search Client"
+            />
+        </searchbar>
+    </div>
+    <div class="tw-flex tw-flex-wrap tw-gap-8">
+        <div
+            statistic-card-v2
+            dashSvg="assets/images/dashboard_routes.svg"
+            class="tw-flex-grow slide-in-bottom"
+            label="No. of routes"
+            [numericValue]="dashboardData?.noOfPlanningRoutesCount"
+            textColor="orange"
+            colorStyle="orange"
+        ></div>
+        <div
+            statistic-card-v2
+            dashSvg="assets/images/dashboard_tp.svg"
+            class="tw-flex-grow slide-in-bottom"
+            label="No. of touchpoints"
+            [numericValue]="dashboardData?.noOfTouchPointsCount"
+            textColor="#A32314"
+            colorStyle="#A32314"
+        ></div>
+        <div
+            statistic-card-v2
+            dashSvg="assets/images/dashboard_sid.svg"
+            class="tw-flex-grow slide-in-bottom"
+            label="No. of SID"
+            [numericValue]="dashboardData?.noOfPlanningConvoySidsCount"
+            textColor="#17A0B5"
+            colorStyle="#17A0B5"
+        ></div>
+    </div>
 
-  <div card class="tw-h-max-content tw-flex tw-flex-col tw-overflow-hidden max-md:tw-overflow-auto">
-      <!-- <div class="tw-flex-grow tw-h-[250px] min-md:tw-h-[250px]">
+    <div
+        card
+        class="tw-h-max-content tw-flex tw-flex-col tw-overflow-hidden max-md:tw-overflow-auto"
+    >
+        <!-- <div class="tw-flex-grow tw-h-[250px] min-md:tw-h-[250px]">
         <ngx-charts-line-chart
           [scheme]="lineChartDataColorScheme"
-          [legend]="!!(showLegend$ | async)"
+          [legend]=true
           [legendPosition]="legendPosition"
           [showXAxisLabel]="showXAxisLabel"
           [showYAxisLabel]="showYAxisLabel"
@@ -31,51 +70,63 @@
           [trimYAxisTicks]="true"
         ></ngx-charts-line-chart>
       </div> -->
-      <div class="tw-flex max-md:tw-flex-col">
-        <div class="tw-w-full tw-flex tw-flex-col tw-p-4">
-          <h3 class="heading-5 tw-text-center tw-mb-10">SID by status</h3>
-          <div class="tw-flex-grow tw-mr-12">
-            <ngx-charts-pie-chart [view]="view"
-            [scheme]="colorScheme"
-            [results]="currentVehicles$ | async"
-            [gradient]="gradient"
-            [legend]="!!(showLegend$ | async)"
-            [legendPosition]="legendPosition"
-            [labels]="showLabels"
-            [doughnut]="false"></ngx-charts-pie-chart>
-          </div>
+        <div class="tw-flex max-md:tw-flex-col">
+            <div class="tw-w-full tw-flex tw-flex-col tw-p-4">
+                <h3 class="heading-5 tw-text-center tw-mb-10">SID by status</h3>
+                <div class="tw-flex-grow tw-mr-12">
+                    <ngx-charts-pie-chart
+                        [view]="view"
+                        [scheme]="colorScheme"
+                        [results]="sidsByStatus"
+                        [gradient]="gradient"
+                        [legend]="true"
+                        [legendPosition]="legendPosition"
+                        [labels]="showLabels"
+                        [doughnut]="false"
+                    ></ngx-charts-pie-chart>
+                </div>
+            </div>
+            <div class="tw-w-full tw-flex tw-flex-col tw-p-4">
+                <h3 class="heading-5 tw-text-center tw-mb-10">
+                    Time breakdown
+                </h3>
+                <div class="tw-flex-grow tw-mr-12">
+                    <ngx-charts-pie-chart
+                        [view]="view"
+                        [scheme]="colorScheme"
+                        [results]="timeBreakDown"
+                        [gradient]="gradient"
+                        [legend]="true"
+                        [legendPosition]="legendPosition"
+                        [labels]="showLabels"
+                        [doughnut]="false"
+                    ></ngx-charts-pie-chart>
+                </div>
+            </div>
         </div>
-        <div class="tw-w-full tw-flex tw-flex-col tw-p-4">
-          <h3 class="heading-5 tw-text-center tw-mb-10">Time breakdown</h3>
-          <div class="tw-flex-grow tw-mr-12">
-            <ngx-charts-pie-chart [view]="view"
-            [scheme]="colorScheme"
-            [results]="futureVehicles$ | async"
-            [gradient]="gradient"
-            [legend]="!!(showLegend$ | async)"
-            [legendPosition]="legendPosition"
-            [labels]="showLabels"
-            [doughnut]="false"></ngx-charts-pie-chart>
-          </div>
-        </div>
-      </div>
     </div>
 
     <app-map></app-map>
-    
+
     <mat-form-field color="accent" class="tw-mt-10">
-      <mat-label>Inherited calendar color</mat-label>
-      <input matInput [matDatepicker]="picker1">
-      <mat-hint>MM/DD/YYYY</mat-hint>
-      <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
-      <mat-datepicker #picker1></mat-datepicker>
+        <mat-label>Inherited calendar color</mat-label>
+        <input matInput [matDatepicker]="picker1" />
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker1"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
     </mat-form-field>
-    
+
     <mat-form-field color="accent">
-      <mat-label>Custom calendar color</mat-label>
-      <input matInput [matDatepicker]="picker2">
-      <mat-hint>MM/DD/YYYY</mat-hint>
-      <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
-      <mat-datepicker #picker2 color="primary"></mat-datepicker>
+        <mat-label>Custom calendar color</mat-label>
+        <input matInput [matDatepicker]="picker2" />
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker2"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker2 color="primary"></mat-datepicker>
     </mat-form-field>
 </div>

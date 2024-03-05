@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map, shareReplay } from 'rxjs';
+import { wrapJsonForRequest, pluckItemWrapperData } from 'src/app/shared/utils/api.functions';
 import { environment } from 'src/environments/environment';
+import { ResponseItemWrapper } from '../models/response-wrappers.types';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +12,14 @@ export class StatsService {
   private readonly route: string = '/admin/stats/vehicles';
   constructor(private readonly http: HttpClient) { }
 
+  getDashboardStats(): Observable<any> {
+    return this.http.post(`${environment.apiUrl}${environment.apiVersion}/getDashboardStats`, {}).pipe(
+      map((x:any)=>{
+        return x
+      })
+    )
+                      
+  }
   getVehiclesToday(): Observable<any> {
       return this.http.get(`${environment.apiUrl}${environment.apiVersion}${this.route}/today`)
                       .pipe(map((body: any) => +body.data.count), shareReplay())
