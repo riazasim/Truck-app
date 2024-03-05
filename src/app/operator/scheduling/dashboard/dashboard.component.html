@@ -1,205 +1,182 @@
-<mat-sidenav-container [ngClass]="{'!tw-absolute tw-top-0 tw-bottom-0 tw-left-0 tw-right-0': sidenav.opened}" autosize >
-  <mat-sidenav #sidenav mode="over" position="end" fullscreen>
-    <ng-container [ngSwitch]="(componentName$ | async)">
-      <scheduling-edit-plan *ngSwitchCase="'edit'" [sidenav]="sidenav"
-      [isLoading]="!!(isLoading$ | async)" [planning$]="editPlanning$" (triggerUpdatePlanning)="openPlanEditModal($event)"
-      [filterDate]="filterDate" (triggerFetchPlannings)="handleDateChange($event)"></scheduling-edit-plan>
-      <scheduling-view-log [planning$]="editPlanning$" [id]="logId" *ngSwitchCase="'view'" [sidenav]="sidenav"></scheduling-view-log>
-      <scheduling-send-message [planning$]="editPlanning$" *ngSwitchCase="'mess'" [sidenav]="sidenav" (triggerPlanUpgradeWarning)="handleOpenPlanUpgradeWarning()"></scheduling-send-message>
-    </ng-container>
-  </mat-sidenav>
-
-  <mat-sidenav-content>
-    <h3 class="max-xl:tw-block min-xl:tw-hidden heading-3 tw-mr-5 mobile-view">{{'operator.planning-list' | translate}}</h3>
-    <div class="tw-flex-grow tw-flex tw-flex-col tw-gap-8">
-      <div class="tw-flex min-lg:tw-justify-between sm:tw-justify-center lg:tw-flex-row max-lg:tw-flex-col tw-gap-4">
-        <div class="tw-flex tw-gap-4 max-lg:tw-flex-col tw-items-center tw-justify-stretch">
-            <h3 class="min-xl:tw-block max-xl:tw-hidden heading-4 tw-mr-5 tw-w-full desktop-view">{{'operator.planning-list' | translate}}</h3>
-            <app-scheduling-search-bar *ngIf="!(isTableView$ | async)"
-            [disabled]="!!(isTimeSlotFilterMode$ | async)"
-            (emitFilterChange)="setSingleSearchFilter($event)">
-            </app-scheduling-search-bar>
-            <div class="tw-w-full">
-              <datepicker [disabled]="!!(isTimeSlotFilterMode$ | async)" 
-              matTooltipClass="tw-drop-shadow-lg" matTooltipPosition="above" [matTooltip]="'booking.delivery-date' | translate"
-              (dateChanged)="handleDateChange($event)" [model]="filterDate" [isHeaderPosition]="true" [height]="37"></datepicker>
-            </div>
-            <div *ngIf="(isComvexOrganization$ | async)" class="tw-flex tw-items-center tw-gap-2 tw-h-[37px] tw-w-full">
-              <app-toggle (onModelChange)="isComvexReorder$.next($event)" [model]="!!(isComvexReorder$ | async)" class="tw-h-[30px]"></app-toggle>
-              <label>{{(isComvexReorder$ | async) ? 'Reorder mode' : 'Freezed mode'}}</label>
-            </div>
-            <div *ngIf="!(isTableView$ | async)" class="tw-w-full">
-              <select [disabled]="!!(isTimeSlotFilterMode$ | async)" class="tw-rounded tw-w-full" inputRef name="sortBy" [value]="sortBy$ | async" (change)="sortBy$.next($any($event.target).value)">
-                <option [value]="null" disabled>{{'generics.sort-by' | translate}}</option>
-                <option value="0">SID</option>
-                <option value="1">{{'booking.front-plate-license-number' | translate}}</option>
-                <option value="2">{{'booking.back-plate-license-number' | translate}}</option>
-                <option value="3">{{'docks.dock' | translate}}</option>
-                <option value="4">{{'generics.status' | translate}}</option>
-                <option value="12">Timeslot</option>
-                </select>
-            </div>
-            <div *ngIf="!(isTableView$ | async)" matTooltipClass="tw-drop-shadow-lg" matTooltipPosition="above" [matTooltip]="(sortOrder$ | async) === 'DESC' ? 'Sort ASC' : 'Sort DESC'"  
-            (click)="sortOrder$.next(sortOrder$.value === 'DESC' ? 'ASC' : 'DESC')"
-            class="tw-flex tw-items-center tw-justify-center tw-w-[37px] tw-h-[37px] tw-bg-white tw-border tw-border-borderColor tw-rounded tw-cursor-pointer tw-px-4 ">
-              <ng-container [ngSwitch]="sortOrder$ | async">
-                <fa-icon *ngSwitchCase="'DESC'" [icon]="['fas','arrow-down-short-wide']"></fa-icon>
-                <fa-icon *ngSwitchCase="'ASC'" [icon]="['fas','arrow-up-short-wide']"></fa-icon>
-                <fa-icon *ngSwitchDefault [icon]="['fas','arrow-up-short-wide']"></fa-icon>
-              </ng-container>
-            </div>
-            <div *ngIf="false" class="tw-w-full">
-              <div class="tw-flex tw-gap-4 tw-items-center tw-whitespace-nowrap">
-                <input id="viewed" type="checkbox" class="tw-border tw-border-textDefault tw-cursor-pointer tw-w-[28px] tw-h-[28px]">
-                <label for="viewed" class="max-xl:tw-hidden min-xl:tw-block heading-5 tw-cursor-pointer">Exclude past SIDs</label>
-                <label for="viewed" class="max-xl:tw-block min-xl:tw-hidden tw-cursor-pointer">Exclude past SIDs</label>
-              </div>
-            </div>
-        </div>
-        <div class="tw-flex tw-items-center">
-          <mat-button-toggle-group class="tw-flex tw-w-full tw-justify-end tw-items-center">
-            <button routerLink="../add" [disabled]="(isLoading$ | async) || false" class="tw-bg-primary tw-text-white hover:tw-bg-primary-dark tw-py-2 tw-min-h-[35px] min-md:tw-min-w-[120px] max-sm:tw-w-full tw-rounded-l max-lg:tw-w-full"
-                    type="button">
-              {{'operator.add-sid' | translate}}
-            </button>
-            <button [disabled]="(isLoading$ | async) || false" class="tw-bg-primary tw-text-white hover:tw-bg-primary-dark tw-min-h-[35px] min-md:tw-min-w-[30px] max-sm:tw-w-full tw-rounded-r"
-                    type="button" [matMenuTriggerFor]="menu">
-                <fa-icon [icon]="['fas', 'caret-down']" size="2x"
-                      class="tw-mx-2 tw-cursor-pointer tw-text-white">
-                  </fa-icon>
-            </button>
-            <mat-menu #menu="matMenu" xPosition="before" class="!tw-bg-white">
-              <button [disabled]="(isLoading$ | async) || false" (click)="openImportModal()" mat-menu-item>Import .xlsx</button>
-            </mat-menu>
-          </mat-button-toggle-group>
-          <fa-icon icon="truck" size="2x"  [matMenuTriggerFor]="sidType" #trigger="matMenuTrigger"
-          matTooltipClass="tw-drop-shadow-lg" matTooltipPosition="above" [matTooltip]="'operator.truck' | translate"
-          class="tw-mx-2 tw-cursor-pointer hover:tw-text-primary">
-          </fa-icon>
-          <mat-menu #sidType="matMenu" class="!tw-bg-white" xPosition="before">
-            <menu mat-menu-item>
-              <fa-icon icon="ship" size="1x" class="tw-mx-2 tw-cursor-pointer hover:tw-text-primary">
-              </fa-icon>
-              {{'operator.ship' | translate}}
-            </menu>
-            <menu mat-menu-item>
-              <fa-icon icon="train" size="1x" class="tw-mx-2 tw-cursor-pointer hover:tw-text-primary">
-              </fa-icon>
-              {{'operator.train' | translate}}
-            </menu>
-            <menu mat-menu-item>
-              <fa-icon icon="plane" size="1x" class="tw-mx-2 tw-cursor-pointer hover:tw-text-primary">
-              </fa-icon>
-              {{'operator.plane' | translate}}
-            </menu>
-          </mat-menu>
-            <fa-icon icon="list" size="2x" *ngIf="!(isTableView$ | async)"
-                      matTooltipClass="tw-drop-shadow-lg" matTooltipPosition="above" [matTooltip]="'operator.card' | translate"
-                     class="tw-mx-2 tw-cursor-pointer hover:tw-text-primary"
-                      (click)="isTableView$.next(true)">
-            </fa-icon>
-            <fa-icon icon="grid-2" size="2x" *ngIf="isTableView$ | async"
-                      matTooltipClass="tw-drop-shadow-lg" matTooltipPosition="above" [matTooltip]="'operator.table' | translate" 
-                     class="tw-mx-2 tw-cursor-pointer hover:tw-text-primary"
-                     (click)="isTableView$.next(false); retrievePlannings()">
-            </fa-icon>
-        </div>
-    </div>
-
-      <div *ngIf="!(isTableView$ | async)" class="min-lg:tw-grid tw-gap-4 min-lg:tw-grid-cols-[420px_minmax(900px,_1fr)_100px] max-lg:tw-flex max-lg:tw-flex-col" cdkDropListGroup>
-        <ng-scrollbar visibility="always" *ngIf="!(isMobileCardList$ | async)" track="vertical" appearance="standard" (reachedBottom)="onBottomReached()" [reachedOffset]="350">
-          <div scrollViewport
-              dropListScroller
-              cdkDropList
-              [cdkDropListData]="plannings"
-              (cdkDropListDropped)="drop($event)">
-              <app-loader [isContainer]="true" *ngIf="(isLoading$ | async)" [fullScreen]="false"></app-loader>
-              <ng-container *ngIf="!(isLoading$ | async)">
-                <scheduling-card *ngFor="let item of plannings" (triggerSideNav)="toggleSidenav($event)"
-                                  [statuses]="statuses" (triggerCancellation)="openCancellationModal($event)" 
-                                  [isUmexOrganization]="(isUmexOrganization$ | async)"
-                                  (triggerCheckIn)="openCheckinModal($event)" (triggerCheckOut)="openCheckOutModal($event)"
-                                  (triggerReject)="openRejectModal($event)" (triggerAccept)="openPlanModal($event)"
-                                (triggerDeletion)="openDeleteModal($event)" [cdkDragData]="item" cdkDrag [planning]="item">
-                    <div *cdkDragPreview class="square" [ngStyle]="{backgroundColor: item?.statusColor }"></div>
-                </scheduling-card>
-                <app-loader [isContainer]="false" *ngIf="(cardLoading$ | async)" [fullScreen]="false"></app-loader>
-              </ng-container>
-              <no-scheduling *ngIf="!(isLoading$ | async) && !plannings.length"></no-scheduling>
-          </div>
-        </ng-scrollbar>
-        <div *ngIf="(isMobileCardList$ | async)" class="tw-flex tw-flex-col tw-gap-4 card-container">
-          <div dropListScroller
-              cdkDropList
-              [cdkDropListData]="plannings"
-              (cdkDropListDropped)="drop($event)">
-              <app-loader [isContainer]="true" *ngIf="(isLoading$ | async)" [fullScreen]="false"></app-loader>
-              <ng-container *ngIf="!(isLoading$ | async)">
-                <scheduling-card *ngFor="let item of plannings" (triggerSideNav)="toggleSidenav($event)"
-                                  [statuses]="statuses" (triggerCancellation)="openCancellationModal($event)" 
-                                  [isUmexOrganization]="(isUmexOrganization$ | async)" [isMaxWidth]="true"
-                                  (triggerCheckIn)="openCheckinModal($event)" (triggerCheckOut)="openCheckOutModal($event)"
-                                  (triggerReject)="openRejectModal($event)" (triggerAccept)="openPlanModal($event)"
-                                (triggerDeletion)="openDeleteModal($event)" [cdkDragData]="item" cdkDrag [planning]="item">
-                    <div *cdkDragPreview class="square" [ngStyle]="{backgroundColor: item?.statusColor }"></div>
-                </scheduling-card>
-                <app-loader [isContainer]="false" *ngIf="(cardLoading$ | async)" [fullScreen]="false"></app-loader>
-              </ng-container>
-              <no-scheduling *ngIf="!(isLoading$ | async) && !plannings.length"></no-scheduling>
-          </div>
-        </div>
-        <div class="tw-col-span-2">
-            <div class="tw-bg-white tw-w-full tw-min-h-[550px]">
-                <app-loader class="tw-m-auto tw-flex-grow" *ngIf="(isLoading$ | async)" [isContainer]="true" [fullScreen]="false"></app-loader>
-                <scheduling-table [isToggleOpened]="!!(isToggleOpened$ | async)"
-                (onFilterTimeslot)="setTimeSlotFilterMode({ key: { prev: filterTypeEnum.timeSlot, curr: filterTypeEnum.timeSlot},  value: $event })"
-                [filterDate]="filterDate" 
-                (onToggleModal)="openPlanModal($event)" [isLoadingDashboard]="isLoading$ | async"
-                (onDrop)="drop($event)"></scheduling-table>
-            </div>
-        </div>
-    </div>
-    <div class="tw-grid" *ngIf="(isTableView$ | async)">
-        <ng-container *ngIf="(isComvexOrganization$ | async); else basicList">
-          <app-comvex-list *ngIf="!(isComvexReorder$ | async)"
-        (triggerAccept)="openPlanModal($event)"
-        (triggerReject)="openRejectModal($event)"
-        (triggerCancellation)="openCancellationModal($event)"
-        (triggerCheckIn)="openCheckinModal($event)"
-        (triggerCheckOut)="openCheckOutModal($event)"
-        (triggerOpenLogs)="toggleSidenav($event)" 
-        (triggerDeletion)="openDeleteModal($event)"
-        (triggerOpenEdit)="toggleSidenav($event)" 
-        [isContained]="!!(isTableView$ | async)"  
-        [filterDate]="filterDate"></app-comvex-list>
-          <app-comvex-list-reorder *ngIf="(isComvexReorder$ | async)"
-        (triggerAccept)="openPlanModal($event)"
-        (triggerReject)="openRejectModal($event)"
-        (triggerCancellation)="openCancellationModal($event)"
-        (triggerCheckIn)="openCheckinModal($event)"
-        (triggerCheckOut)="openCheckOutModal($event)"
-        (triggerOpenLogs)="toggleSidenav($event)" 
-        (triggerDeletion)="openDeleteModal($event)"
-        (triggerOpenEdit)="toggleSidenav($event)" 
-        [isContained]="!!(isTableView$ | async)"  
-        [filterDate]="filterDate"></app-comvex-list-reorder>
+<mat-sidenav-container [ngClass]="{'!tw-absolute tw-top-0 tw-bottom-0 tw-left-0 tw-right-0': sidenav.opened}" autosize>
+    <mat-sidenav #sidenav mode="over" position="end" fullscreen>
+        <ng-container [ngSwitch]="(componentName$ | async)">
+            <scheduling-edit-plan *ngSwitchCase="'edit'" [sidenav]="sidenav" [isLoading]="!!(isLoading$ | async)"
+                [planning$]="editPlanning$" (triggerUpdatePlanning)="openPlanEditModal($event)"
+                [filterDate]="filterDate" (triggerFetchPlannings)="handleDateChange($event)"></scheduling-edit-plan>
+            <scheduling-view-log [planning$]="editPlanning$" [id]="logId" *ngSwitchCase="'view'"
+                [sidenav]="sidenav"></scheduling-view-log>
+            <scheduling-send-message [planning$]="editPlanning$" *ngSwitchCase="'mess'" [sidenav]="sidenav"
+                (triggerPlanUpgradeWarning)="handleOpenPlanUpgradeWarning()"></scheduling-send-message>
         </ng-container>
-      <ng-template #basicList>
-          <app-vehicle-list 
-          (triggerAccept)="openPlanModal($event)"
-          (triggerReject)="openRejectModal($event)"
-          (triggerCancellation)="openCancellationModal($event)"
-          (triggerCheckIn)="openCheckinModal($event)"
-          (triggerCheckOut)="openCheckOutModal($event)"
-          (triggerOpenLogs)="toggleSidenav($event)" 
-          (triggerDeletion)="openDeleteModal($event)" 
-          (triggerOpenEdit)="toggleSidenav($event)" 
-          [isContained]="!!(isTableView$ | async)"  
-          [filterDate]="filterDate">
-        </app-vehicle-list>
-      </ng-template>
-    </div>
-  </div>
-</mat-sidenav-content>
-
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <h3 class="max-xl:tw-block min-xl:tw-hidden heading-3 tw-mr-5 mobile-view">{{'planning-list' | translate}}</h3>
+        <div class="tw-flex-grow tw-flex tw-flex-col tw-gap-8">
+            <div
+                class="tw-flex min-lg:tw-justify-between sm:tw-justify-center lg:tw-flex-row max-lg:tw-flex-col tw-gap-4">
+                <div class="tw-flex tw-gap-4 max-lg:tw-flex-col tw-items-center tw-justify-stretch">
+                    <h3 class="min-xl:tw-block max-xl:tw-hidden heading-4 tw-mr-5 tw-w-full desktop-view">
+                        {{'planning-list' | translate}}</h3>
+                    <app-scheduling-search-bar (emitFilterChange)="setSingleSearchFilter($event)">
+                    </app-scheduling-search-bar>
+                    <div class="tw-w-full">
+                        <datepicker matTooltipClass="tw-drop-shadow-lg" matTooltipPosition="above"
+                            [matTooltip]="'booking.delivery-date' | translate" (dateChanged)="handleDateChange($event)"
+                            [model]="filterDate" [isHeaderPosition]="true" [height]="37"></datepicker>
+                    </div>
+                    <div *ngIf="(isComvexOrganization$ | async)"
+                        class="tw-flex tw-items-center tw-gap-2 tw-h-[37px] tw-w-full">
+                        <app-toggle (onModelChange)="isComvexReorder$.next($event)"
+                            [model]="!!(isComvexReorder$ | async)" class="tw-h-[30px]"></app-toggle>
+                        <label>{{(isComvexReorder$ | async) ? 'Reorder mode' : 'Freezed mode'}}</label>
+                    </div>
+                    <!-- <div *ngIf="!(isTableView$ | async)" class="tw-w-full">
+                        <select [disabled]="!!(isTimeSlotFilterMode$ | async)" class="tw-rounded tw-w-full" inputRef
+                            name="sortBy" [value]="sortBy$ | async" (change)="sortBy$.next($any($event.target).value)">
+                            <option [value]="null" disabled>{{'generics.sort-by' | translate}}</option>
+                            <option value="0">SID</option>
+                            <option value="1">{{'booking.front-plate-license-number' | translate}}</option>
+                            <option value="2">{{'booking.back-plate-license-number' | translate}}</option>
+                            <option value="3">{{'docks.dock' | translate}}</option>
+                            <option value="4">{{'generics.status' | translate}}</option>
+                            <option value="12">Timeslot</option>
+                        </select>
+                    </div> -->
+                    <!-- <div *ngIf="!(isTableView$ | async)" matTooltipClass="tw-drop-shadow-lg" matTooltipPosition="above"
+                        [matTooltip]="(sortOrder$ | async) === 'DESC' ? 'Sort ASC' : 'Sort DESC'"
+                        (click)="sortOrder$.next(sortOrder$.value === 'DESC' ? 'ASC' : 'DESC')"
+                        class="tw-flex tw-items-center tw-justify-center tw-w-[37px] tw-h-[37px] tw-bg-white tw-border tw-border-borderColor tw-rounded tw-cursor-pointer tw-px-4 ">
+                        <ng-container [ngSwitch]="sortOrder$ | async">
+                            <fa-icon *ngSwitchCase="'DESC'" [icon]="['fas','arrow-down-short-wide']"></fa-icon>
+                            <fa-icon *ngSwitchCase="'ASC'" [icon]="['fas','arrow-up-short-wide']"></fa-icon>
+                            <fa-icon *ngSwitchDefault [icon]="['fas','arrow-up-short-wide']"></fa-icon>
+                        </ng-container>
+                    </div> -->
+                    <div *ngIf="false" class="tw-w-full">
+                        <div class="tw-flex tw-gap-4 tw-items-center tw-whitespace-nowrap">
+                            <input id="viewed" type="checkbox"
+                                class="tw-border tw-border-textDefault tw-cursor-pointer tw-w-[28px] tw-h-[28px]">
+                            <label for="viewed"
+                                class="max-xl:tw-hidden min-xl:tw-block heading-5 tw-cursor-pointer">Exclude past
+                                SIDs</label>
+                            <label for="viewed" class="max-xl:tw-block min-xl:tw-hidden tw-cursor-pointer">Exclude past
+                                SIDs</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="tw-flex tw-items-center">
+                    <mat-button-toggle-group class="tw-flex tw-w-full tw-justify-end tw-items-center">
+                        <button routerLink="../add" [disabled]="(isLoading$ | async) || false"
+                            class="tw-bg-primary tw-text-white hover:tw-bg-primary-dark tw-py-2 tw-min-h-[35px] min-md:tw-min-w-[120px] max-sm:tw-w-full tw-rounded-l max-lg:tw-w-full"
+                            type="button">
+                            {{'add-sid' | translate}}
+                        </button>
+                        <button [disabled]="(isLoading$ | async) || false"
+                            class="tw-bg-primary tw-text-white hover:tw-bg-primary-dark tw-min-h-[35px] min-md:tw-min-w-[30px] max-sm:tw-w-full tw-rounded-r"
+                            type="button" [matMenuTriggerFor]="menu">
+                            <fa-icon [icon]="['fas', 'caret-down']" size="2x"
+                                class="tw-mx-2 tw-cursor-pointer tw-text-white">
+                            </fa-icon>
+                        </button>
+                        <mat-menu #menu="matMenu" xPosition="before" class="!tw-bg-white">
+                            <button [disabled]="(isLoading$ | async) || false" (click)="openImportModal()"
+                                mat-menu-item>Import .xlsx</button>
+                        </mat-menu>
+                    </mat-button-toggle-group>
+                    <!-- <fa-icon icon="truck" size="2x" [matMenuTriggerFor]="sidType" #trigger="matMenuTrigger"
+                        matTooltipClass="tw-drop-shadow-lg" matTooltipPosition="above"
+                        [matTooltip]="'truck' | translate"
+                        class="tw-mx-2 tw-cursor-pointer hover:tw-text-primary">
+                    </fa-icon> -->
+                    <mat-menu #sidType="matMenu" class="!tw-bg-white" xPosition="before">
+                        <menu mat-menu-item>
+                            <fa-icon icon="ship" size="1x" class="tw-mx-2 tw-cursor-pointer hover:tw-text-primary">
+                            </fa-icon>
+                            {{'ship' | translate}}
+                        </menu>
+                        <menu mat-menu-item>
+                            <fa-icon icon="train" size="1x" class="tw-mx-2 tw-cursor-pointer hover:tw-text-primary">
+                            </fa-icon>
+                            {{'train' | translate}}
+                        </menu>
+                        <menu mat-menu-item>
+                            <fa-icon icon="plane" size="1x" class="tw-mx-2 tw-cursor-pointer hover:tw-text-primary">
+                            </fa-icon>
+                            {{'plane' | translate}}
+                        </menu>
+                    </mat-menu>
+                    <fa-icon icon="grid-2" size="2x" matTooltipClass="tw-drop-shadow-lg" matTooltipPosition="above"
+                        [matTooltip]="'table' | translate"
+                        [ngClass]="{'tw-text-[#17A0B5]': !(isTableView$ | async),'tw-mx-2 tw-cursor-pointer' : true}"
+                        (click)="isTableView$.next(false); retrievePlannings()">
+                    </fa-icon>
+                    <fa-icon icon="list" size="2x" matTooltipClass="tw-drop-shadow-lg" matTooltipPosition="above"
+                        [matTooltip]="'card' | translate"
+                        [ngClass]="{'tw-text-[#17A0B5]': (isTableView$ | async),'tw-mx-2 tw-cursor-pointer' : true}"
+                        (click)="isTableView$.next(true)">
+                    </fa-icon>
+                </div>
+            </div>
+            <div *ngIf="!(isTableView$ | async)"
+                class="min-lg:tw-grid tw-gap-4 min-lg:tw-grid-cols-[420px_minmax(900px,_1fr)_100px] max-lg:tw-flex max-lg:tw-flex-col"
+                cdkDropListGroup>
+                <ng-scrollbar visibility="always" *ngIf="!(isMobileCardList$ | async)" track="vertical"
+                    appearance="standard" (reachedBottom)="onBottomReached()" [reachedOffset]="350">
+                    <div scrollViewport dropListScroller cdkDropList [cdkDropListData]="plannings"
+                        (cdkDropListDropped)="drop($event)">
+                        <app-loader [isContainer]="true" *ngIf="(isLoading$ | async)" [fullScreen]="false"></app-loader>
+                        <ng-container *ngIf="!(isLoading$ | async)">
+                            <scheduling-card *ngFor="let item of plannings" (triggerSideNav)="toggleSidenav($event)"
+                                [statuses]="statuses" (triggerCancellation)="openCancellationModal($event)"
+                                [isUmexOrganization]="(isUmexOrganization$ | async)"
+                                (triggerCheckIn)="openCheckinModal($event)"
+                                (triggerCheckOut)="openCheckOutModal($event)" (triggerReject)="openRejectModal($event)"
+                                (triggerAccept)="openPlanModal($event)" (triggerDeletion)="openDeleteModal($event)"
+                                [cdkDragData]="item" cdkDrag [planning]="item">
+                                <div *cdkDragPreview class="square" [ngStyle]="{backgroundColor: item?.statusColor }">
+                                </div>
+                            </scheduling-card>
+                            <app-loader [isContainer]="false" *ngIf="(cardLoading$ | async)"
+                                [fullScreen]="false"></app-loader>
+                        </ng-container>
+                        <no-scheduling *ngIf="!(isLoading$ | async) && !plannings.length"></no-scheduling>
+                    </div>
+                </ng-scrollbar>
+                <div *ngIf="(isMobileCardList$ | async)" class="tw-flex tw-flex-col tw-gap-4 card-container">
+                    <div dropListScroller cdkDropList [cdkDropListData]="plannings" (cdkDropListDropped)="drop($event)">
+                        <app-loader [isContainer]="true" *ngIf="(isLoading$ | async)" [fullScreen]="false"></app-loader>
+                        <ng-container *ngIf="!(isLoading$ | async)">
+                            <scheduling-card *ngFor="let item of plannings" (triggerSideNav)="toggleSidenav($event)"
+                                [statuses]="statuses" (triggerCancellation)="openCancellationModal($event)"
+                                [isUmexOrganization]="(isUmexOrganization$ | async)" [isMaxWidth]="true"
+                                (triggerCheckIn)="openCheckinModal($event)"
+                                (triggerCheckOut)="openCheckOutModal($event)" (triggerReject)="openRejectModal($event)"
+                                (triggerAccept)="openPlanModal($event)" (triggerDeletion)="openDeleteModal($event)"
+                                [cdkDragData]="item" cdkDrag [planning]="item">
+                                <div *cdkDragPreview class="square" [ngStyle]="{backgroundColor: item?.statusColor }">
+                                </div>
+                            </scheduling-card>
+                            <app-loader [isContainer]="false" *ngIf="(cardLoading$ | async)"
+                                [fullScreen]="false"></app-loader>
+                        </ng-container>
+                        <no-scheduling *ngIf="!(isLoading$ | async) && !plannings.length"></no-scheduling>
+                    </div>
+                </div>
+                <div class="tw-col-span-2">
+                    <div class="tw-bg-white tw-w-full tw-min-h-[550px]">
+                        <app-loader class="tw-m-auto tw-flex-grow" *ngIf="(isLoading$ | async)" [isContainer]="true"
+                            [fullScreen]="false"></app-loader>
+                        <scheduling-table [isToggleOpened]="!!(isToggleOpened$ | async)"
+                            (onFilterTimeslot)="setTimeSlotFilterMode({ key: { prev: filterTypeEnum.timeSlot, curr: filterTypeEnum.timeSlot},  value: $event })"
+                            [filterDate]="filterDate" (onToggleModal)="openPlanModal($event)"
+                            [isLoadingDashboard]="isLoading$ | async" (onDrop)="drop($event)"></scheduling-table>
+                    </div>
+                </div>
+            </div>
+            <div class="tw-grid" *ngIf="(isTableView$ | async)">
+                <app-planning-list></app-planning-list>
+            </div>
+        </div>
+    </mat-sidenav-content>
 </mat-sidenav-container>

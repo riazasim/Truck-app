@@ -15,8 +15,8 @@
         <div class="input-container tw-rounded" [ngStyle]="styles">
             <fa-icon (click)="picker.open()" icon="calendar-days" size="lg" class="icon tw-cursor-pointer"></fa-icon>
             <input onkeydown="return false" [ngStyle]="{'textAlign': textAlign}"
-                    (click)="picker.open()" type="text" 
-                    [placeholder]="placeholder" [(ngModel)]="model" (ngModelChange)="dateChanged.emit($event)" [matDatepicker]="picker">
+                    (click)="picker.open()" type="text"
+                    [placeholder]="placeholder" [ngModel]="model" (ngModelChange)="dateChanged.emit($event)" [matDatepicker]="picker">
             <fa-icon (click)="model = ''" *ngIf="model" icon="close" size="lg" class="icon tw-cursor-pointer"></fa-icon>
             <mat-datepicker #picker></mat-datepicker>
         </div>

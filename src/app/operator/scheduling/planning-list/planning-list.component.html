@@ -1,46 +1,9 @@
 ﻿<!--<section *ngIf="false && isLoading$ && originalSource.length; else empty">-->
 <section *ngIf="(isLoading$ | async) || originalSource.length; else empty">
-    <div class="tw-flex tw-items-center">
-        <mat-button-toggle-group
-            class="tw-flex tw-w-full tw-justify-end tw-items-center"
-        >
-            <button
-                routerLink="../add"
-                [disabled]="(isLoading$ | async) || false"
-                class="tw-bg-primary tw-text-white tw-py-2 tw-min-h-[35px] min-md:tw-min-w-[120px] max-sm:tw-w-full tw-rounded-l max-lg:tw-w-full"
-                type="button"
-            >
-                Add SID
-            </button>
-            <button
-                [disabled]="(isLoading$ | async) || false"
-                class="tw-bg-primary tw-text-white  tw-min-h-[35px] min-md:tw-min-w-[30px] max-sm:tw-w-full tw-rounded-r"
-                type="button"
-                [matMenuTriggerFor]="menu"
-            >
-                <fa-icon
-                    [icon]="['fas', 'caret-down']"
-                    size="2x"
-                    class="tw-mx-2 tw-cursor-pointer tw-text-white"
-                >
-                </fa-icon>
-            </button>
-            <mat-menu #menu="matMenu" xPosition="before" class="!tw-bg-white">
-                <button
-                    [disabled]="(isLoading$ | async) || false"
-                    (click)="openImportModal()"
-                    mat-menu-item
-                >
-                    Import .xlsx
-                </button>
-            </mat-menu>
-        </mat-button-toggle-group>
-    </div>
     <!--    buttonLabel="Add Location" tableTitle="Locations" (buttonClicked)="redirectAddLocation()"-->
     <material-panel-table
         [showSearchbar]="false"
         [showHeader]="true"
-        tableTitle="Planning List"
     >
         <div table class="tw-w-full tw-shadow-lg">
             <ng-scrollbar track="horizontal" [autoHeightDisabled]="false">

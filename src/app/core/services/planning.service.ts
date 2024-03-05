@@ -44,7 +44,7 @@ export class PlanningService {
     // delete body.customFieldCargoData;
     // delete body.customFieldTransportData;
     // delete body.customFieldAdditionalData;
-
+    console.log(body)
     const data = convertJsonToFormData(body, '');
 
     // if (body?.documents?.length) {

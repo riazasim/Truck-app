@@ -1,10 +1,6 @@
 <mat-stepper labelPosition="bottom" [linear]="isLinear" #stepper>
     <mat-step label="Route Details">
-        <!-- <app-loader
-            *ngIf="isLoading$ | async"
-            [isContainer]="true"
-            [fullScreen]="false"
-        ></app-loader> -->
+        <app-loader *ngIf="isLoading$ | async" [isContainer]="true" [fullScreen]="false"></app-loader>
         <form [formGroup]="schedulingForm">
             <div class="tw-grid min-lg:tw-grid-cols-2 tw-grid-cols-1 tw-gap-x-10 tw-gap-y-4 tw-pt-[100px] tw-px-[50px]">
                 <div class="tw-flex tw-flex-col tw-gap-x-10 tw-gap-y-4 tw-px-[50px]">
@@ -12,25 +8,29 @@
                     <div iconic-input-wrapper leftIcon="user" formGroupName="routingDetail">
                         <input inputRef type="text" placeholder="Convoy Type" formControlName="convoyType" />
                     </div>
-                    <div iconic-input-wrapper leftIcon="user" formGroupName="routingDetail">
-                        <input inputRef type="text" placeholder="ETA" formControlName="estimatedTimeArrival" />
+                    <div iconic-input-wrapper leftIcon="clock" formGroupName="routingDetail">
+                        <!-- <input inputRef matInput onkeydown="return false" (click)="picker.open()"  type="text"
+                            formControlName="estimatedTimeArrival" [matDatepicker]="picker" placeholder="ETA">
+                        <mat-datepicker #picker></mat-datepicker> -->
+                        <input inputRef type="text" placeholder="Location Port"
+                            formControlName="estimatedTimeArrival" />
                     </div>
-                    <div iconic-input-wrapper leftIcon="user" formGroupName="routingDetail">
+                    <div iconic-input-wrapper leftIcon="location-dot" formGroupName="routingDetail">
                         <input inputRef type="text" placeholder="Location Port" formControlName="locationPort" />
                     </div>
-                    <div iconic-select-wrapper leftIcon="id-card" [rightIcon]="['fas', 'caret-down']"
-                        formGroupName="routingDetail">
+                    <div iconic-select-wrapper leftSvg="assets/images/scheduling_map_location.svg"
+                        [rightIcon]="['fas', 'caret-down']" formGroupName="routingDetail">
                         <select inputRef name="zone" id="zone" formControlName="zone">
-                            <option value="null" disabled>Zone</option>
+                            <option disabled selected>Zone</option>
                             <option *ngFor="let customer of customer" [value]="customer.id">
                                 {{ customer.name }}
                             </option>
                         </select>
                     </div>
-                    <div iconic-select-wrapper leftIcon="id-card" [rightIcon]="['fas', 'caret-down']"
-                        formGroupName="routingDetail">
+                    <div iconic-select-wrapper leftSvg="assets/images/scheduling_ship_type.svg"
+                        [rightIcon]="['fas', 'caret-down']" formGroupName="routingDetail">
                         <select inputRef name="departurePort" id="departurePort" formControlName="departurePort">
-                            <option value="null" disabled>
+                            <option disabled selected>
                                 Departure Port
                             </option>
                             <option *ngFor="let customer of customer" [value]="customer.id">
@@ -38,40 +38,45 @@
                             </option>
                         </select>
                     </div>
-                    <div iconic-select-wrapper leftIcon="id-card" [rightIcon]="['fas', 'caret-down']"
-                        formGroupName="routingDetail">
+                    <div iconic-select-wrapper leftSvg="assets/images/scheduling_arrival_port.svg"
+                        [rightIcon]="['fas', 'caret-down']" formGroupName="routingDetail">
                         <select inputRef name="arrivalPort" id="arrivalPort" formControlName="arrivalPort">
-                            <option value="null" disabled>Arival Port</option>
+                            <option disabled selected>Arival Port</option>
                             <option *ngFor="let customer of customer" [value]="customer.id">
                                 {{ customer.name }}
                             </option>
                         </select>
                     </div>
-                    <div iconic-input-wrapper leftIcon="user" formGroupName="routingDetail">
+                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_port.svg" formGroupName="routingDetail">
                         <input inputRef type="text" placeholder="Pilot Company" formControlName="pilotCompany" />
                     </div>
                 </div>
                 <div class="tw-flex tw-flex-col tw-gap-x-10 tw-gap-y-4 tw-px-[50px]">
                     <!-- <p>&nbsp;</p> -->
-                    <div iconic-input-wrapper leftSvg="assets/images/license_plates.svg" formGroupName="routingDetail">
-                        <input inputRef type="text" placeholder="Length (m)*" formControlName="length" />
-                    </div>
-                    <div iconic-input-wrapper leftIcon="trailer" formGroupName="routingDetail">
-                        <input inputRef type="text" placeholder="Width (m)*" formControlName="width" />
-                    </div>
-                    <div iconic-input-wrapper leftSvg="assets/images/license_plates.svg" formGroupName="routingDetail">
-                        <input inputRef type="text" placeholder="Max Draft" formControlName="maxDraft" />
-                    </div>
-                    <div iconic-input-wrapper leftSvg="assets/images/license_plates.svg" formGroupName="routingDetail">
-                        <input inputRef type="text" placeholder="Aerial Guage (M)*" formControlName="arrivalGuage" />
-                    </div>
-                    <div iconic-input-wrapper leftSvg="assets/images/license_plates.svg" formGroupName="routingDetail">
-                        <input inputRef type="text" placeholder="Capacity max (m)*" formControlName="maxCapacity" />
-                    </div>
-                    <div iconic-select-wrapper leftIcon="id-card" [rightIcon]="['fas', 'caret-down']"
+                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_length.svg"
                         formGroupName="routingDetail">
+                        <input inputRef type="number" placeholder="Length (m)*" formControlName="length" />
+                    </div>
+                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_width.svg"
+                        formGroupName="routingDetail">
+                        <input inputRef type="number" placeholder="Width (m)*" formControlName="width" />
+                    </div>
+                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_depth.svg"
+                        formGroupName="routingDetail">
+                        <input inputRef type="number" placeholder="Max Draft" formControlName="maxDraft" />
+                    </div>
+                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_convoy.svg"
+                        formGroupName="routingDetail">
+                        <input inputRef type="number" placeholder="Aerial Guage (M)*" formControlName="arrivalGuage" />
+                    </div>
+                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_weight.svg"
+                        formGroupName="routingDetail">
+                        <input inputRef type="number" placeholder="Capacity max (m)*" formControlName="maxCapacity" />
+                    </div>
+                    <div iconic-select-wrapper leftSvg="assets/images/scheduling_lock.svg"
+                        [rightIcon]="['fas', 'caret-down']" formGroupName="routingDetail">
                         <select inputRef name="typeOfLock" id="typeOfLock" formControlName="lockType">
-                            <option value="null" disabled>Type of lock</option>
+                            <option disabled selected>Type of lock</option>
                             <option *ngFor="let customer of customer" [value]="customer.id">
                                 {{ customer.name }}
                             </option>
@@ -79,7 +84,7 @@
                     </div>
                 </div>
             </div>
-            <div class="tw-flex tw-gap-2 tw-justify-center min-md:tw-gap-20 tw-gap-3 max-md:tw-flex-col tw-py-3">
+            <div class="tw-flex tw-gap-2 tw-justify-center min-md:tw-gap-20 max-md:tw-flex-col tw-py-3">
                 <button type="button" class="btn btn-primary min-md:tw-min-w-[436px] tw-min-h-[50px] !tw-text-[18px]"
                     matStepperPrevious>
                     {{ "button.back" | translate }}
@@ -92,113 +97,115 @@
         </form>
     </mat-step>
     <mat-step label="Convoi">
-        <!-- <app-loader
-            *ngIf="isLoading$ | async"
-            [isContainer]="true"
-            [fullScreen]="false"
-        ></app-loader> -->
+        <app-loader *ngIf="isLoading$ | async" [isContainer]="true" [fullScreen]="false"></app-loader>
         <form [formGroup]="convoyForm">
             <div class="tw-grid min-lg:tw-grid-cols-2 tw-grid-cols-1 tw-gap-x-10 tw-gap-y-4 tw-pt-[100px] tw-px-[50px]">
                 <div class="tw-flex tw-flex-col tw-gap-x-10 tw-gap-y-4 tw-px-[50px]">
                     <!-- <p class="tw-text-columnCell tw-font-bold"></p> -->
-                    <div iconic-input-wrapper leftIcon="user">
+                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_navigation.svg">
                         <input inputRef type="text" placeholder="Navigation type*" formControlName="navigationType" />
                     </div>
                     <div iconic-select-wrapper leftIcon="grid-2" [rightIcon]="['fas', 'caret-down']">
                         <select inputRef name="ship" id="ship" formControlName="ship">
-                            <option value="null" disabled>Ship</option>
+                            <option disabled selected>Ship</option>
                             <option *ngFor="let customer of customer" [value]="customer.id">
                                 {{ customer.name }}
                             </option>
                         </select>
                     </div>
-                    <div iconic-select-wrapper leftIcon="id-card" [rightIcon]="['fas', 'caret-down']">
+                    <div iconic-select-wrapper leftSvg="assets/images/scheduling_ship_type.svg"
+                        [rightIcon]="['fas', 'caret-down']">
                         <select inputRef name="shipType" id="shipType" formControlName="shipType">
-                            <option value="null" disabled>Ship type*</option>
+                            <option disabled selected>Ship type*</option>
                             <option *ngFor="let customer of customer" [value]="customer.id">
                                 {{ customer.name }}
                             </option>
                         </select>
                     </div>
-                    <div iconic-input-wrapper leftIcon="user">
-                        <input inputRef type="text" placeholder="Pavilion*" formControlName="pavilion" />
+                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_port.svg">
+                        <input inputRef type="number" placeholder="Pavilion*" formControlName="pavilion" />
                     </div>
-                    <div iconic-input-wrapper leftIcon="location-dot">
-                        <input inputRef type="text" placeholder="Engine power" formControlName="enginePower" />
+                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_engine.svg">
+                        <input inputRef type="number" placeholder="Engine power" formControlName="enginePower" />
                     </div>
-                    <div iconic-input-wrapper leftIcon="location-dot">
-                        <input inputRef type="text" placeholder="LOA" formControlName="lengthOverall" />
+                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_file.svg">
+                        <input inputRef type="number" placeholder="LOA" formControlName="lengthOverall" />
                     </div>
-                    <div iconic-input-wrapper leftIcon="location-dot">
-                        <input inputRef type="text" placeholder="Width (m)*" formControlName="width" />
+                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_width.svg">
+                        <input inputRef type="number" placeholder="Width (m)*" formControlName="width" />
                     </div>
-                    <div iconic-input-wrapper leftIcon="location-dot">
-                        <input inputRef type="text" placeholder="Max draft (m)*" formControlName="maxDraft" />
+                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_depth.svg">
+                        <input inputRef type="number" placeholder="Max draft (m)*" formControlName="maxDraft" />
                     </div>
-                    <div iconic-input-wrapper leftIcon="location-dot">
-                        <input inputRef type="text" placeholder="C.max (t)*" formControlName="maxQuantity" />
+                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_weight.svg">
+                        <input inputRef type="number" placeholder="C.max (t)*" formControlName="maxQuantity" />
                     </div>
-                    <div iconic-select-wrapper leftIcon="id-card" [rightIcon]="['fas', 'caret-down']">
+                    <div iconic-select-wrapper leftIcon="user" [rightIcon]="['fas', 'caret-down']">
                         <select inputRef name="agent" id="agent" formControlName="agent">
-                            <option value="null" disabled>Agent</option>
+                            <option disabled selected>Agent</option>
                             <option *ngFor="let customer of customer" [value]="customer.id">
                                 {{ customer.name }}
                             </option>
                         </select>
                     </div>
-                    <div iconic-input-wrapper leftIcon="user">
+                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_manevra.svg">
                         <input inputRef type="text" placeholder="Manevra" formControlName="maneuvering" />
                     </div>
                 </div>
                 <div class="tw-flex tw-flex-col tw-gap-x-10 tw-gap-y-4 tw-px-[50px]">
                     <!-- <p>&nbsp;</p> -->
-                    <div iconic-input-wrapper leftSvg="assets/images/license_plates.svg">
+                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_ship_owner.svg">
                         <input inputRef type="text" placeholder="Ship owner" formControlName="shipowner" />
                     </div>
-                    <div iconic-input-wrapper leftIcon="trailer">
+                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_purpose.svg">
                         <input inputRef type="text" placeholder="Purpose" formControlName="purpose" />
                     </div>
-                    <div iconic-select-wrapper leftIcon="id-card" [rightIcon]="['fas', 'caret-down']">
+                    <div iconic-select-wrapper leftSvg="assets/images/scheduling_operator.svg"
+                        [rightIcon]="['fas', 'caret-down']">
                         <select inputRef name="operator" id="operator" formControlName="operator">
-                            <option value="null" disabled>Operator*</option>
+                            <option disabled selected>Operator*</option>
                             <option *ngFor="let customer of customer" [value]="customer.id">
                                 {{ customer.name }}
                             </option>
                         </select>
                     </div>
-                    <div iconic-select-wrapper leftIcon="id-card" [rightIcon]="['fas', 'caret-down']">
+                    <div iconic-select-wrapper leftSvg="assets/images/scheduling_trafic_type.svg"
+                        [rightIcon]="['fas', 'caret-down']">
                         <select inputRef name="trafficType" id="trafficType" formControlName="trafficType">
-                            <option value="null" disabled>Traffic type*</option>
+                            <option disabled selected>Traffic type*</option>
                             <option *ngFor="let customer of customer" [value]="customer.id">
                                 {{ customer.name }}
                             </option>
                         </select>
                     </div>
-                    <div iconic-select-wrapper leftIcon="id-card" [rightIcon]="['fas', 'caret-down']">
+                    <div iconic-select-wrapper leftSvg="assets/images/scheduling_operation_type.svg"
+                        [rightIcon]="['fas', 'caret-down']">
                         <select inputRef name="operationType" id="operationType" formControlName="operatonType">
-                            <option value="null" disabled>Operaton type</option>
+                            <option disabled selected>Operaton type</option>
                             <option *ngFor="let customer of customer" [value]="customer.id">
                                 {{ customer.name }}
                             </option>
                         </select>
                     </div>
-                    <div iconic-select-wrapper leftIcon="id-card" [rightIcon]="['fas', 'caret-down']">
+                    <div iconic-select-wrapper leftSvg="assets/images/scheduling_cargo.svg"
+                        [rightIcon]="['fas', 'caret-down']">
                         <select inputRef name="cargo" id="cargo" formControlName="cargo">
-                            <option value="null" disabled>Cargo*</option>
+                            <option disabled selected>Cargo*</option>
                             <option *ngFor="let customer of customer" [value]="customer.id">
                                 {{ customer.name }}
                             </option>
                         </select>
                     </div>
-                    <div iconic-input-wrapper leftSvg="assets/images/license_plates.svg">
-                        <input inputRef type="text" placeholder="Quantity (t)" formControlName="quantity" />
+                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_weight.svg">
+                        <input inputRef type="number" placeholder="Quantity (t)" formControlName="quantity" />
                     </div>
-                    <div iconic-input-wrapper leftSvg="assets/images/license_plates.svg">
+                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_unit.svg">
                         <input inputRef type="text" placeholder="Unit.no" formControlName="unitNo" />
                     </div>
-                    <div iconic-select-wrapper leftIcon="id-card" [rightIcon]="['fas', 'caret-down']">
+                    <div iconic-select-wrapper leftSvg="assets/images/scheduling_port.svg"
+                        [rightIcon]="['fas', 'caret-down']">
                         <select inputRef name="portOfOrigin" id="portOfOrigin" formControlName="originPort">
-                            <option value="null" disabled>
+                            <option disabled selected>
                                 Port of origin
                             </option>
                             <option *ngFor="let customer of customer" [value]="customer.id">
@@ -206,20 +213,21 @@
                             </option>
                         </select>
                     </div>
-                    <div iconic-select-wrapper leftIcon="id-card" [rightIcon]="['fas', 'caret-down']">
+                    <div iconic-select-wrapper leftSvg="assets/images/scheduling_destination.svg"
+                        [rightIcon]="['fas', 'caret-down']">
                         <select inputRef name="destination" id="destination" formControlName="destination">
-                            <option value="null" disabled>Destination</option>
+                            <option disabled selected>Destination</option>
                             <option *ngFor="let customer of customer" [value]="customer.id">
                                 {{ customer.name }}
                             </option>
                         </select>
                     </div>
-                    <div iconic-input-wrapper leftSvg="assets/images/license_plates.svg">
+                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_observation.svg">
                         <input inputRef type="text" placeholder="observation" formControlName="observation" />
                     </div>
                 </div>
             </div>
-            <div class="tw-flex tw-gap-2 tw-justify-center min-md:tw-gap-20 tw-gap-3 max-md:tw-flex-col tw-py-3">
+            <div class="tw-flex tw-gap-2 tw-justify-center min-md:tw-gap-20 max-md:tw-flex-col tw-py-3">
                 <button type="button" class="btn btn-primary min-md:tw-min-w-[436px] tw-min-h-[50px] !tw-text-[18px]"
                     matStepperPrevious>
                     {{ "button.back" | translate }}
@@ -232,6 +240,7 @@
         </form>
     </mat-step>
     <mat-step label="Additional Data">
+        <app-loader *ngIf="isLoading$ | async" [isContainer]="true" [fullScreen]="false"></app-loader>
         <div>
             <div class="tw-pt-[100px] min-xl:tw-px-[50px]">
                 <form class="tw-grid min-lg:tw-grid-cols-2 tw-grid-cols-1 tw-gap-x-10 tw-gap-y-4"
@@ -305,18 +314,21 @@
                     {{ "button.back" | translate }}
                 </button>
                 <button type="button" class="btn btn-primary min-md:tw-min-w-[436px] tw-min-h-[50px] !tw-text-[18px]"
-                (click)="next(stepThree$, convoyForm , 3)">
+                    (click)="next(stepThree$, convoyForm , 3)">
                     {{ "button.next" | translate }}
                 </button>
             </div>
         </div>
     </mat-step>
     <mat-step label="Save or Extend">
+        <app-loader *ngIf="isLoading$ | async" [isContainer]="true" [fullScreen]="false"></app-loader>
         <div class="tw-flex tw-flex-col tw-justify-center">
             <div class="tw-flex-1 tw-flex tw-justify-center tw-gap-10 tw-w-full">
-                <div (click)="saveScheduling()"  class="tw-flex tw-flex-col tw-gap-5 tw-items-center tw-justify-evenly tw-w-[400px] tw-h-[520px] tw-rounded-[10px] tw-border tw-border-transparent tw-shadow-md">
+                <div (click)="saveScheduling()"
+                    class="tw-flex tw-flex-col tw-gap-5 tw-items-center tw-justify-evenly tw-w-[400px] tw-h-[520px] tw-rounded-[10px] tw-border tw-border-transparent tw-shadow-md">
                     <div class="tw-flex tw-flex-col tw-gap-2 tw-items-center">
-                        <div class="tw-border tw-border-[#B7B7B7] tw-rounded-full tw-flex tw-justify-center tw-items-center tw-w-[155px] tw-h-[155px]">
+                        <div
+                            class="tw-border tw-border-[#B7B7B7] tw-rounded-full tw-flex tw-justify-center tw-items-center tw-w-[155px] tw-h-[155px]">
                             <img src="assets/images/scheduling_flag.svg" alt="Flag">
                         </div>
                         <h2 class="tw-text-4xl tw-text-[#696969] tw-font-bold">Convoi ended</h2>
@@ -327,9 +339,11 @@
                         </p>
                     </div>
                 </div>
-                <div (click)="navigate(1)"  class="tw-flex tw-flex-col tw-justify-evenly tw-gap-5 tw-items-center tw-w-[400px] tw-h-[520px] tw-rounded-[10px] tw-border tw-border-transparent tw-shadow-md">
+                <div (click)="navigate(1)"
+                    class="tw-flex tw-flex-col tw-justify-evenly tw-gap-5 tw-items-center tw-w-[400px] tw-h-[520px] tw-rounded-[10px] tw-border tw-border-transparent tw-shadow-md">
                     <div class="tw-flex tw-flex-col tw-gap-2 tw-items-center">
-                        <div class="tw-border tw-border-[#B7B7B7] tw-rounded-full tw-flex tw-justify-center tw-items-center tw-w-[155px] tw-h-[155px]">
+                        <div
+                            class="tw-border tw-border-[#B7B7B7] tw-rounded-full tw-flex tw-justify-center tw-items-center tw-w-[155px] tw-h-[155px]">
                             <img src="assets/images/scheduling_boat.svg" alt="Flag">
                         </div>
                         <h2 class="tw-text-4xl tw-text-[#696969] tw-font-bold">Add ship to convoy</h2>

@@ -31,7 +31,7 @@ import { SchedulingDeleteModalComponent } from './scheduling-delete-modal/schedu
 import { VehicleModule } from '../vehicle/vehicle.module';
 import { NoSchedulingComponent } from './no-scheduling/no-scheduling.component';
 import { SchedulingAddProductModalComponent } from './scheduling-add-product-modal/scheduling-add-product-modal.component';
-import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MAT_DATE_FORMATS, MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatMenuModule } from '@angular/material/menu';
@@ -56,6 +56,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { CdkTableModule } from '@angular/cdk/table';
+import { MatInputModule } from '@angular/material/input';
 
 
 @NgModule({
@@ -83,7 +84,7 @@ import { CdkTableModule } from '@angular/cdk/table';
     SchedulingShowClientSupplierCardLabelsComponent,
     SchedulingSearchBarComponent,
     PlanningListComponent,
-    
+
   ],
   imports: [
     CommonModule,
@@ -121,10 +122,10 @@ import { CdkTableModule } from '@angular/cdk/table';
     NgScrollbarModule,
     NgScrollbarReachedModule,
     CdkTableModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule
   ],
-  providers: [
-    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
-    { provide: MAT_DATE_FORMATS, useValue: MAT_DATE_FORMATS }
-  ]
+  providers: [provideNativeDateAdapter()]
 })
 export class SchedulingModule { }

@@ -39,7 +39,7 @@ export interface PlanningModel {
     id?: number;
     routingDetail: {
         convoyType: string;
-        estimatedTimeArrival: string;
+        estimatedTimeArrival: Date;
         locationPort: string;
         zone: number;
         departurePort: string;
