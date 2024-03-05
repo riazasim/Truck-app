@@ -1,0 +1,10 @@
+
+
+
+<form [formGroup]="searchForm" (ngSubmit)="searchLocation()">
+    <input type="text" formControlName="searchQuery" placeholder="Enter coordinates (lat, lng)">
+    <button type="submit">Search</button>
+  </form>
+<div id="map" style="height: 750px; width: 100%;"></div>
+
+

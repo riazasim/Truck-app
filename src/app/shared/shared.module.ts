@@ -68,7 +68,8 @@ import { TranslateModule } from '@ngx-translate/core';
         SearchbarModule,
         MatProgressSpinnerModule,
         MatDatepickerModule,
-        TranslateModule
+        TranslateModule,
+        ReactiveFormsModule
     ],
   exports: [
     IconicInputWrapperComponent,

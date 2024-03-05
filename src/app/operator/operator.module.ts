@@ -16,6 +16,13 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import {TranslateModule} from "@ngx-translate/core";
+import { MapComponent } from './map/map.component';
+import { GoogleMapsModule } from '@angular/google-maps';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { provideNativeDateAdapter } from '@angular/material/core';
 
 
 @NgModule({
@@ -25,6 +32,7 @@ import {TranslateModule} from "@ngx-translate/core";
     OperatorHeaderComponent,
     NavigationMenuComponent,
     OperatorLayoutComponent,
+    MapComponent
   ],
     imports: [
         CommonModule,
@@ -38,7 +46,13 @@ import {TranslateModule} from "@ngx-translate/core";
         MatBadgeModule,
         MatDialogModule,
         MatSnackBarModule,
-        TranslateModule
-    ]
+        TranslateModule,
+        GoogleMapsModule,
+        ReactiveFormsModule,
+        MatFormFieldModule, 
+        MatInputModule, 
+        MatDatepickerModule
+    ],
+    providers: [provideNativeDateAdapter()],
 })
 export class OperatorModule { }
