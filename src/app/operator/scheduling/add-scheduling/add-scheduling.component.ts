@@ -32,6 +32,7 @@ import { getFormatHourSlot } from '../scheduling-box.helper';
 import * as moment from 'moment';
 import { extractPhoneNumber } from 'src/app/shared/validators/phone-numbers';
 import { PlanningModel, convoyModel } from 'src/app/core/models/planning.model';
+import { convertJsonToFormData } from 'src/app/shared/utils/api.functions';
 
 @Component({
     selector: 'app-add-scheduling',
@@ -123,6 +124,7 @@ export class AddSchedulingComponent implements OnInit, OnDestroy {
         this.id = this.route.snapshot.params['id'];
         this.initForm();
         this.initConvoyForm();
+        this.isLoading$.next(false)
     }
 
     navigate(index: number) {
@@ -130,6 +132,7 @@ export class AddSchedulingComponent implements OnInit, OnDestroy {
         this.initConvoyForm()
         this.matStepper.selectedIndex = index;
     }
+
 
     next(step$: BehaviorSubject<boolean>, formGroup: FormGroup, index: any): void {
         if (formGroup.valid) {

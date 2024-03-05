@@ -41,7 +41,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   readonly isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   readonly cardLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   readonly componentName$: BehaviorSubject<string> = new BehaviorSubject<string>('');
-  readonly isTableView$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  readonly isTableView$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   readonly isToggleOpened$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   readonly isMobileCardList$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   readonly isTimeSlotFilterMode$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
@@ -49,14 +49,14 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   readonly hasReachedEndPage$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   readonly sortBy$: BehaviorSubject<number> = new BehaviorSubject<number>(12);
   readonly sortOrder$: BehaviorSubject<string> = new BehaviorSubject('DESC');
-  readonly isComvexReorder$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false); 
+  readonly isComvexReorder$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   plannings: SchedulingPreviewModel[] = []
   filterDate: Date = new Date();
   filterTypeEnum = FilterTypeENum;
 
   logId: number;
-  
+
   toggleRef: MatSnackBarRef<TextOnlySnackBar>;
   statuses: StatusListModel[] = [];
   operations: OperationModel[] = [];
@@ -210,7 +210,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     this.toggleRef = this.snackBar.open('SID has been copied, please select the cell to schedule the planning!', 'Exit', {
       panelClass: ['tw-bg-white']
     })
-    
+
     this.toggleRef.afterDismissed().subscribe(() => {
       navigator.clipboard.writeText("");
       this.isToggleOpened$.next(false);
@@ -221,7 +221,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   drop(event: any): void {
     const planning = this.isToggleOpened$.value ? this.plannings.find(p => p.id === this.logId) : event.item.data;
     const data = event.container.data;
-    
+
     if (event.previousContainer === event.container) {
     } else {
       this.isLoading$.next(true);
@@ -234,14 +234,14 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
           duration: 3000,
           horizontalPosition: 'center',
           panelClass: ['error-snackbar'],
-          verticalPosition: 'top', 
+          verticalPosition: 'top',
         })
         return;
       }
       this.updatePlanning(<any>{
         assigningDate: `${year}-${month}-${day}`,
         hour: this.getHour(data.index),
-        planning: planning.id, 
+        planning: planning.id,
         dock: data.dock,
         statusListStatus: <number>plannedStatus?.id,
         timeSlot: this.getHour(data.index)
@@ -288,7 +288,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
           duration: 3000,
           horizontalPosition: 'center',
           panelClass: ['success-snackbar'],
-          verticalPosition: 'top', 
+          verticalPosition: 'top',
         })
         if (this.isToggleOpened$.value) this.logId = 0;
         this.isToggleOpened$.next(false);
@@ -355,7 +355,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
           duration: 3000,
           horizontalPosition: 'center',
           panelClass: ['success-snackbar'],
-          verticalPosition: 'top', 
+          verticalPosition: 'top',
         })
         this.retrievePlannings();
       },
@@ -372,7 +372,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
           duration: 3000,
           horizontalPosition: 'center',
           panelClass: ['success-snackbar'],
-          verticalPosition: 'top', 
+          verticalPosition: 'top',
         })
         this.retrievePlannings();
       },
@@ -425,7 +425,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         duration: 3000,
         horizontalPosition: 'center',
         panelClass: ['success-snackbar'],
-        verticalPosition: 'top', 
+        verticalPosition: 'top',
       })
       this.retrievePlannings();
     }, error: (body) => {
@@ -440,7 +440,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         duration: 3000,
         horizontalPosition: 'center',
         panelClass: ['success-snackbar'],
-        verticalPosition: 'top', 
+        verticalPosition: 'top',
       })
       this.retrievePlannings();
     }, error: (body) => {
@@ -498,7 +498,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
                 duration: 3000,
                 horizontalPosition: 'center',
                 panelClass: ['error-snackbar'],
-                verticalPosition: 'top', 
+                verticalPosition: 'top',
               })
               return;
             }
@@ -543,7 +543,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
                 duration: 3000,
                 horizontalPosition: 'center',
                 panelClass: ['error-snackbar'],
-                verticalPosition: 'top', 
+                verticalPosition: 'top',
               })
               return;
             }
@@ -570,7 +570,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         this.toggleSelectMode();
         this.componentName$.next(data.view);
         break;
-      case 'view': 
+      case 'view':
         this.logId = data.id;
         const planning = data.planning ? data.planning : this.plannings.find(p => p.id === data.id) || null;
         this.editPlanning$.next(planning)
@@ -610,7 +610,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
                 duration: 3000,
                 horizontalPosition: 'center',
                 panelClass: ['success-snackbar'],
-                verticalPosition: 'top', 
+                verticalPosition: 'top',
               })
               this.retrievePlannings();
             }, error: (body) => handleError(this.snackBar, body, this.isLoading$)})

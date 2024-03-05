@@ -30,6 +30,9 @@ export class IconicSelectWrapperComponent extends GenericWrapperComponent<HTMLSe
   // public readonly rightIcon: IconProp = faAngleDown;
   public rightIcon: IconProp | undefined;
 
+  @Input()
+  public leftSvg: string | undefined;
+
   @ContentChild(SelectRefDirective)
   override set inputRef(ref: SelectRefDirective) {
     this._inputRef = ref;
