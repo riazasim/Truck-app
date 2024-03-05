@@ -25,6 +25,9 @@ export class StatisticCardV2Component extends ShadowDirective {
 
   @Input()
   public textColor = '#000'
+
+  @Input()
+  public dashSvg: string | undefined;
 }
 
 @NgModule({
