@@ -1,7 +1,7 @@
 <mat-stepper labelPosition="bottom" [linear]="isLinear" #stepper>
     <mat-step label="Route Details">
         <app-loader *ngIf="isLoading$ | async" [isContainer]="true" [fullScreen]="false"></app-loader>
-        <form [formGroup]="schedulingForm">
+        <form [formGroup]="schedulingForm" *ngIf="!(isLoading$ | async)">
             <div class="tw-grid min-lg:tw-grid-cols-2 tw-grid-cols-1 tw-gap-x-10 tw-gap-y-4 tw-pt-[100px] tw-px-[50px]">
                 <div class="tw-flex tw-flex-col tw-gap-x-10 tw-gap-y-4 tw-px-[50px]">
                     <!-- <p class="tw-text-columnCell tw-font-bold"></p> -->
@@ -98,7 +98,7 @@
     </mat-step>
     <mat-step label="Convoi">
         <app-loader *ngIf="isLoading$ | async" [isContainer]="true" [fullScreen]="false"></app-loader>
-        <form [formGroup]="convoyForm">
+        <form [formGroup]="convoyForm" *ngIf="!(isLoading$ | async)">
             <div class="tw-grid min-lg:tw-grid-cols-2 tw-grid-cols-1 tw-gap-x-10 tw-gap-y-4 tw-pt-[100px] tw-px-[50px]">
                 <div class="tw-flex tw-flex-col tw-gap-x-10 tw-gap-y-4 tw-px-[50px]">
                     <!-- <p class="tw-text-columnCell tw-font-bold"></p> -->
@@ -241,7 +241,7 @@
     </mat-step>
     <mat-step label="Additional Data">
         <app-loader *ngIf="isLoading$ | async" [isContainer]="true" [fullScreen]="false"></app-loader>
-        <div>
+        <div *ngIf="!(isLoading$ | async)">
             <div class="tw-pt-[100px] min-xl:tw-px-[50px]">
                 <form class="tw-grid min-lg:tw-grid-cols-2 tw-grid-cols-1 tw-gap-x-10 tw-gap-y-4"
                     [formGroup]="convoyForm">
@@ -322,7 +322,7 @@
     </mat-step>
     <mat-step label="Save or Extend">
         <app-loader *ngIf="isLoading$ | async" [isContainer]="true" [fullScreen]="false"></app-loader>
-        <div class="tw-flex tw-flex-col tw-justify-center">
+        <div class="tw-flex tw-flex-col tw-justify-center" *ngIf="!(isLoading$ | async)">
             <div class="tw-flex-1 tw-flex tw-justify-center tw-gap-10 tw-w-full">
                 <div (click)="saveScheduling()"
                     class="tw-flex tw-flex-col tw-gap-5 tw-items-center tw-justify-evenly tw-w-[400px] tw-h-[520px] tw-rounded-[10px] tw-border tw-border-transparent tw-shadow-md">
