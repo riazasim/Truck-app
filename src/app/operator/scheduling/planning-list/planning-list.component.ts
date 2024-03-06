@@ -16,7 +16,7 @@ import { SchedulingImportModalComponent } from '../scheduling-import-modal/sched
 })
 export class PlanningListComponent {
   isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
-    displayedColumns: string[] = ['id', 'manevre', 'vesselId', 'berth', 'products', 'estimatedTimeArrival', 'relativeTimeArrival', 'delay', 'coordinates', 'shipmentStatus'];
+    displayedColumns: string[] = ['id', 'manevre', 'vesselId', 'berth', 'products', 'estimatedTimeArrival', 'relativeTimeArrival', 'delay', 'coordinates', 'shipmentStatus' , 'actions'];
     dataSource: PlanningModel[] = [];
     originalSource: PlanningModel[] = [];
     appliedFilters: any = {};

@@ -1,21 +1,11 @@
 ﻿<!--<section *ngIf="false && isLoading$ && originalSource.length; else empty">-->
 <section *ngIf="(isLoading$ | async) || originalSource.length; else empty">
     <!--    buttonLabel="Add Location" tableTitle="Locations" (buttonClicked)="redirectAddLocation()"-->
-    <material-panel-table
-        [showSearchbar]="false"
-        [showHeader]="true"
-    >
-        <div table class="tw-w-full tw-shadow-lg">
-            <ng-scrollbar track="horizontal" [autoHeightDisabled]="false">
-                <table
-                    class="material-table no-wrap tw-overflow-hidden"
-                    matSort
-                    (matSortChange)="sortData($event)"
-                    [class.loading]="isLoading$ | async"
-                    aria-label="Usage Table"
-                    cdk-table
-                    [dataSource]="dataSource"
-                >
+    <material-panel-table [showSearchbar]="false" [showHeader]="false" Class="!tw-rounded-xl tw-shadow-lg tw-border tw-border-transparent">
+        <div table class="tw-w-full tw-overflow-hidden">
+            <ng-scrollbar track="horizontal" [autoHeightDisabled]="false" style="scrollbar-width: none;">
+                <table class="material-table no-wrap tw-overflow-hidden" matSort (matSortChange)="sortData($event)"
+                    [class.loading]="isLoading$ | async" aria-label="Usage Table" cdk-table [dataSource]="dataSource">
 
                     <ng-container cdkColumnDef="id">
                         <th cdk-header-cell *cdkHeaderCellDef scope="col" class="tw-max-w-40">
@@ -25,7 +15,7 @@
                         </th>
                         <td cdk-cell *cdkCellDef="let row">{{ row.id }}</td>
                     </ng-container>
-                     <ng-container cdkColumnDef="manevre">
+                    <ng-container cdkColumnDef="manevre">
                         <th cdk-header-cell *cdkHeaderCellDef scope="col" class="tw-max-w-20">
                             <section class="tw-flex tw-flex-col tw-gap-4">
                                 <div mat-sort-header="manevre">Manevre</div>
@@ -111,7 +101,7 @@
                         <th cdk-header-cell *cdkHeaderCellDef scope="col" class="tw-max-w-40">
                             <section class="tw-flex tw-flex-col tw-gap-4">
                                 <div mat-sort-header="coordinates">
-                                  Coordinates
+                                    Coordinates
                                 </div>
                             </section>
                         </th>
@@ -123,7 +113,7 @@
                         <th cdk-header-cell *cdkHeaderCellDef scope="col" class="tw-max-w-40">
                             <section class="tw-flex tw-flex-col tw-gap-4">
                                 <div mat-sort-header="shipmentStatus">
-                                  Shipment Status
+                                    Shipment Status
                                 </div>
                             </section>
                         </th>
@@ -133,81 +123,50 @@
                     </ng-container>
 
                     <ng-container cdkColumnDef="actions">
-                        <th cdk-header-cell *cdkHeaderCellDef scope="col">
+                        <th cdk-header-cell *cdkHeaderCellDef scope="col" class="tw-min-w-40">
                             <section class="tw-flex tw-flex-col tw-gap-4">
-                                <div>Actions</div>
-                                <button
-                                    type="button"
-                                    class="btn btn-outline-primary"
-                                >
-                                    Mass update
-                                </button>
+                                <div mat-sort-header="actions">Actions</div>
                             </section>
                         </th>
-                        <td
-                            cdk-cell
-                            *cdkCellDef="let row"
-                            class="tw-flex tw-justify-center tw-gap-4"
-                        >
-                            <fa-icon
-                                icon="eye"
-                                class="custom-btn-clr tw-cursor-pointer"
-                                size="lg"
-                                [routerLink]="['../edit', row.id]"
-                            ></fa-icon>
-                            <fa-icon
-                                icon="trash-can"
-                                class="custom-btn-clr tw-cursor-pointer"
-                                size="lg"
-                                (click)="openDeleteModal(row.id)"
-                            ></fa-icon>
+                        <td cdk-cell *cdkCellDef="let row" class="tw-flex tw-justify-center tw-gap-4 tw-w-max-content">
+                            <div class="tw-flex tw-gap-4">
+                                <img src="assets/images/left-right-list-icon.png" alt="icon" class="tw-cursor-pointer">
+                                <fa-icon icon="xmark" class="tw-text-[#17A0B5] tw-cursor-pointer" size="lg"
+                                    (click)="openDeleteModal(row.id)"></fa-icon>
+                            </div>
+                            <div class="tw-flex tw-gap-4">
+                                <fa-icon icon="eye" class="tw-text-[#17A0B5] tw-cursor-pointer" size="lg"
+                                    [routerLink]="['../edit', row.id]"></fa-icon>
+                                <img src="assets/images/rotate-left-list-icon.svg" alt="icon" class="tw-cursor-pointer">
+                            </div>
                         </td>
                     </ng-container>
 
                     <!-- Header and Row Declarations -->
                     <tr cdk-header-row *cdkHeaderRowDef="displayedColumns"></tr>
-                    <tr
-                        cdk-row
-                        *cdkRowDef="let row; columns: displayedColumns"
-                    ></tr>
+                    <tr cdk-row *cdkRowDef="let row; columns: displayedColumns"></tr>
                     <tr *cdkNoDataRow>
                         <td [colSpan]="displayedColumns.length">
                             <span *ngIf="isLoading$ | async">
-                                <app-loader
-                                    *ngIf="isLoading$ | async"
-                                    [isContainer]="true"
-                                    [fullScreen]="false"
-                                ></app-loader>
+                                <app-loader *ngIf="isLoading$ | async" [isContainer]="true"
+                                    [fullScreen]="false"></app-loader>
                             </span>
-                            <span
-                                *ngIf="
+                            <span *ngIf="
                                     dataSource.length === 0 &&
                                     !(isLoading$ | async)
-                                "
-                                >Nu există înregistrări</span
-                            >
-                            <span
-                                *ngIf="
+                                ">Nu există înregistrări</span>
+                            <span *ngIf="
                                     dataSource.length > 0 &&
                                     !(isLoading$ | async)
-                                "
-                                >Nicio înregistrare nu corespunde criteriilor de
-                                căutare</span
-                            >
+                                ">Nicio înregistrare nu corespunde criteriilor de
+                                căutare</span>
                         </td>
                     </tr>
                 </table>
             </ng-scrollbar>
-
-            <mat-paginator
-                [class.!tw-hidden]="dataSource.length === 0"
-                [pageSizeOptions]="pageSizeOptions"
-                [length]="length"
-                [pageIndex]="pageIndex"
-                (page)="onPaginateChange($event)"
-                [pageSize]="pageSize"
-                showFirstLastButtons
-            >
+            <mat-paginator [class.!tw-hidden]="dataSource.length === 0" [pageSizeOptions]="pageSizeOptions"
+                [length]="length" [pageIndex]="pageIndex" (page)="onPaginateChange($event)" [pageSize]="pageSize"
+                showFirstLastButtons>
             </mat-paginator>
         </div>
     </material-panel-table>

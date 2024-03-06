@@ -1,5 +1,5 @@
 <section *ngIf="(isLoading$ | async) || originalSource.length; else empty">
-    <material-panel-table [showSearchbar]="false" [showHeader]="true" buttonLabel="Add User" tableTitle="Users list" (buttonClicked)="redirectAddUser()">
+    <material-panel-table Class="!tw-rounded-xl tw-shadow-lg tw-border tw-border-transparent" [showSearchbar]="false" [showHeader]="true" buttonLabel="Add User" tableTitle="Users list" (buttonClicked)="redirectAddUser()">
     <div table class="tw-w-full tw-shadow-lg">
         <ng-scrollbar track="horizontal" [autoHeightDisabled]="false">
           <table class="material-table no-wrap tw-overflow-hidden" matSort (matSortChange)="sortData($event)"
@@ -133,7 +133,6 @@
                        (page)="onPaginateChange($event)"
                        [pageSize]="pageSize"
                        showFirstLastButtons>
-
         </mat-paginator>
 
 <!--                <mat-paginator [class.!tw-hidden]="dataSource.length === 0"   class="paginator tw-rounded-b-[10px]"-->

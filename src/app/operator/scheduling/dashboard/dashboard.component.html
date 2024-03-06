@@ -11,13 +11,13 @@
         </ng-container>
     </mat-sidenav>
     <mat-sidenav-content>
-        <h3 class="max-xl:tw-block min-xl:tw-hidden heading-3 tw-mr-5 mobile-view">{{'planning-list' | translate}}</h3>
-        <div class="tw-flex-grow tw-flex tw-flex-col tw-gap-8">
+        <h3 class="max-xl:tw-block min-xl:tw-hidden heading-3 tw-mr-5 mobile-view">{{'Planning list' | translate}}</h3>
+        <div [ngClass]="{'tw-gap-8' : !(isTableView$ | async), 'tw-gap-0' : (isTableView$ | async) , 'tw-flex-grow tw-flex tw-flex-col' : true}">
             <div
                 class="tw-flex min-lg:tw-justify-between sm:tw-justify-center lg:tw-flex-row max-lg:tw-flex-col tw-gap-4">
                 <div class="tw-flex tw-gap-4 max-lg:tw-flex-col tw-items-center tw-justify-stretch">
                     <h3 class="min-xl:tw-block max-xl:tw-hidden heading-4 tw-mr-5 tw-w-full desktop-view">
-                        {{'planning-list' | translate}}</h3>
+                        {{'Planning list' | translate}}</h3>
                     <app-scheduling-search-bar (emitFilterChange)="setSingleSearchFilter($event)">
                     </app-scheduling-search-bar>
                     <div class="tw-w-full">
@@ -70,7 +70,7 @@
                         <button routerLink="../add" [disabled]="(isLoading$ | async) || false"
                             class="tw-bg-primary tw-text-white hover:tw-bg-primary-dark tw-py-2 tw-min-h-[35px] min-md:tw-min-w-[120px] max-sm:tw-w-full tw-rounded-l max-lg:tw-w-full"
                             type="button">
-                            {{'add-sid' | translate}}
+                            {{'Add SID' | translate}}
                         </button>
                         <button [disabled]="(isLoading$ | async) || false"
                             class="tw-bg-primary tw-text-white hover:tw-bg-primary-dark tw-min-h-[35px] min-md:tw-min-w-[30px] max-sm:tw-w-full tw-rounded-r"
@@ -109,7 +109,7 @@
                     <fa-icon icon="grid-2" size="2x" matTooltipClass="tw-drop-shadow-lg" matTooltipPosition="above"
                         [matTooltip]="'table' | translate"
                         [ngClass]="{'tw-text-[#17A0B5]': !(isTableView$ | async),'tw-mx-2 tw-cursor-pointer' : true}"
-                        (click)="isTableView$.next(false); retrievePlannings()">
+                        (click)="isTableView$.next(false); retrievePlanningList()">
                     </fa-icon>
                     <fa-icon icon="list" size="2x" matTooltipClass="tw-drop-shadow-lg" matTooltipPosition="above"
                         [matTooltip]="'card' | translate"
@@ -133,8 +133,8 @@
                                 (triggerCheckIn)="openCheckinModal($event)"
                                 (triggerCheckOut)="openCheckOutModal($event)" (triggerReject)="openRejectModal($event)"
                                 (triggerAccept)="openPlanModal($event)" (triggerDeletion)="openDeleteModal($event)"
-                                [cdkDragData]="item" cdkDrag [planning]="item">
-                                <div *cdkDragPreview class="square" [ngStyle]="{backgroundColor: item?.statusColor }">
+                                [cdkDragData]="item" cdkDrag>
+                                <div *cdkDragPreview class="square">
                                 </div>
                             </scheduling-card>
                             <app-loader [isContainer]="false" *ngIf="(cardLoading$ | async)"
@@ -153,8 +153,8 @@
                                 (triggerCheckIn)="openCheckinModal($event)"
                                 (triggerCheckOut)="openCheckOutModal($event)" (triggerReject)="openRejectModal($event)"
                                 (triggerAccept)="openPlanModal($event)" (triggerDeletion)="openDeleteModal($event)"
-                                [cdkDragData]="item" cdkDrag [planning]="item">
-                                <div *cdkDragPreview class="square" [ngStyle]="{backgroundColor: item?.statusColor }">
+                                [cdkDragData]="item" cdkDrag>
+                                <div *cdkDragPreview class="square" >
                                 </div>
                             </scheduling-card>
                             <app-loader [isContainer]="false" *ngIf="(cardLoading$ | async)"

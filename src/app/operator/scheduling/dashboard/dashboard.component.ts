@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { SchedulingImportModalComponent } from '../scheduling-import-modal/scheduling-import-modal.component';
 import { SchedulingPlanModalComponent } from '../scheduling-plan-modal/scheduling-plan-modal.component';
 import { PlanningService } from 'src/app/core/services/planning.service';
-import { UpdatePlanningDock } from 'src/app/core/models/planning.model';
+import { PlanningModel, UpdatePlanningDock } from 'src/app/core/models/planning.model';
 import { BehaviorSubject, Observable, Subscription, map } from 'rxjs';
 import { SchedulingDeleteModalComponent } from '../scheduling-delete-modal/scheduling-delete-modal.component';
 import { MatSidenav } from '@angular/material/sidenav';
@@ -51,7 +51,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   readonly sortOrder$: BehaviorSubject<string> = new BehaviorSubject('DESC');
   readonly isComvexReorder$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-  plannings: SchedulingPreviewModel[] = []
+  plannings: PlanningModel[] = []
   filterDate: Date = new Date();
   filterTypeEnum = FilterTypeENum;
 
@@ -111,7 +111,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   subscribeForSortByChanges(isFirstLoad: boolean = false): void {
     this.sortBy$.subscribe((response) => {
       this.appliedFilters['column'] = response;
-      if (!isFirstLoad) this.retrievePlannings();
+      if (!isFirstLoad) this.retrievePlanningList();
       isFirstLoad = false;
     });
   }
@@ -119,7 +119,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   subscribeForSortOrderChanges(isFirstLoad: boolean = false): void {
     this.sortOrder$.subscribe((dir) => {
       this.appliedFilters['dir'] = dir;
-      if (!isFirstLoad) this.retrievePlannings();
+      if (!isFirstLoad) this.retrievePlanningList();
       isFirstLoad = false;
     });
   }
@@ -168,7 +168,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       * 5 = schedulingDate filter
     */
     this.appliedFilters[key] = event.value;
-    this.retrievePlannings();
+    this.retrievePlanningList();
   }
 
   applyMobileView(): void {
@@ -181,14 +181,14 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onBottomReached(): void {
     this.pageSettings.start = this.pageSettings.start + 20;
-    this.retrievePlannings(true);
+    this.retrievePlanningList();
   }
 
   subscribeForLocationChange(isFirstLoad: boolean = false): void {
     this.organizationService.organization.subscribe((response) => {
       if (response) {
         if (!isFirstLoad) this.isLoading$.next(true);
-        this.retrievePlannings();
+        this.retrievePlanningList();
       } else {
         this.isLoading$.next(false);
       }
@@ -257,7 +257,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     this.filterDate = <Date>event;
     this.plannings.length = 0;
     this.isLoading$.next(true);
-    this.retrievePlannings();
+    this.retrievePlanningList();
   }
 
   handleOpenPlanUpgradeWarning(): void {
@@ -282,7 +282,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
           this.vehicleListComponent.retrievePlannings();
           this.isLoading$.next(false);
         } else {
-          this.retrievePlannings();
+          this.retrievePlanningList();
         }
         this.snackBar.open('SID has been scheduled!', 'Success', {
           duration: 3000,
@@ -310,7 +310,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         .subscribe({
           next: (isImported) => {
             if (isImported) {
-              this.retrievePlannings();
+              this.retrievePlanningList();
             } else {
               this.isLoading$.next(false);
             }
@@ -357,7 +357,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
           panelClass: ['success-snackbar'],
           verticalPosition: 'top',
         })
-        this.retrievePlannings();
+        this.retrievePlanningList();
       },
       error: (body) => {
         handleError(this.snackBar,  body, this.isLoading$);
@@ -374,7 +374,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
           panelClass: ['success-snackbar'],
           verticalPosition: 'top',
         })
-        this.retrievePlannings();
+        this.retrievePlanningList();
       },
       error: (body) => {
         handleError(this.snackBar,  body, this.isLoading$);
@@ -427,7 +427,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         panelClass: ['success-snackbar'],
         verticalPosition: 'top',
       })
-      this.retrievePlannings();
+      this.retrievePlanningList();
     }, error: (body) => {
       handleError(this.snackBar,  body, this.isLoading$);
     }});
@@ -442,38 +442,29 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         panelClass: ['success-snackbar'],
         verticalPosition: 'top',
       })
-      this.retrievePlannings();
+      this.retrievePlanningList();
     }, error: (body) => {
       handleError(this.snackBar,  body, this.isLoading$);
     }});
   }
 
-  retrievePlannings(fetchMore: boolean = false): void {
-    if (fetchMore && this.hasReachedEndPage$.getValue() || this.isTableView$.getValue()) {
-      return;
+  retrievePlanningList(): void {
+    let pageIndex = 0;
+    let pageSize = 5;
+    let data={
+        "start": pageIndex,
+        "length": pageSize,
+        "filters": ["","","","","",""],//["firstname/lastname", "status", "role", "phone", "email"]
+        "order": [{"dir": "DESC", "column": 0}]
     }
-
-    if (!fetchMore) this.pageSettings = {...defaultPageSettings};
-    if (fetchMore) this.cardLoading$.next(true);
-
-    this.planningService.list({ schedulingDate: getFormattedDate(this.filterDate), ...this.appliedFilters, ...this.pageSettings })
-                        .subscribe((response: SchedulingModel[]) => {
-      if (fetchMore) {
-        if (!response.length) {
-          this.hasReachedEndPage$.next(true);
-          this.cardLoading$.next(false);
-          return;
-        }
-        this.plannings.push(...<SchedulingPreviewModel[]>response);
-        this.cardLoading$.next(false);
-      } else {
-        this.plannings = <SchedulingPreviewModel[]>response;
-        this.hasReachedEndPage$.next(false);
-      }
-
-      this.isLoading$.next(false);
-    });
-  }
+    // debugger
+    this.planningService.pagination(data).subscribe((response:any) => {
+        this.plannings = response.items;
+        this.isLoading$.next(false);
+        this.cd.detectChanges();
+        pageSize = pageSize + 5;
+    })
+}
 
   openPlanEditModal(event: any): void {
     const planning = this.editPlanning$.getValue();
@@ -563,32 +554,32 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   toggleSidenav(data: { view: string, id: number, planning?: SchedulingPreviewModel }) {
-    switch (data.view) {
-      case 'copy':
-        this.logId = data.id;
-        this.editPlanning$.next(this.plannings.find(p => p.id === data.id) || null)
-        this.toggleSelectMode();
-        this.componentName$.next(data.view);
-        break;
-      case 'view':
-        this.logId = data.id;
-        const planning = data.planning ? data.planning : this.plannings.find(p => p.id === data.id) || null;
-        this.editPlanning$.next(planning)
-        this.componentName$.next(data.view);
-        this.sidenav.open();
-        break;
-      case 'mess':
-        this.editPlanning$.next(this.plannings.find(p => p.id === data.id) || null)
-        this.componentName$.next(data.view);
-        this.sidenav.open();
-        break;
-      case 'edit':
-        this.editPlanning$.next(this.plannings.find(p => p.id === data.id) || null)
-        this.componentName$.next(data.view);
-        this.isLoading$.next(false);
-        this.sidenav.open();
-        break;
-    }
+    // switch (data.view) {
+    //   case 'copy':
+    //     this.logId = data.id;
+    //     this.editPlanning$.next(this.plannings.find(p => p.id === data.id) || any[])
+    //     this.toggleSelectMode();
+    //     this.componentName$.next(data.view);
+    //     break;
+    //   case 'view':
+    //     this.logId = data.id;
+    //     const planning = data.planning ? data.planning : this.plannings.find(p => p.id === data.id) || null;
+    //     this.editPlanning$.next(planning)
+    //     this.componentName$.next(data.view);
+    //     this.sidenav.open();
+    //     break;
+    //   case 'mess':
+    //     this.editPlanning$.next(this.plannings.find(p => p.id === data.id) || null)
+    //     this.componentName$.next(data.view);
+    //     this.sidenav.open();
+    //     break;
+    //   case 'edit':
+    //     this.editPlanning$.next(this.plannings.find(p => p.id === data.id) || null)
+    //     this.componentName$.next(data.view);
+    //     this.isLoading$.next(false);
+    //     this.sidenav.open();
+    //     break;
+    // }
   }
 
   openDeleteModal(planning: SchedulingPreviewModel|ComvexPlanningList|null): void {
@@ -612,7 +603,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
                 panelClass: ['success-snackbar'],
                 verticalPosition: 'top',
               })
-              this.retrievePlannings();
+              this.retrievePlanningList();
             }, error: (body) => handleError(this.snackBar, body, this.isLoading$)})
           }
         }
