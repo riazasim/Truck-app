@@ -25,7 +25,7 @@ export class LoginComponent {
   }
 
   loginForm: UntypedFormGroup = new UntypedFormGroup({
-    email: new UntypedFormControl(null, [Validators.required, Validators.email]),
+    username: new UntypedFormControl(null, [Validators.required, Validators.email]),
     password: new UntypedFormControl(null, [Validators.required, Validators.pattern('')]),
   })
   constructor(private readonly router: Router,
@@ -61,11 +61,13 @@ export class LoginComponent {
       next: (response) => {
       this.auth.saveAuth(response);
        this.rolesService.setUserRoles([response.roles])
-      this.router.navigate(
-                                               ////operator/dashboard
-          [isTutorialTrue ? '/admin' : '../admin/dashboard'], { relativeTo: this.route }
-      )
-        .then(() => {
+      // this.router.navigate(
+      //                                          ////operator/dashboard
+      //     [isTutorialTrue ? '/admin' : '../admin/dashboard'], { relativeTo: this.route }
+      // )
+      //   .then(() => {
+        this.router.navigate(['../admin'], { relativeTo: this.route }).then(() => {
+          this.loginForm.enable();
         // this.snackBar.open("Login success!", "", {
         //   duration: 3000,
         //   horizontalPosition: 'end',
