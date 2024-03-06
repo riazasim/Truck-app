@@ -54,7 +54,7 @@ export class MaterialPanelTableComponent {
   public showButton = true;
 
   @Input()
-  public hasShadow = true;
+  public Class : string;
 
   @Input()
   public buttonLabel = '';

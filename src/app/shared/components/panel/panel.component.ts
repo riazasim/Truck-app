@@ -13,7 +13,7 @@ export class PanelComponent {
   public showHeader = true;
 
   @Input()
-  public hasShadow = true;
+  public Class : string;
 
 }
 

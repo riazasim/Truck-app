@@ -1,10 +1,18 @@
-
-
-
-<form [formGroup]="searchForm" (ngSubmit)="searchLocation()">
-    <input type="text" formControlName="searchQuery" placeholder="Enter coordinates (lat, lng)">
-    <button type="submit">Search</button>
-  </form>
-<div id="map" style="height: 750px; width: 100%;"></div>
-
-
+<div class="tw-flex tw-flex-col tw-w-full tw-gap-4 tw-bg-white tw-px-[auto] tw-shadow-md tw-py-4">
+    <div class="tw-flex tw-flex-[0.1] tw-w-[98%] tw-mx-[auto] tw-items-center tw-justify-between">
+        <h2 class="tw-text-xl tw-font-medium">{{Title}}</h2>
+        <form [formGroup]="searchForm" (ngSubmit)="searchLocation()" class="tw-min-w-[500px] tw-h-full tw-rounded-md tw-flex tw-border tw-border-[#9E9E9E]">
+            <button type="submit">
+                <fa-icon icon="search" class="tw-mx-2 tw-cursor-pointer tw-text-black"></fa-icon>
+            </button>
+            <input class="tw-h-full tw-border-transparent tw-w-full tw-rounded-md" inputRef type="text" formControlName="searchQuery"
+                placeholder="Enter coordinates (lat, lng)">
+                <button type="button">
+                    <fa-icon [icon]="['fas' , 'caret-down']" class="tw-mx-2 tw-cursor-pointer tw-text-black"></fa-icon>
+                </button>
+        </form>
+    </div>
+    <div class="tw-w-full tw-flex-1">
+        <div id="map" style="height: 750px; width: 98%; margin: 0 auto;"></div>
+    </div>
+</div>

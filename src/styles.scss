@@ -23,6 +23,7 @@
 
 @import 'flag-icons/sass/flag-icons';
 
+
 :root {
   --app-border-radius: 3px;
   --control-height: 53px;
@@ -61,9 +62,9 @@ div.mat-autocomplete-panel {
 /* End MatSnackBar Module */
 
 /* Fix Mat calendar hover text color */
-.mat-calendar-body-cell:not(.mat-calendar-body-disabled):focus > 
+.mat-calendar-body-cell:not(.mat-calendar-body-disabled):focus >
 .mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical),
-.mat-calendar-body-cell:not(.mat-calendar-body-disabled):hover > 
+.mat-calendar-body-cell:not(.mat-calendar-body-disabled):hover >
 .mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical) {
   color: #FFF;
 }
@@ -85,7 +86,7 @@ div.mat-autocomplete-panel {
   margin-right: 0px;
 }
 .mat-mdc-paginator-range-label {
-   margin: 0px !important; 
+   margin: 0px !important;
 }
 html {
   --mat-paginator-container-text-font: Roboto, sans-serif;

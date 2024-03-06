@@ -4,7 +4,7 @@
       <ng-content select="[menu]"></ng-content>
     </div>
   </header>
-  <main [ngStyle]="{'box-shadow': hasShadow ? '0 0 4px #00000040' : ''}">
+  <main [class]="Class" [ngStyle]="{'scrollbar-width' : 'none','overflow' : 'hidden'}">
     <ng-content select="[content]"></ng-content>
   </main>
 </div>

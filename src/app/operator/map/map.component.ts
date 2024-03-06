@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild , Input } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MapInfoWindow, MapMarker } from '@angular/google-maps';
 
@@ -26,6 +26,8 @@ export class MapComponent implements OnInit {
         south: -10,
         west: -10,
     };
+    @Input()
+    public Title: string | undefined;
 
     constructor() {
         this.searchForm = new FormGroup({
@@ -74,7 +76,7 @@ export class MapComponent implements OnInit {
     move(event: google.maps.MapMouseEvent) {
         if (event.latLng != null) this.display = event.latLng.toJSON();
     }
-        
+
         // const overlayDiv = document.getElementById('overlay');
     // map.controls[google.maps.ControlPosition.TOP_LEFT].push(overlayDiv);
     // }
@@ -114,7 +116,7 @@ export class MapComponent implements OnInit {
     //     });
     // }
 
-    
+
 
     // Method to open info window when marker is clicked
     // openInfoWindow(marker: MapMarker) {
@@ -126,4 +128,4 @@ export class MapComponent implements OnInit {
     //     if (event.latLng != null) this.display = event.latLng.toJSON();
     // }
 }
-    
+
