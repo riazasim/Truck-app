@@ -37,6 +37,10 @@ export interface convoyModel {
 
 export interface PlanningModel {
     id?: number;
+    planningId?: number;
+    sId?:number;
+    relativeTimeArrival?:string;
+    shipmentStatus?:string;
     routingDetail: {
         convoyType: string;
         estimatedTimeArrival: Date;

@@ -150,7 +150,8 @@ export class PlanningService {
   }
 
   delete(id: number): Observable<any> {
-    return this.http.delete(`${environment.apiUrl}${environment.apiVersion}${this.route}/${id}`)
+    let data = {"planningId":id};
+    return this.http.post(`${environment.apiUrl}${environment.apiVersion}/deletePlanning`, wrapJsonForRequest(data))
   }
 
   pagination(data: any): Observable<PlanningTable> {

@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, Input, OnChanges } from '@angular/c
 import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
 import { BehaviorSubject } from 'rxjs';
+import { PlanningModel } from 'src/app/core/models/planning.model';
 import { SchedulingLogModel, SchedulingModel, SchedulingPreviewModel, ShipmentLogsModel } from 'src/app/core/models/scheduling.model';
 import { PlanningService } from 'src/app/core/services/planning.service';
 import { OpenImageModalComponent } from 'src/app/shared/components/open-image-modal/open-image-modal.component';
@@ -16,7 +17,7 @@ export class SchedulingViewLogComponent implements OnChanges {
   isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   @Input() id: number;
   @Input() sidenav: MatSidenav;
-  @Input() planning$: BehaviorSubject<SchedulingPreviewModel|null>;
+  @Input() planning$: BehaviorSubject<PlanningModel|null>;
   planning: SchedulingLogModel;
   shipmentLogs: ShipmentLogsModel[];
 

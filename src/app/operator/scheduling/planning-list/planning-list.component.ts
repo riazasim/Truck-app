@@ -44,12 +44,11 @@ export class PlanningListComponent {
             "filters": ["","","","","",""],//["firstname/lastname", "status", "role", "phone", "email"]
             "order": [{"dir": "DESC", "column": 0}]
         }
-        // debugger
         this.planningService.pagination(data).subscribe((response:any) => {
             this.dataSource = response.items;
             this.originalSource = response.items;
             this.length=response.noTotal;
-            this.isLoading$.next(false);
+            this.isLoading$.next(false)
             this.cd.detectChanges();
         })
     }

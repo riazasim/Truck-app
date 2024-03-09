@@ -7,7 +7,7 @@ import { PlanningModel, UpdatePlanningDock } from 'src/app/core/models/planning.
 import { BehaviorSubject, Observable, Subscription, map } from 'rxjs';
 import { SchedulingDeleteModalComponent } from '../scheduling-delete-modal/scheduling-delete-modal.component';
 import { MatSidenav } from '@angular/material/sidenav';
-import { ComvexPlanningList, SchedulingModel, SchedulingPreviewModel } from 'src/app/core/models/scheduling.model';
+import { ComvexPlanningList} from 'src/app/core/models/scheduling.model';
 import { MatSnackBar, MatSnackBarRef, TextOnlySnackBar } from '@angular/material/snack-bar';
 import { getFormattedDate } from 'src/app/shared/utils/date.functions';
 import { StatusListService } from 'src/app/core/services/status-list.service';
@@ -45,7 +45,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   readonly isToggleOpened$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   readonly isMobileCardList$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   readonly isTimeSlotFilterMode$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  readonly editPlanning$: BehaviorSubject<SchedulingPreviewModel|null> = new BehaviorSubject<SchedulingPreviewModel|null>(null);
+  readonly editPlanning$: BehaviorSubject<PlanningModel|null> = new BehaviorSubject<PlanningModel|null>(null);
   readonly hasReachedEndPage$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   readonly sortBy$: BehaviorSubject<number> = new BehaviorSubject<number>(12);
   readonly sortOrder$: BehaviorSubject<string> = new BehaviorSubject('DESC');
@@ -84,6 +84,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
               private readonly organizationService: OrganizationService) {}
 
   ngOnInit(): void {
+    this.retrievePlanningList();
     this.retrieveSIDStatuses();
     this.subscribeForLocationChange(true);
     this.subscribeForSortByChanges(true);
@@ -318,7 +319,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         });
   }
 
-  openCancellationModal(planning: SchedulingPreviewModel): void {
+  openCancellationModal(planning: PlanningModel): void {
     this.dialogService.open(SchedulingCancelModalComponent, {
       disableClose: true,
       data: planning
@@ -333,7 +334,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       });
   }
 
-  openRejectModal(planning: SchedulingPreviewModel): void {
+  openRejectModal(planning: PlanningModel): void {
     this.dialogService.open(SchedulingRejectModalComponent, {
       disableClose: true,
       data: planning
@@ -382,7 +383,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     })
   }
 
-  openCheckinModal(planning: SchedulingPreviewModel): void {
+  openCheckinModal(planning: PlanningModel): void {
     this.dialogService.open(SchedulingCheckinCheckoutModalComponent, {
       disableClose: true,
       data: {
@@ -400,7 +401,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       });
   }
 
-  openCheckOutModal(planning: SchedulingPreviewModel): void {
+  openCheckOutModal(planning: PlanningModel): void {
     this.dialogService.open(SchedulingCheckinCheckoutModalComponent, {
       disableClose: true,
       data: {
@@ -457,9 +458,10 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         "filters": ["","","","","",""],//["firstname/lastname", "status", "role", "phone", "email"]
         "order": [{"dir": "DESC", "column": 0}]
     }
-    // debugger
     this.planningService.pagination(data).subscribe((response:any) => {
         this.plannings = response.items;
+        console.log('planning data',this.plannings);
+        
         this.isLoading$.next(false);
         this.cd.detectChanges();
         pageSize = pageSize + 5;
@@ -496,7 +498,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
             this.updatePlanning(<any>{
               assigningDate: getFormattedDate(this.filterDate),
               hour: this.getHour(data.index),
-              planning: <number>(<SchedulingModel>planning).id,
+              planning: <number>(<PlanningModel>planning).id,
               dock: data.dock,
               statusListStatus: plannedStatus.id,
               timeSlot: this.getHour(data.index)
@@ -553,42 +555,42 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       });
   }
 
-  toggleSidenav(data: { view: string, id: number, planning?: SchedulingPreviewModel }) {
-    // switch (data.view) {
-    //   case 'copy':
-    //     this.logId = data.id;
-    //     this.editPlanning$.next(this.plannings.find(p => p.id === data.id) || any[])
-    //     this.toggleSelectMode();
-    //     this.componentName$.next(data.view);
-    //     break;
-    //   case 'view':
-    //     this.logId = data.id;
-    //     const planning = data.planning ? data.planning : this.plannings.find(p => p.id === data.id) || null;
-    //     this.editPlanning$.next(planning)
-    //     this.componentName$.next(data.view);
-    //     this.sidenav.open();
-    //     break;
-    //   case 'mess':
-    //     this.editPlanning$.next(this.plannings.find(p => p.id === data.id) || null)
-    //     this.componentName$.next(data.view);
-    //     this.sidenav.open();
-    //     break;
-    //   case 'edit':
-    //     this.editPlanning$.next(this.plannings.find(p => p.id === data.id) || null)
-    //     this.componentName$.next(data.view);
-    //     this.isLoading$.next(false);
-    //     this.sidenav.open();
-    //     break;
-    // }
+  toggleSidenav(data: { view: string, id: number, planning?: PlanningModel }) {
+    switch (data.view) {
+      case 'copy':
+        this.logId = data.id;
+        this.editPlanning$.next(this.plannings.find(p => p.id === data.id) || null)
+        this.toggleSelectMode();
+        this.componentName$.next(data.view);
+        break;
+      case 'view':
+        this.logId = data.id;
+        const planning = data.planning ? data.planning : this.plannings.find(p => p.id === data.id) || null;
+        this.editPlanning$.next(planning)
+        this.componentName$.next(data.view);
+        this.sidenav.open();
+        break;
+      case 'mess':
+        this.editPlanning$.next(this.plannings.find(p => p.id === data.id) || null)
+        this.componentName$.next(data.view);
+        this.sidenav.open();
+        break;
+      case 'edit':
+        this.editPlanning$.next(this.plannings.find(p => p.id === data.id) || null)
+        this.componentName$.next(data.view);
+        this.isLoading$.next(false);
+        this.sidenav.open();
+        break;
+    }
   }
 
-  openDeleteModal(planning: SchedulingPreviewModel|ComvexPlanningList|null): void {
+  openDeleteModal(planning: PlanningModel|ComvexPlanningList|null): void {
     if (!planning) return;
 
     this.dialogService.open(SchedulingDeleteModalComponent, {
       disableClose: true,
       data: {
-        sId: planning.sId
+        sId: planning.id
       }
     }).afterClosed()
       .subscribe({
