@@ -6,6 +6,7 @@ import { SchedulingSuccessComponent } from './scheduling-success/scheduling-succ
 import { SchedulingComponent } from './scheduling.component';
 import { EditSchedulingComponent } from './edit-scheduling/edit-scheduling.component';
 import { PlanningListComponent } from './planning-list/planning-list.component';
+import { SchedulingViewLogComponent } from './scheduling-view-log/scheduling-view-log.component';
 
 const routes: Routes = [
   {
@@ -32,6 +33,10 @@ const routes: Routes = [
       {
         path: 'edit/:id',
         component:  EditSchedulingComponent
+      },
+      {
+        path: 'view',
+        component:  SchedulingViewLogComponent
       },
       {
         path: 'success',

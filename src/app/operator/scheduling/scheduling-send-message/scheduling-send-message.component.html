@@ -12,13 +12,23 @@
             <div><h4 class="heading-4 tw-text-primary">Shipment Details</h4></div>
         </div>
         <div class="tw-grid min-lg:tw-grid-rows-3 min-lg:tw-grid-cols-2 max-md:tw-grid-rows-6 max-md:tw-grid-cols-1 tw-py-2">
-            <div><span class="tw-font-bold">Status: </span> <mat-chip [ngStyle]="{
+            <div><span class="tw-font-bold">Status: </span> 
+            <!-- <mat-chip [ngStyle]="{
                 'background': (planning$ | async)?.statusColor
-            }">{{(planning$ | async)?.status || 'No status'}}</mat-chip></div>
-            <div><span class="tw-font-bold">Driver: </span> {{ (planning$ | async)?.driverName || '-'}}</div>
-            <div><span class="tw-font-bold">Operation: </span> {{ (planning$ | async)?.operation || '-'}}</div>
-            <div><span class="tw-font-bold">Auto License Plate: </span> {{ (planning$ | async)?.truckLicensePlateFront || '-'}}</div>
-            <div><span class="tw-font-bold">Products: </span> {{ (planning$ | async)?.products || '-'}}</div>
+            }">{{(planning$ | async)?.status || 'No status'}}</mat-chip> -->
+            </div>
+            <div><span class="tw-font-bold">Driver: </span> 
+                <!-- {{ (planning$ | async)?.driverName || '-'}} -->
+            </div>
+            <div><span class="tw-font-bold">Operation: </span>
+                 <!-- {{ (planning$ | async)?.operation || '-'}} -->
+                </div>
+            <div><span class="tw-font-bold">Auto License Plate: </span>
+                 <!-- {{ (planning$ | async)?.truckLicensePlateFront || '-'}} -->
+                </div>
+            <div><span class="tw-font-bold">Products: </span>
+                 <!-- {{ (planning$ | async)?.products || '-'}} -->
+                </div>
             <div><span class="tw-font-bold">Avize marfa: </span> -</div>
         </div>
     </div>

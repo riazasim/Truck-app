@@ -1,16 +1,76 @@
-<div class="tw-rounded-lg tw-overflow-hidden tw-shadow-lg tw-bg-white tw-p-5 tw-min-h-[203px] tw-border-l-[8px] tw-cursor-pointer"
-[ngClass]="{'tw-max-w-[400px]': !isMaxWidth, 'tw-w-full': isMaxWidth}"
-[ngStyle]="{borderColor: planning?.statusColor }">
+<!-- <div
+    class="tw-rounded-lg tw-overflow-hidden tw-shadow-lg tw-bg-white tw-p-5 tw-min-h-[203px] tw-border-l-[8px] tw-cursor-pointer"
+    [ngClass]="{ 'tw-max-w-[400px]': !isMaxWidth, 'tw-w-full': isMaxWidth }"
+    [ngStyle]="{ borderColor: planning?.statusColor }"
+> -->
+<div
+    class="tw-rounded-lg tw-mb-2 tw-overflow-hidden tw-shadow-lg tw-bg-white tw-p-5 tw-min-h-[203px] tw-border-l-[8px] tw-cursor-pointer"
+    [ngClass]="{ 'tw-max-w-[400px]': !isMaxWidth, 'tw-w-full': isMaxWidth }"  *ngFor="let planning of plannings"
+>
     <div class="tw-grid tw-grid-rows-9 tw-gap-2 tw-h-full">
-        <div class="tw-grid tw-grid-cols-3 tw-gap-2 tw-border-b tw-mb-2 tw-border-lightgray">
+        <div
+            class="tw-grid tw-grid-cols-3 tw-gap-2 tw-border-b tw-mb-2 tw-border-lightgray"
+        >
             <div class="tw-col-span-2">
-                <h5 matTooltipClass="tw-drop-shadow-lg" matTooltipPosition="above" [matTooltip]="'booking.drag-drop-to-right' | translate" class="heading-5 tw-text-primary tw-font-bold" (click)="setComponentName('view')">SID - {{planning.sId}}</h5>
+                <!-- <h5
+                    matTooltipClass="tw-drop-shadow-lg"
+                    matTooltipPosition="above"
+                    [matTooltip]="'booking.drag-drop-to-right' | translate"
+                    class="heading-5 tw-text-primary tw-font-bold"
+                    (click)="setComponentName('view')"
+                >
+                    SID - {{ planning.id }}
+                </h5> -->
+                <h5
+                    matTooltipClass="tw-drop-shadow-lg"
+                    matTooltipPosition="above"
+                    [matTooltip]="'booking.drag-drop-to-right' | translate"
+                    class="heading-5 tw-text-primary tw-font-bold"
+                >
+                    SID - {{ planning.id }}
+                </h5>
             </div>
             <div class="tw-flex tw-gap-2 tw-justify-end">
-                <fa-icon matTooltipClass="tw-drop-shadow-lg" matTooltipPosition="above" [matTooltip]="'button.send-message' | translate" icon="message-lines" size="lg" (click)="setComponentName('mess')"></fa-icon>
-                <fa-icon matTooltipClass="tw-drop-shadow-lg" matTooltipPosition="above" [matTooltip]="'button.edit' | translate" icon="eye" size="lg"  [routerLink]="['../', 'edit', planning.id]"></fa-icon>
-                <fa-icon matTooltipClass="tw-drop-shadow-lg" matTooltipPosition="above" [matTooltip]="'button.plan' | translate" icon="notes" size="lg" (click)="setComponentName('copy')"></fa-icon>
-                <fa-icon matTooltipClass="tw-drop-shadow-lg" matTooltipPosition="above" [matTooltip]="'button.delete' | translate" icon="trash" size="lg" (click)="triggerDeletion.emit(planning)"></fa-icon>
+                <fa-icon
+                    matTooltipClass="tw-drop-shadow-lg"
+                    matTooltipPosition="above"
+                    [matTooltip]="'Send message' | translate"
+                    icon="message-lines"
+                    size="lg"
+                    (click)="setComponentName('mess')"
+                ></fa-icon>
+                <!-- <fa-icon
+                    matTooltipClass="tw-drop-shadow-lg"
+                    matTooltipPosition="above"
+                    [matTooltip]="'button.edit' | translate"
+                    icon="eye"
+                    size="lg"
+                    [routerLink]="['../', 'edit', planning.id]"
+                ></fa-icon> -->
+                <fa-icon
+                    matTooltipClass="tw-drop-shadow-lg"
+                    matTooltipPosition="above"
+                    [matTooltip]="'Edit' | translate"
+                    icon="eye"
+                    size="lg"
+                    [routerLink]="['../', 'edit', planning.id]"
+                ></fa-icon>
+                <fa-icon
+                    matTooltipClass="tw-drop-shadow-lg"
+                    matTooltipPosition="above"
+                    [matTooltip]="'Plan' | translate"
+                    icon="notes"
+                    size="lg"
+                    (click)="setComponentName('copy')"
+                ></fa-icon>
+                <fa-icon
+                    matTooltipClass="tw-drop-shadow-lg"
+                    matTooltipPosition="above"
+                    [matTooltip]="'button.delete' | translate"
+                    icon="trash"
+                    size="lg"
+                    (click)="triggerDeletion.emit(planning)"
+                ></fa-icon>
             </div>
         </div>
         <div class="tw-grid tw-grid-cols-3 tw-gap-2">
@@ -18,73 +78,172 @@
                 <div class="tw-flex tw-justify-between">
                     <div>
                         <p>
-                            <span class="tw-font-bold">Docks:</span>
-                            <span class="tw-pl-2">{{planning.dockName || '-'}}</span>
+                            <span class="tw-font-bold">Vessel Id:</span>
+                            <!-- <span class="tw-pl-2">{{
+                                planning.dockName || "-"
+                            }}</span> -->
+                            <span class="tw-pl-2">{{
+                                "-"
+                            }}</span>
                         </p>
                     </div>
-                    <div>
-                        <mat-chip 
-                        [ngStyle]="{'background': planning?.statusColor, 'color': (planning?.status === 'Checked-out' || planning?.status === 'Checked-in')?'white':'#595959' }">
-                            {{planning.status || 'No status'}} 
+                    <!-- <div>
+                        <mat-chip
+                            [ngStyle]="{
+                                background: planning?.statusColor,
+                                color:
+                                    planning?.status === 'Checked-out' ||
+                                    planning?.status === 'Checked-in'
+                                        ? 'white'
+                                        : '#595959'
+                            }"
+                        >
+                            {{ planning.status || "No status" }}
                         </mat-chip>
-                    </div>
+                    </div> -->
                 </div>
-
             </div>
         </div>
         <div class="tw-flex tw-justify-between">
             <div>
-                <span class="tw-font-bold">Timeslot:</span>
-                <span class="tw-pl-2">{{planning.timeSlot || '-'}}</span>
+                <span class="tw-font-bold">Berth:</span>
+                <span class="tw-pl-2">{{ "-" }}</span>
             </div>
-            <div class="tw-pl-2 tw-flex tw-justify-around tw-gap-2">
-                <ng-container *ngIf="planning.timeSlot && planning.status === 'Created'">
-                    <span (click)="triggerAccept.emit({ 
-                        container: { data: { index: +planning.timeSlot.slice(0,2), name: planning.dockName, dock: +planning.dockId } },
-                        item: { data: planning }
-                    })"><b>{{'button.accept' | translate}}</b></span> <fa-icon (click)="triggerAccept.emit({ 
-                        container: { data: { index: +planning.timeSlot.slice(0,2), name: planning.dockName, dock: +planning.dockId } },
-                        item: { data: planning }
-                    })" class="tw-text-green-500"  icon="check" size="lg"></fa-icon>
+            <!-- <div class="tw-pl-2 tw-flex tw-justify-around tw-gap-2">
+                <ng-container
+                    *ngIf="planning.timeSlot && planning.status === 'Created'"
+                >
+                    <span
+                        (click)="
+                            triggerAccept.emit({
+                                container: {
+                                    data: {
+                                        index: +planning.timeSlot.slice(0, 2),
+                                        name: planning.dockName,
+                                        dock: +planning.dockId
+                                    }
+                                },
+                                item: { data: planning }
+                            })
+                        "
+                        ><b>{{ "button.accept" | translate }}</b></span
+                    >
+                    <fa-icon
+                        (click)="
+                            triggerAccept.emit({
+                                container: {
+                                    data: {
+                                        index: +planning.timeSlot.slice(0, 2),
+                                        name: planning.dockName,
+                                        dock: +planning.dockId
+                                    }
+                                },
+                                item: { data: planning }
+                            })
+                        "
+                        class="tw-text-green-500"
+                        icon="check"
+                        size="lg"
+                    ></fa-icon>
                 </ng-container>
                 <ng-container *ngIf="planning.status === 'Planned'">
-                    <span (click)="triggerCheckIn.emit(planning)"><b>{{'button.check-in' | translate}}</b></span> <fa-icon (click)="triggerCheckIn.emit(planning)" class="tw-text-sidCheckIn tw--rotate-90 tw-origin-[8px_11px]"  icon="arrow-down-to-bracket" size="lg"></fa-icon>
+                    <span (click)="triggerCheckIn.emit(planning)"
+                        ><b>{{ "button.check-in" | translate }}</b></span
+                    >
+                    <fa-icon
+                        (click)="triggerCheckIn.emit(planning)"
+                        class="tw-text-sidCheckIn tw--rotate-90 tw-origin-[8px_11px]"
+                        icon="arrow-down-to-bracket"
+                        size="lg"
+                    ></fa-icon>
                 </ng-container>
                 <ng-container *ngIf="planning.status === 'Checked-in'">
-                    <span (click)="triggerCheckOut.emit(planning)"><b>{{'button.check-out' | translate}}</b></span> <fa-icon (click)="triggerCheckOut.emit(planning)" class="tw-text-sidCheckOut tw-rotate-90 tw-origin-[8px_11px]"  icon="arrow-down-to-bracket" size="lg"></fa-icon>
+                    <span (click)="triggerCheckOut.emit(planning)"
+                        ><b>{{ "button.check-out" | translate }}</b></span
+                    >
+                    <fa-icon
+                        (click)="triggerCheckOut.emit(planning)"
+                        class="tw-text-sidCheckOut tw-rotate-90 tw-origin-[8px_11px]"
+                        icon="arrow-down-to-bracket"
+                        size="lg"
+                    ></fa-icon>
                 </ng-container>
-                 <span *ngIf="planning.timeSlot && planning.status === 'Created' || planning.status === 'Planned' || planning.status === 'Checked-in'">|</span>
-                 <ng-container *ngIf="planning.timeSlot && (planning.status === 'Created' || planning.status === 'Planned' || planning.status === 'Checked-in')">
-                     <fa-icon (click)="handleTriggerAction(planning)" class="tw-text-red-500" icon="xmark" size="lg"></fa-icon>
-                    <span (click)="handleTriggerAction(planning)"><b>{{ ['Planned', 'Checked-in'].includes(planning.status) ? ('button.cancel' | translate) : ('button.reject' | translate)}}</b></span>
-                 </ng-container>
-            </div>
+                <span
+                    *ngIf="
+                        (planning.timeSlot && planning.status === 'Created') ||
+                        planning.status === 'Planned' ||
+                        planning.status === 'Checked-in'
+                    "
+                    >|</span
+                >
+                <ng-container
+                    *ngIf="
+                        planning.timeSlot &&
+                        (planning.status === 'Created' ||
+                            planning.status === 'Planned' ||
+                            planning.status === 'Checked-in')
+                    "
+                >
+                    <fa-icon
+                        (click)="handleTriggerAction(planning)"
+                        class="tw-text-red-500"
+                        icon="xmark"
+                        size="lg"
+                    ></fa-icon>
+                    <span (click)="handleTriggerAction(planning)"
+                        ><b>{{
+                            ["Planned", "Checked-in"].includes(planning.status)
+                                ? ("button.cancel" | translate)
+                                : ("button.reject" | translate)
+                        }}</b></span
+                    >
+                </ng-container>
+            </div> -->
         </div>
         <div>
-            <span class="tw-font-bold">Auto:</span>
-            <span class="tw-pl-2">{{planning.truckLicensePlateFront || '-'}}</span>
+            <span class="tw-font-bold">Numar aprobare manevra:</span>
+            <span class="tw-pl-2">{{
+                "-"
+            }}</span>
+        </div>
+        
+        <div>
+            <span class="tw-font-bold">Products:</span>
+            <span class="tw-pl-2">{{
+                "-"
+            }}</span>
+            <!-- <span class="tw-pl-2">
+                <span *ngIf="planning.products && planning.goodsName"
+                    >{{ planning.products }}, {{ planning.goodsName }}</span
+                >
+                <span *ngIf="planning.products && !planning.goodsName">{{
+                    planning.products
+                }}</span>
+                <span *ngIf="!planning.products && planning.goodsName">{{
+                    planning.goodsName
+                }}</span>
+                <span *ngIf="!planning.products && !planning.goodsName">-</span>
+            </span> -->
         </div>
         <div>
-            <span class="tw-font-bold">Operation:</span>
-            <span class="tw-pl-2">{{planning.operation || '-'}}</span>
+            <span class="tw-font-bold">ETA:</span>
+            <span class="tw-pl-2">{{ planning.estimatedTimeArrival || "-" }}</span>
         </div>
         <div>
             <span class="tw-font-bold">Created by:</span>
-            <span class="tw-pl-2">{{planning.createdBy || '-'}}</span>
+            <span class="tw-pl-2">{{ planning.relativeTimeArrival || "-" }}</span>
+        </div>
+        <!-- <scheduling-show-client-supplier-card-labels
+            [isUmexOrganization]="isUmexOrganization"
+            [planning]="planning"
+        ></scheduling-show-client-supplier-card-labels> -->
+        <div>
+            <span class="tw-font-bold">Delay:</span>
+            <span class="tw-pl-2">{{ "-" }}</span>
         </div>
         <div>
-            <span class="tw-font-bold">Products:</span>
-            <span class="tw-pl-2">
-                <span *ngIf="planning.products && planning.goodsName">{{planning.products}}, {{planning.goodsName}}</span>
-                <span *ngIf="planning.products && !planning.goodsName">{{planning.products}}</span>
-                <span *ngIf="!planning.products && planning.goodsName">{{planning.goodsName}}</span>
-                <span *ngIf="!planning.products && !planning.goodsName">-</span>
-            </span>
-        </div>
-        <scheduling-show-client-supplier-card-labels [isUmexOrganization]="isUmexOrganization" [planning]="planning"></scheduling-show-client-supplier-card-labels>
-        <div>
-            <span class="tw-font-bold">Comments:</span>
-            <span class="tw-pl-2">{{planning.clientInstruction || '-'}}</span>
+            <span class="tw-font-bold">Coordinates:</span>
+            <span class="tw-pl-2">{{ "-" }}</span>
         </div>
     </div>
 </div>

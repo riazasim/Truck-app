@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { BehaviorSubject } from 'rxjs';
+import { PlanningModel } from 'src/app/core/models/planning.model';
 import { SchedulingPreviewModel } from 'src/app/core/models/scheduling.model';
 
 @Component({
@@ -10,6 +11,6 @@ import { SchedulingPreviewModel } from 'src/app/core/models/scheduling.model';
 })
 export class SchedulingSendMessageComponent {
   @Input() sidenav: MatSidenav;
-  @Input() planning$: BehaviorSubject<SchedulingPreviewModel|null>;
+  @Input() planning$: BehaviorSubject<PlanningModel|null>;
   @Output() triggerPlanUpgradeWarning: EventEmitter<void> = new EventEmitter();
 }

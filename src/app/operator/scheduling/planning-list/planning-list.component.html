@@ -33,7 +33,7 @@
                             </section>
                         </th>
                         <td cdk-cell *cdkCellDef="let row">
-                            {{ row.vesselId }}
+                            {{ row.vesselId || "-" }}
                         </td>
                     </ng-container>
 
@@ -46,7 +46,7 @@
                             </section>
                         </th>
                         <td cdk-cell *cdkCellDef="let row">
-                            {{ row.berth }}
+                            {{ row.berth || "-" }}
                         </td>
                     </ng-container>
                     <ng-container cdkColumnDef="products">
@@ -58,7 +58,7 @@
                             </section>
                         </th>
                         <td cdk-cell *cdkCellDef="let row">
-                            {{ row.products }}
+                            {{ row.products || "-" }}
                         </td>
                     </ng-container>
                     <ng-container cdkColumnDef="estimatedTimeArrival">
@@ -70,7 +70,7 @@
                             </section>
                         </th>
                         <td cdk-cell *cdkCellDef="let row">
-                            {{ row.estimatedTimeArrival }}
+                            {{ row.estimatedTimeArrival || "-" }}
                         </td>
                     </ng-container>
                     <ng-container cdkColumnDef="relativeTimeArrival">
@@ -82,7 +82,7 @@
                             </section>
                         </th>
                         <td cdk-cell *cdkCellDef="let row">
-                            {{ row.relativeTimeArrival }}
+                            {{ row.relativeTimeArrival || "-" }}
                         </td>
                     </ng-container>
                     <ng-container cdkColumnDef="delay">
@@ -94,7 +94,7 @@
                             </section>
                         </th>
                         <td cdk-cell *cdkCellDef="let row">
-                            {{ row.delay }}
+                            {{ row.delay || "-" }}
                         </td>
                     </ng-container>
                     <ng-container cdkColumnDef="coordinates">
@@ -106,7 +106,7 @@
                             </section>
                         </th>
                         <td cdk-cell *cdkCellDef="let row">
-                            {{ row.coordinates }}
+                            {{ row.coordinates || "-" }}
                         </td>
                     </ng-container>
                     <ng-container cdkColumnDef="shipmentStatus">
@@ -118,7 +118,21 @@
                             </section>
                         </th>
                         <td cdk-cell *cdkCellDef="let row">
-                            {{ row.shipmentStatus }}
+                            <!-- {{ row.shipmentStatus }} -->
+                            <mat-chip
+                            [ngStyle]="{'background-color': row.shipmentStatus === 'Port Queue' ? 'green' : 'red'}"
+                                >
+                                {{ row.shipmentStatus === 'Port Queue' ? 'Port Queue' : row.shipmentStatus === 'Service' ? 'Service' : 'Closed' }}
+                            </mat-chip>
+                            <!-- <mat-chip
+                                [ngClass]="{
+                                    'active': row.shipmentStatus === 'Port Queue',
+                                    'service': row.shipmentStatus === 'Service',
+                                    'inactive': row.shipmentStatus === 'Closed',
+                                }"
+                                >
+                                {{ row.shipmentStatus === 'Port Queue' ? 'Port Queue' : row.shipmentStatus === 'Service' ? 'Service' : 'Closed' }}
+                            </mat-chip> -->
                         </td>
                     </ng-container>
 

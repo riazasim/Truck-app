@@ -13,21 +13,31 @@
             <div class="tw-flex min-lg:tw-justify-between min-lg:tw-items-center max-lg:tw-flex-col">
                 <div><h4 class="heading-4 tw-text-primary">Shipment Details</h4></div>
             </div>
-            <div class="tw-grid min-lg:tw-grid-rows-3 min-lg:tw-grid-cols-2 max-md:tw-grid-rows-6 max-md:tw-grid-cols-1 tw-py-2">
-                <div><span class="tw-font-bold">Status: </span> <mat-chip [ngStyle]="{
+            <div class="tw-grid min-lg:tw-grid-rows-3 min-lg:tw-grid-cols-2 max-md:tw-grid-rows-8 max-md:tw-grid-cols-1 tw-py-2">
+                <div><span class="tw-font-bold">Vessel ID: </span>-</div>
+                <div><span class="tw-font-bold">Coordinates: </span>-</div>
+                <div><span class="tw-font-bold">numar aprobare manevra: </span>-</div>
+                <div><span class="tw-font-bold">ETA: </span>-</div>
+                <div><span class="tw-font-bold">Products: </span>-</div>
+                <div><span class="tw-font-bold">RTA: </span>-</div>
+                <div><span class="tw-font-bold">Dock: </span>-</div>
+                <div><span class="tw-font-bold">Delay: </span>-</div>
+                <!-- <div><span class="tw-font-bold">Status: </span>  -->
+                <!-- <mat-chip [ngStyle]="{
                     'background': (planning$ | async)?.statusColor
-                }">{{(planning$ | async)?.status || 'No status'}}</mat-chip></div>
-                <div><span class="tw-font-bold">Driver: </span> {{planning?.driverName || '-'}}</div>
-                <div><span class="tw-font-bold">Operation: </span> 
-                    <span *ngIf="$any(planning?.operation).name">{{$any(planning?.operation).name}}</span>
-                    <span *ngIf="(planning$ | async)?.operation">{{ (planning$ | async)?.operation}} ({{(planning$ | async)?.operationType}})</span>
-                </div>
-                <div><span class="tw-font-bold">Auto License Plate: </span> {{planning?.truckLicensePlateFront || '-'}}</div>
-                <div><span class="tw-font-bold">Products: </span> 
-                    <span *ngIf="planning.products.length">{{planning.products | extractProperty : 'productName'}}</span>
-                    <span *ngIf="">{{(planning$ | async)?.goodsName}}</span>
-                </div>
-                <div><span class="tw-font-bold">Documents: </span> id = {{planning.documents | extractProperty : 'id'}}</div>
+                }">{{(planning$ | async)?.status || 'No status'}}</mat-chip> -->
+                <!-- </div>
+                <div><span class="tw-font-bold">Driver: </span> {{planning?.driverName || '-'}}</div> -->
+                <!-- <div><span class="tw-font-bold">Operation: </span> 
+                    <span *ngIf="$any(planning?.operation).name">{{$any(planning?.operation).name}}</span> -->
+                    <!-- <span *ngIf="(planning$ | async)?.operation">{{ (planning$ | async)?.operation}} ({{(planning$ | async)?.operationType}})</span> -->
+                <!-- </div> -->
+                <!-- <div><span class="tw-font-bold">Auto License Plate: </span> {{planning?.truckLicensePlateFront || '-'}}</div> -->
+                <!-- <div><span class="tw-font-bold">Products: </span> 
+                    <span *ngIf="planning.products.length">{{planning.products | extractProperty : 'productName'}}</span> -->
+                    <!-- <span *ngIf="">{{(planning$ | async)?.goodsName}}</span> -->
+                <!-- </div> -->
+                <!-- <div><span class="tw-font-bold">Documents: </span> id = {{planning.documents | extractProperty : 'id'}}</div> -->
             </div>
             <div class="tw-flex tw-gap-4">
                 <ng-container *ngIf="planning.documents.length">

@@ -4,7 +4,7 @@
             <scheduling-edit-plan *ngSwitchCase="'edit'" [sidenav]="sidenav" [isLoading]="!!(isLoading$ | async)"
                 [planning$]="editPlanning$" (triggerUpdatePlanning)="openPlanEditModal($event)"
                 [filterDate]="filterDate" (triggerFetchPlannings)="handleDateChange($event)"></scheduling-edit-plan>
-            <scheduling-view-log [planning$]="editPlanning$" [id]="logId" *ngSwitchCase="'view'"
+                            <scheduling-view-log [planning$]="editPlanning$" [id]="logId" *ngSwitchCase="'view'"
                 [sidenav]="sidenav"></scheduling-view-log>
             <scheduling-send-message [planning$]="editPlanning$" *ngSwitchCase="'mess'" [sidenav]="sidenav"
                 (triggerPlanUpgradeWarning)="handleOpenPlanUpgradeWarning()"></scheduling-send-message>
@@ -123,6 +123,24 @@
                 cdkDropListGroup>
                 <ng-scrollbar visibility="always" *ngIf="!(isMobileCardList$ | async)" track="vertical"
                     appearance="standard" (reachedBottom)="onBottomReached()" [reachedOffset]="350">
+                    <div scrollViewport dropListScroller
+                    >
+                        <!-- <app-loader [isContainer]="true" *ngIf="(isLoading$ | async)" [fullScreen]="false"></app-loader> -->
+                        <ng-container>
+                            <!-- <scheduling-card *ngFor="let item of plannings"cdkDrag>
+                                <div *cdkDragPreview class="square">
+                                </div>
+                                {{item.id}}
+                            </scheduling-card> -->
+                            <scheduling-card></scheduling-card>
+                            <!-- <app-loader [isContainer]="false"
+                                [fullScreen]="false"></app-loader> -->
+                        </ng-container>
+                        <!-- <no-scheduling></no-scheduling>y -->
+                    </div>
+                </ng-scrollbar>
+                <!-- <ng-scrollbar visibility="always" *ngIf="!(isMobileCardList$ | async)" track="vertical"
+                    appearance="standard" (reachedBottom)="onBottomReached()" [reachedOffset]="350">
                     <div scrollViewport dropListScroller cdkDropList [cdkDropListData]="plannings"
                         (cdkDropListDropped)="drop($event)">
                         <app-loader [isContainer]="true" *ngIf="(isLoading$ | async)" [fullScreen]="false"></app-loader>
@@ -142,8 +160,25 @@
                         </ng-container>
                         <no-scheduling *ngIf="!(isLoading$ | async) && !plannings.length"></no-scheduling>
                     </div>
-                </ng-scrollbar>
+                </ng-scrollbar> -->
                 <div *ngIf="(isMobileCardList$ | async)" class="tw-flex tw-flex-col tw-gap-4 card-container">
+                    <div dropListScroller cdkDropList>
+                        <!-- <app-loader [isContainer]="true" *ngIf="(isLoading$ | async)" [fullScreen]="false"></app-loader> -->
+                        <ng-container>
+                            <scheduling-card *ngFor="let item of plannings" (triggerSideNav)="toggleSidenav($event)"
+                                
+                                [isMaxWidth]="true"cdkDrag>
+                                <div *cdkDragPreview class="square" >
+                                </div>
+                                
+                            </scheduling-card>
+                            <!-- <app-loader [isContainer]="false" *ngIf="(cardLoading$ | async)"
+                                [fullScreen]="false"></app-loader> -->
+                            </ng-container>
+                        <!-- <no-scheduling *ngIf="!(isLoading$ | async) && !plannings.length"></no-scheduling> -->
+                    </div>
+                </div>
+                <!-- <div *ngIf="(isMobileCardList$ | async)" class="tw-flex tw-flex-col tw-gap-4 card-container">
                     <div dropListScroller cdkDropList [cdkDropListData]="plannings" (cdkDropListDropped)="drop($event)">
                         <app-loader [isContainer]="true" *ngIf="(isLoading$ | async)" [fullScreen]="false"></app-loader>
                         <ng-container *ngIf="!(isLoading$ | async)">
@@ -156,13 +191,14 @@
                                 [cdkDragData]="item" cdkDrag>
                                 <div *cdkDragPreview class="square" >
                                 </div>
+                                {{item}}
                             </scheduling-card>
                             <app-loader [isContainer]="false" *ngIf="(cardLoading$ | async)"
                                 [fullScreen]="false"></app-loader>
-                        </ng-container>
+                            </ng-container>
                         <no-scheduling *ngIf="!(isLoading$ | async) && !plannings.length"></no-scheduling>
                     </div>
-                </div>
+                </div> -->
                 <div class="tw-col-span-2">
                     <div class="tw-bg-white tw-w-full tw-min-h-[550px]">
                         <app-loader class="tw-m-auto tw-flex-grow" *ngIf="(isLoading$ | async)" [isContainer]="true"
