@@ -37,11 +37,11 @@ const routes: Routes = [
         component:  EditSchedulingRouteComponent
       },
       {
-        path: 'convoy/:id',
+        path: 'route/:id/convoy-list',
         component:  EditSchedulingConvoyComponent
       },
       {
-        path: 'convoy/edit/:id',
+        path: 'route/:id/convoy-list/:id',
         component:  EditSchedulingConvoyPageComponent
       },
       {

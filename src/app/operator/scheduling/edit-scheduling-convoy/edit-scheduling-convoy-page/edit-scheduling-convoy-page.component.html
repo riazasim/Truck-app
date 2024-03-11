@@ -52,7 +52,7 @@
                         </select>
                     </div>
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_manevra.svg">
-                        <input inputRef type="text" placeholder="Manevra" formControlName="maneuvering" />
+                        <input inputRef type="text" placeholder="maneuvering" formControlName="maneuvering" />
                     </div>
                 </div>
                 <div class="tw-flex tw-flex-col tw-gap-x-10 tw-gap-y-4 tw-px-[50px]">
@@ -131,8 +131,8 @@
                 </div>
             </div>
             <div class="tw-flex tw-gap-2 tw-justify-center min-md:tw-gap-20 max-md:tw-flex-col tw-py-3">
-                <button type="button" class="btn btn-primary min-md:tw-min-w-[436px] tw-min-h-[50px] !tw-text-[18px]" [routerLink]="['../../../convoy', id]">
-                    {{ "button.back" | translate }}
+                <button type="button" class="btn btn-outline-primary min-md:tw-min-w-[436px] tw-min-h-[50px] !tw-text-[18px]" [routerLink]="['../']">
+                    {{ "cancel" | translate }}
                 </button>
                 <button type="button" class="btn btn-primary min-md:tw-min-w-[436px] tw-min-h-[50px] !tw-text-[18px]"
                     (click)="next(stepTwo$, convoyForm , 1)">
@@ -216,8 +216,8 @@
                     {{ "button.back" | translate }}
                 </button>
                 <button type="button" class="btn btn-primary min-md:tw-min-w-[436px] tw-min-h-[50px] !tw-text-[18px]"
-                (click)="saveScheduling()">
-                    {{ "button.next" | translate }}
+                (click)="updateConvoys()">
+                    {{ "update" | translate }}
                 </button>
             </div>
         </div>

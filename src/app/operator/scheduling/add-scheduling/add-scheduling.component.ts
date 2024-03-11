@@ -128,6 +128,7 @@ export class AddSchedulingComponent implements OnInit, OnDestroy {
     }
 
     navigate(index: number) {
+        this.convoyForm.patchValue({planningConvoyDocuments : this.images})
         this.convoys.push(this.convoyForm.value)
         this.initConvoyForm()
         this.matStepper.selectedIndex = index;
@@ -452,6 +453,7 @@ export class AddSchedulingComponent implements OnInit, OnDestroy {
             additionalOperator: this.fb.control(data?.additionalOperator || ''),
             clientComments: this.fb.control(data?.clientComments || ''),
             operatorComments: this.fb.control(data?.operatorComments || ''),
+            planningConvoyDocuments: this.fb.control(data?.planningConvoyDocuments || []),
         })
     }
 
@@ -473,7 +475,6 @@ export class AddSchedulingComponent implements OnInit, OnDestroy {
                 lockType: this.fb.control(data?.routingDetail?.lockType || ''),
             }),
             convoyDetail: this.fb.control(data?.convoyDetail || []),
-            documents: this.fb.control(data?.documents || []),
 
 
             // schedulingDate: this.fb.control(new Date()),
@@ -507,7 +508,7 @@ export class AddSchedulingComponent implements OnInit, OnDestroy {
     saveScheduling(): void {
         this.isLoading$.next(true);
         this.convoys.push(this.convoyForm.value)
-        this.schedulingForm.patchValue({ convoyDetail: this.convoys, documents: this.images })
+        this.schedulingForm.patchValue({ convoyDetail: this.convoys})
         this.planningService.create(this.schedulingForm.value).subscribe({
             next: () => {
                 this.router.navigate(['../success'], { relativeTo: this.route });
