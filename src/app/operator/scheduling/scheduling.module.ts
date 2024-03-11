@@ -57,6 +57,9 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { CdkTableModule } from '@angular/cdk/table';
 import { MatInputModule } from '@angular/material/input';
+import { EditSchedulingRouteComponent } from './edit-scheduling-route/edit-scheduling-route.component';
+import { EditSchedulingConvoyComponent } from './edit-scheduling-convoy/edit-scheduling-convoy.component';
+import { EditSchedulingConvoyPageComponent } from './edit-scheduling-convoy/edit-scheduling-convoy-page/edit-scheduling-convoy-page.component';
 
 
 @NgModule({
@@ -84,7 +87,9 @@ import { MatInputModule } from '@angular/material/input';
     SchedulingShowClientSupplierCardLabelsComponent,
     SchedulingSearchBarComponent,
     PlanningListComponent,
-
+    EditSchedulingRouteComponent,
+    EditSchedulingConvoyComponent,
+    EditSchedulingConvoyPageComponent,
   ],
   imports: [
     CommonModule,

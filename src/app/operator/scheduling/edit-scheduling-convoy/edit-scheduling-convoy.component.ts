@@ -1,4 +1,4 @@
-﻿import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Sort } from '@angular/material/sort';
 import { compare } from 'src/app/shared/utils/sort.function';
@@ -9,14 +9,13 @@ import { PlanningModel } from 'src/app/core/models/planning.model';
 import { SchedulingDeleteModalComponent } from '../scheduling-delete-modal/scheduling-delete-modal.component';
 import { SchedulingImportModalComponent } from '../scheduling-import-modal/scheduling-import-modal.component';
 
+
 @Component({
-  selector: 'app-planning-list',
-  templateUrl: './planning-list.component.html',
-  styleUrl:'./planning-list.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  selector: 'app-edit-scheduling-convoy',
+  templateUrl: './edit-scheduling-convoy.component.html',
 })
-export class PlanningListComponent {
-  isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+export class EditSchedulingConvoyComponent {
+    isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     displayedColumns: string[] = ['id', 'manevre', 'vesselId', 'berth', 'products', 'estimatedTimeArrival', 'relativeTimeArrival', 'delay', 'coordinates', 'shipmentStatus' , 'actions'];
     dataSource: PlanningModel[] = [];
     originalSource: PlanningModel[] = [];
@@ -162,20 +161,4 @@ export class PlanningListComponent {
       }
     });
   }
-    openImportModal(): void {
-        this.isLoading$.next(true);
-        this.dialogService.open(SchedulingImportModalComponent, {
-            disableClose: true,
-            data: {}
-        }).afterClosed()
-            .subscribe({
-                next: (isImported) => {
-                    if (isImported) {
-                        this.retrievePlanningList();
-                    } else {
-                        this.isLoading$.next(false);
-                    }
-                }
-            });
-    }
 }

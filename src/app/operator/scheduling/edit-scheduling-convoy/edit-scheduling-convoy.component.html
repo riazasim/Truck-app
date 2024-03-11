@@ -1,5 +1,5 @@
-﻿<!--<section *ngIf="false && isLoading$ && originalSource.length; else empty">-->
-<section *ngIf="(isLoading$ | async) || originalSource.length; else empty">
+<!--<section *ngIf="false && isLoading$ && originalSource.length; else empty">-->
+<section *ngIf="(isLoading$ | async) || originalSource.length">
     <!--    buttonLabel="Add Location" tableTitle="Locations" (buttonClicked)="redirectAddLocation()"-->
     <material-panel-table [showSearchbar]="false" [showHeader]="false"
         Class="!tw-rounded-xl tw-shadow-lg tw-border tw-border-transparent">
@@ -121,20 +121,19 @@
                         <td cdk-cell *cdkCellDef="let row">
                             <!-- {{ row.shipmentStatus }} -->
                             <mat-chip
-                                [ngStyle]="{'background-color': row.shipmentStatus === 'Port Queue' ? 'green' : 'red'}"
-                                >
+                                [ngStyle]="{'background-color': row.shipmentStatus === 'Port Queue' ? 'green' : 'red'}">
                                 {{ row.shipmentStatus === 'Port Queue' ? 'Port Queue' : row.shipmentStatus === 'Service'
                                 ? 'Service' : 'Closed' }}
                             </mat-chip>
                             <!-- <mat-chip
-                                [ngClass]="{
-                                    'active': row.shipmentStatus === 'Port Queue',
-                                    'service': row.shipmentStatus === 'Service',
-                                    'inactive': row.shipmentStatus === 'Closed',
-                                }"
-                                >
-                                {{ row.shipmentStatus === 'Port Queue' ? 'Port Queue' : row.shipmentStatus === 'Service' ? 'Service' : 'Closed' }}
-                            </mat-chip> -->
+                                    [ngClass]="{
+                                        'active': row.shipmentStatus === 'Port Queue',
+                                        'service': row.shipmentStatus === 'Service',
+                                        'inactive': row.shipmentStatus === 'Closed',
+                                    }"
+                                    >
+                                    {{ row.shipmentStatus === 'Port Queue' ? 'Port Queue' : row.shipmentStatus === 'Service' ? 'Service' : 'Closed' }}
+                                </mat-chip> -->
                         </td>
                     </ng-container>
 
@@ -144,18 +143,11 @@
                                 <div mat-sort-header="actions">Actions</div>
                             </section>
                         </th>
-                        <td cdk-cell *cdkCellDef="let row" class="tw-flex tw-justify-center tw-gap-4 tw-w-max-content">
-                            <div class="tw-flex tw-gap-4">
-                                <img src="assets/images/left-right-list-icon.png" alt="icon" class="tw-cursor-pointer">
-                                <fa-icon icon="xmark" class="tw-text-[#17A0B5] tw-cursor-pointer" size="lg"
-                                    (click)="openDeleteModal(row.id)"></fa-icon>
-                            </div>
-                            <div class="tw-flex tw-gap-4">
-                                <fa-icon icon="eye" class="tw-text-[#17A0B5] tw-cursor-pointer" size="lg"
-                                    [routerLink]="['../edit', row.id]"></fa-icon>
-                                <img src="assets/images/boat.svg" alt="icon" class="tw-cursor-pointer tw-max-w-5 tw-max-h-5" [routerLink]="['../convoy', row.id]" >
-                                <img src="assets/images/rotate-left-list-icon.svg" alt="icon" class="tw-cursor-pointer">
-                            </div>
+                        <td cdk-cell *cdkCellDef="let row" class="tw-flex tw-justify-center tw-gap-8 tw-w-max-content">
+                            <fa-icon icon="eye" class="tw-text-[#17A0B5] tw-cursor-pointer" size="lg"
+                                [routerLink]="['../edit', row.id]"></fa-icon>
+                            <fa-icon icon="xmark" class="tw-text-[#17A0B5] tw-cursor-pointer" size="lg"
+                                (click)="openDeleteModal(row.id)"></fa-icon>
                         </td>
                     </ng-container>
 
@@ -169,13 +161,13 @@
                                     [fullScreen]="false"></app-loader>
                             </span>
                             <span *ngIf="
-                                    dataSource.length === 0 &&
-                                    !(isLoading$ | async)
-                                ">Nu există înregistrări</span>
+                                        dataSource.length === 0 &&
+                                        !(isLoading$ | async)
+                                    ">Nu există înregistrări</span>
                             <span *ngIf="
-                                    dataSource.length > 0 &&
-                                    !(isLoading$ | async)
-                                ">Nicio înregistrare nu corespunde criteriilor de
+                                        dataSource.length > 0 &&
+                                        !(isLoading$ | async)
+                                    ">Nicio înregistrare nu corespunde criteriilor de
                                 căutare</span>
                         </td>
                     </tr>
@@ -188,6 +180,3 @@
         </div>
     </material-panel-table>
 </section>
-<ng-template #empty>
-    <no-scheduling></no-scheduling>
-</ng-template>

@@ -43,7 +43,7 @@ export interface PlanningModel {
     shipmentStatus?:string;
     routingDetail: {
         convoyType: string;
-        estimatedTimeArrival: Date;
+        estimatedTimeArrival: string;
         locationPort: string;
         zone: number;
         departurePort: string;

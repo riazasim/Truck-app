@@ -1,0 +1,89 @@
+<section class="tw-bg-white tw-w-full">
+    <app-loader *ngIf="isLoading$ | async" [isContainer]="true" [fullScreen]="false"></app-loader>
+    <form [formGroup]="schedulingForm" *ngIf="!(isLoading$ | async)">
+        <div class="tw-grid min-lg:tw-grid-cols-2 tw-grid-cols-1 tw-gap-x-10 tw-gap-y-4 tw-pt-[100px] tw-px-[50px]">
+            <div class="tw-flex tw-flex-col tw-gap-x-10 tw-gap-y-4 tw-px-[50px]">
+                <!-- <p class="tw-text-columnCell tw-font-bold"></p> -->
+                <div iconic-input-wrapper leftIcon="user" formGroupName="routingDetail">
+                    <input inputRef type="text" placeholder="Convoy Type" formControlName="convoyType" />
+                </div>
+                <div iconic-input-wrapper leftIcon="clock" formGroupName="routingDetail">
+                    <!-- <input inputRef matInput onkeydown="return false" (click)="picker.open()"  type="text"
+                    formControlName="estimatedTimeArrival" [matDatepicker]="picker" placeholder="ETA">
+                <mat-datepicker #picker></mat-datepicker> -->
+                    <input inputRef type="text" placeholder="Location Port" formControlName="estimatedTimeArrival" />
+                </div>
+                <div iconic-input-wrapper leftIcon="location-dot" formGroupName="routingDetail">
+                    <input inputRef type="text" placeholder="Location Port" formControlName="locationPort" />
+                </div>
+                <div iconic-select-wrapper leftSvg="assets/images/scheduling_map_location.svg"
+                    [rightIcon]="['fas', 'caret-down']" formGroupName="routingDetail">
+                    <select inputRef name="zone" id="zone" formControlName="zone">
+                        <option disabled selected>Zone</option>
+                        <option *ngFor="let customer of customer" [value]="customer.id">
+                            {{ customer.name }}
+                        </option>
+                    </select>
+                </div>
+                <div iconic-select-wrapper leftSvg="assets/images/scheduling_ship_type.svg"
+                    [rightIcon]="['fas', 'caret-down']" formGroupName="routingDetail">
+                    <select inputRef name="departurePort" id="departurePort" formControlName="departurePort">
+                        <option disabled selected>
+                            Departure Port
+                        </option>
+                        <option *ngFor="let customer of customer" [value]="customer.id">
+                            {{ customer.name }}
+                        </option>
+                    </select>
+                </div>
+                <div iconic-select-wrapper leftSvg="assets/images/scheduling_arrival_port.svg"
+                    [rightIcon]="['fas', 'caret-down']" formGroupName="routingDetail">
+                    <select inputRef name="arrivalPort" id="arrivalPort" formControlName="arrivalPort">
+                        <option disabled selected>Arival Port</option>
+                        <option *ngFor="let customer of customer" [value]="customer.id">
+                            {{ customer.name }}
+                        </option>
+                    </select>
+                </div>
+                <div iconic-input-wrapper leftSvg="assets/images/scheduling_port.svg" formGroupName="routingDetail">
+                    <input inputRef type="text" placeholder="Pilot Company" formControlName="pilotCompany" />
+                </div>
+            </div>
+            <div class="tw-flex tw-flex-col tw-gap-x-10 tw-gap-y-4 tw-px-[50px]">
+                <!-- <p>&nbsp;</p> -->
+                <div iconic-input-wrapper leftSvg="assets/images/scheduling_length.svg" formGroupName="routingDetail">
+                    <input inputRef type="number" placeholder="Length (m)*" formControlName="length" />
+                </div>
+                <div iconic-input-wrapper leftSvg="assets/images/scheduling_width.svg" formGroupName="routingDetail">
+                    <input inputRef type="number" placeholder="Width (m)*" formControlName="width" />
+                </div>
+                <div iconic-input-wrapper leftSvg="assets/images/scheduling_depth.svg" formGroupName="routingDetail">
+                    <input inputRef type="number" placeholder="Max Draft" formControlName="maxDraft" />
+                </div>
+                <div iconic-input-wrapper leftSvg="assets/images/scheduling_convoy.svg" formGroupName="routingDetail">
+                    <input inputRef type="number" placeholder="Aerial Guage (M)*" formControlName="arrivalGuage" />
+                </div>
+                <div iconic-input-wrapper leftSvg="assets/images/scheduling_weight.svg" formGroupName="routingDetail">
+                    <input inputRef type="number" placeholder="Capacity max (m)*" formControlName="maxCapacity" />
+                </div>
+                <div iconic-select-wrapper leftSvg="assets/images/scheduling_lock.svg"
+                    [rightIcon]="['fas', 'caret-down']" formGroupName="routingDetail">
+                    <select inputRef name="typeOfLock" id="typeOfLock" formControlName="lockType">
+                        <option disabled selected>Type of lock</option>
+                        <option *ngFor="let customer of customer" [value]="customer.id">
+                            {{ customer.name }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="tw-flex tw-gap-2 tw-justify-center min-md:tw-gap-20 max-md:tw-flex-col tw-py-3">
+            <button type="button" class="btn btn-outline-primary min-md:tw-min-w-[436px] tw-min-h-[50px] !tw-text-[18px]" [routerLink]="id ? '../../' : '../'">
+                {{ "cancel" | translate }}
+            </button>
+            <button type="button" class="btn btn-primary min-md:tw-min-w-[436px] tw-min-h-[50px] !tw-text-[18px]">
+                {{ "update" | translate }}
+            </button>
+        </div>
+    </form>
+</section>

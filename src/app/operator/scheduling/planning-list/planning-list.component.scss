@@ -9,7 +9,7 @@
 // .mat-mdc-standard-chip:not(.mdc-evolution-chip--disabled).inactive {
 //     background-color: #5E5E5E !important;
 // }
-::ng-deep.mat-mdc-standard-chip:not(.mdc-evolution-chip--disabled) .mdc-evolution-chip__text-label {
+::ng-deep .mat-mdc-standard-chip:not(.mdc-evolution-chip--disabled) .mdc-evolution-chip__text-label {
     color: white !important;
 }
 // .mat-mdc-standard-chip:not(.mdc-evolution-chip--disabled) .mdc-evolution-chip__text-label {

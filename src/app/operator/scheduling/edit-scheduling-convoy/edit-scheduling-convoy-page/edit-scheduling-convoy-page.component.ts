@@ -15,7 +15,7 @@ import { CustomFieldService } from 'src/app/core/services/custom-field.service';
 import { OperationService } from 'src/app/core/services/operation.service';
 import { PartnerService } from 'src/app/core/services/partner.service';
 import { PlanningService } from 'src/app/core/services/planning.service';
-import { SchedulingAddProductModalComponent } from '../scheduling-add-product-modal/scheduling-add-product-modal.component';
+import { SchedulingAddProductModalComponent } from '../../scheduling-add-product-modal/scheduling-add-product-modal.component';
 import { ProductService } from 'src/app/core/services/product.service';
 import { MatStepper } from '@angular/material/stepper';
 import { getFormattedDate } from 'src/app/shared/utils/date.functions';
@@ -28,19 +28,19 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { OrganizationService } from 'src/app/core/services/organization.service';
 import { WorkingHoursModel } from 'src/app/core/models/working-hours.model';
 import { handleError } from 'src/app/shared/utils/error-handling.function';
-import { getFormatHourSlot } from '../scheduling-box.helper';
+import { getFormatHourSlot } from '../../scheduling-box.helper';
 import * as moment from 'moment';
 import { extractPhoneNumber } from 'src/app/shared/validators/phone-numbers';
 import { PlanningModel, convoyModel } from 'src/app/core/models/planning.model';
 import { convertJsonToFormData } from 'src/app/shared/utils/api.functions';
 
+
 @Component({
-    selector: 'app-add-scheduling',
-    templateUrl: './add-scheduling.component.html',
-    styleUrls: ['./add-scheduling.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-edit-scheduling-convoy-page',
+    templateUrl: './edit-scheduling-convoy-page.component.html',
+    styleUrl: './edit-scheduling-convoy-page.component.scss'
 })
-export class AddSchedulingComponent implements OnInit, OnDestroy {
+export class EditSchedulingConvoyPageComponent {
     file1Text$: BehaviorSubject<string> = new BehaviorSubject<string>('');
     file2Text$: BehaviorSubject<string> = new BehaviorSubject<string>('');
     file3Text$: BehaviorSubject<string> = new BehaviorSubject<string>('');
@@ -139,14 +139,7 @@ export class AddSchedulingComponent implements OnInit, OnDestroy {
             // Update the step status accordingly
             if (this.matStepper.selectedIndex === 0) {
                 this.stepOne$.next(true);
-            } else if (this.matStepper.selectedIndex === 1) {
-                this.stepTwo$.next(true);
-            } else if (this.matStepper.selectedIndex === 2) {
-                this.stepThree$.next(true);
-            } else if (this.matStepper.selectedIndex === 2) {
-                this.stepFour$.next(true);
             }
-            console.log('schedulingForm:', this.schedulingForm)
             // Move to the next step
             this.matStepper.selectedIndex = index;
         } else {
