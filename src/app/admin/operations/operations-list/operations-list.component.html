@@ -11,7 +11,7 @@
               <th cdk-header-cell *cdkHeaderCellDef scope="col">
                   <section class="tw-flex tw-flex-col">
                       <div mat-sort-header="name">Name</div>
-                      <searchbar [maxWidth]="152">
+                      <searchbar >
                         <fa-icon icon="search"></fa-icon>
                         <input #searchName input type="text" (keyup)="applyFilter($event.target, 'name')">
                         <div *ngIf="searchName.value" close (click)="searchName.value=''; applyFilter({ value: '' }, 'name')">
@@ -27,7 +27,7 @@
               <th cdk-header-cell *cdkHeaderCellDef scope="col">
                   <section class="tw-flex tw-flex-col">
                     <div mat-sort-header="allocatedTime">Allocated Time (minutes)</div>
-                    <searchbar [maxWidth]="152">
+                    <searchbar >
                       <fa-icon icon="search"></fa-icon>
                       <input #searchAllocatedTime input type="text" (keyup)="applyFilter($event.target, 'allocatedTime')">
                         <div *ngIf="searchAllocatedTime.value" close (click)="searchAllocatedTime.value=''; applyFilter({ value: '' }, 'allocatedTime')">
@@ -43,7 +43,7 @@
               <th cdk-header-cell *cdkHeaderCellDef scope="col">
                   <section class="tw-flex tw-flex-col">
                     <div mat-sort-header="description">Description</div>
-                    <searchbar [maxWidth]="76">
+                    <searchbar>
                       <fa-icon icon="search"></fa-icon>
                       <input #searchDescription input type="text" (keyup)="applyFilter($event.target, 'description')">
                         <div *ngIf="searchDescription.value" close (click)="searchDescription.value=''; applyFilter({ value: '' }, 'description')">

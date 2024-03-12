@@ -44,13 +44,22 @@ export class OperationService {
 
 
 
+    // pagination(data: any): Observable<OperationTable> {
+    //   return this.http.get<ResponseArrayPaginationWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/paginateOperations`)
+    //       .pipe(pluckArrayPaginationWrapperData<any, ResponseArrayPaginationWrapper<any>>(),
+    //                       map((u: OperationTable) => {
+    //                            u.items = (<any>u.items).map(((c: CustomFieldData) => c.attributes));
+    //                           return u;
+    //                       })
+    //           );
+    // }
     pagination(data: any): Observable<OperationTable> {
-      return this.http.get<ResponseArrayPaginationWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/paginateOperations`)
-          .pipe(pluckArrayPaginationWrapperData<any, ResponseArrayPaginationWrapper<any>>(),
-                          map((u: OperationTable) => {
-                               u.items = (<any>u.items).map(((c: CustomFieldData) => c.attributes));
-                              return u;
-                          })
-              );
+      return this.http.post<ResponseArrayPaginationWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/paginateOperations`, wrapJsonForRequest(data))
+        .pipe(pluckArrayPaginationWrapperData<any, ResponseArrayPaginationWrapper<any>>(),
+          map((u: OperationTable) => {
+            u.items = (<any>u.items).map(((c: CustomFieldData) => c.attributes));
+            return u;
+          })
+        );
     }
 }
