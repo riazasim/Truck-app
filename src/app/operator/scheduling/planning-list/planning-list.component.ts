@@ -12,6 +12,7 @@ import { SchedulingImportModalComponent } from '../scheduling-import-modal/sched
 @Component({
   selector: 'app-planning-list',
   templateUrl: './planning-list.component.html',
+  styleUrl:'./planning-list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PlanningListComponent {

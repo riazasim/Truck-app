@@ -4,9 +4,11 @@ import { AddSchedulingComponent } from './add-scheduling/add-scheduling.componen
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SchedulingSuccessComponent } from './scheduling-success/scheduling-success.component';
 import { SchedulingComponent } from './scheduling.component';
-import { EditSchedulingComponent } from './edit-scheduling/edit-scheduling.component';
 import { PlanningListComponent } from './planning-list/planning-list.component';
 import { SchedulingViewLogComponent } from './scheduling-view-log/scheduling-view-log.component';
+import { EditSchedulingRouteComponent } from './edit-scheduling-route/edit-scheduling-route.component';
+import { EditSchedulingConvoyComponent } from './edit-scheduling-convoy/edit-scheduling-convoy.component';
+import { EditSchedulingConvoyPageComponent } from './edit-scheduling-convoy/edit-scheduling-convoy-page/edit-scheduling-convoy-page.component';
 
 const routes: Routes = [
   {
@@ -32,7 +34,15 @@ const routes: Routes = [
       },
       {
         path: 'edit/:id',
-        component:  EditSchedulingComponent
+        component:  EditSchedulingRouteComponent
+      },
+      {
+        path: 'route/:id/convoy-list',
+        component:  EditSchedulingConvoyComponent
+      },
+      {
+        path: 'route/:id/convoy-list/:id',
+        component:  EditSchedulingConvoyPageComponent
       },
       {
         path: 'view',

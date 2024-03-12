@@ -104,6 +104,7 @@ export class UsersAddEditComponent {
     if (this.id) {
       //this.getAssignedLocations(this.id);
       this.userService.get(this.id).subscribe(response => {
+        console.log(response)
         this.initForm(response);
         this.selectedRole$.next('DRIVER');
         this.isLoading$.next(false);

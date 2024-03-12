@@ -1,7 +1,8 @@
 ﻿<!--<section *ngIf="false && isLoading$ && originalSource.length; else empty">-->
 <section *ngIf="(isLoading$ | async) || originalSource.length; else empty">
     <!--    buttonLabel="Add Location" tableTitle="Locations" (buttonClicked)="redirectAddLocation()"-->
-    <material-panel-table [showSearchbar]="false" [showHeader]="false" Class="!tw-rounded-xl tw-shadow-lg tw-border tw-border-transparent">
+    <material-panel-table [showSearchbar]="false" [showHeader]="false"
+        Class="!tw-rounded-xl tw-shadow-lg tw-border tw-border-transparent">
         <div table class="tw-w-full tw-overflow-hidden">
             <ng-scrollbar track="horizontal" [autoHeightDisabled]="false" style="scrollbar-width: none;">
                 <table class="material-table no-wrap tw-overflow-hidden" matSort (matSortChange)="sortData($event)"
@@ -120,9 +121,10 @@
                         <td cdk-cell *cdkCellDef="let row">
                             <!-- {{ row.shipmentStatus }} -->
                             <mat-chip
-                            [ngStyle]="{'background-color': row.shipmentStatus === 'Port Queue' ? 'green' : 'red'}"
+                                [ngStyle]="{'background-color': row.shipmentStatus === 'Port Queue' ? 'green' : 'red'}"
                                 >
-                                {{ row.shipmentStatus === 'Port Queue' ? 'Port Queue' : row.shipmentStatus === 'Service' ? 'Service' : 'Closed' }}
+                                {{ row.shipmentStatus === 'Port Queue' ? 'Port Queue' : row.shipmentStatus === 'Service'
+                                ? 'Service' : 'Closed' }}
                             </mat-chip>
                             <!-- <mat-chip
                                 [ngClass]="{
@@ -151,6 +153,7 @@
                             <div class="tw-flex tw-gap-4">
                                 <fa-icon icon="eye" class="tw-text-[#17A0B5] tw-cursor-pointer" size="lg"
                                     [routerLink]="['../edit', row.id]"></fa-icon>
+                                <img src="assets/images/boat.svg" alt="icon" class="tw-cursor-pointer tw-max-w-5 tw-max-h-5" [routerLink]="['../route',row.id ,'convoy-list']" >
                                 <img src="assets/images/rotate-left-list-icon.svg" alt="icon" class="tw-cursor-pointer">
                             </div>
                         </td>

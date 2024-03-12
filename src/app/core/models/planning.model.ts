@@ -33,17 +33,18 @@ export interface convoyModel {
     additionalOperator: string;
     clientComments: string;
     operatorComments: string;
+    planningConvoyDocuments: File[];
 }
 
 export interface PlanningModel {
     id?: number;
     planningId?: number;
-    sId?:number;
-    relativeTimeArrival?:string;
-    shipmentStatus?:string;
+    sId?: number;
+    relativeTimeArrival?: string;
+    shipmentStatus?: string;
     routingDetail: {
         convoyType: string;
-        estimatedTimeArrival: Date;
+        estimatedTimeArrival: string;
         locationPort: string;
         zone: number;
         departurePort: string;
@@ -57,8 +58,31 @@ export interface PlanningModel {
         lockType: string;
     }
     convoyDetail: convoyModel[]
-    documents: File[];
 }
+
+export interface PlanningDetailModel {
+    planningConvoys: convoyModel[];
+    id?: number;
+    planningId?: number;
+    sId?: number;
+    relativeTimeArrival?: string;
+    shipmentStatus?: string;
+    convoyType: string;
+    estimatedTimeArrival: string;
+    locationPort: string;
+    zone: number;
+    departurePort: string;
+    arrivalPort: string;
+    pilotCompany: string;
+    length: number;
+    width: number;
+    maxDraft: number;
+    arrivalGauge: number;
+    maxCapacity: number;
+    lockType: string;
+}
+
+
 export interface PlanningTable {
     items: PlanningModel[];
     noFiltered: number;
