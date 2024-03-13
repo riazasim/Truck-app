@@ -16,30 +16,30 @@
             <div class="tw-grid min-lg:tw-grid-rows-3 min-lg:tw-grid-cols-2 max-md:tw-grid-rows-8 max-md:tw-grid-cols-1 tw-py-2">
                 <div><span class="tw-font-bold">Vessel ID: </span>-</div>
                 <div><span class="tw-font-bold">Coordinates: </span>-</div>
-                <div><span class="tw-font-bold">numar aprobare manevra: </span>-</div>
-                <div><span class="tw-font-bold">ETA: </span>-</div>
-                <div><span class="tw-font-bold">Products: </span>-</div>
-                <div><span class="tw-font-bold">RTA: </span>-</div>
-                <div><span class="tw-font-bold">Dock: </span>-</div>
-                <div><span class="tw-font-bold">Delay: </span>-</div>
+                <div><span class="tw-font-bold">numar aprobare manevra: </span>- {{planning?.planningConvoys?.maneuvering}}</div>
+                <div><span class="tw-font-bold">ETA: </span>- {{planning?.estimatedTimeArrival}}</div>
+                <div><span class="tw-font-bold">Products: </span>- {{planning?.planningProducts}}</div>
+                <div><span class="tw-font-bold">RTA: </span>- {{planning?.relativeTimeArrival}}</div>
+                <div><span class="tw-font-bold">Dock: </span>- </div>
+                <div><span class="tw-font-bold">Delay: </span>- {{planning?.delay}}</div>
                 <!-- <div><span class="tw-font-bold">Status: </span>  -->
                 <!-- <mat-chip [ngStyle]="{
                     'background': (planning$ | async)?.statusColor
                 }">{{(planning$ | async)?.status || 'No status'}}</mat-chip> -->
                 <!-- </div>
                 <div><span class="tw-font-bold">Driver: </span> {{planning?.driverName || '-'}}</div> -->
-                <!-- <div><span class="tw-font-bold">Operation: </span> 
+                <!-- <div><span class="tw-font-bold">Operation: </span>
                     <span *ngIf="$any(planning?.operation).name">{{$any(planning?.operation).name}}</span> -->
                     <!-- <span *ngIf="(planning$ | async)?.operation">{{ (planning$ | async)?.operation}} ({{(planning$ | async)?.operationType}})</span> -->
                 <!-- </div> -->
                 <!-- <div><span class="tw-font-bold">Auto License Plate: </span> {{planning?.truckLicensePlateFront || '-'}}</div> -->
-                <!-- <div><span class="tw-font-bold">Products: </span> 
+                <!-- <div><span class="tw-font-bold">Products: </span>
                     <span *ngIf="planning.products.length">{{planning.products | extractProperty : 'productName'}}</span> -->
                     <!-- <span *ngIf="">{{(planning$ | async)?.goodsName}}</span> -->
                 <!-- </div> -->
                 <!-- <div><span class="tw-font-bold">Documents: </span> id = {{planning.documents | extractProperty : 'id'}}</div> -->
             </div>
-            <div class="tw-flex tw-gap-4">
+            <!-- <div class="tw-flex tw-gap-4">
                 <ng-container *ngIf="planning.convoyDetail.documents.length">
                     <div *ngFor="let image of $any(planning.documents)">
                         <div [style.background-image]="'url(' + image?.document + ')'" (click)="openImageModal(image.document)"
@@ -49,15 +49,15 @@
             </div>
             <div *ngIf="!planning?.documents?.length">
                 <p class="tw-font-bold tw-text-center tw-py-2">There're no documents attached.</p>
-            </div>
+            </div> -->
         </div>
-        <div>
+        <!-- <div>
             <h4 class="heading-4 tw-font-bold tw-text-primary tw-mb-3">Shipment Log</h4>
             <activity-log *ngFor="let log of shipmentLogs;let i = index" icon="file-plus" [shipmentLog]="log" [isEnd]="(i + 1) === shipmentLogs.length"></activity-log>
             <h3 *ngIf="!(isLoading$ | async) && !shipmentLogs.length" class="heading-3 tw-font-bold tw-text-center tw-py-2">There're no shipment logs.</h3>
-            <!-- <activity-log icon="copy"></activity-log>
+            <activity-log icon="copy"></activity-log>
             <activity-log icon="user-plus"></activity-log>
-            <activity-log icon="file-plus" [isEnd]="true"></activity-log> -->
-        </div>
+            <activity-log icon="file-plus" [isEnd]="true"></activity-log>
+        </div> -->
     </div>
 </section>

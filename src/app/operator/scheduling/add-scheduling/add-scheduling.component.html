@@ -11,19 +11,19 @@
                     <div iconic-input-wrapper leftIcon="clock" formGroupName="routingDetail">
                         <!-- <mat-form-field appearance="fill" formControlName="estimatedTimeArrival">
                             <mat-label>Date time</mat-label> -->
-                            <input matInput formControlName="estimatedTimeArrival" [matDatepicker]="picker" />
+                            <!-- <input matInput formControlName="estimatedTimeArrival" [matDatepicker]="picker" />
                             <input matInput formControlName="estimatedTimeArrival" class="time-picker" type="time" id="appt" name="appt" />
-                          
+
                             <mat-datepicker-toggle matSuffix [for]="picker">
                               <mat-icon matDatepickerToggleIcon>today</mat-icon>
                             </mat-datepicker-toggle>
-                            <mat-datepicker #picker></mat-datepicker>
+                            <mat-datepicker #picker></mat-datepicker> -->
                           <!-- </mat-form-field> -->
                         <!-- <input inputRef matInput onkeydown="return false" (click)="picker.open()" type="text"
                             formControlName="estimatedTimeArrival" [matDatepicker]="picker" placeholder="ETA">
                         <mat-datepicker #picker></mat-datepicker> -->
-                        <!-- <input inputRef type="text" placeholder="Location Port"
-                            formControlName="estimatedTimeArrival" /> -->
+                        <input inputRef type="text" placeholder="Location Port"
+                            formControlName="estimatedTimeArrival" />
                     </div>
                     <div iconic-input-wrapper leftIcon="location-dot" formGroupName="routingDetail">
                         <input inputRef type="text" placeholder="Location Port" formControlName="locationPort" />
@@ -244,7 +244,6 @@
                     {{ "button.back" | translate }}
                 </button>
                 <button type="button" class="btn btn-primary min-md:tw-min-w-[436px] tw-min-h-[50px] !tw-text-[18px]"
-                     [disabled]="!schedulingForm.get('customer')?.value"
                     (click)="next(stepTwo$, convoyForm , 2)">
                     {{ "button.next" | translate }}
                 </button>

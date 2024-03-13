@@ -72,8 +72,9 @@ export class AddSchedulingComponent implements OnInit, OnDestroy {
     buildings: BuildingModel[] = [];
 
     convoys: convoyModel[] = [];
-    images: File[] = [];
-
+    images: any[] = [];
+    imageLen : number = 0;
+    tempImg : File[] = [];
     customInputsFetched: boolean = false;
 
     search: string;
@@ -96,7 +97,7 @@ export class AddSchedulingComponent implements OnInit, OnDestroy {
 
     id: number;
 
-    
+
     zone = [
         { id: 1, name: 'zone1' },
         { id: 2, name: 'zone2' },
@@ -187,11 +188,12 @@ export class AddSchedulingComponent implements OnInit, OnDestroy {
         this.initConvoyForm();
         this.isLoading$.next(false)
     }
-    
+
 
     navigate(index: number) {
-        this.convoyForm.patchValue({planningConvoyDocuments : this.images})
         this.convoys.push(this.convoyForm.value)
+        this.imageLen++
+        this.tempImg = [];
         this.initConvoyForm()
         this.matStepper.selectedIndex = index;
     }
@@ -516,7 +518,6 @@ export class AddSchedulingComponent implements OnInit, OnDestroy {
             additionalOperator: this.fb.control(data?.additionalOperator || ''),
             clientComments: this.fb.control(data?.clientComments || ''),
             operatorComments: this.fb.control(data?.operatorComments),
-            planningConvoyDocuments: this.fb.control(data?.planningConvoyDocuments || []),
         })
     }
 
@@ -539,6 +540,7 @@ export class AddSchedulingComponent implements OnInit, OnDestroy {
                 lockType: this.fb.control(data?.routingDetail?.lockType || ''),
             }),
             convoyDetail: this.fb.control(data?.convoyDetail || []),
+            documents: this.fb.control(data?.documents || []),
 
 
             // schedulingDate: this.fb.control(new Date()),
@@ -572,7 +574,8 @@ export class AddSchedulingComponent implements OnInit, OnDestroy {
     saveScheduling(): void {
         this.isLoading$.next(true);
         this.convoys.push(this.convoyForm.value)
-        this.schedulingForm.patchValue({ convoyDetail: this.convoys})
+        // this.schedulingForm.patchValue({ documents : this.images})
+        this.schedulingForm.patchValue({ convoyDetail: this.convoys , documents : this.images})
         this.planningService.create(this.schedulingForm.value).subscribe({
             next: () => {
                 this.router.navigate(['../success'], { relativeTo: this.route });
@@ -615,8 +618,9 @@ export class AddSchedulingComponent implements OnInit, OnDestroy {
     // }
 
     patchFile(file: File, index: number): void {
-        this.images[index] = file
-        console.log(this.images)
+        this.tempImg[index] = file
+        console.log(this.tempImg)
+        this.images[this.imageLen] = this.tempImg;
         // const documents = this.schedulingForm.get('documents')?.value;
         // if (typeof documents === 'object' && documents.length) {
         //   documents[index] = files[0];

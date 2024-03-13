@@ -6,39 +6,38 @@ import { PlanningService } from 'src/app/core/services/planning.service';
 import { OpenImageModalComponent } from 'src/app/shared/components/open-image-modal/open-image-modal.component';
 
 @Component({
-  selector: 'scheduling-view-log',
-  templateUrl: './scheduling-view-log.component.html',
-  styleUrls: ['./scheduling-view-log.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'scheduling-view-log',
+    templateUrl: './scheduling-view-log.component.html',
+    styleUrls: ['./scheduling-view-log.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SchedulingViewLogComponent implements OnChanges {
-  isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  @Input() id: number;
-  @Input() sidenav: MatSidenav;
-  @Input() planning$: BehaviorSubject<any|null>;
-  planning: any;
-  shipmentLogs: any[];
+    isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    @Input() id: number;
+    @Input() sidenav: MatSidenav;
+    @Input() planning$: BehaviorSubject<any | null>;
+    planning: any;
+    shipmentLogs: any[];
 
-  constructor(private readonly planningService: PlanningService,
-              private readonly dialog: MatDialog) {}
+    constructor(private readonly planningService: PlanningService,
+        private readonly dialog: MatDialog) { }
 
-  ngOnChanges(): void {
-    this.retrieveLogHistory();
-  }
+    ngOnChanges(): void {
+        this.retrieveLogHistory();
+    }
 
-  openImageModal(image: string): void {
-    this.dialog.open(OpenImageModalComponent, {
-      data: image
-    });
-  }
+    openImageModal(image: string): void {
+        this.dialog.open(OpenImageModalComponent, {
+            data: image
+        });
+    }
 
-  retrieveLogHistory(): void {
-    this.isLoading$.next(true);
-    this.planningService.listLogs(this.id).subscribe((response: any[]) => {
-      this.planning = {...response[0]};
-      this.shipmentLogs = (<any[]>{...response[0]}.shipmentLogs);
-      this.isLoading$.next(false);
-    })
-  }
+    retrieveLogHistory(): void {
+        this.planningService.listLogs(this.id).subscribe(response => {
+            this.planning = response
+            console.log(response)
+            this.isLoading$.next(false);
+        })
+    }
 }
 

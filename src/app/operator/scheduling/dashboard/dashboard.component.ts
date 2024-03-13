@@ -461,7 +461,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     this.planningService.pagination(data).subscribe((response:any) => {
         this.plannings = response.items;
         console.log('planning data',this.plannings);
-        
+
         this.isLoading$.next(false);
         this.cd.detectChanges();
         pageSize = pageSize + 5;

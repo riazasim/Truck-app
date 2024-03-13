@@ -37,9 +37,9 @@ export interface convoyModel {
     clientComments: string;
     operatorComments: string;
     planningConvoyDocuments: File[];
-    // documents: File[];
-    documents: ResponseDataItem<DocumentObject>[] | DocumentObject[];
-    oldDocuments: File[];
+    documents: any[];
+    // documents: ResponseDataItem<DocumentObject>[] | DocumentObject[];
+    oldDocuments: string;
 }
 
 export interface PlanningModel {
@@ -63,7 +63,8 @@ export interface PlanningModel {
         maxCapacity: number;
         lockType: string;
     }
-    convoyDetail: convoyModel[]
+    convoyDetail: convoyModel[];
+    documents: any[];
 }
 
 export interface PlanningDetailModel {

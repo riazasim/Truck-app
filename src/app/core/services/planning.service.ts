@@ -312,36 +312,14 @@ export class PlanningService {
         return this.http.post(`${environment.apiUrl}${environment.apiVersion}${this.route}/import-json`, wrapJsonListForRequest('planning', list));
     }
 
-    listLogs(id: number): Observable<any[]> {
-        return this.http.get<ResponseArrayWrapper<any[]>>(`${environment.apiUrl}${environment.apiVersion}/getShipmentLogs/${id}`)
-                        .pipe(pluckArrayWrapperData<any, ResponseArrayWrapper<any[]>>(),
-                          map((l: any[]) => {
-    
-                            l = l.map((p: SchedulingLogModel) => {
-                              
-                              p.statusListStatus = (<ResponseDataItem<any>>p.statusListStatus)?.attributes ?? null;
-                              // p.operation = (<ResponseDataItem<OperationModel>>p.operation)?.attributes ?? null;
-                              // p.warehouse = (<ResponseDataItem<BuildingModel>>p.warehouse)?.attributes || null;
-    
-                              // if (p.products.length) {
-                              //   p.products = (<ResponseDataItem<SchedulingProduct>[]>p.products).map((product: ResponseDataItem<SchedulingProduct>) => product.attributes);
-                              // }
-    
-                              if (p.shipmentLogs?.length) {
-                                p.shipmentLogs = (<ResponseDataItem<any>[]>p.shipmentLogs).map((s: ResponseDataItem<any>) => s.attributes);
-                              }
-    
-                              if (p.documents.length) {
-                                p.documents = (<ResponseDataItem<any>[]>p.documents).map((s: ResponseDataItem<any>) => s.attributes);
-                              }
-    
-                              return p;
-                            })
-    
-                            return l;
-                          })
-                        )
-      }
+    listLogs(id: number): Observable<any> {
+        return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getShipmentLogs`, { "planningId": id })
+            .pipe(pluckItemWrapperData<any, ResponseItemWrapper<any>>(),
+                map((p: any) => {
+                    return p;
+                })
+            )
+    }
 
     // listLogs(id: number): Observable<SchedulingLogModel[]> {
     //     return this.http.get<ResponseArrayWrapper<SchedulingLogModel[]>>(`${environment.apiUrl}${environment.apiVersion}/admin/shipment-logs/${id}`)
