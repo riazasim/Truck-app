@@ -4,6 +4,7 @@ import { DashboardComponent } from "./dashboard/dashboard.component";
 import { BrandingComponent } from "./branding/branding.component";
 import { LocationSettingsComponent } from "./location-settings/location-settings.component";
 import { AdminComponent } from "./admin.component";
+import { SchedulingTransferComponent } from './scheduling-transfer/scheduling-transfer.component';
 
 
 const routes: Routes = [
@@ -27,6 +28,10 @@ const routes: Routes = [
       {
         path: 'location-settings',
         component: LocationSettingsComponent
+      },
+      {
+        path: 'transfer',
+        component: SchedulingTransferComponent
       },
       {
         path: 'fleet',
