@@ -1,3 +1,5 @@
+import { ResponseDataItem } from "./response-wrappers.types";
+
 export interface UpdatePlanningDock {
     assigningDate: string;
     hour: string;
@@ -7,6 +9,7 @@ export interface UpdatePlanningDock {
 }
 
 export interface convoyModel {
+    planningConvoyId? :number;
     id?: number;
     navigationType: string;
     ship: string;
@@ -34,6 +37,9 @@ export interface convoyModel {
     clientComments: string;
     operatorComments: string;
     planningConvoyDocuments: File[];
+    // documents: File[];
+    documents: ResponseDataItem<DocumentObject>[] | DocumentObject[];
+    oldDocuments: File[];
 }
 
 export interface PlanningModel {
@@ -87,4 +93,8 @@ export interface PlanningTable {
     items: PlanningModel[];
     noFiltered: number;
     noTotal: number;
+}
+export type DocumentObject = {
+    document: string;
+    id: number;
 }

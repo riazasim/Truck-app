@@ -1,6 +1,6 @@
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Observable, combineLatest, take, delay } from 'rxjs';
@@ -96,11 +96,72 @@ export class AddSchedulingComponent implements OnInit, OnDestroy {
 
     id: number;
 
-    customer = [
-        { id: 1, name: 'customer1' },
-        { id: 2, name: 'customer2' },
-        { id: 3, name: 'customer3' },
-    ]
+    
+    zone = [
+        { id: 1, name: 'zone1' },
+        { id: 2, name: 'zone2' },
+        { id: 3, name: 'zone3' },
+    ];
+    departurePort = [
+        { id: 1, name: 'departure port1' },
+        { id: 2, name: 'departure port2' },
+        { id: 3, name: 'departure port3' },
+    ];
+    arivalPort = [
+        { id: 1, name: 'arival port1' },
+        { id: 2, name: 'arival port2' },
+        { id: 3, name: 'arival port3' },
+    ];
+    typeOfLock = [
+        { id: 1, name: 'type of lock1' },
+        { id: 2, name: 'type of lock2' },
+        { id: 3, name: 'type of lock3' },
+    ];
+    ship = [
+        { id: 1, name: 'ship1' },
+        { id: 2, name: 'ship2' },
+        { id: 3, name: 'ship3' },
+    ];
+    shipType = [
+        { id: 1, name: 'ship type1' },
+        { id: 2, name: 'ship type2' },
+        { id: 3, name: 'ship type3' },
+    ];
+    agent = [
+        { id: 1, name: 'agent1' },
+        { id: 2, name: 'agent2' },
+        { id: 3, name: 'agent3' },
+    ];
+    operator = [
+        { id: 1, name: 'operator1' },
+        { id: 2, name: 'operator2' },
+        { id: 3, name: 'operator3' },
+    ];
+    trafficType = [
+        { id: 1, name: 'traffic type1' },
+        { id: 2, name: 'traffic type2' },
+        { id: 3, name: 'traffic type3' },
+    ];
+    operationType = [
+        { id: 1, name: 'operation type1' },
+        { id: 2, name: 'operation type2' },
+        { id: 3, name: 'operation type3' },
+    ];
+    cargo = [
+        { id: 1, name: 'cargo1' },
+        { id: 2, name: 'cargo2' },
+        { id: 3, name: 'cargo3' },
+    ];
+    portOfOrigin = [
+        { id: 1, name: 'port of origin1' },
+        { id: 2, name: 'port of origin2' },
+        { id: 3, name: 'port of origin3' },
+    ];
+    destination = [
+        { id: 1, name: 'destination1' },
+        { id: 2, name: 'destination2' },
+        { id: 3, name: 'destination3' },
+    ];
 
     constructor(private readonly fb: FormBuilder,
         private readonly partnerService: PartnerService,
@@ -126,6 +187,7 @@ export class AddSchedulingComponent implements OnInit, OnDestroy {
         this.initConvoyForm();
         this.isLoading$.next(false)
     }
+    
 
     navigate(index: number) {
         this.convoyForm.patchValue({planningConvoyDocuments : this.images})
@@ -428,8 +490,9 @@ export class AddSchedulingComponent implements OnInit, OnDestroy {
 
     initConvoyForm(data?: convoyModel): void {
         this.convoyForm = this.fb.group({
-            navigationType: this.fb.control(data?.navigationType || ''),
-            ship: this.fb.control(data?.ship || ''),
+            navigationType: this.fb.control(data?.navigationType,[Validators.required]),
+            // ship: this.fb.control(data?.ship || ''),
+            ship: this.fb.control(data?.ship,[Validators.required]),
             shipType: this.fb.control(data?.shipType || ''),
             pavilion: this.fb.control(data?.pavilion || ''),
             enginePower: this.fb.control(data?.enginePower || ''),
@@ -452,7 +515,7 @@ export class AddSchedulingComponent implements OnInit, OnDestroy {
             observation: this.fb.control(data?.observation || ''),
             additionalOperator: this.fb.control(data?.additionalOperator || ''),
             clientComments: this.fb.control(data?.clientComments || ''),
-            operatorComments: this.fb.control(data?.operatorComments || ''),
+            operatorComments: this.fb.control(data?.operatorComments),
             planningConvoyDocuments: this.fb.control(data?.planningConvoyDocuments || []),
         })
     }
@@ -460,7 +523,8 @@ export class AddSchedulingComponent implements OnInit, OnDestroy {
     initForm(data?: PlanningModel): void {
         this.schedulingForm = this.fb.group({
             routingDetail: this.fb.group({
-                convoyType: this.fb.control(data?.routingDetail?.convoyType || ''),
+                convoyType: this.fb.control(data?.routingDetail?.convoyType,[Validators.required]),
+                // convoyType: this.fb.control(data?.routingDetail?.convoyType || ''),
                 estimatedTimeArrival: this.fb.control(data?.routingDetail?.estimatedTimeArrival || ''),
                 locationPort: this.fb.control(data?.routingDetail?.locationPort || ''),
                 zone: this.fb.control(data?.routingDetail?.zone || ''),

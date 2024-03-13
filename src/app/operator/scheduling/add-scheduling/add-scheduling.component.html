@@ -9,9 +9,19 @@
                         <input inputRef type="text" placeholder="Convoy Type" formControlName="convoyType" />
                     </div>
                     <div iconic-input-wrapper leftIcon="clock" formGroupName="routingDetail">
-                        <input inputRef matInput onkeydown="return false" (click)="picker.open()" type="text"
+                        <!-- <mat-form-field appearance="fill" formControlName="estimatedTimeArrival">
+                            <mat-label>Date time</mat-label> -->
+                            <input matInput formControlName="estimatedTimeArrival" [matDatepicker]="picker" />
+                            <input matInput formControlName="estimatedTimeArrival" class="time-picker" type="time" id="appt" name="appt" />
+                          
+                            <mat-datepicker-toggle matSuffix [for]="picker">
+                              <mat-icon matDatepickerToggleIcon>today</mat-icon>
+                            </mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                          <!-- </mat-form-field> -->
+                        <!-- <input inputRef matInput onkeydown="return false" (click)="picker.open()" type="text"
                             formControlName="estimatedTimeArrival" [matDatepicker]="picker" placeholder="ETA">
-                        <mat-datepicker #picker></mat-datepicker>
+                        <mat-datepicker #picker></mat-datepicker> -->
                         <!-- <input inputRef type="text" placeholder="Location Port"
                             formControlName="estimatedTimeArrival" /> -->
                     </div>
@@ -22,8 +32,8 @@
                         [rightIcon]="['fas', 'caret-down']" formGroupName="routingDetail">
                         <select inputRef name="zone" id="zone" formControlName="zone">
                             <option disabled selected>Zone</option>
-                            <option *ngFor="let customer of customer" [value]="customer.id">
-                                {{ customer.name }}
+                            <option *ngFor="let zone of zone" [value]="zone.id">
+                                {{ zone.name }}
                             </option>
                         </select>
                     </div>
@@ -33,8 +43,8 @@
                             <option disabled selected>
                                 Departure Port
                             </option>
-                            <option *ngFor="let customer of customer" [value]="customer.id">
-                                {{ customer.name }}
+                            <option *ngFor="let departurePort of departurePort" [value]="departurePort.id">
+                                {{ departurePort.name }}
                             </option>
                         </select>
                     </div>
@@ -42,8 +52,8 @@
                         [rightIcon]="['fas', 'caret-down']" formGroupName="routingDetail">
                         <select inputRef name="arrivalPort" id="arrivalPort" formControlName="arrivalPort">
                             <option disabled selected>Arival Port</option>
-                            <option *ngFor="let customer of customer" [value]="customer.id">
-                                {{ customer.name }}
+                            <option *ngFor="let arivalPort of arivalPort" [value]="arivalPort.id">
+                                {{ arivalPort.name }}
                             </option>
                         </select>
                     </div>
@@ -77,8 +87,8 @@
                         [rightIcon]="['fas', 'caret-down']" formGroupName="routingDetail">
                         <select inputRef name="typeOfLock" id="typeOfLock" formControlName="lockType">
                             <option disabled selected>Type of lock</option>
-                            <option *ngFor="let customer of customer" [value]="customer.id">
-                                {{ customer.name }}
+                            <option *ngFor="let typeOfLock of typeOfLock" [value]="typeOfLock.id">
+                                {{ typeOfLock.name }}
                             </option>
                         </select>
                     </div>
@@ -90,6 +100,7 @@
                     {{ "button.back" | translate }}
                 </button>
                 <button type="button" class="btn btn-primary min-md:tw-min-w-[436px] tw-min-h-[50px] !tw-text-[18px]"
+                    [disabled]="!schedulingForm.valid"
                     (click)="next(stepOne$, schedulingForm , 1)">
                     {{ "button.next" | translate }}
                 </button>
@@ -108,8 +119,8 @@
                     <div iconic-select-wrapper leftIcon="grid-2" [rightIcon]="['fas', 'caret-down']">
                         <select inputRef name="ship" id="ship" formControlName="ship">
                             <option disabled selected>Ship</option>
-                            <option *ngFor="let customer of customer" [value]="customer.id">
-                                {{ customer.name }}
+                            <option *ngFor="let ship of ship" [value]="ship.id">
+                                {{ ship.name }}
                             </option>
                         </select>
                     </div>
@@ -117,8 +128,8 @@
                         [rightIcon]="['fas', 'caret-down']">
                         <select inputRef name="shipType" id="shipType" formControlName="shipType">
                             <option disabled selected>Ship type*</option>
-                            <option *ngFor="let customer of customer" [value]="customer.id">
-                                {{ customer.name }}
+                            <option *ngFor="let shipType of shipType" [value]="shipType.id">
+                                {{ shipType.name }}
                             </option>
                         </select>
                     </div>
@@ -143,8 +154,8 @@
                     <div iconic-select-wrapper leftIcon="user" [rightIcon]="['fas', 'caret-down']">
                         <select inputRef name="agent" id="agent" formControlName="agent">
                             <option disabled selected>Agent</option>
-                            <option *ngFor="let customer of customer" [value]="customer.id">
-                                {{ customer.name }}
+                            <option *ngFor="let agent of agent" [value]="agent.id">
+                                {{ agent.name }}
                             </option>
                         </select>
                     </div>
@@ -164,8 +175,8 @@
                         [rightIcon]="['fas', 'caret-down']">
                         <select inputRef name="operator" id="operator" formControlName="operator">
                             <option disabled selected>Operator*</option>
-                            <option *ngFor="let customer of customer" [value]="customer.id">
-                                {{ customer.name }}
+                            <option *ngFor="let operator of operator" [value]="operator.id">
+                                {{ operator.name }}
                             </option>
                         </select>
                     </div>
@@ -173,17 +184,17 @@
                         [rightIcon]="['fas', 'caret-down']">
                         <select inputRef name="trafficType" id="trafficType" formControlName="trafficType">
                             <option disabled selected>Traffic type*</option>
-                            <option *ngFor="let customer of customer" [value]="customer.id">
-                                {{ customer.name }}
+                            <option *ngFor="let trafficType of trafficType" [value]="trafficType.id">
+                                {{ trafficType.name }}
                             </option>
                         </select>
                     </div>
                     <div iconic-select-wrapper leftSvg="assets/images/scheduling_operation_type.svg"
                         [rightIcon]="['fas', 'caret-down']">
                         <select inputRef name="operationType" id="operationType" formControlName="operatonType">
-                            <option disabled selected>Operaton type</option>
-                            <option *ngFor="let customer of customer" [value]="customer.id">
-                                {{ customer.name }}
+                            <option disabled selected>Operation type</option>
+                            <option *ngFor="let operationType of operationType" [value]="operationType.id">
+                                {{ operationType.name }}
                             </option>
                         </select>
                     </div>
@@ -191,8 +202,8 @@
                         [rightIcon]="['fas', 'caret-down']">
                         <select inputRef name="cargo" id="cargo" formControlName="cargo">
                             <option disabled selected>Cargo*</option>
-                            <option *ngFor="let customer of customer" [value]="customer.id">
-                                {{ customer.name }}
+                            <option *ngFor="let cargo of cargo" [value]="cargo.id">
+                                {{ cargo.name }}
                             </option>
                         </select>
                     </div>
@@ -208,8 +219,8 @@
                             <option disabled selected>
                                 Port of origin
                             </option>
-                            <option *ngFor="let customer of customer" [value]="customer.id">
-                                {{ customer.name }}
+                            <option *ngFor="let portOfOrigin of portOfOrigin" [value]="portOfOrigin.id">
+                                {{ portOfOrigin.name }}
                             </option>
                         </select>
                     </div>
@@ -217,8 +228,8 @@
                         [rightIcon]="['fas', 'caret-down']">
                         <select inputRef name="destination" id="destination" formControlName="destination">
                             <option disabled selected>Destination</option>
-                            <option *ngFor="let customer of customer" [value]="customer.id">
-                                {{ customer.name }}
+                            <option *ngFor="let destination of destination" [value]="destination.id">
+                                {{ destination.name }}
                             </option>
                         </select>
                     </div>
@@ -233,6 +244,7 @@
                     {{ "button.back" | translate }}
                 </button>
                 <button type="button" class="btn btn-primary min-md:tw-min-w-[436px] tw-min-h-[50px] !tw-text-[18px]"
+                     [disabled]="!schedulingForm.get('customer')?.value"
                     (click)="next(stepTwo$, convoyForm , 2)">
                     {{ "button.next" | translate }}
                 </button>

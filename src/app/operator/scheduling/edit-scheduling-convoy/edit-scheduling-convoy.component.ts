@@ -45,13 +45,13 @@ export class EditSchedulingConvoyComponent {
     openDeleteModal(id: number) {
         this.dialogService.open(SchedulingDeleteModalComponent, {
             disableClose: true,
-            data: {}
+            data: { "id" : id , "title" : "convoy"}
         }).afterClosed()
             .subscribe({
                 next: (isDelete: boolean) => {
                     if (isDelete) {
                         this.isLoading$.next(true);
-                        this.planningService.delete(id).subscribe(() => {
+                        this.planningService.deleteConvoy(id).subscribe(() => {
                             this.retrievePlanningList();
                             this.cd.detectChanges();
                         })

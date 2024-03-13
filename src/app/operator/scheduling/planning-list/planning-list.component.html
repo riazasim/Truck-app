@@ -14,7 +14,12 @@
                                 <div mat-sort-header="id">SID</div>
                             </section>
                         </th>
-                        <td cdk-cell *cdkCellDef="let row">{{ row.id }}</td>
+                        <td cdk-cell *cdkCellDef="let row">
+                            <a class="tw-text-primary" href="javascript:void(0)" (click)="triggerOpenLogs.emit({ view: 'view', id: row.id, planning: row })">{{row.id || '-'}}</a>
+                          </td>
+                          <td cdk-footer-cell *cdkFooterCellDef [colSpan]="displayedColumns.length" class="tw-py-4 tw-font-bold tw-text-center">
+                            {{'messages.there-no-more-items' | translate}}
+                          </td>
                     </ng-container>
                     <ng-container cdkColumnDef="manevre">
                         <th cdk-header-cell *cdkHeaderCellDef scope="col" class="tw-max-w-20">
@@ -121,7 +126,7 @@
                         <td cdk-cell *cdkCellDef="let row">
                             <!-- {{ row.shipmentStatus }} -->
                             <mat-chip
-                                [ngStyle]="{'background-color': row.shipmentStatus === 'Port Queue' ? 'green' : 'red'}"
+                                [ngStyle]="{'background-color': row.shipmentStatus === 'Port Queue' ? '#3386FE' : '#1C3F47'}"
                                 >
                                 {{ row.shipmentStatus === 'Port Queue' ? 'Port Queue' : row.shipmentStatus === 'Service'
                                 ? 'Service' : 'Closed' }}

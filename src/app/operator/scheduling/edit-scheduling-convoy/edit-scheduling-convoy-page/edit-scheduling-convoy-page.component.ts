@@ -52,71 +52,66 @@ export class EditSchedulingConvoyPageComponent {
     convoyForm: FormGroup;
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     showFileThree$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-
     isLinear = true;
-    customers: PartnerModel[] = [];
-    operations: OperationModel[] = [];
 
-    transportData: CustomFieldModel[] | undefined;
-    cargoData: CustomFieldModel[] | undefined;
-    additionalData: CustomFieldModel[] | undefined;
-
-    customFieldTransportData: SchedulingCustomField[] = [];
-    customFieldCargoData: SchedulingCustomField[] = [];
-    customFieldAdditionalData: SchedulingCustomField[] = [];
-
-    products: ProductModel[] = [];
-    listProducts: ProductModel[] = [];
-    docks: DockModel[] = [];
-    buildings: BuildingModel[] = [];
-
-    convoys: convoyModel[] = [];
+    oldImages: File[] = [];
     images: File[] = [];
 
-    customInputsFetched: boolean = false;
-
-    search: string;
-
     stepOne$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-    stepTwo$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-    stepThree$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-    stepFour$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-    // stepFive$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-
-    slots: number[] = [];
-    ignoreSlots: number[] = [];
-    tomorrowSlots: number[] = [];
-    today: Date;
-    tomorrow: Date;
-    selectedSlot$: BehaviorSubject<number | null> = new BehaviorSubject<number | null>(null);
-    selectedCustomer$: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
-
-    getFormatHourSlot: Function;
 
     id: number;
 
-    customer = [
-        { id: 1, name: 'customer1' },
-        { id: 2, name: 'customer2' },
-        { id: 3, name: 'customer3' },
-    ]
+    ship = [
+        { id: 1, name: 'ship1' },
+        { id: 2, name: 'ship2' },
+        { id: 3, name: 'ship3' },
+    ];
+    shipType = [
+        { id: 1, name: 'ship type1' },
+        { id: 2, name: 'ship type2' },
+        { id: 3, name: 'ship type3' },
+    ];
+    agent = [
+        { id: 1, name: 'agent1' },
+        { id: 2, name: 'agent2' },
+        { id: 3, name: 'agent3' },
+    ];
+    operator = [
+        { id: 1, name: 'operator1' },
+        { id: 2, name: 'operator2' },
+        { id: 3, name: 'operator3' },
+    ];
+    trafficType = [
+        { id: 1, name: 'traffic type1' },
+        { id: 2, name: 'traffic type2' },
+        { id: 3, name: 'traffic type3' },
+    ];
+    operationType = [
+        { id: 1, name: 'operation type1' },
+        { id: 2, name: 'operation type2' },
+        { id: 3, name: 'operation type3' },
+    ];
+    cargo = [
+        { id: 1, name: 'cargo1' },
+        { id: 2, name: 'cargo2' },
+        { id: 3, name: 'cargo3' },
+    ];
+    portOfOrigin = [
+        { id: 1, name: 'port of origin1' },
+        { id: 2, name: 'port of origin2' },
+        { id: 3, name: 'port of origin3' },
+    ];
+    destination = [
+        { id: 1, name: 'destination1' },
+        { id: 2, name: 'destination2' },
+        { id: 3, name: 'destination3' },
+    ];
 
     constructor(private readonly fb: FormBuilder,
-        private readonly partnerService: PartnerService,
-        private readonly operationService: OperationService,
         private readonly planningService: PlanningService,
         private readonly route: ActivatedRoute,
         private readonly router: Router,
-        private readonly customFieldService: CustomFieldService,
-        private readonly dialogService: MatDialog,
-        private readonly productService: ProductService,
-        private readonly dockService: DockService,
-        private readonly buildingService: BuildingService,
-        private readonly statusListStatus: StatusListService,
-        private readonly snackBar: MatSnackBar,
-        private readonly organizationService: OrganizationService) {
-        this.getFormatHourSlot = getFormatHourSlot.bind(this);
-    }
+        private readonly snackBar: MatSnackBar,) {}
 
     ngOnInit(): void {
         this.getRoute()
@@ -127,18 +122,13 @@ export class EditSchedulingConvoyPageComponent {
     getRoute() {
         this.id = this.route.snapshot.params['id'];
         this.planningService.getConvoy(this.id).subscribe(response => {
+            this.oldImages = response.planningConvoyDocuments
+            console.log(this.oldImages)
             console.log(response)
             this.initConvoyForm(response);
             this.isLoading$.next(false);
         });
     }
-
-    navigate(index: number) {
-        this.convoys.push(this.convoyForm.value)
-        this.initConvoyForm()
-        this.matStepper.selectedIndex = index;
-    }
-
 
     next(step$: BehaviorSubject<boolean>, formGroup: FormGroup, index: any): void {
         if (formGroup.valid) {
@@ -184,25 +174,27 @@ export class EditSchedulingConvoyPageComponent {
             additionalOperator: this.fb.control(data?.additionalOperator || ''),
             clientComments: this.fb.control(data?.clientComments || ''),
             operatorComments: this.fb.control(data?.operatorComments || ''),
-            documents: this.fb.control(data?.planningConvoyDocuments || []),
+            documents: this.fb.control(data?.documents || []),
+            oldDocuments: this.fb.control(data?.oldDocuments || []),
+            planningConvoyDocuments: this.fb.control(data?.planningConvoyDocuments || []),
         })
     }
 
     updateConvoys(): void {
         this.isLoading$.next(true);
-        this.convoys.push(this.convoyForm.value)
-        this.convoyForm.patchValue({planningConvoyDocuments: this.images })
+        this.convoyForm.patchValue({documents: this.images , oldDocuments : this.oldImages })
         console.log(this.convoyForm)
-        // this.planningService.create(this.convoyForm.value).subscribe({
-        //     next: () => {
-        //         this.router.navigate(['../success'], { relativeTo: this.route });
-        //     },
-        //     error: (body) => {
-        //         handleError(this.snackBar, body);
-        //         this.matStepper.selectedIndex = 0;
-        //         this.isLoading$.next(false);
-        //     }
-        // })
+        this.planningService.editConvoys(this.id,this.convoyForm.value)
+        .subscribe({
+            next: () => {
+                this.router.navigate(['../../../../success'], { relativeTo: this.route });
+            },
+            error: (body) => {
+                handleError(this.snackBar, body);
+                this.matStepper.selectedIndex = 0;
+                this.isLoading$.next(false);
+            }
+        })
     }
 
     patchFile(file: File, index: number): void {

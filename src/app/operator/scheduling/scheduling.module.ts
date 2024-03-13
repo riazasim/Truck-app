@@ -31,7 +31,7 @@ import { SchedulingDeleteModalComponent } from './scheduling-delete-modal/schedu
 import { VehicleModule } from '../vehicle/vehicle.module';
 import { NoSchedulingComponent } from './no-scheduling/no-scheduling.component';
 import { SchedulingAddProductModalComponent } from './scheduling-add-product-modal/scheduling-add-product-modal.component';
-import { MAT_DATE_FORMATS, MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/core';
+import { MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule, MatRippleModule, provideNativeDateAdapter } from '@angular/material/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatMenuModule } from '@angular/material/menu';
@@ -129,7 +129,7 @@ import { EditSchedulingConvoyPageComponent } from './edit-scheduling-convoy/edit
     CdkTableModule,
     MatFormFieldModule,
     MatInputModule,
-    MatDatepickerModule
+    MatDatepickerModule,
   ],
   providers: [provideNativeDateAdapter()]
 })

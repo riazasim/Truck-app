@@ -86,3 +86,23 @@ ul li {
         line-height: 200px;
     }
 }
+
+.time-picker {
+    position: relative;
+  }
+  .time-picker::-webkit-calendar-picker-indicator {
+    background: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20enable-background%3D%22new%200%200%2024%2024%22%20height%3D%2224px%22%20viewBox%3D%220%200%2024%2024%22%20width%3D%2224px%22%20fill%3D%22%23000000%22%3E%3Cg%3E%3Crect%20fill%3D%22none%22%20height%3D%2224%22%20width%3D%2224%22%2F%3E%3C%2Fg%3E%3Cg%3E%3Cg%3E%3Cg%3E%3Cpath%20d%3D%22M12%2C2C6.5%2C2%2C2%2C6.5%2C2%2C12s4.5%2C10%2C10%2C10s10-4.5%2C10-10S17.5%2C2%2C12%2C2z%20M16.2%2C16.2L11%2C13V7h1.5v5.2l4.5%2C2.7L16.2%2C16.2z%22%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    display: inline-block;
+    fill: currentColor;
+    height: 24px;
+    width: 24px;
+  }
+  
+  :host ::ng-deep .mat-form-field-infix {
+    display: flex;
+  }
+  
+//   .mat-form-field {
+//     width: 100%;
+//   }

@@ -8,7 +8,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 })
 export class SchedulingDeleteModalComponent {
   constructor(private readonly dialogRef: MatDialogRef<any>,
-              @Inject(MAT_DIALOG_DATA) public data: {sId: number}) {
+              @Inject(MAT_DIALOG_DATA) public data: {id: number , title : string}) {
   }
 
   cancel(): void {

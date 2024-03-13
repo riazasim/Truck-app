@@ -53,6 +53,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
         MatInputModule, 
         MatDatepickerModule
     ],
+    exports: [MapComponent],
     providers: [provideNativeDateAdapter()],
 })
 export class OperatorModule { }

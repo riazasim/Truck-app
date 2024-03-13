@@ -2,7 +2,7 @@
     <app-loader class="tw-m-auto tw-flex-grow" *ngIf="(isLoading$ | async)" [fullScreen]="false"></app-loader>
     <div *ngIf="!(isLoading$ | async)">
         <div class="tw-flex tw-justify-between min-lg:tw-items-center max-lg:tw-flex-col">
-            <div><h2 class="heading-2 tw-font-bold tw-text-primary">Shipment ID - {{planning?.sId}}</h2></div>
+            <div><h2 class="heading-2 tw-font-bold tw-text-primary">Shipment ID - {{planning?.id}}</h2></div>
             <div class="tw-flex tw-gap-10">
                 <fa-icon icon="print" class="tw-text-primary tw-text-[35px] tw-cursor-pointer"></fa-icon>
                 <fa-icon icon="file-pdf" class="tw-text-primary tw-text-[35px] tw-cursor-pointer"></fa-icon>
@@ -40,7 +40,7 @@
                 <!-- <div><span class="tw-font-bold">Documents: </span> id = {{planning.documents | extractProperty : 'id'}}</div> -->
             </div>
             <div class="tw-flex tw-gap-4">
-                <ng-container *ngIf="planning.documents.length">
+                <ng-container *ngIf="planning.convoyDetail.documents.length">
                     <div *ngFor="let image of $any(planning.documents)">
                         <div [style.background-image]="'url(' + image?.document + ')'" (click)="openImageModal(image.document)"
                         class="tw-bg-center tw-cursor-pointer tw-bg-no-repeat tw-bg-cover tw-min-h-[83px] min-md:tw-min-w-[120px]"></div>

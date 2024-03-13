@@ -30,13 +30,25 @@ export class PlanningService {
     }
 
 
-    editRouteingDetails(id : number , data  : any) : Observable<PlanningDetailModel>{
-        return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/updatePlanning`, {"planningId" : id ,...data})
-        .pipe(pluckItemWrapperData<PlanningDetailModel, ResponseItemWrapper<PlanningDetailModel>>(),
-        map((p: PlanningDetailModel) => {
-            return p;
-        })
-    )
+    editRouteingDetails(id: number, data: any): Observable<PlanningDetailModel> {
+        return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/updatePlanning`, { "planningId": id, ...data })
+            .pipe(pluckItemWrapperData<PlanningDetailModel, ResponseItemWrapper<PlanningDetailModel>>(),
+                map((p: PlanningDetailModel) => {
+                    return p;
+                })
+            )
+    }
+    editConvoys(id: number, data: convoyModel): Observable<convoyModel> {
+        data.planningConvoyId = id
+        const body = convertJsonToFormData(data, '');
+        console.log(body)
+        console.log(data)
+        return this.http.post<ResponseItemWrapper<convoyModel>>(`${environment.apiUrl}${environment.apiVersion}/updatePlanningConvoy`, body)
+            .pipe(pluckItemWrapperData<convoyModel, ResponseItemWrapper<convoyModel>>(),
+                map((p: convoyModel) => {
+                    return p;
+                })
+            )
     }
 
     edit(id: number, body: Partial<SchedulingModel>): Observable<any> {
@@ -93,7 +105,7 @@ export class PlanningService {
     }
 
     get(id: number): Observable<PlanningDetailModel> {
-        return this.http.post<ResponseItemWrapper<PlanningDetailModel>>(`${environment.apiUrl}${environment.apiVersion}/getPlanning`, {"planningId":id})
+        return this.http.post<ResponseItemWrapper<PlanningDetailModel>>(`${environment.apiUrl}${environment.apiVersion}/getPlanning`, { "planningId": id })
             .pipe(pluckItemWrapperData<PlanningDetailModel, ResponseItemWrapper<PlanningDetailModel>>(),
                 map((p: PlanningDetailModel) => {
                     return p;
@@ -102,7 +114,7 @@ export class PlanningService {
     }
 
     getConvoy(id: number): Observable<convoyModel> {
-        return this.http.post<ResponseItemWrapper<convoyModel>>(`${environment.apiUrl}${environment.apiVersion}/getPlanningConvoy`, {"planningConvoyId":id})
+        return this.http.post<ResponseItemWrapper<convoyModel>>(`${environment.apiUrl}${environment.apiVersion}/getPlanningConvoy`, { "planningConvoyId": id })
             .pipe(pluckItemWrapperData<convoyModel, ResponseItemWrapper<convoyModel>>(),
                 map((p: convoyModel) => {
                     return p;
@@ -113,6 +125,10 @@ export class PlanningService {
     delete(id: number): Observable<any> {
         let data = { "planningId": id };
         return this.http.post(`${environment.apiUrl}${environment.apiVersion}/deletePlanning`, wrapJsonForRequest(data))
+    }
+    deleteConvoy(id: number): Observable<any> {
+        let data = { "planningConvoyId": id };
+        return this.http.post(`${environment.apiUrl}${environment.apiVersion}/deletePlanningConvoy`, wrapJsonForRequest(data))
     }
 
     pagination(data: any): Observable<PlanningTable> {
@@ -296,36 +312,67 @@ export class PlanningService {
         return this.http.post(`${environment.apiUrl}${environment.apiVersion}${this.route}/import-json`, wrapJsonListForRequest('planning', list));
     }
 
-    listLogs(id: number): Observable<SchedulingLogModel[]> {
-        return this.http.get<ResponseArrayWrapper<SchedulingLogModel[]>>(`${environment.apiUrl}${environment.apiVersion}/admin/shipment-logs/${id}`)
-            .pipe(pluckArrayWrapperData<any, ResponseArrayWrapper<SchedulingLogModel[]>>(),
-                map((l: SchedulingLogModel[]) => {
+    listLogs(id: number): Observable<any[]> {
+        return this.http.get<ResponseArrayWrapper<any[]>>(`${environment.apiUrl}${environment.apiVersion}/getShipmentLogs/${id}`)
+                        .pipe(pluckArrayWrapperData<any, ResponseArrayWrapper<any[]>>(),
+                          map((l: any[]) => {
+    
+                            l = l.map((p: SchedulingLogModel) => {
+                              
+                              p.statusListStatus = (<ResponseDataItem<any>>p.statusListStatus)?.attributes ?? null;
+                              // p.operation = (<ResponseDataItem<OperationModel>>p.operation)?.attributes ?? null;
+                              // p.warehouse = (<ResponseDataItem<BuildingModel>>p.warehouse)?.attributes || null;
+    
+                              // if (p.products.length) {
+                              //   p.products = (<ResponseDataItem<SchedulingProduct>[]>p.products).map((product: ResponseDataItem<SchedulingProduct>) => product.attributes);
+                              // }
+    
+                              if (p.shipmentLogs?.length) {
+                                p.shipmentLogs = (<ResponseDataItem<any>[]>p.shipmentLogs).map((s: ResponseDataItem<any>) => s.attributes);
+                              }
+    
+                              if (p.documents.length) {
+                                p.documents = (<ResponseDataItem<any>[]>p.documents).map((s: ResponseDataItem<any>) => s.attributes);
+                              }
+    
+                              return p;
+                            })
+    
+                            return l;
+                          })
+                        )
+      }
 
-                    l = l.map((p: SchedulingLogModel) => {
+    // listLogs(id: number): Observable<SchedulingLogModel[]> {
+    //     return this.http.get<ResponseArrayWrapper<SchedulingLogModel[]>>(`${environment.apiUrl}${environment.apiVersion}/admin/shipment-logs/${id}`)
+    //         .pipe(pluckArrayWrapperData<any, ResponseArrayWrapper<SchedulingLogModel[]>>(),
+    //             map((l: SchedulingLogModel[]) => {
 
-                        p.statusListStatus = (<ResponseDataItem<StatusListModel>>p.statusListStatus)?.attributes ?? null;
-                        p.operation = (<ResponseDataItem<OperationModel>>p.operation)?.attributes ?? null;
-                        p.warehouse = (<ResponseDataItem<BuildingModel>>p.warehouse)?.attributes || null;
+    //                 l = l.map((p: SchedulingLogModel) => {
 
-                        if (p.products.length) {
-                            p.products = (<ResponseDataItem<SchedulingProduct>[]>p.products).map((product: ResponseDataItem<SchedulingProduct>) => product.attributes);
-                        }
+    //                     p.statusListStatus = (<ResponseDataItem<StatusListModel>>p.statusListStatus)?.attributes ?? null;
+    //                     p.operation = (<ResponseDataItem<OperationModel>>p.operation)?.attributes ?? null;
+    //                     p.warehouse = (<ResponseDataItem<BuildingModel>>p.warehouse)?.attributes || null;
 
-                        if (p.shipmentLogs?.length) {
-                            p.shipmentLogs = (<ResponseDataItem<ShipmentLogsModel>[]>p.shipmentLogs).map((s: ResponseDataItem<ShipmentLogsModel>) => s.attributes);
-                        }
+    //                     if (p.products.length) {
+    //                         p.products = (<ResponseDataItem<SchedulingProduct>[]>p.products).map((product: ResponseDataItem<SchedulingProduct>) => product.attributes);
+    //                     }
 
-                        if (p.documents.length) {
-                            p.documents = (<ResponseDataItem<DocumentObject>[]>p.documents).map((s: ResponseDataItem<DocumentObject>) => s.attributes);
-                        }
+    //                     if (p.shipmentLogs?.length) {
+    //                         p.shipmentLogs = (<ResponseDataItem<ShipmentLogsModel>[]>p.shipmentLogs).map((s: ResponseDataItem<ShipmentLogsModel>) => s.attributes);
+    //                     }
 
-                        return p;
-                    })
+    //                     if (p.documents.length) {
+    //                         p.documents = (<ResponseDataItem<DocumentObject>[]>p.documents).map((s: ResponseDataItem<DocumentObject>) => s.attributes);
+    //                     }
 
-                    return l;
-                })
-            )
-    }
+    //                     return p;
+    //                 })
+
+    //                 return l;
+    //             })
+    //         )
+    // }
 
     cancel(planningId: number): Observable<any> {
         return this.http.post(`${environment.apiUrl}${environment.apiVersion}${this.route}/cancel/${planningId}`, {});

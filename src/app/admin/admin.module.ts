@@ -28,21 +28,28 @@ import { CardModule } from "../shared/components/cards/card.module";
 import {MatMenuModule} from "@angular/material/menu";
 import {HttpClientModule} from "@angular/common/http";
 import {TranslateModule} from "@ngx-translate/core";
+import { OperatorModule } from "../operator/operator.module";
+import { SchedulingModule } from '../operator/scheduling/scheduling.module';
 
 
 
 
 @NgModule({
-  declarations: [
-    DashboardComponent,
-    AdminComponent,
-    AdminHeaderComponent,
-    NavigationMenuComponent,
-    AdminLayoutComponent,
-    BrandingComponent,
-    LocationSettingsComponent,
-    ChangeLocationModalComponent,
-  ],
+    declarations: [
+        DashboardComponent,
+        AdminComponent,
+        AdminHeaderComponent,
+        NavigationMenuComponent,
+        AdminLayoutComponent,
+        BrandingComponent,
+        LocationSettingsComponent,
+        ChangeLocationModalComponent,
+    ],
+    providers: [
+        AssetsProviderService,
+        LoaderOrchestratorService,
+        CredentialsGuard,
+    ],
     imports: [
         CommonModule,
         AdminRoutingModule,
@@ -63,11 +70,8 @@ import {TranslateModule} from "@ngx-translate/core";
         TranslateModule,
         MatMenuModule,
         ReactiveFormsModule,
-    ],
-  providers: [
-    AssetsProviderService,
-    LoaderOrchestratorService,
-    CredentialsGuard,
-  ]
+        OperatorModule,
+        SchedulingModule,
+    ]
 })
 export class AdminModule { }

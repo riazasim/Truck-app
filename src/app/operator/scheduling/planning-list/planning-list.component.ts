@@ -1,4 +1,4 @@
-﻿import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+﻿import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Sort } from '@angular/material/sort';
 import { compare } from 'src/app/shared/utils/sort.function';
@@ -16,6 +16,7 @@ import { SchedulingImportModalComponent } from '../scheduling-import-modal/sched
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PlanningListComponent {
+  @Output() triggerOpenLogs: EventEmitter<{ view: string, id: number, planning: any }> = new EventEmitter();
   isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     displayedColumns: string[] = ['id', 'manevre', 'vesselId', 'berth', 'products', 'estimatedTimeArrival', 'relativeTimeArrival', 'delay', 'coordinates', 'shipmentStatus' , 'actions'];
     dataSource: PlanningModel[] = [];
@@ -74,7 +75,7 @@ export class PlanningListComponent {
   openDeleteModal(id: number) {
     this.dialogService.open(SchedulingDeleteModalComponent, {
       disableClose: true,
-      data: {}
+      data: {"id" : id , "title" : "planning"}
     }).afterClosed()
       .subscribe({
         next: (isDelete: boolean) => {
