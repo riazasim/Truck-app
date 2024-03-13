@@ -54,8 +54,10 @@ export class EditSchedulingConvoyPageComponent {
     showFileThree$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     isLinear = true;
 
-    oldImages: File[] = [];
-    images: File[] = [];
+    oldId: any[] = [];
+    oldImagesId: any[] = [];
+    images: any[] = [];
+    tempImg: File[] = [];
 
     stepOne$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
@@ -111,7 +113,7 @@ export class EditSchedulingConvoyPageComponent {
         private readonly planningService: PlanningService,
         private readonly route: ActivatedRoute,
         private readonly router: Router,
-        private readonly snackBar: MatSnackBar,) {}
+        private readonly snackBar: MatSnackBar,) { }
 
     ngOnInit(): void {
         this.getRoute()
@@ -122,9 +124,9 @@ export class EditSchedulingConvoyPageComponent {
     getRoute() {
         this.id = this.route.snapshot.params['id'];
         this.planningService.getConvoy(this.id).subscribe(response => {
-            this.oldImages = response.planningConvoyDocuments
-            console.log(this.oldImages)
-            console.log(response)
+            response.planningConvoyDocuments.map((item: any) => {
+                this.oldImagesId.push(item.id)
+            })
             this.initConvoyForm(response);
             this.isLoading$.next(false);
         });
@@ -174,32 +176,31 @@ export class EditSchedulingConvoyPageComponent {
             additionalOperator: this.fb.control(data?.additionalOperator || ''),
             clientComments: this.fb.control(data?.clientComments || ''),
             operatorComments: this.fb.control(data?.operatorComments || ''),
+            oldDocuments: this.fb.control(data?.oldDocuments || ''),
             documents: this.fb.control(data?.documents || []),
-            oldDocuments: this.fb.control(data?.oldDocuments || []),
-            planningConvoyDocuments: this.fb.control(data?.planningConvoyDocuments || []),
         })
     }
 
     updateConvoys(): void {
         this.isLoading$.next(true);
-        this.convoyForm.patchValue({documents: this.images , oldDocuments : this.oldImages })
+        this.convoyForm.patchValue({ documents: this.images, oldDocuments: `[${String(this.oldId)}]` })
         console.log(this.convoyForm)
-        this.planningService.editConvoys(this.id,this.convoyForm.value)
-        .subscribe({
-            next: () => {
-                this.router.navigate(['../../../../success'], { relativeTo: this.route });
-            },
-            error: (body) => {
-                handleError(this.snackBar, body);
-                this.matStepper.selectedIndex = 0;
-                this.isLoading$.next(false);
-            }
-        })
+        this.planningService.editConvoys(this.id, this.convoyForm.value)
+            .subscribe({
+                next: () => {
+                    this.router.navigate(['../../../../success'], { relativeTo: this.route });
+                },
+                error: (body) => {
+                    handleError(this.snackBar, body);
+                    this.matStepper.selectedIndex = 0;
+                    this.isLoading$.next(false);
+                }
+            })
     }
 
     patchFile(file: File, index: number): void {
         this.images[index] = file
-        console.log(this.images)
+        this.oldId[index] = this.oldImagesId[index]
     }
 
 }
