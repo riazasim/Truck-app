@@ -30,7 +30,6 @@ import {HttpClientModule} from "@angular/common/http";
 import {TranslateModule} from "@ngx-translate/core";
 import { OperatorModule } from "../operator/operator.module";
 import { SchedulingModule } from '../operator/scheduling/scheduling.module';
-import { SchedulingTransferComponent } from './scheduling-transfer/scheduling-transfer.component';
 import { MatTableModule } from '@angular/material/table';
 import { CdkTableModule } from '@angular/cdk/table';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -48,7 +47,6 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
         BrandingComponent,
         LocationSettingsComponent,
         ChangeLocationModalComponent,
-        SchedulingTransferComponent
     ],
     providers: [
         AssetsProviderService,

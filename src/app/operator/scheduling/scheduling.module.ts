@@ -60,6 +60,10 @@ import { MatInputModule } from '@angular/material/input';
 import { EditSchedulingRouteComponent } from './edit-scheduling-route/edit-scheduling-route.component';
 import { EditSchedulingConvoyComponent } from './edit-scheduling-convoy/edit-scheduling-convoy.component';
 import { EditSchedulingConvoyPageComponent } from './edit-scheduling-convoy/edit-scheduling-convoy-page/edit-scheduling-convoy-page.component';
+import { SchedulingTransferComponent } from './scheduling-transfer/scheduling-transfer.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { NoRestrictionsComponent } from './no-restrictions/no-restrictions.component';
+import { RestrictionsComponent } from './restrictions/restrictions.component';
 
 
 @NgModule({
@@ -90,6 +94,9 @@ import { EditSchedulingConvoyPageComponent } from './edit-scheduling-convoy/edit
     EditSchedulingRouteComponent,
     EditSchedulingConvoyComponent,
     EditSchedulingConvoyPageComponent,
+    SchedulingTransferComponent,
+    NoRestrictionsComponent,
+    RestrictionsComponent
   ],
   imports: [
     CommonModule,
@@ -130,6 +137,7 @@ import { EditSchedulingConvoyPageComponent } from './edit-scheduling-convoy/edit
     MatFormFieldModule,
     MatInputModule,
     MatDatepickerModule,
+    MatCheckboxModule
   ],
   providers: [provideNativeDateAdapter()]
 })
