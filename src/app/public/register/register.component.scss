@@ -2,7 +2,7 @@
 //:host {
 //    @media screen and (min-width: 577px) {
 //        ::ng-deep .iconic-layout-wrapper > .input-container,
-//        button[type="submit"] {
+//        button{
 //            min-width: 435px
 //        }
 //    }
@@ -19,12 +19,12 @@
 //    }
 //
 //    ::ng-deep .iconic-layout-wrapper > .input-container,
-//    button[type="submit"] {
+//    button{
 //        // border-radius: 50px;
 //
 //    }
 //
-//    button[type="submit"] {
+//    button{
 //        height: 50px;
 //        font-size: 18px;
 //    }
@@ -34,30 +34,31 @@
 
 :host {
     @media screen and (min-width: 577px) {
-        ::ng-deep .iconic-layout-wrapper > .input-container,
-        button[type="submit"] {
+
+        ::ng-deep .iconic-layout-wrapper>.input-container,
+        button {
             min-width: 435px
         }
     }
 
-    ::ng-deep .iconic-layout-wrapper > .input-container {
+    ::ng-deep .iconic-layout-wrapper>.input-container {
         padding: 1.1rem 1.4rem;
         // max-height: 60px;
         height: 60px;
         text-align: center;
     }
 
-    ::ng-deep .iconic-layout-wrapper > .input-container::placeholder {
+    ::ng-deep .iconic-layout-wrapper>.input-container::placeholder {
         color: $input-placeholder;
     }
 
-    ::ng-deep .iconic-layout-wrapper > .input-container,
-    button[type="submit"] {
-        border-radius: 50px;
+    ::ng-deep .iconic-layout-wrapper>.input-container,
+    button {
+        border-radius: 10px;
 
     }
 
-    button[type="submit"] {
+    button {
         height: 50px;
         font-size: 18px;
     }

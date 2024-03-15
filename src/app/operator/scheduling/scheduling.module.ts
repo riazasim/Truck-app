@@ -139,6 +139,6 @@ import { RestrictionsComponent } from './restrictions/restrictions.component';
     MatDatepickerModule,
     MatCheckboxModule
   ],
-  providers: [provideNativeDateAdapter()]
+  providers: []
 })
 export class SchedulingModule { }

@@ -17,7 +17,7 @@ import { CallbackPipe } from '../core/pipes/callback.pipe';
 import { SearchbarModule } from './components/searchbar/searchbar.component';
 import { ButtonComponent } from './components/button/button.component';
 import { FilterSelectComponent } from './components/filter-select/filter-select.component';
-import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { TextareaWrapperComponent } from './components/textarea-wrapper/textarea-wrapper.component';
 import { DatepickerComponent } from './components/datepicker/datepicker.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -34,35 +34,45 @@ import { TranslateModule } from '@ngx-translate/core';
 import { TimepickerComponent } from './components/timepicker/timepicker.component';
 import { MatMenuModule } from '@angular/material/menu';
 
-
+export const MY_FORMATS = {
+    parse: {
+        dateInput: 'YYYY.MM.DD',
+    },
+    display: {
+        dateInput: 'YYYY.MM.DD',
+        monthYearLabel: 'MMM YYYY',
+        dateA11yLabel: 'LL',
+        monthYearA11yLabel: 'MMMM-YYYY',
+    },
+};
 
 @NgModule({
-  declarations: [
-    IconicInputWrapperComponent,
-    IconicPasswordWrapperComponent,
-    IconicSelectWrapperComponent,
-    DatepickerComponent,
-    LoaderComponent,
-    SelectRefDirective,
-    PublicLayoutComponent,
-    SuccessContainerComponent,
-    FilterPipe,
-    EditContainerComponent,
-    FullEmptyContainerComponent,
-    ChangeLocationModalComponent,
-    CallbackPipe,
-    ButtonComponent,
-    FilterSelectComponent,
-    TextareaWrapperComponent,
-    OpenImageModalComponent,
-    ExtractPropertyPipe,
-    ActivityLogComponent,
-    CustomTooltipComponent,
-    CustomTooltipDirective,
-    SafeHtmlPipe,
-    ToggleComponent,
-    TimepickerComponent
-  ],
+    declarations: [
+        IconicInputWrapperComponent,
+        IconicPasswordWrapperComponent,
+        IconicSelectWrapperComponent,
+        DatepickerComponent,
+        LoaderComponent,
+        SelectRefDirective,
+        PublicLayoutComponent,
+        SuccessContainerComponent,
+        FilterPipe,
+        EditContainerComponent,
+        FullEmptyContainerComponent,
+        ChangeLocationModalComponent,
+        CallbackPipe,
+        ButtonComponent,
+        FilterSelectComponent,
+        TextareaWrapperComponent,
+        OpenImageModalComponent,
+        ExtractPropertyPipe,
+        ActivityLogComponent,
+        CustomTooltipComponent,
+        CustomTooltipDirective,
+        SafeHtmlPipe,
+        ToggleComponent,
+        TimepickerComponent
+    ],
     imports: [
         CommonModule,
         FontAwesomeModule,
@@ -75,35 +85,35 @@ import { MatMenuModule } from '@angular/material/menu';
         ReactiveFormsModule,
         MatMenuModule
     ],
-  exports: [
-    IconicInputWrapperComponent,
-    IconicPasswordWrapperComponent,
-    IconicSelectWrapperComponent,
-    DatepickerComponent,
-    LoaderComponent,
-    SelectRefDirective,
-    PublicLayoutComponent,
-    FilterPipe,
-    SuccessContainerComponent,
-    EditContainerComponent,
-    FullEmptyContainerComponent,
-    ChangeLocationModalComponent,
-    CallbackPipe,
-    ButtonComponent,
-    FilterSelectComponent,
-    TextareaWrapperComponent,
-    OpenImageModalComponent,
-    ExtractPropertyPipe,
-    ActivityLogComponent,
-    CustomTooltipComponent,
-    CustomTooltipDirective,
-    SafeHtmlPipe,
-    ToggleComponent,
-    TimepickerComponent
-  ],
-  providers: [
-    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
-    { provide: MAT_DATE_FORMATS, useValue: MAT_DATE_FORMATS }
-  ]
+    exports: [
+        IconicInputWrapperComponent,
+        IconicPasswordWrapperComponent,
+        IconicSelectWrapperComponent,
+        DatepickerComponent,
+        LoaderComponent,
+        SelectRefDirective,
+        PublicLayoutComponent,
+        FilterPipe,
+        SuccessContainerComponent,
+        EditContainerComponent,
+        FullEmptyContainerComponent,
+        ChangeLocationModalComponent,
+        CallbackPipe,
+        ButtonComponent,
+        FilterSelectComponent,
+        TextareaWrapperComponent,
+        OpenImageModalComponent,
+        ExtractPropertyPipe,
+        ActivityLogComponent,
+        CustomTooltipComponent,
+        CustomTooltipDirective,
+        SafeHtmlPipe,
+        ToggleComponent,
+        TimepickerComponent
+    ],
+    providers: [
+        { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+        { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS }
+    ]
 })
 export class SharedModule { }

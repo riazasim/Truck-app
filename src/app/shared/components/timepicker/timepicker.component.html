@@ -4,11 +4,11 @@
             <div class="iconic-layout-wrapper">
                 <div class="input-container">
                     <fa-icon icon="clock" size="lg" class="icon"></fa-icon>
-                    <input #inputTrigger="matMenuTrigger" 
-                            type="text" 
-                            [matMenuTriggerFor]="menu" 
-                            [placeholder]="placeholder" 
-                            [formControlName]="field" 
+                    <input #inputTrigger="matMenuTrigger"
+                            type="text"
+                            [matMenuTriggerFor]="menu"
+                            [placeholder]="placeholder"
+                            [formControlName]="field"
                             onkeydown="return false">
                     <fa-icon (click)="formGroup.get(field)?.patchValue(null)" *ngIf="formGroup.get(field)?.value" icon="close" size="lg" class="icon tw-cursor-pointer"></fa-icon>
                     <mat-menu #menu="matMenu">
@@ -59,11 +59,11 @@
         <div class="iconic-layout-wrapper">
             <div class="input-container">
                 <fa-icon icon="clock" size="lg" class="icon"></fa-icon>
-                <input onkeydown="return false" 
-                        type="text" 
+                <input onkeydown="return false"
+                        type="text"
                         #inputTrigger="matMenuTrigger"
-                        [placeholder]="placeholder" 
-                        [(ngModel)]="model" 
+                        [placeholder]="placeholder"
+                        [(ngModel)]="model"
                         [matMenuTriggerFor]="menu">
                 <fa-icon (click)="model = ''" *ngIf="model" icon="close" size="lg" class="icon tw-cursor-pointer"></fa-icon>
                 <mat-menu #menu="matMenu">

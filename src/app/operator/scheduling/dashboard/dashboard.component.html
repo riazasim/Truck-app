@@ -87,8 +87,7 @@
                     </mat-button-toggle-group>
                     <fa-icon icon="truck" size="2x" [matMenuTriggerFor]="sidType" #trigger="matMenuTrigger"
                         matTooltipClass="tw-drop-shadow-lg" matTooltipPosition="above"
-                        [matTooltip]="'truck' | translate"
-                        class="tw-mx-2 tw-cursor-pointer hover:tw-text-primary">
+                        [matTooltip]="'truck' | translate" class="tw-mx-2 tw-cursor-pointer hover:tw-text-primary">
                     </fa-icon>
                     <mat-menu #sidType="matMenu" class="!tw-bg-white" xPosition="before">
                         <menu mat-menu-item>
@@ -108,14 +107,14 @@
                         </menu>
                     </mat-menu>
                     <fa-icon icon="grid-2" size="2x" matTooltipClass="tw-drop-shadow-lg" matTooltipPosition="above"
-                        [matTooltip]="'table' | translate"
+                        [matTooltip]="'table' | translate" *ngIf="!(isTableView$ | async)"
                         [ngClass]="{'tw-text-[#17A0B5]': !(isTableView$ | async),'tw-mx-2 tw-cursor-pointer' : true}"
-                        (click)="isTableView$.next(false); retrievePlanningList()">
+                        (click)="isTableView$.next(true); retrievePlanningList()">
                     </fa-icon>
                     <fa-icon icon="list" size="2x" matTooltipClass="tw-drop-shadow-lg" matTooltipPosition="above"
-                        [matTooltip]="'card' | translate"
+                        [matTooltip]="'card' | translate" *ngIf="(isTableView$ | async)"
                         [ngClass]="{'tw-text-[#17A0B5]': (isTableView$ | async),'tw-mx-2 tw-cursor-pointer' : true}"
-                        (click)="isTableView$.next(true)">
+                        (click)="isTableView$.next(false)">
                     </fa-icon>
                 </div>
             </div>
@@ -123,23 +122,6 @@
                 class="min-lg:tw-grid tw-gap-4 min-lg:tw-grid-cols-[420px_minmax(900px,_1fr)_100px] max-lg:tw-flex max-lg:tw-flex-col"
                 cdkDropListGroup>
                 <ng-scrollbar visibility="always" *ngIf="!(isMobileCardList$ | async)" track="vertical"
-                    appearance="standard" (reachedBottom)="onBottomReached()" [reachedOffset]="350">
-                    <div scrollViewport dropListScroller>
-                        <!-- <app-loader [isContainer]="true" *ngIf="(isLoading$ | async)" [fullScreen]="false"></app-loader> -->
-                        <ng-container>
-                            <!-- <scheduling-card *ngFor="let item of plannings"cdkDrag>
-                                <div *cdkDragPreview class="square">
-                                </div>
-                                {{item.id}}
-                            </scheduling-card> -->
-                            <scheduling-card></scheduling-card>
-                            <!-- <app-loader [isContainer]="false"
-                                [fullScreen]="false"></app-loader> -->
-                        </ng-container>
-                        <!-- <no-scheduling></no-scheduling>y -->
-                    </div>
-                </ng-scrollbar>
-                <!-- <ng-scrollbar visibility="always" *ngIf="!(isMobileCardList$ | async)" track="vertical"
                     appearance="standard" (reachedBottom)="onBottomReached()" [reachedOffset]="350">
                     <div scrollViewport dropListScroller cdkDropList [cdkDropListData]="plannings"
                         (cdkDropListDropped)="drop($event)">
@@ -151,32 +133,17 @@
                                 (triggerCheckIn)="openCheckinModal($event)"
                                 (triggerCheckOut)="openCheckOutModal($event)" (triggerReject)="openRejectModal($event)"
                                 (triggerAccept)="openPlanModal($event)" (triggerDeletion)="openDeleteModal($event)"
-                                [cdkDragData]="item" cdkDrag>
-                                <div *cdkDragPreview class="square">
+                                [cdkDragData]="item" cdkDrag [planning]="item">
+                                <div *cdkDragPreview class="square" [ngStyle]="{backgroundColor: 'blue' }">
                                 </div>
                             </scheduling-card>
+                            <scheduling-card [isloading]="newCardsLoading$" *ngIf="(newCardsLoading$ | async)"></scheduling-card>
                             <app-loader [isContainer]="false" *ngIf="(cardLoading$ | async)"
                                 [fullScreen]="false"></app-loader>
                         </ng-container>
                         <no-scheduling *ngIf="!(isLoading$ | async) && !plannings.length"></no-scheduling>
                     </div>
-                </ng-scrollbar> -->
-                <!-- <div *ngIf="(isMobileCardList$ | async)" class="tw-flex tw-flex-col tw-gap-4 card-container">
-                    <div dropListScroller cdkDropList>
-                        <app-loader [isContainer]="true" *ngIf="(isLoading$ | async)" [fullScreen]="false"></app-loader>
-                        <ng-container>
-                            <scheduling-card *ngFor="let item of plannings" (triggerSideNav)="toggleSidenav($event)"
-                                [isMaxWidth]="true" cdkDrag>
-                                <div *cdkDragPreview class="square">
-                                </div>
-
-                            </scheduling-card>
-                            <app-loader [isContainer]="false" *ngIf="(cardLoading$ | async)"
-                                [fullScreen]="false"></app-loader>
-                         </ng-container>
-                         <no-scheduling *ngIf="!(isLoading$ | async) && !plannings.length"></no-scheduling>
-                    </div>
-                </div> -->
+                </ng-scrollbar>
                 <!-- <div *ngIf="(isMobileCardList$ | async)" class="tw-flex tw-flex-col tw-gap-4 card-container">
                     <div dropListScroller cdkDropList [cdkDropListData]="plannings" (cdkDropListDropped)="drop($event)">
                         <app-loader [isContainer]="true" *ngIf="(isLoading$ | async)" [fullScreen]="false"></app-loader>
@@ -187,14 +154,13 @@
                                 (triggerCheckIn)="openCheckinModal($event)"
                                 (triggerCheckOut)="openCheckOutModal($event)" (triggerReject)="openRejectModal($event)"
                                 (triggerAccept)="openPlanModal($event)" (triggerDeletion)="openDeleteModal($event)"
-                                [cdkDragData]="item" cdkDrag>
-                                <div *cdkDragPreview class="square" >
+                                [cdkDragData]="item" cdkDrag [planning]="item">
+                                <div *cdkDragPreview class="square" [ngStyle]="{backgroundColor: 'blue' }">
                                 </div>
-                                {{item}}
                             </scheduling-card>
                             <app-loader [isContainer]="false" *ngIf="(cardLoading$ | async)"
                                 [fullScreen]="false"></app-loader>
-                            </ng-container>
+                        </ng-container>
                         <no-scheduling *ngIf="!(isLoading$ | async) && !plannings.length"></no-scheduling>
                     </div>
                 </div> -->

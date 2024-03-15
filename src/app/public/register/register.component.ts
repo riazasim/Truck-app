@@ -177,9 +177,4 @@ export class RegisterComponent {
             }});
         }
     }
-
-  toggleLanguage(value: boolean): void {
-    //TODO: select UI language
-    this.isEnglish$.next(value);
-  }
 }
