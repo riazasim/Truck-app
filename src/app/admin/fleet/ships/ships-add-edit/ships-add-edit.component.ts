@@ -17,6 +17,18 @@ export class ShipsAddEditComponent {
   id: number;
   displayedColumns: string[] = ['licensePlate', 'type', 'status', 'loadingCapacity'];
   appliedFilters: any = {};
+
+  selfPropelled = [
+    {id:1,name : 'Self Propelled 1'},
+    {id:2,name : 'Self Propelled 2'},
+    {id:3,name : 'Self Propelled 3'},
+  ]
+  typeOfLock = [
+    {id:1,name : 'Type Of Lock1'},
+    {id:2,name : 'Type Of Lock2'},
+    {id:3,name : 'Type Of Lock3'},
+  ]
+
   constructor(private readonly fb: UntypedFormBuilder,
               private readonly vehicleService: VehicleService,
               private readonly route: ActivatedRoute,

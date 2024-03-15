@@ -97,7 +97,7 @@ export class AddSchedulingComponent implements OnInit, OnDestroy {
 
     id: number;
 
-
+    filterDate: Date = new Date();
     zone = [
         { id: 1, name: 'zone1' },
         { id: 2, name: 'zone2' },

@@ -4,7 +4,7 @@
     [ngStyle]="{ borderColor: planning?.statusColor }"
 > -->
 <div
-    class="tw-rounded-lg tw-mb-2 tw-overflow-hidden tw-shadow-lg tw-bg-white tw-p-5 tw-min-h-[203px] tw-border-l-[8px] tw-cursor-pointer"
+    class="tw-rounded-lg tw-mb-2 tw-overflow-hidden tw-shadow-lg tw-bg-white tw-p-5 tw-min-h-[203px] tw-border-l-[8px] tw-border-indigo-500 tw-cursor-pointer"
     [ngClass]="{ 'tw-max-w-[400px]': !isMaxWidth, 'tw-w-full': isMaxWidth }"  *ngFor="let planning of plannings"
 >
     <div class="tw-grid tw-grid-rows-9 tw-gap-2 tw-h-full">
@@ -34,7 +34,7 @@
                 <fa-icon
                     matTooltipClass="tw-drop-shadow-lg"
                     matTooltipPosition="above"
-                    [matTooltip]="'Send message' | translate"
+                    [matTooltip]="'Send message'"
                     icon="message-lines"
                     size="lg"
                     (click)="setComponentName('mess')"
@@ -50,7 +50,7 @@
                 <fa-icon
                     matTooltipClass="tw-drop-shadow-lg"
                     matTooltipPosition="above"
-                    [matTooltip]="'Edit' | translate"
+                    [matTooltip]="'Edit'"
                     icon="eye"
                     size="lg"
                     [routerLink]="['../', 'edit', planning.id]"
@@ -58,7 +58,7 @@
                 <fa-icon
                     matTooltipClass="tw-drop-shadow-lg"
                     matTooltipPosition="above"
-                    [matTooltip]="'Plan' | translate"
+                    [matTooltip]="'Plan'"
                     icon="notes"
                     size="lg"
                     (click)="setComponentName('copy')"
@@ -69,7 +69,7 @@
                     [matTooltip]="'button.delete' | translate"
                     icon="trash"
                     size="lg"
-                    (click)="triggerDeletion.emit(planning)"
+                    (click)="openDeleteModal(planning.id)"
                 ></fa-icon>
             </div>
         </div>
@@ -87,20 +87,14 @@
                             }}</span>
                         </p>
                     </div>
-                    <!-- <div>
+                    <div>
                         <mat-chip
-                            [ngStyle]="{
-                                background: planning?.statusColor,
-                                color:
-                                    planning?.status === 'Checked-out' ||
-                                    planning?.status === 'Checked-in'
-                                        ? 'white'
-                                        : '#595959'
-                            }"
-                        >
-                            {{ planning.status || "No status" }}
-                        </mat-chip>
-                    </div> -->
+                                [ngStyle]="{'background-color': planning.shipmentStatus === 'Port Queue' ? '#3386FE' : '#1C3F47'}"
+                                >
+                                {{ planning.shipmentStatus === 'Port Queue' ? 'Port Queue' : planning.shipmentStatus === 'Service'
+                                ? 'Service' : 'Closed' }}
+                            </mat-chip>
+                    </div>
                 </div>
             </div>
         </div>
@@ -109,8 +103,8 @@
                 <span class="tw-font-bold">Berth:</span>
                 <span class="tw-pl-2">{{ "-" }}</span>
             </div>
-            <!-- <div class="tw-pl-2 tw-flex tw-justify-around tw-gap-2">
-                <ng-container
+            <div class="tw-pl-2 tw-flex tw-justify-around tw-gap-2">
+                <!-- <ng-container
                     *ngIf="planning.timeSlot && planning.status === 'Created'"
                 >
                     <span
@@ -145,19 +139,20 @@
                         icon="check"
                         size="lg"
                     ></fa-icon>
-                </ng-container>
-                <ng-container *ngIf="planning.status === 'Planned'">
+                </ng-container> -->
+                <ng-container >
                     <span (click)="triggerCheckIn.emit(planning)"
-                        ><b>{{ "button.check-in" | translate }}</b></span
+                        ><b>Transfer</b></span
                     >
-                    <fa-icon
+                  <span><img src="assets/images/mingcute_transfer.svg" alt="icon" class="tw-cursor-pointer"></span>  
+                    <!-- <fa-icon
                         (click)="triggerCheckIn.emit(planning)"
                         class="tw-text-sidCheckIn tw--rotate-90 tw-origin-[8px_11px]"
                         icon="arrow-down-to-bracket"
                         size="lg"
-                    ></fa-icon>
+                    ></fa-icon> -->
                 </ng-container>
-                <ng-container *ngIf="planning.status === 'Checked-in'">
+                <!-- <ng-container >
                     <span (click)="triggerCheckOut.emit(planning)"
                         ><b>{{ "button.check-out" | translate }}</b></span
                     >
@@ -167,38 +162,23 @@
                         icon="arrow-down-to-bracket"
                         size="lg"
                     ></fa-icon>
-                </ng-container>
+                </ng-container> -->
                 <span
-                    *ngIf="
-                        (planning.timeSlot && planning.status === 'Created') ||
-                        planning.status === 'Planned' ||
-                        planning.status === 'Checked-in'
-                    "
                     >|</span
                 >
                 <ng-container
-                    *ngIf="
-                        planning.timeSlot &&
-                        (planning.status === 'Created' ||
-                            planning.status === 'Planned' ||
-                            planning.status === 'Checked-in')
-                    "
-                >
+                    >
                     <fa-icon
                         (click)="handleTriggerAction(planning)"
-                        class="tw-text-red-500"
+                        class="text-color"
                         icon="xmark"
                         size="lg"
                     ></fa-icon>
                     <span (click)="handleTriggerAction(planning)"
-                        ><b>{{
-                            ["Planned", "Checked-in"].includes(planning.status)
-                                ? ("button.cancel" | translate)
-                                : ("button.reject" | translate)
-                        }}</b></span
+                        ><b>Cancel</b></span
                     >
                 </ng-container>
-            </div> -->
+            </div>
         </div>
         <div>
             <span class="tw-font-bold">Numar aprobare manevra:</span>

@@ -31,6 +31,8 @@ import { ToggleComponent } from './components/toggle/toggle.component';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { TranslateModule } from '@ngx-translate/core';
+import { TimepickerComponent } from './components/timepicker/timepicker.component';
+import { MatMenuModule } from '@angular/material/menu';
 
 
 
@@ -59,6 +61,7 @@ import { TranslateModule } from '@ngx-translate/core';
     CustomTooltipDirective,
     SafeHtmlPipe,
     ToggleComponent,
+    TimepickerComponent
   ],
     imports: [
         CommonModule,
@@ -69,7 +72,8 @@ import { TranslateModule } from '@ngx-translate/core';
         MatProgressSpinnerModule,
         MatDatepickerModule,
         TranslateModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        MatMenuModule
     ],
   exports: [
     IconicInputWrapperComponent,
@@ -95,6 +99,7 @@ import { TranslateModule } from '@ngx-translate/core';
     CustomTooltipDirective,
     SafeHtmlPipe,
     ToggleComponent,
+    TimepickerComponent
   ],
   providers: [
     { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },

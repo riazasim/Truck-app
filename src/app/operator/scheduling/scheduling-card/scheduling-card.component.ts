@@ -4,6 +4,8 @@ import { StatusListModel } from 'src/app/core/models/status-list.model';
 import { PlanningModel } from 'src/app/core/models/planning.model';
 import { PlanningService } from 'src/app/core/services/planning.service';
 import { BehaviorSubject } from 'rxjs';
+import { SchedulingDeleteModalComponent } from '../scheduling-delete-modal/scheduling-delete-modal.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
     selector: 'scheduling-card',
@@ -33,6 +35,7 @@ export class SchedulingCardComponent {
     length: number;
 
     constructor(private readonly clipboard: Clipboard,
+        private readonly dialogService: MatDialog,
         private readonly planningService: PlanningService,
         private readonly cd: ChangeDetectorRef) {
           this.retrievePlanningList();
@@ -57,6 +60,29 @@ export class SchedulingCardComponent {
             this.cd.detectChanges();
         })
     }
+
+    openDeleteModal(id: number) {
+        this.dialogService.open(SchedulingDeleteModalComponent, {
+            disableClose: true,
+            data: { "id": id, "title": "planning" }
+        }).afterClosed()
+            .subscribe({
+                next: (isDelete: boolean) => {
+                    if (isDelete) {
+                        this.isLoading$.next(true);
+                        this.planningService.delete(id).subscribe(() => {
+                            this.retrievePlanningList();
+                            this.cd.detectChanges();
+                        })
+                    }
+                }
+            });
+    }
+
+
+
+
+
     setComponentName(value: string): void {
         
         if (value === 'copy') this.clipboard.copy(this.planning.id + '');

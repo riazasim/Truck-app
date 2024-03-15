@@ -12,7 +12,7 @@
 </ng-container>
 <ng-template #simple>
     <div class="iconic-layout-wrapper">
-        <div class="input-container tw-rounded" [ngStyle]="styles">
+        <div class="input-container" [ngStyle]="styles">
             <fa-icon (click)="picker.open()" icon="calendar-days" size="lg" class="icon tw-cursor-pointer"></fa-icon>
             <input onkeydown="return false" [ngStyle]="{'textAlign': textAlign}"
                     (click)="picker.open()" type="text"

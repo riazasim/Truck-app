@@ -5,7 +5,7 @@
     <span class="tw-text-3xl tw-font-bold">{{(companyName$ | async)}}</span>
   </div>
   <div class="tw-flex tw-flex-grow tw-justify-center tw-items-center tw-gap-2" *ngIf="!(companyName$ | async)">
-    <span class="tw-text-3xl tw-font-bold">Truck App</span>
+    <span class="tw-text-3xl tw-font-bold">Transport App</span>
   </div>
   <div class="logo-container" *ngIf="logoSrc" [routerLink]="logoRedirect" [relativeTo]="activatedRoute.parent">
     <img [src]="logoSrc" alt="logo">

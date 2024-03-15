@@ -19,6 +19,7 @@ export class EditSchedulingRouteComponent implements OnInit {
     planningForm: FormGroup;
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     id: number;
+    filterDate: Date = new Date();
 
     customer = [
         { id: 1, name: 'customer1' },

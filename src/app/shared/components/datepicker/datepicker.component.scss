@@ -5,4 +5,7 @@ div.iconic-layout-wrapper > div.input-container > input[type=text]:focus {
     box-shadow: unset;
     width: 100%;
 }
+::ng-deep.input-container{
+    border-radius: 3px !important;
+}
 

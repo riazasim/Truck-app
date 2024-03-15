@@ -23,6 +23,7 @@ export class TimepickerComponent implements OnInit {
   @Input() placeholder: string = 'Pick a time';
   @Input() model: string;
   @Input() isMinutes: boolean;
+  @Input() height: number;
 
   @Output() modelChange: EventEmitter<string> = new EventEmitter();
   isLoading: boolean = false;

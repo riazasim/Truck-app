@@ -38,4 +38,58 @@
         </div>
       </div>
   </form>
+  <!-- <form [formGroup]="shipForm" *ngIf="!(isLoading$ | async)">
+    <div class="tw-grid min-lg:tw-grid-cols-2 tw-grid-cols-1 tw-gap-x-10 tw-gap-y-4 tw-pt-[100px] tw-px-[50px]">
+        <div class="tw-flex tw-flex-col tw-gap-x-10 tw-gap-y-4 tw-px-[50px]">
+            <div iconic-input-wrapper leftIcon="user">
+                <input inputRef type="text" placeholder="Ship name" formControlName="name" />
+            </div>
+            <div iconic-input-wrapper leftIcon="user">
+                <input inputRef type="text" placeholder="Ship registration number" formControlName="shipRegistrationNumber" />
+            </div>
+            <div iconic-input-wrapper leftIcon="location-dot">
+                <input inputRef type="text" placeholder="AIS" formControlName="ais" />
+            </div>
+            <div iconic-select-wrapper leftSvg="assets/images/scheduling_map_location.svg"
+                [rightIcon]="['fas', 'caret-down']">
+                <select inputRef name="selfPropelled" id="selfPropelled" formControlName="selfPropelled">
+                    <option disabled selected>Self propelled</option>
+                    <option *ngFor="let item of selfPropelled" [value]="item.id">
+                        {{ item.name }}
+                    </option>
+                </select>
+            </div>
+            <div iconic-select-wrapper leftSvg="assets/images/scheduling_lock.svg"
+                [rightIcon]="['fas', 'caret-down']">
+                <select inputRef name="typeOfLock" id="typeOfLock" formControlName="lockType">
+                    <option disabled selected>Type of lock</option>
+                    <option *ngFor="let item of typeOfLock" [value]="item.id">
+                        {{ item.name }}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="tw-flex tw-flex-col tw-gap-x-10 tw-gap-y-4 tw-px-[50px]">
+            <div iconic-input-wrapper leftSvg="assets/images/scheduling_length.svg">
+                <input inputRef type="number" placeholder="Length (m)*" formControlName="length" />
+            </div>
+            <div iconic-input-wrapper leftSvg="assets/images/scheduling_width.svg">
+                <input inputRef type="number" placeholder="Width (m)*" formControlName="width" />
+            </div>
+            <div iconic-input-wrapper leftSvg="assets/images/scheduling_depth.svg">
+                <input inputRef type="number" placeholder="Max Draft (m)*" formControlName="maxDraft" />
+            </div>
+            <div iconic-input-wrapper leftSvg="assets/images/scheduling_convoy.svg">
+                <input inputRef type="number" placeholder="Aerial Guage (M)*" formControlName="arrivalGauge" />
+            </div>
+            <div iconic-input-wrapper leftSvg="assets/images/scheduling_weight.svg">
+                <input inputRef type="number" placeholder="Capacity max (m)*" formControlName="maxCapacity" />
+            </div>
+        </div>
+    </div>
+    <div class="tw-flex tw-gap-2 tw-justify-center min-md:tw-gap-20 max-md:tw-flex-col tw-py-3">
+        <button [routerLink]="id ? '../../list' : '../list'" class="btn btn-outline-primary min-md:tw-min-w-[436px] tw-min-h-[50px] !tw-text-[18px]" type="button">Cancel</button>
+          <button [disabled]="shipForm.invalid ||(isLoading$ | async)"  class="btn btn-primary min-md:tw-min-w-[436px] tw-min-h-[50px] !tw-text-[18px]" type="button" (click)="saveVehicle()">Save</button>
+    </div>
+</form> -->
 </edit-container>

@@ -23,7 +23,7 @@
                     </app-scheduling-search-bar>
                     <div class="tw-w-full">
                         <datepicker matTooltipClass="tw-drop-shadow-lg" matTooltipPosition="above"
-                            [matTooltip]="'booking.delivery-date' | translate" (dateChanged)="handleDateChange($event)"
+                            [matTooltip]="'Planning date' | translate" (dateChanged)="handleDateChange($event)"
                             [model]="filterDate" [isHeaderPosition]="true" [height]="37"></datepicker>
                     </div>
                     <div *ngIf="(isComvexOrganization$ | async)"
@@ -85,11 +85,11 @@
                                 mat-menu-item>Import .xlsx</button>
                         </mat-menu>
                     </mat-button-toggle-group>
-                    <!-- <fa-icon icon="truck" size="2x" [matMenuTriggerFor]="sidType" #trigger="matMenuTrigger"
+                    <fa-icon icon="truck" size="2x" [matMenuTriggerFor]="sidType" #trigger="matMenuTrigger"
                         matTooltipClass="tw-drop-shadow-lg" matTooltipPosition="above"
                         [matTooltip]="'truck' | translate"
                         class="tw-mx-2 tw-cursor-pointer hover:tw-text-primary">
-                    </fa-icon> -->
+                    </fa-icon>
                     <mat-menu #sidType="matMenu" class="!tw-bg-white" xPosition="before">
                         <menu mat-menu-item>
                             <fa-icon icon="ship" size="1x" class="tw-mx-2 tw-cursor-pointer hover:tw-text-primary">

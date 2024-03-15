@@ -7,11 +7,16 @@
                 <div iconic-input-wrapper leftIcon="user">
                     <input inputRef type="text" placeholder="Convoy Type" formControlName="convoyType" />
                 </div>
-                <div iconic-input-wrapper leftIcon="clock">
-                    <!-- <input inputRef matInput onkeydown="return false" (click)="picker.open()"  type="text"
-                    formControlName="estimatedTimeArrival" [matDatepicker]="picker" placeholder="ETA">
-                <mat-datepicker #picker></mat-datepicker> -->
-                    <input inputRef type="text" placeholder="Location Port" formControlName="estimatedTimeArrival" />
+                <div class="tw-grid tw-grid-cols-2 tw-gap-x-8 tw-gap-y-4 tw-mb-5">
+                    <div class=" tw-flex tw-flex-col" formGroupName="routingDetail">
+                        <datepicker matTooltipClass="tw-drop-shadow-lg" matTooltipPosition="above"
+                            [matTooltip]="'Pick ETA date' | translate"
+                            [model]="filterDate" [isHeaderPosition]="true" [height]="52"></datepicker>
+                    </div>
+                    <div class=" tw-flex tw-flex-col" formGroupName="routingDetail">
+                        <timepicker matTooltipClass="tw-drop-shadow-lg" matTooltipPosition="above"
+                        [matTooltip]="'Pick ETA time' | translate"[height]="52"></timepicker>
+                    </div>
                 </div>
                 <div iconic-input-wrapper leftIcon="location-dot">
                     <input inputRef type="text" placeholder="Location Port" formControlName="locationPort" />
