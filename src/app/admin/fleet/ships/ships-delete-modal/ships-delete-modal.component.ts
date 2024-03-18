@@ -7,7 +7,8 @@ import {MatDialogRef} from "@angular/material/dialog";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ShipsDeleteModalComponent {
-  constructor(private readonly dialogRef: MatDialogRef<any>) { }
+  constructor(private readonly dialogRef: MatDialogRef<any>){}
+  
 
   cancel() {
     this.dialogRef.close(false);

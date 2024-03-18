@@ -1,9 +1,9 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
 import { BehaviorSubject, combineLatest } from "rxjs";
-import {FormGroup, UntypedFormBuilder, UntypedFormGroup, Validators} from "@angular/forms";
+import {FormGroup, UntypedFormBuilder, Validators} from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { VehicleService } from 'src/app/core/services/vehicle.service';
-import { VehicleModel } from 'src/app/core/models/vehicle.model';
+import { ShipsService } from 'src/app/core/services/ships.service';
+import { ShipModel } from 'src/app/core/models/ship.model';
 
 @Component({
   selector: "app-ships-add-edit",
@@ -13,9 +13,7 @@ import { VehicleModel } from 'src/app/core/models/vehicle.model';
 export class ShipsAddEditComponent {
   isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   shipForm: FormGroup;
-  VehicleTypeEnum: string[] = ['Boat', 'Cruise'];
   id: number;
-  displayedColumns: string[] = ['licensePlate', 'type', 'status', 'loadingCapacity'];
   appliedFilters: any = {};
 
   selfPropelled = [
@@ -30,7 +28,7 @@ export class ShipsAddEditComponent {
   ]
 
   constructor(private readonly fb: UntypedFormBuilder,
-              private readonly vehicleService: VehicleService,
+              private readonly shipService: ShipsService,
               private readonly route: ActivatedRoute,
               private readonly router: Router) {
     this.subscribeForQueryParams();
@@ -40,20 +38,14 @@ export class ShipsAddEditComponent {
     this.id = this.route.snapshot.params['id'];
     if (this.id) {
       combineLatest([
-        this.vehicleService.get(this.id)
-      ]).subscribe(([vehicle]: [VehicleModel]) => {
-        this.initForm(vehicle);
+        this.shipService.get(this.id)
+      ]).subscribe(([ship]: [ShipModel]) => {
+        this.initForm(ship);
         this.isLoading$.next(false);
       });
     } else {
       this.initForm();
       this.isLoading$.next(false);
-      /*this.dockService.list({}).subscribe((response: DockModel[]) => {
-        this.originalSource = response;
-        this.docks$.next(response);
-        this.initForm();
-        this.isLoading$.next(false);
-      });*/
     }
   }
 
@@ -65,32 +57,38 @@ export class ShipsAddEditComponent {
     }
   }
 
-  initForm(data: VehicleModel = <VehicleModel>{}): void {
+  initForm(data: ShipModel = <ShipModel>{}): void {
     this.shipForm = this.fb.group({
-      licensePlate: this.fb.control(data?.licensePlate || '', [Validators.required]),
-      type: this.fb.control(data?.type || '', [Validators.required]),
-      status: this.fb.control(data?.status || '', [Validators.required]),
-      loadingCapacity: this.fb.control(data?.loadingCapacity|| '', [Validators.required]),
+    name: this.fb.control(data?.name || '', [Validators.required]),
+    registrationNo: this.fb.control(data?.registrationNo || '', [Validators.required]),
+    ais: this.fb.control(data?.ais || '', [Validators.required]),
+    selfPropelled: this.fb.control(data?.selfPropelled || '', [Validators.required]),    
+    lockType: this.fb.control(data?.lockType || '', [Validators.required]),
+    length: this.fb.control(data?.length || '', [Validators.required]), 
+    width: this.fb.control(data?.width || '', [Validators.required]),
+    maxDraft: this.fb.control(data?.maxDraft || '', [Validators.required]),    
+    aerialGauge:this.fb.control(data?.aerialGauge || '', [Validators.required]),
+    maxCapacity: this.fb.control(data?.maxCapacity || '', [Validators.required]),
     });
   }
 
   saveVehicle(): void {
     this.isLoading$.next(true);
     if (this.id) {
-      this.vehicleService.edit(this.id,this.parseData(this.shipForm.value)).subscribe(() => {
+      this.shipService.edit(this.id,this.parseData(this.shipForm.value)).subscribe(() => {
         this.isLoading$.next(false);
         this.router.navigate(['../../success'], { relativeTo: this.route });
       });
     } else {
-      this.vehicleService.create(this.parseData(this.shipForm.value)).subscribe(() => {
+      this.shipService.create(this.parseData(this.shipForm.value)).subscribe(() => {
         this.isLoading$.next(false);
         this.router.navigate(['../success'], { relativeTo: this.route });
       });
     }
   }
 
-  private parseData(data: VehicleModel): VehicleModel {
-    if (!data.vehicleId) delete data.vehicleId;
+  private parseData(data: ShipModel): ShipModel {
+    if (!data.shipId) delete data.shipId;
     return data;
   }
 }

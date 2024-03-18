@@ -6,63 +6,141 @@
                [class.loading]="(isLoading$ | async)" aria-label="Usage Table"
                cdk-table [dataSource]="dataSource">
 
-          <ng-container cdkColumnDef="licensePlate">
+          <ng-container cdkColumnDef="name">
             <th cdk-header-cell *cdkHeaderCellDef scope="col">
               <section class="tw-flex tw-flex-col">
-                <div mat-sort-header="licensePlate">License Plate</div>
+                <div mat-sort-header="name">Ship name</div>
                 <searchbar>
                   <fa-icon icon="search"></fa-icon>
-                  <input #searchName input type="text" (keyup)="applyFilter($event.target, 'licensePlate')">
-                  <div *ngIf="searchName.value" close (click)="searchName.value=''; applyFilter({ value: '' }, 'licensePlate')">
+                  <input #searchName input type="text" (keyup)="applyFilter($event.target, 'name')">
+                  <div *ngIf="searchName.value" close (click)="searchName.value=''; applyFilter({ value: '' }, 'name')">
                     <fa-icon icon="close"></fa-icon>
                   </div>
                 </searchbar>
               </section>
             </th>
-            <td cdk-cell *cdkCellDef="let row">{{row.licensePlate}}</td>
+            <td cdk-cell *cdkCellDef="let row">{{row.name}}</td>
           </ng-container>
-
-          <ng-container cdkColumnDef="type">
+          <ng-container cdkColumnDef="registrationNo">
             <th cdk-header-cell *cdkHeaderCellDef scope="col">
               <section class="tw-flex tw-flex-col">
-                <div mat-sort-header="type">Type</div>
-                <select (change)="filterByType($event)" filter-select>
-                  <option value="" selected>Select</option>
-                  <option *ngFor="let type of VehicleTypeEnum">{{type}}</option>
-                </select>
-              </section>
-            </th>
-            <td cdk-cell *cdkCellDef="let row">{{row.type}}</td>
-          </ng-container>
-
-          <ng-container cdkColumnDef="status">
-            <th cdk-header-cell *cdkHeaderCellDef scope="col">
-              <section class="tw-flex tw-flex-col">
-                <div mat-sort-header="status">Status</div>
-                <select (change)="filterByStatus($event)" filter-select>
-                  <option value="" selected>Select</option>
-                  <option value="true">ACTIVE</option>
-                  <option value="false">INACTIVE</option>
-                </select>
-              </section>
-            </th>
-             <td cdk-cell *cdkCellDef="let row">{{row.status ? 'ACTIVE': 'INACTIVE'}}</td>
-          </ng-container>
-
-          <ng-container cdkColumnDef="loadingCapacity">
-            <th cdk-header-cell *cdkHeaderCellDef scope="col">
-              <section class="tw-flex tw-flex-col">
-                <div mat-sort-header="loadingCapacity">Loading Capacity</div>
+                <div mat-sort-header="registrationNo">Ship reg-no</div>
                 <searchbar>
                   <fa-icon icon="search"></fa-icon>
-                  <input #searchName input type="text" (keyup)="applyFilter($event.target, 'loadingCapacity')">
-                  <div *ngIf="searchName.value" close (click)="searchName.value=''; applyFilter({ value: '' }, 'loadingCapacity')">
+                  <input #searchRegistrationNo input type="text" (keyup)="applyFilter($event.target, 'registrationNo')">
+                  <div *ngIf="searchRegistrationNo.value" close (click)="searchRegistrationNo.value=''; applyFilter({ value: '' }, 'registrationNo')">
                     <fa-icon icon="close"></fa-icon>
                   </div>
                 </searchbar>
               </section>
             </th>
-            <td cdk-cell *cdkCellDef="let row">{{row.loadingCapacity}}</td>
+            <td cdk-cell *cdkCellDef="let row">{{row.registrationNo}}</td>
+          </ng-container>
+
+          <ng-container cdkColumnDef="ais">
+            <th cdk-header-cell *cdkHeaderCellDef scope="col">
+              <section class="tw-flex tw-flex-col">
+                <div mat-sort-header="ais">AIS</div>
+                <searchbar>
+                  <fa-icon icon="search"></fa-icon>
+                  <input #searchAIS input type="text" (keyup)="applyFilter($event.target, 'ais')">
+                  <div *ngIf="searchAIS.value" close (click)="searchAIS.value=''; applyFilter({ value: '' }, 'ais')">
+                    <fa-icon icon="close"></fa-icon>
+                  </div>
+                </searchbar>
+              </section>
+            </th>
+            <td cdk-cell *cdkCellDef="let row">{{row.ais}}</td>
+          </ng-container>
+          <ng-container cdkColumnDef="dock">
+            <th cdk-header-cell *cdkHeaderCellDef scope="col">
+              <section class="tw-flex tw-flex-col">
+                <div mat-sort-header="dock">Dock</div>
+                <searchbar>
+                  <fa-icon icon="search"></fa-icon>
+                  <input #searchAIS input type="text" (keyup)="applyFilter($event.target, 'dock')">
+                  <div *ngIf="searchAIS.value" close (click)="searchAIS.value=''; applyFilter({ value: '' }, 'dock')">
+                    <fa-icon icon="close"></fa-icon>
+                  </div>
+                </searchbar>
+              </section>
+            </th>
+            <td cdk-cell *cdkCellDef="let row">{{row.dock || '-'}}</td>
+          </ng-container>
+          <ng-container cdkColumnDef="length">
+            <th cdk-header-cell *cdkHeaderCellDef scope="col">
+              <section class="tw-flex tw-flex-col">
+                <div mat-sort-header="length">Length (m)*</div>
+                <searchbar>
+                  <fa-icon icon="search"></fa-icon>
+                  <input #searchAIS input type="text" (keyup)="applyFilter($event.target, 'length')">
+                  <div *ngIf="searchAIS.value" close (click)="searchAIS.value=''; applyFilter({ value: '' }, 'length')">
+                    <fa-icon icon="close"></fa-icon>
+                  </div>
+                </searchbar>
+              </section>
+            </th>
+            <td cdk-cell *cdkCellDef="let row">{{row.length}}</td>
+          </ng-container>
+          <ng-container cdkColumnDef="width">
+            <th cdk-header-cell *cdkHeaderCellDef scope="col">
+              <section class="tw-flex tw-flex-col">
+                <div mat-sort-header="width">Width (m)*</div>
+                <searchbar>
+                  <fa-icon icon="search"></fa-icon>
+                  <input #searchAIS input type="text" (keyup)="applyFilter($event.target, 'width')">
+                  <div *ngIf="searchAIS.value" close (click)="searchAIS.value=''; applyFilter({ value: '' }, 'width')">
+                    <fa-icon icon="close"></fa-icon>
+                  </div>
+                </searchbar>
+              </section>
+            </th>
+            <td cdk-cell *cdkCellDef="let row">{{row.width}}</td>
+          </ng-container>
+          <ng-container cdkColumnDef="maxDraft">
+            <th cdk-header-cell *cdkHeaderCellDef scope="col">
+              <section class="tw-flex tw-flex-col">
+                <div mat-sort-header="maxDraft">Max draft (m)*</div>
+                <searchbar>
+                  <fa-icon icon="search"></fa-icon>
+                  <input #searchAIS input type="text" (keyup)="applyFilter($event.target, 'maxDraft')">
+                  <div *ngIf="searchAIS.value" close (click)="searchAIS.value=''; applyFilter({ value: '' }, 'maxDraft')">
+                    <fa-icon icon="close"></fa-icon>
+                  </div>
+                </searchbar>
+              </section>
+            </th>
+            <td cdk-cell *cdkCellDef="let row">{{row.maxDraft}}</td>
+          </ng-container>
+          <ng-container cdkColumnDef="aerialGauge">
+            <th cdk-header-cell *cdkHeaderCellDef scope="col">
+              <section class="tw-flex tw-flex-col">
+                <div mat-sort-header="aerialGauge">Aerial gauge (m)*</div>
+                <searchbar>
+                  <fa-icon icon="search"></fa-icon>
+                  <input #searchAIS input type="text" (keyup)="applyFilter($event.target, 'aerialGauge')">
+                  <div *ngIf="searchAIS.value" close (click)="searchAIS.value=''; applyFilter({ value: '' }, 'aerialGauge')">
+                    <fa-icon icon="close"></fa-icon>
+                  </div>
+                </searchbar>
+              </section>
+            </th>
+            <td cdk-cell *cdkCellDef="let row">{{row.aerialGauge}}</td>
+          </ng-container>
+          <ng-container cdkColumnDef="maxCapacity">
+            <th cdk-header-cell *cdkHeaderCellDef scope="col">
+              <section class="tw-flex tw-flex-col">
+                <div mat-sort-header="maxCapacity">Capacity max (m)*</div>
+                <searchbar>
+                  <fa-icon icon="search"></fa-icon>
+                  <input #searchAIS input type="text" (keyup)="applyFilter($event.target, 'maxCapacity')">
+                  <div *ngIf="searchAIS.value" close (click)="searchAIS.value=''; applyFilter({ value: '' }, 'maxCapacity')">
+                    <fa-icon icon="close"></fa-icon>
+                  </div>
+                </searchbar>
+              </section>
+            </th>
+            <td cdk-cell *cdkCellDef="let row">{{row.maxCapacity}}</td>
           </ng-container>
 
           <ng-container cdkColumnDef="actions">

@@ -1,6 +1,6 @@
 <edit-container [headerTitle]="id ?  'Edit ship details':'Add ship details'">
   <app-loader *ngIf="(isLoading$ | async)" [isContainer]="true" [fullScreen]="false"></app-loader>
-  <form [formGroup]="shipForm" *ngIf="!(isLoading$ | async)">
+  <!-- <form [formGroup]="shipForm" *ngIf="!(isLoading$ | async)">
       <div class="tw-flex tw-flex-col tw-mx-auto tw-max-w-[440px] tw-gap-5">
         <div>
           <div iconic-input-wrapper leftIcon="id-badge">
@@ -37,20 +37,20 @@
           <button [disabled]="shipForm.invalid ||(isLoading$ | async)"  class="btn btn-primary" type="button" (click)="saveVehicle()">Save</button>
         </div>
       </div>
-  </form>
-  <!-- <form [formGroup]="shipForm" *ngIf="!(isLoading$ | async)">
+  </form> -->
+  <form [formGroup]="shipForm" *ngIf="!(isLoading$ | async)">
     <div class="tw-grid min-lg:tw-grid-cols-2 tw-grid-cols-1 tw-gap-x-10 tw-gap-y-4 tw-pt-[100px] tw-px-[50px]">
         <div class="tw-flex tw-flex-col tw-gap-x-10 tw-gap-y-4 tw-px-[50px]">
             <div iconic-input-wrapper leftIcon="user">
                 <input inputRef type="text" placeholder="Ship name" formControlName="name" />
             </div>
-            <div iconic-input-wrapper leftIcon="user">
-                <input inputRef type="text" placeholder="Ship registration number" formControlName="shipRegistrationNumber" />
+            <div iconic-input-wrapper leftSvg="assets/images/shipRegNo.svg">
+                <input inputRef type="text" placeholder="Ship registration number" formControlName="registrationNo" />
             </div>
-            <div iconic-input-wrapper leftIcon="location-dot">
+            <div iconic-input-wrapper leftSvg="assets/images/circum_gps.svg">
                 <input inputRef type="text" placeholder="AIS" formControlName="ais" />
             </div>
-            <div iconic-select-wrapper leftSvg="assets/images/scheduling_map_location.svg"
+            <div iconic-select-wrapper leftSvg="assets/images/engine.svg"
                 [rightIcon]="['fas', 'caret-down']">
                 <select inputRef name="selfPropelled" id="selfPropelled" formControlName="selfPropelled">
                     <option disabled selected>Self propelled</option>
@@ -61,7 +61,7 @@
             </div>
             <div iconic-select-wrapper leftSvg="assets/images/scheduling_lock.svg"
                 [rightIcon]="['fas', 'caret-down']">
-                <select inputRef name="typeOfLock" id="typeOfLock" formControlName="lockType">
+                <select inputRef name="lockType" id="lockType" formControlName="lockType">
                     <option disabled selected>Type of lock</option>
                     <option *ngFor="let item of typeOfLock" [value]="item.id">
                         {{ item.name }}
@@ -80,7 +80,7 @@
                 <input inputRef type="number" placeholder="Max Draft (m)*" formControlName="maxDraft" />
             </div>
             <div iconic-input-wrapper leftSvg="assets/images/scheduling_convoy.svg">
-                <input inputRef type="number" placeholder="Aerial Guage (M)*" formControlName="arrivalGauge" />
+                <input inputRef type="number" placeholder="Aerial Guage (M)*" formControlName="aerialGauge" />
             </div>
             <div iconic-input-wrapper leftSvg="assets/images/scheduling_weight.svg">
                 <input inputRef type="number" placeholder="Capacity max (m)*" formControlName="maxCapacity" />
@@ -91,5 +91,5 @@
         <button [routerLink]="id ? '../../list' : '../list'" class="btn btn-outline-primary min-md:tw-min-w-[436px] tw-min-h-[50px] !tw-text-[18px]" type="button">Cancel</button>
           <button [disabled]="shipForm.invalid ||(isLoading$ | async)"  class="btn btn-primary min-md:tw-min-w-[436px] tw-min-h-[50px] !tw-text-[18px]" type="button" (click)="saveVehicle()">Save</button>
     </div>
-</form> -->
+</form>
 </edit-container>
