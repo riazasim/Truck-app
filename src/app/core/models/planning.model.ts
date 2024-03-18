@@ -43,11 +43,12 @@ export interface convoyModel {
 }
 
 export interface PlanningModel {
-    id?: number;
+    id?: number | undefined;
     planningId?: number;
     sId?: number;
     relativeTimeArrival?: string;
     shipmentStatus?: string;
+    estimatedTimeArrival: string;
     routingDetail: {
         convoyType: string;
         estimatedTimeArrival: string;

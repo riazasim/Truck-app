@@ -1,87 +1,127 @@
-<section [@slideIn] [@slideOut] *ngIf="(step$ | async) === 1">
-  <h1 class="heading-2 tw-text-center tw-mb-8">Welcome! / Bun venit!</h1>
+<section class="tw-h-max" [@slideIn] [@slideOut] *ngIf="(step$ | async) === 1">
+    <div class="tw-flex tw-flex-col tw-gap-16">
+        <div class="tw-flex tw-flex-col tw-gap-4">
+            <h1 class="heading-2 tw-text-center tw-mb-8">PERSONAL DATA</h1>
 
-  <div class="tw-max-w-sm tw-flex tw-flex-col tw-gap-4">
-    <p class="tw-mb-8 tw-text-center tw-text-defaultText tw-text-xl">
-      Fill in the fields below to reset your password and make sure it is a strong password.
-    </p>
+            <p class="tw-mb-8 tw-text-[#08073A] tw-text-xl tw-max-w-[430px]">
+                All personal data processed through our apps are your property and are always available to you.
+                <br><br>
+                To better understand the conditions, legal requirments and our commitment, please read the dedicated
+                sectio at
+                <a href="https://www.privacy.lowis.tech" target="_blank" class="tw-text-[#08073A] tw-text-xl">
+                    https://www.privacy.lowis.tech</a>
+            </p>
 
-    <p class="tw-text-panelColor">Language / limba</p>
-
-    <div class="tw-flex tw-justify-center tw-gap-10">
-      <div (click)="toggleLanguage(true)" class="tw-flex tw-items-center tw-flex-col tw-gap-2 tw-cursor-pointer tw-p-4 tw-border tw-border-transparent tw-border-[3px]" [class.selected]="isEnglish$ | async">
-        <span [style.height.px]="170" [style.width.px]="170" class="fi fi-gb fis"></span>
-        <p>English</p>
-      </div>
-      <div (click)="toggleLanguage(false)" class="tw-flex tw-items-center tw-flex-col tw-gap-2 tw-cursor-pointer tw-p-4 tw-border tw-border-transparent tw-border-[3px]" [class.selected]="!(isEnglish$ | async)">
-        <span [style.height.px]="170" [style.width.px]="170" class="fi fi-ro fis"></span>
-        <p>Română</p>
-      </div>
+            <div class="tw-flex tw-gap-4 tw-items-center">
+                <input id="viewed" type="checkbox" class="tw-border tw-border-defaultText tw-cursor-pointer">
+                <label for="viewed" class="tw-text-xl tw-text-[#08073A]">I read and understood the privacy
+                    notice</label>
+            </div>
+        </div>
+        <div>
+            <button class="btn btn-primary tw-w-full" (click)="step$.next(2)">Continue</button>
+        </div>
     </div>
-
-    <div>
-      <button class="btn btn-primary tw-w-full" (click)="step$.next(2)">Continue</button>
-    </div>
-  </div>
 </section>
 
 <section [@slideIn] [@slideOut] *ngIf="(step$ | async) === 2">
-  <div class="tw-flex tw-flex-col tw-gap-4">
-    <h1 class="heading-2 tw-text-center tw-mb-8">GDPR</h1>
+    <div class="tw-flex tw-flex-col tw-gap-4">
+        <h1 class="heading-2 tw-text-center tw-mb-8">Sign up</h1>
+        <form id="signUpForm" [formGroup]="registerForm" class="tw-w-full tw-min-w-xs tw-flex tw-flex-col tw-gap-1">
 
-    <p class="tw-mb-8 tw-text-defaultText tw-text-xl tw-max-w-[430px]">
-      Toate datele solicitate prin prezentul formular sunt necesare ca urmare a cerintelor legale din Romania pe zone de securitate sau pentru derularea relatiilor contractuale.
-      <br><br>
-      Pentru detalii suplimentare va rugam sa accesati - <a href="https://www.ursus.ro/politica-de-confidentialitate" target="_blank">https://www.ursus.ro/politica-de-confidentialitate</a>
-    </p>
+            <div formGroupName="userSetting" iconic-input-wrapper leftIcon="user" class="tw-w-full"
+                [withCheckmark]="true">
+                <input formControlName="firstName" type="text" inputRef placeholder="First Name"
+                    class="tw-text-center" />
+            </div>
+            <div formGroupName="userSetting" iconic-input-wrapper leftIcon="user" class="tw-w-full"
+                [withCheckmark]="true">
+                <input formControlName="lastName" type="text" inputRef placeholder="Last Name" class="tw-text-center" />
+            </div>
 
-    <div class="tw-flex tw-gap-4 tw-items-center">
-      <input id="viewed" type="checkbox" class="tw-border tw-border-defaultText tw-cursor-pointer">
-      <label for="viewed" class="heading-5">Am luat la cunostinta</label>
+            <div formGroupName="user" iconic-input-wrapper leftIcon="envelope" class="tw-w-full" [withCheckmark]="true">
+                <input formControlName="email" type="text" inputRef placeholder="Email" class="tw-text-center" />
+            </div>
+
+            <!-- <div formGroupName="userSetting" iconic-input-wrapper [withCheckmark]="true" leftIcon="phone"
+                class="tw-w-full">
+                <input formControlName="phone" type="tel" inputRef placeholder="Phone #" class="tw-text-center">
+            </div>
+            <div formGroupName="userSetting" iconic-input-wrapper [withCheckmark]="true" leftIcon="phone"
+                class="tw-w-full">
+                <input formControlName="phoneRegionCode" type="text" inputRef placeholder="Phone Region Code"
+                    class="tw-text-center">
+            </div> -->
+        </form>
+        <div class="tw-flex tw-flex-col tw-gap-8 tw-text-center">
+            <button [disabled]="isLoading$ | async" type="submit" class="btn btn-primary tw-w-full"
+                (click)="step$.next(3)">Continue</button>
+            <div class="tw-flex tw-flex-col tw-gap-2">
+                <p>Or sign up with another account</p>
+                <div class="tw-flex tw-gap-12 tw-justify-center">
+                    <img src="assets/images/AppleLogo.svg" alt="Apple Logo">
+                    <img src="assets/images/GoogleLogo.svg" alt="Google Logo">
+                </div>
+            </div>
+            <p class="heading-5 tw-text-textDefault tw-font-bold">Already have an account? <a
+                    class="tw-text-primary tw-cursor-pointer" routerLink="../sign-in">Sign in</a></p>
+        </div>
     </div>
-
-    <div>
-      <button class="btn btn-primary tw-w-full" (click)="step$.next(3)">Continue</button>
-    </div>
-  </div>
 </section>
 
 <section [@slideIn] [@slideOut] *ngIf="(step$ | async) === 3">
-  <div class="tw-flex tw-flex-col tw-gap-4">
-    <h1 class="heading-2 tw-text-center tw-mb-8">Setează parola</h1>
-
-    <p class="tw-mb-8 tw-text-defaultText tw-text-xl tw-max-w-[430px]">
-      Te rugam sa setezi parola contului tau care trebuie sa fie de minim 8 caractere si sa contina cel putin 3 din urmatoarele tipuri de caractere: litere mari, litere mici, cifre si semne speciale.
-      <br><br>
-      Ulterior, vei fi redirectionat catre pagina de login unde vei folosi adresa de email si aceasta parola pentru a accesa portalul.
-    </p>
-
-    <form [formGroup]="registerForm" class="tw-w-full tw-min-w-xs tw-flex tw-flex-col tw-gap-4">
-
-        <div formGroupName="userSetting" iconic-input-wrapper leftIcon="user" class="tw-w-full" [withCheckmark]="true">
-            <input formControlName="firstName" type="text" inputRef placeholder="First Name" class="tw-text-center" />
+    <div class="tw-flex tw-flex-col tw-gap-16">
+        <div class="tw-flex tw-flex-col tw-gap-8">
+            <h1 class="heading-2 tw-text-center">Sign up</h1>
+            <p class="tw-text-[#08073A] tw-text-md tw-text-center tw-max-w-[430px]">Choose the type of account you want
+                to create.
+                <br>
+                Different features are available depending on the type of account.
+            </p>
         </div>
-        <div formGroupName="userSetting" iconic-input-wrapper leftIcon="user" class="tw-w-full" [withCheckmark]="true">
-            <input formControlName="lastName" type="text" inputRef placeholder="Last Name" class="tw-text-center" />
+        <div class="tw-flex tw-flex-col tw-gap-12">
+            <div class="tw-flex tw-flex-col tw-gap-4">
+                <div class="tw-w-full tw-shadow-md tw-rounded-lg tw-border tw-border-transparent tw-h-20 tw-py-2 tw-flex tw-justify-between">
+                    <div class="">
+                        <img src="assets/images/Reg_truck.svg" alt="icon">
+                    </div>
+                    <h5>Transport company</h5>
+                </div>
+                <div class="tw-w-full tw-shadow-md tw-rounded-lg tw-border tw-border-transparent tw-h-20 tw-py-2 tw-flex tw-justify-between">
+                    <div class="">
+                        <img src="assets/images/Reg_file.svg" alt="icon">
+
+                    </div>
+                    <h5>Agent company</h5>
+                </div>
+                <div class="tw-w-full tw-shadow-md tw-rounded-lg tw-border tw-border-transparent tw-h-20 tw-py-2 tw-flex tw-justify-between">
+                    <div class="">
+                        <img src="assets/images/Reg_manu.svg" alt="icon">
+                    </div>
+                    <h5>Maneuvering company</h5>
+                </div>
+            </div>
+            <div class="">
+                <button class="btn btn-primary tw-w-full" (click)="step$.next(4)">Next</button>
+            </div>
         </div>
+    </div>
+</section>
 
-        <div formGroupName="user" iconic-input-wrapper leftIcon="envelope" class="tw-w-full" [withCheckmark]="true">
-            <input formControlName="email" type="text" inputRef placeholder="Email" class="tw-text-center" />
+<section [@slideIn] [@slideOut] *ngIf="(step$ | async) === 4">
+    <div class="tw-flex tw-flex-col tw-gap-16">
+        <div class="tw-flex tw-flex-col tw-gap-12">
+            <h1 class="heading-2 tw-text-center">CONGRATULATIONS!</h1>
+            <p class="tw-text-[#08073A] tw-text-xl tw-max-w-[430px]">Your account was created.
+                You will receive an email to activate your account.
+                <br><br>
+                Please make sure you activate the account in maximum 72 hours. Otherwise, the account will be
+                automatically deleted.
+            </p>
         </div>
-
-      <div formGroupName="userSetting" iconic-input-wrapper [withCheckmark]="true" leftIcon="phone" class="tw-w-full">
-        <input formControlName="phone" type="tel" inputRef placeholder="Phone #" class="tw-text-center">
-      </div>
-      <div formGroupName="userSetting" iconic-input-wrapper [withCheckmark]="true" leftIcon="phone" class="tw-w-full">
-        <input formControlName="phoneRegionCode" type="text" inputRef placeholder="Phone Region Code" class="tw-text-center">
-      </div>
-
-
-
-        <div class="tw-flex tw-flex-col tw-gap-4 tw-text-center">
-            <button [disabled]="isLoading$ | async" type="submit" class="btn btn-primary tw-w-full" (click)="signUp()">Sign Up</button>
-            <p class="heading-5 tw-text-textDefault tw-font-bold">Already have an account? <a class="tw-text-primary tw-cursor-pointer" routerLink="../sign-in">Sign in</a></p>
+        <div class="">
+            <button [disabled]="isLoading$ | async" type="submit" class="btn btn-primary tw-w-full" (click)="signUp()"
+                form="signUpForm">Home</button>
         </div>
-    </form>
-  </div>
+    </div>
 </section>

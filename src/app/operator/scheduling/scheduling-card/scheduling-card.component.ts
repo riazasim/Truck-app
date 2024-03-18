@@ -18,6 +18,7 @@ export class SchedulingCardComponent {
     // @Input() planning: SchedulingPreviewModel;
     @Input() isUmexOrganization: boolean | null;
     @Input() isMaxWidth: boolean;
+    @Input() isloading: BehaviorSubject<boolean>;
     @Output() readonly triggerSideNav = new EventEmitter<{ view: string, id: number, sId: number }>();
     @Output() readonly triggerDeletion: EventEmitter<PlanningModel | null> = new EventEmitter<PlanningModel | null>();
     @Output() readonly triggerCancellation: EventEmitter<PlanningModel> = new EventEmitter<PlanningModel>();
@@ -26,7 +27,7 @@ export class SchedulingCardComponent {
     @Output() readonly triggerCheckIn: EventEmitter<PlanningModel> = new EventEmitter<PlanningModel>();
     @Output() readonly triggerCheckOut: EventEmitter<PlanningModel> = new EventEmitter<PlanningModel>();
     @Input() statuses: StatusListModel[] = [];
-    
+
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     plannings: any[] = [];
     originalSource: any[] = [];
@@ -40,11 +41,11 @@ export class SchedulingCardComponent {
         private readonly cd: ChangeDetectorRef) {
           this.retrievePlanningList();
          }
-    
+
     retrievePlanningList(): void {
 
         this.pageIndex=0;
-        this.pageSize=5;
+        this.pageSize=0;
 
         let data={
             "start": this.pageIndex,
@@ -61,7 +62,7 @@ export class SchedulingCardComponent {
         })
     }
 
-    openDeleteModal(id: number) {
+    openDeleteModal(id: number = -1) {
         this.dialogService.open(SchedulingDeleteModalComponent, {
             disableClose: true,
             data: { "id": id, "title": "planning" }
@@ -79,12 +80,8 @@ export class SchedulingCardComponent {
             });
     }
 
-
-
-
-
     setComponentName(value: string): void {
-        
+
         if (value === 'copy') this.clipboard.copy(this.planning.id + '');
         this.triggerSideNav.emit({ view: value, id: <number>this.planning.id, sId: <number>this.planning.sId });
     }

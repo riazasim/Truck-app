@@ -8,14 +8,16 @@
                     <input inputRef type="text" placeholder="Convoy Type" formControlName="convoyType" />
                 </div>
                 <div class="tw-grid tw-grid-cols-2 tw-gap-x-8 tw-gap-y-4 tw-mb-5">
-                    <div class=" tw-flex tw-flex-col" formGroupName="routingDetail">
+                    <div class=" tw-flex tw-flex-col">
                         <datepicker matTooltipClass="tw-drop-shadow-lg" matTooltipPosition="above"
-                            [matTooltip]="'Pick ETA date' | translate"
-                            [model]="filterDate" [isHeaderPosition]="true" [height]="52"></datepicker>
+                            [matTooltip]="'Pick ETA date' | translate" [model]="filterDate"
+                            [isHeaderPosition]="true" [height]="52" (dateChanged)="OnDateChange($event)">
+                        </datepicker>
                     </div>
-                    <div class=" tw-flex tw-flex-col" formGroupName="routingDetail">
+                    <div class=" tw-flex tw-flex-col">
                         <timepicker matTooltipClass="tw-drop-shadow-lg" matTooltipPosition="above"
-                        [matTooltip]="'Pick ETA time' | translate"[height]="52"></timepicker>
+                            [matTooltip]="'Pick ETA time' | translate" [height]="52"
+                            (modelChange)="OnTimeChange($event)"></timepicker>
                     </div>
                 </div>
                 <div iconic-input-wrapper leftIcon="location-dot">

@@ -49,11 +49,11 @@ import { provideNativeDateAdapter } from '@angular/material/core';
         TranslateModule,
         GoogleMapsModule,
         ReactiveFormsModule,
-        MatFormFieldModule, 
-        MatInputModule, 
+        MatFormFieldModule,
+        MatInputModule,
         MatDatepickerModule
     ],
     exports: [MapComponent],
-    providers: [provideNativeDateAdapter()],
+    providers: [],
 })
 export class OperatorModule { }

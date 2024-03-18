@@ -26,6 +26,9 @@ export class EditSchedulingRouteComponent implements OnInit {
         { id: 2, name: 'customer2' },
         { id: 3, name: 'customer3' },
     ]
+    dateVal: string;
+    timeVal: string;
+    dateTimeVal: string;
 
     constructor(private readonly fb: FormBuilder,
         private readonly planningService: PlanningService,
@@ -48,6 +51,13 @@ export class EditSchedulingRouteComponent implements OnInit {
             this.initForm(response);
             this.isLoading$.next(false);
         });
+    }
+
+    OnDateChange(value : any){
+        this.dateVal = `${value._i.year}-${value._i.month}-${value._i.date}`
+    }
+    OnTimeChange(value : any){
+        this.timeVal = value
     }
 
     retrieveStatuses(): Observable<any> {
@@ -74,6 +84,8 @@ export class EditSchedulingRouteComponent implements OnInit {
 
     updateRoutingDetails(): void {
         this.isLoading$.next(true);
+        this.dateTimeVal = `${this.dateVal} ${this.timeVal}`
+        this.planningForm.patchValue({estimatedTimeArrival : this.dateTimeVal})
         this.planningService.editRouteingDetails(this.id,this.planningForm.value).subscribe({
             next: () => {
                 this.router.navigate(['../../success'], { relativeTo: this.route });

@@ -1,5 +1,5 @@
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -32,7 +32,6 @@ import { getFormatHourSlot } from '../scheduling-box.helper';
 import * as moment from 'moment';
 import { extractPhoneNumber } from 'src/app/shared/validators/phone-numbers';
 import { PlanningModel, convoyModel } from 'src/app/core/models/planning.model';
-import { convertJsonToFormData } from 'src/app/shared/utils/api.functions';
 
 @Component({
     selector: 'app-add-scheduling',
@@ -41,6 +40,8 @@ import { convertJsonToFormData } from 'src/app/shared/utils/api.functions';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AddSchedulingComponent implements OnInit, OnDestroy {
+    // @Output() OnDateChange: EventEmitter<{ value : any }> = new EventEmitter();
+    // @Output() OnTimeChange: EventEmitter<{ value : any }> = new EventEmitter();
     file1Text$: BehaviorSubject<string> = new BehaviorSubject<string>('');
     file2Text$: BehaviorSubject<string> = new BehaviorSubject<string>('');
     file3Text$: BehaviorSubject<string> = new BehaviorSubject<string>('');
@@ -76,6 +77,9 @@ export class AddSchedulingComponent implements OnInit, OnDestroy {
     imageLen : number = 0;
     tempImg : File[] = [];
     customInputsFetched: boolean = false;
+    dateVal : string;
+    timeVal : string;
+    dateTimeVal : string;
 
     search: string;
 
@@ -227,6 +231,13 @@ export class AddSchedulingComponent implements OnInit, OnDestroy {
         //   }
         // })
         // step$.next(true)
+    }
+
+    OnDateChange(value : any){
+        this.dateVal = `${value._i.year}-${value._i.month}-${value._i.date}`
+    }
+    OnTimeChange(value : any){
+        this.timeVal = value
     }
 
     // subscribeForDockChanges(): void
@@ -574,8 +585,8 @@ export class AddSchedulingComponent implements OnInit, OnDestroy {
     saveScheduling(): void {
         this.isLoading$.next(true);
         this.convoys.push(this.convoyForm.value)
-        // this.schedulingForm.patchValue({ documents : this.images})
-        this.schedulingForm.patchValue({ convoyDetail: this.convoys , documents : this.images})
+        this.dateTimeVal = `${this.dateVal} ${this.timeVal}`
+        this.schedulingForm.patchValue({ convoyDetail: this.convoys , documents : this.images , routingDetail : {estimatedTimeArrival : this.dateTimeVal}})
         this.planningService.create(this.schedulingForm.value).subscribe({
             next: () => {
                 this.router.navigate(['../success'], { relativeTo: this.route });

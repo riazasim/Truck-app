@@ -59,14 +59,14 @@ export class TimepickerComponent implements OnInit {
     const s2 = this.hourModel.s2;
 
     switch(field) {
-      case 'h1': 
+      case 'h1':
         switch(true) {
           case h1 === 1 && h2 > 3 || h1 >= 2: this.hourModel.h1 = 0; break;
           default: this.hourModel.h1 = this.hourModel.h1 + 1; break;
         }
 
         return;
-      
+
       case 'h2':
         switch(true) {
           case h1 === 2 && h2 === 3: this.hourModel.h1 = 0; this.hourModel.h2 = 0; break;
@@ -74,17 +74,17 @@ export class TimepickerComponent implements OnInit {
           case h2 >= 9: this.hourModel.h2 = 0; break;
           default: this.hourModel.h2 = this.hourModel.h2 + 1; break;
         }
-  
+
         return;
-      
+
       case 'm1':
         switch(true) {
           case m1 >= 5: this.hourModel.m1 = 0; break;
           default: this.hourModel.m1 = this.hourModel.m1 + 1; break;
         }
-  
+
         return;
-      
+
       case 'm2':
         switch(true) {
           case m1 === 5 && m2 === 9: this.hourModel.m1 = 0; this.hourModel.m2 = 0; break;
@@ -92,7 +92,7 @@ export class TimepickerComponent implements OnInit {
           case m2 > 9: this.hourModel.m2 = 0; break;
           default: this.hourModel.m2 = this.hourModel.m2 + 1; break;
         }
-  
+
         return;
 
       case 's1':
@@ -100,7 +100,7 @@ export class TimepickerComponent implements OnInit {
           case s1 >= 5: this.hourModel.s1 = 0; break;
           default: this.hourModel.s1 = this.hourModel.s1 + 1; break;
         }
-  
+
         return;
 
       case 's2':
@@ -110,7 +110,7 @@ export class TimepickerComponent implements OnInit {
           case s2 > 9: this.hourModel.s2 = 0; break;
           default: this.hourModel.s2 = this.hourModel.s2 + 1; break;
         }
-  
+
         return;
     }
   }
@@ -131,7 +131,7 @@ export class TimepickerComponent implements OnInit {
           case h1 === 0: this.hourModel.h1 = 2; break;
           default: this.hourModel.h1 = this.hourModel.h1 - 1; break;
         }
-  
+
         return;
 
       case 'h2':
@@ -140,7 +140,7 @@ export class TimepickerComponent implements OnInit {
           case h2 === 0: this.hourModel.h2 = 9; break;
           default: this.hourModel.h2 = this.hourModel.h2 - 1; break;
         }
-  
+
         return;
 
       case 'm1':
@@ -148,24 +148,24 @@ export class TimepickerComponent implements OnInit {
           case m1 === 0: this.hourModel.m1 = 5; break;
           default: this.hourModel.m1 = this.hourModel.m1 - 1; break;
         }
-  
+
         return;
-      
+
       case 'm2':
         switch(true) {
           case m1 >= 1 && m2 === 0: this.hourModel.m1--; this.hourModel.m2 = 9; break;
           case m2 === 0: this.hourModel.m2 = 9; break;
           default: this.hourModel.m2 = this.hourModel.m2 - 1; break;
         }
-  
+
         return;
-      
+
       case 's1':
         switch(true) {
           case s1 === 0: this.hourModel.s1 = 5; break;
           default: this.hourModel.s1--; break;
         }
-  
+
         return;
 
       case 's2':
@@ -174,14 +174,12 @@ export class TimepickerComponent implements OnInit {
           case s2 === 0: this.hourModel.s2 = 9; break;
           default: this.hourModel.s2--; break;
         }
-  
+
         return;
     }
   }
 
   save(e: Event): void {
-    e.stopPropagation();
-    
     if (this.hourModel.h1 > 2 || this.hourModel.h2 > 9 || this.hourModel.m1 > 5 || this.hourModel.m2 > 9) {
       return;
     }
@@ -190,6 +188,7 @@ export class TimepickerComponent implements OnInit {
       this.formGroup.get(this.field)?.patchValue(this.getHourFormat());
     } else {
       this.model = this.getHourFormat();
+      this.modelChange.emit(this.model)
     }
 
     this.inputTrigger.closeMenu();

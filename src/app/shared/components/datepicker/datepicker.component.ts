@@ -22,7 +22,7 @@ export class DatepickerComponent implements OnInit {
   @Input() maxDate: Date;
   @Input() minDate: Date;
 
-  @Output() dateChanged: EventEmitter<string|Date> = new EventEmitter<string|Date>();
+  @Output() dateChanged: EventEmitter<string> = new EventEmitter<string>();
 
   styles: any = {};
   constructor() { }

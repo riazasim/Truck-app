@@ -9,31 +9,18 @@
                         <input inputRef type="text" placeholder="Convoy Type" formControlName="convoyType" />
                     </div>
                     <div class="tw-grid tw-grid-cols-2 tw-gap-x-8 tw-gap-y-4 tw-mb-5">
-                    <div class=" tw-flex tw-flex-col" formGroupName="routingDetail">
-                        <datepicker matTooltipClass="tw-drop-shadow-lg" matTooltipPosition="above"
-                            [matTooltip]="'Pick ETA date' | translate"
-                            [model]="filterDate" [isHeaderPosition]="true" [height]="52"></datepicker>
+                        <div class=" tw-flex tw-flex-col" formGroupName="routingDetail">
+                            <datepicker matTooltipClass="tw-drop-shadow-lg" matTooltipPosition="above"
+                                [matTooltip]="'Pick ETA date' | translate" [model]="filterDate"
+                                [isHeaderPosition]="true" [height]="52" (dateChanged)="OnDateChange($event)">
+                            </datepicker>
+                        </div>
+                        <div class=" tw-flex tw-flex-col" formGroupName="routingDetail">
+                            <timepicker matTooltipClass="tw-drop-shadow-lg" matTooltipPosition="above"
+                                [matTooltip]="'Pick ETA time' | translate" [height]="52"
+                                (modelChange)="OnTimeChange($event)"></timepicker>
+                        </div>
                     </div>
-                    <div class=" tw-flex tw-flex-col" formGroupName="routingDetail">
-                        <timepicker matTooltipClass="tw-drop-shadow-lg" matTooltipPosition="above"
-                        [matTooltip]="'Pick ETA time' | translate"[height]="52"></timepicker>
-                        <!-- <mat-form-field appearance="fill" formControlName="estimatedTimeArrival">
-                            <mat-label>Date time</mat-label> -->
-                            <!-- <input matInput formControlName="estimatedTimeArrival" [matDatepicker]="picker" />
-                            <input matInput formControlName="estimatedTimeArrival" class="time-picker" type="time" id="appt" name="appt" />
-
-                            <mat-datepicker-toggle matSuffix [for]="picker">
-                              <mat-icon matDatepickerToggleIcon>today</mat-icon>
-                            </mat-datepicker-toggle>
-                            <mat-datepicker #picker></mat-datepicker> -->
-                          <!-- </mat-form-field> -->
-                        <!-- <input inputRef matInput onkeydown="return false" (click)="picker.open()" type="text"
-                            formControlName="estimatedTimeArrival" [matDatepicker]="picker" placeholder="ETA">
-                        <mat-datepicker #picker></mat-datepicker> -->
-                        <!-- <input inputRef type="text" placeholder="Location Port"
-                            formControlName="estimatedTimeArrival" /> -->
-                    </div>
-                </div>
                     <div iconic-input-wrapper leftIcon="location-dot" formGroupName="routingDetail">
                         <input inputRef type="text" placeholder="Location Port" formControlName="locationPort" />
                     </div>
@@ -109,8 +96,7 @@
                     {{ "button.back" | translate }}
                 </button>
                 <button type="button" class="btn btn-primary min-md:tw-min-w-[436px] tw-min-h-[50px] !tw-text-[18px]"
-                    [disabled]="!schedulingForm.valid"
-                    (click)="next(stepOne$, schedulingForm , 1)">
+                    [disabled]="!schedulingForm.valid" (click)="next(stepOne$, schedulingForm , 1)">
                     {{ "button.next" | translate }}
                 </button>
             </div>
