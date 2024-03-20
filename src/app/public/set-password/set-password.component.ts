@@ -41,14 +41,13 @@ export class SetPasswordComponent implements OnInit {
   }
 
   subscribeForQueryParams(): void {
+    debugger
       this.route.paramMap.subscribe((params) => {
-
-          this.token = params.get("token")
+        this.token = params.get('token');
+        console.log(this.token);
           return this.token;
 
       });
-    // this.route.queryParams.subscribe(({ token }) => this.token = token);
-    // alert(this.token);
   }
 
   setPassword(): void {
