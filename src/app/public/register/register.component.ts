@@ -1,39 +1,40 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import {ChangeDetectionStrategy, Component, HostListener} from '@angular/core';
-import {FormControl, FormGroup, UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
+import { ChangeDetectionStrategy, Component, HostListener } from '@angular/core';
+import { FormControl, FormGroup, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { SignupModel } from 'src/app/core/models/signup.model';
 import { AuthService } from 'src/app/core/services/auth.service';
-import {environment} from "../../../environments/environment";
-import {handleError} from "../../shared/utils/error-handling.function";
-import {LoaderOrchestratorService} from "../../core/services/loader-orchestrator.service";
-import {handleSuccess} from "../../shared/utils/success-handling.function";
+import { environment } from "../../../environments/environment";
+import { handleError } from "../../shared/utils/error-handling.function";
+import { LoaderOrchestratorService } from "../../core/services/loader-orchestrator.service";
+import { handleSuccess } from "../../shared/utils/success-handling.function";
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: [
-    trigger('slideOut', [
-      transition(':leave', [
-        animate('200ms ease-in', style({transform: 'translateX(-100%)'}))
-      ])
-    ]),
-    trigger('slideIn', [
-      transition(':enter', [
-        style({transform: 'translateX(-100%)'}),
-        animate('200ms ease-in', style({transform: 'translateX(0%)'}))
-      ])
-    ])
-  ]
+    selector: 'app-register',
+    templateUrl: './register.component.html',
+    styleUrls: ['./register.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    animations: [
+        trigger('slideOut', [
+            transition(':leave', [
+                animate('200ms ease-in', style({ transform: 'translateX(-100%)' }))
+            ])
+        ]),
+        trigger('slideIn', [
+            transition(':enter', [
+                style({ transform: 'translateX(-100%)' }),
+                animate('200ms ease-in', style({ transform: 'translateX(0%)' }))
+            ])
+        ])
+    ]
 })
 export class RegisterComponent {
-  isEnglish$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  step$: BehaviorSubject<number> = new BehaviorSubject<number>(1);
-  public readonly isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    isEnglish$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    step$: BehaviorSubject<number> = new BehaviorSubject<number>(1);
+    value: string | null;
+    public readonly isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
     @HostListener('document:keydown.enter', ['$event']) onKeydownHandler(event: KeyboardEvent) {
         this.signUp();
@@ -71,14 +72,16 @@ export class RegisterComponent {
             firstName: FormControl<string | null>;
             // phoneRegionCode: FormControl<string | null>
         }>;
-        user: FormGroup<{ email: FormControl<string | null>;
-                          userRole: FormControl<string | null>}>,
+        user: FormGroup<{
+            email: FormControl<string | null>;
+            userRole: FormControl<string | null>
+        }>,
     }> = new FormGroup({
-        user:new FormGroup({
-            email:new FormControl(null, [Validators.required, Validators.email]),
-            userRole:new FormControl(null, [Validators.required]),
+        user: new FormGroup({
+            email: new FormControl(null, [Validators.required, Validators.email]),
+            userRole: new FormControl(null, [Validators.required]),
         }),
-        userSetting:new FormGroup({
+        userSetting: new FormGroup({
             firstName: new FormControl(null, [Validators.required]),
             lastName: new FormControl(null, [Validators.required]),
             // language: new FormControl(null, [Validators.required]),
@@ -90,23 +93,22 @@ export class RegisterComponent {
 
 
 
-  constructor(private readonly authService: AuthService,
-              private readonly router: Router,
-              private readonly auth: AuthService,
-              private readonly route: ActivatedRoute,
-              private loaderService: LoaderOrchestratorService,
-              private readonly snackBar: MatSnackBar) {
-       this.preCompleteSignUp();
-  }
-setRoleValue(event: MouseEvent): void {
-    const clickedElement = event.target as HTMLElement;
-    const value = clickedElement.getAttribute('value');
-    if (value) {
-      console.log('Clicked value:', value);
-      this.registerForm.get('user.userRole')?.setValue(value);
-      // You can perform further actions with the value here
+    constructor(private readonly authService: AuthService,
+        private readonly router: Router,
+        private readonly auth: AuthService,
+        private readonly route: ActivatedRoute,
+        private loaderService: LoaderOrchestratorService,
+        private readonly snackBar: MatSnackBar) {
+        this.preCompleteSignUp();
     }
-  }
+    setRoleValue(event: MouseEvent): void {
+        const clickedElement = event.target as HTMLElement;
+        this.value = clickedElement.getAttribute('value');
+        if (this.value) {
+            this.registerForm.get('user.userRole')?.setValue(this.value);
+            // You can perform further actions with the value here
+        }
+    }
 
     preCompleteSignUp(): void {
         const user = this.auth.getAuth();
@@ -125,13 +127,13 @@ setRoleValue(event: MouseEvent): void {
             // })
 
             this.registerForm = new FormGroup({
-                user:new FormGroup({
-                    email:new FormControl("mrumari@gmail.com",{nonNullable: false}),
-                    userRole:new FormControl("ROLE_USER_TRANSPORT",{nonNullable: false}),
+                user: new FormGroup({
+                    email: new FormControl("mrumari@gmail.com", { nonNullable: false }),
+                    userRole: new FormControl("ROLE_USER_TRANSPORT", { nonNullable: false }),
                 }),
-                userSetting:new FormGroup({
-                    firstName: new FormControl("Asim", {nonNullable: false}),
-                    lastName: new FormControl("Channar", {nonNullable: false}),
+                userSetting: new FormGroup({
+                    firstName: new FormControl("Asim", { nonNullable: false }),
+                    lastName: new FormControl("Channar", { nonNullable: false }),
                     // language: new FormControl("EN", {nonNullable: false}),
                     // phone: new FormControl("33365356", {nonNullable: false}),
                     // phoneRegionCode: new FormControl("+92", {nonNullable: false})
@@ -144,47 +146,48 @@ setRoleValue(event: MouseEvent): void {
 
     signUp(): void {
         if (this.registerForm.valid) {
-        this.registerForm.disable();
-        this.isLoading$.next(true);
-        //    let language="RO";
-        //     if (this.isEnglish$){
-        //         language ="EN"
-        //     }
-        //     this.registerForm.patchValue();
-              // let data = {
-              //     "user": {
-              //         "email": this.registerForm.value.email
-              //     },
-              //     "user_setting": {
-              //         "timezone": "Europe/Bucharest",
-              //         "first_name": this.registerForm.value.first_name,
-              //         "last_name": this.registerForm.value.last_name,
-              //         "language": language,
-              //         "phone": this.registerForm.value.phone,
-              //         "phone_region_code": this.registerForm.value.phone_region_code
-              //     }
-              // }
+            this.registerForm.disable();
+            this.isLoading$.next(true);
+            //    let language="RO";
+            //     if (this.isEnglish$){
+            //         language ="EN"
+            //     }
+            //     this.registerForm.patchValue();
+            // let data = {
+            //     "user": {
+            //         "email": this.registerForm.value.email
+            //     },
+            //     "user_setting": {
+            //         "timezone": "Europe/Bucharest",
+            //         "first_name": this.registerForm.value.first_name,
+            //         "last_name": this.registerForm.value.last_name,
+            //         "language": language,
+            //         "phone": this.registerForm.value.phone,
+            //         "phone_region_code": this.registerForm.value.phone_region_code
+            //     }
+            // }
 
 
-        this.auth.signup(<SignupModel>this.registerForm.getRawValue()).subscribe({
-            next: (response) => {
-                this.router.navigate(
-                    ['../sign-in'], { relativeTo: this.route }
-                )
-                    .then(() => {
-                        // this.snackBar.open("Account created! Check email please!", "Close", {
-                        //     duration: 3000,
-                        //     horizontalPosition: 'end',
-                        //     panelClass: ['success-snackbar'],
-                        //     verticalPosition: 'bottom',
-                        // });
-                        handleSuccess(this.snackBar, response, this.isLoading$)
-                        this.loaderService.hideLoader()
-                    })
-            }, error: (body) => {
-                this.registerForm.enable();
-                handleError(this.snackBar, body, this.isLoading$)
-            }});
+            this.auth.signup(<SignupModel>this.registerForm.getRawValue()).subscribe({
+                next: (response) => {
+                    this.router.navigate(
+                        ['../sign-in'], { relativeTo: this.route }
+                    )
+                        .then(() => {
+                            // this.snackBar.open("Account created! Check email please!", "Close", {
+                            //     duration: 3000,
+                            //     horizontalPosition: 'end',
+                            //     panelClass: ['success-snackbar'],
+                            //     verticalPosition: 'bottom',
+                            // });
+                            handleSuccess(this.snackBar, response, this.isLoading$)
+                            this.loaderService.hideLoader()
+                        })
+                }, error: (body) => {
+                    this.registerForm.enable();
+                    handleError(this.snackBar, body, this.isLoading$)
+                }
+            });
         }
     }
 }

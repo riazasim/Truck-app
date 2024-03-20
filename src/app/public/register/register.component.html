@@ -81,23 +81,23 @@
         </div>
         <div class="flex flex-col gap-12">
             <div class="flex flex-col gap-4">
-                <div class="w-full shadow-md rounded-lg border border-transparent gap-5 h-28 p-6 flex items-center cursor-pointer" value="ROLE_USER_TRANSPORT" (click)="setRoleValue($event)">
-                    <div class="flex justify-center p-5 border border-gray rounded-full h-[72px] w-[72px] items-center">
-                        <img src="assets/images/Reg_truck.svg" alt="icon">
+                <div [ngClass]="{'w-full shadow-md rounded-lg border border-transparent gap-5 h-28 p-6 flex items-center cursor-pointer' : true, '!border-black' : (value === 'ROLE_USER_TRANSPORT')}" value="ROLE_USER_TRANSPORT" (click)="setRoleValue($event)">
+                    <div class="flex justify-center p-5 border border-gray rounded-full h-[72px] w-[72px] items-center" value="ROLE_USER_TRANSPORT" (click)="setRoleValue($event)">
+                        <img src="assets/images/Reg_truck.svg" alt="icon" value="ROLE_USER_TRANSPORT" (click)="setRoleValue($event)">
                       </div>
-                    <h1 class="text text-4xl font-bold">Transport company</h1>
+                    <h1 class="text text-4xl font-bold" value="ROLE_USER_TRANSPORT" (click)="setRoleValue($event)">Transport company</h1>
                 </div>
-                <div class="w-full shadow-md rounded-lg border border-transparent gap-5 h-28 p-6 flex items-center cursor-pointer" value="ROLE_USER_AGENT" (click)="setRoleValue($event)">
-                    <div class="flex justify-center p-5 border border-gray rounded-full h-[72px] w-[72px] items-center">
-                        <img src="assets/images/Reg_file.svg" alt="icon">
+                <div [ngClass]="{'w-full shadow-md rounded-lg border border-transparent gap-5 h-28 p-6 flex items-center cursor-pointer' : true, '!border-black' : (value === 'ROLE_USER_AGENT')}" value="ROLE_USER_AGENT" (click)="setRoleValue($event)">
+                    <div class="flex justify-center p-5 border border-gray rounded-full h-[72px] w-[72px] items-center" value="ROLE_USER_AGENT" (click)="setRoleValue($event)">
+                        <img src="assets/images/Reg_file.svg" alt="icon" value="ROLE_USER_AGENT" (click)="setRoleValue($event)">
                       </div>
-                    <h1 class="text text-4xl font-bold">Agent company</h1>
+                    <h1 class="text text-4xl font-bold" value="ROLE_USER_AGENT" (click)="setRoleValue($event)">Agent company</h1>
                 </div>
-                <div class="w-full shadow-md rounded-lg border border-transparent gap-5 h-28 p-6 flex items-center cursor-pointer" value="ROLE_USER_MANEUVERING" (click)="setRoleValue($event)">
-                    <div class="flex justify-center p-5 border border-gray rounded-full h-[72px] w-[72px] items-center">
-                        <img src="assets/images/Reg_manu.svg" alt="icon">
+                <div [ngClass]="{'w-full shadow-md rounded-lg border border-transparent gap-5 h-28 p-6 flex items-center cursor-pointer' : true, '!border-black' : (value === 'ROLE_USER_MANEUVERING')}" value="ROLE_USER_MANEUVERING" (click)="setRoleValue($event)">
+                    <div class="flex justify-center p-5 border border-gray rounded-full h-[72px] w-[72px] items-center" value="ROLE_USER_MANEUVERING" (click)="setRoleValue($event)">
+                        <img src="assets/images/Reg_manu.svg" alt="icon" value="ROLE_USER_MANEUVERING" (click)="setRoleValue($event)">
                       </div>
-                    <h1 class="text text-4xl font-bold">Maneuvering company</h1>
+                    <h1 class="text text-4xl font-bold" value="ROLE_USER_MANEUVERING" (click)="setRoleValue($event)">Maneuvering company</h1>
                 </div>
             </div>
             <div class="">
