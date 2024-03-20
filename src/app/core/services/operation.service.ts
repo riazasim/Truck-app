@@ -18,7 +18,7 @@ export class OperationService {
     }
 
     edit(id:number,data: OperationModel): Observable<any> {
-      data['id']=id;
+      data['operationId']=id;
       return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/setOperationInfo`, wrapJsonForRequest(data));
     }
 
