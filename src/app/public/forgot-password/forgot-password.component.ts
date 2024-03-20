@@ -48,7 +48,7 @@ export class ForgotPasswordComponent {
                         //   panelClass: ['success-snackbar'],
                         //   verticalPosition: 'bottom',
                         // });
-                        handleSuccess(this.snackBar, response, this.isLoading$)
+                        handleSuccess(this.snackBar, response.attributes, this.isLoading$)
                         this.loaderService.hideLoader()
                     })
             }, error: (body) => {

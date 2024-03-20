@@ -47,7 +47,7 @@
                     <label class="tw-cursor-pointer tw-font-bold" for="block">Block new SID for license plate until checkout</label>
                 </div>
             </div>
-    
+
             <div class="tw-flex tw-justify-end tw-pt-5">
                 <div class="tw-flex tw-gap-4">
                     <button [routerLink]="id ? '../../list' : '../list'" class="btn btn-outline-primary" type="button">Cancel</button>
@@ -62,7 +62,7 @@
                   <table class="material-table no-wrap tw-overflow-hidden" matSort
                          [class.loading]="(isLoading$ | async)" aria-label="Usage Table"
                          cdk-table [dataSource]="docks$.value">
-              
+
                     <ng-container cdkColumnDef="name">
                       <th cdk-header-cell *cdkHeaderCellDef scope="col">
                           <section class="tw-flex tw-flex-col">
@@ -110,14 +110,14 @@
                       </th>
                       <td cdk-cell *cdkCellDef="let row">{{row.warehouse.name}}</td>
                     </ng-container>
-              
+
                     <ng-container cdkColumnDef="access">
                       <th cdk-header-cell *cdkHeaderCellDef scope="col">Enable dock access</th>
                       <td cdk-cell *cdkCellDef="let row" >
                         <mat-slide-toggle [checked]="row | hasPartnerDockAccess : partnerDocks" (change)="setAccess($event.checked, row.id)" class="tw-ml-2"></mat-slide-toggle>
                     </td>
                     </ng-container>
-              
+
                     <!-- Header and Row Declarations -->
                     <tr cdk-header-row *cdkHeaderRowDef="displayedColumns"></tr>
                     <tr cdk-row *cdkRowDef="let row; columns: displayedColumns"></tr>
@@ -127,7 +127,7 @@
                           Loading the data
                         </span>
                         <span
-                          *ngIf="docks$.value?.length === 0 && !(isLoading$ | async)">Nu există înregistrări</span>
+                          *ngIf="docks$.value?.length === 0 && !(isLoading$ | async)">No results found</span>
                       </td>
                     </tr>
                   </table>

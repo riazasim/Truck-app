@@ -74,7 +74,7 @@
               <td [colSpan]="displayedColumns.length">
                 <app-loader *ngIf="(isLoading$ | async)" [isContainer]="true" [fullScreen]="false"></app-loader>
                 <span
-                  *ngIf="dataSource.length === 0 && !(isLoading$ | async)">Nu există înregistrări</span>
+                  *ngIf="dataSource.length === 0 && !(isLoading$ | async)">No results found</span>
                 <span
                   *ngIf="dataSource.length > 0  && !(isLoading$ | async)">Nicio înregistrare nu corespunde criteriilor de căutare</span>
               </td>
