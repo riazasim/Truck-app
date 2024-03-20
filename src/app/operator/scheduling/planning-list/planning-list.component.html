@@ -159,7 +159,7 @@
                                 <fa-icon icon="eye" class="tw-text-[#17A0B5] tw-cursor-pointer" size="lg"
                                     [routerLink]="['../edit', row.id]"></fa-icon>
                                 <img src="assets/images/boat.svg" alt="icon" class="tw-cursor-pointer tw-max-w-5 tw-max-h-5" [routerLink]="['../route',row.id ,'convoy-list']" >
-                                <a class="tw-text-primary" href="javascript:void(0)" (click)="triggerOpenLogs.emit({ view: 'view', id: row.id, planning: row })"><img src="assets/images/rotate-left-list-icon.svg" alt="icon" class="tw-cursor-pointer"></a>  
+                                <a class="tw-text-primary" href="javascript:void(0)" (click)="triggerOpenLogs.emit({ view: 'view', id: row.id, planning: row })"><img src="assets/images/rotate-left-list-icon.svg" alt="icon" class="tw-cursor-pointer"></a>
                             </div>
                         </td>
                     </ng-container>
@@ -176,7 +176,7 @@
                             <span *ngIf="
                                     dataSource.length === 0 &&
                                     !(isLoading$ | async)
-                                ">Nu există înregistrări</span>
+                                ">No results found</span>
                             <span *ngIf="
                                     dataSource.length > 0 &&
                                     !(isLoading$ | async)

@@ -58,7 +58,7 @@ export class SetPasswordComponent implements OnInit {
         this.authService.setPassword({...this.setPasswordForm.value, token: this.token }).subscribe({
             next: (response) => {
                 this.router.navigate(
-                    ['../sign-in'], { relativeTo: this.route }
+                    ['../../sign-in'], { relativeTo: this.route }
                 )
                     .then(() => {
                         // this.snackBar.open("Password has been successfully setup.", "Close", {
@@ -67,7 +67,7 @@ export class SetPasswordComponent implements OnInit {
                         //     panelClass: ['success-snackbar'],
                         //     verticalPosition: 'bottom',
                         // });
-                        handleSuccess(this.snackBar, response, this.isLoading$)
+                        handleSuccess(this.snackBar, response.attributes, this.isLoading$)
                         this.loaderService.hideLoader()
                     })
             }, error: (body) => {

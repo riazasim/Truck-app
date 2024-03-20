@@ -53,10 +53,10 @@ export class ResetPasswordComponent implements OnInit {
             this.authService.resetPassword({...this.formGroup.value, token: this.token }).subscribe({
                 next: (response) => {
                     this.router.navigate(
-                        ['sign-in'], { relativeTo: this.route }
+                        ['../../sign-in'], { relativeTo: this.route }
                     )
                         .then(() => {
-                            handleSuccess(this.snackBar, response, this.isLoading$)
+                            handleSuccess(this.snackBar, response.attributes, this.isLoading$)
                             this.loaderService.hideLoader()
                         })
                 }, error: (body) => {

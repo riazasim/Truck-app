@@ -1,12 +1,12 @@
 <section *ngIf="isLoading || originalSource.length; else empty">
-    <material-panel-table [showSearchbar]="false" [showHeader]="true" 
+    <material-panel-table [showSearchbar]="false" [showHeader]="true"
                         buttonLabel="Add Partner's contact" tableTitle="Partner's contacts list" (buttonClicked)="redirectAddMessage()">
     <div table class="tw-w-full tw-shadow-lg">
         <ng-scrollbar track="horizontal" [autoHeightDisabled]="false">
           <table class="material-table no-wrap tw-overflow-hidden" matSort (matSortChange)="sortData($event)"
                  [class.loading]="isLoading" aria-label="Usage Table"
                  cdk-table [dataSource]="dataSource">
-      
+
             <ng-container cdkColumnDef="fullName">
               <th cdk-header-cell *cdkHeaderCellDef scope="col">
                   <section class="tw-flex tw-flex-col">
@@ -70,7 +70,7 @@
                 </th>
                 <td cdk-cell *cdkCellDef="let row">{{row.email || '-'}}</td>
               </ng-container>
-      
+
             <ng-container cdkColumnDef="actions">
               <th cdk-header-cell *cdkHeaderCellDef scope="col">
                 <section class="tw-flex tw-flex-col">
@@ -83,7 +83,7 @@
                 <fa-icon icon="trash-can" class="tw-text-primary tw-cursor-pointer" size="lg" (click)="openDeleteModal(row.id)"></fa-icon>
               </td>
             </ng-container>
-      
+
             <!-- Header and Row Declarations -->
             <tr cdk-header-row *cdkHeaderRowDef="displayedColumns"></tr>
             <tr cdk-row *cdkRowDef="let row; columns: displayedColumns"></tr>
@@ -93,14 +93,14 @@
                   Loading the data
                 </span>
                 <span
-                  *ngIf="dataSource.length === 0 && !isLoading">Nu există înregistrări</span>
+                  *ngIf="dataSource.length === 0 && !isLoading">No results found</span>
                 <span
                   *ngIf="dataSource.length > 0  && !isLoading">Nicio înregistrare nu corespunde criteriilor de căutare</span>
               </td>
             </tr>
           </table>
         </ng-scrollbar>
-      
+
         <!-- <mat-paginator [class.!tw-hidden]="dataSource.data.length === 0" class="paginator tw-rounded-b-[10px]"
                        hidePageSize
                        aria-label="Select page" pageSize="10">
