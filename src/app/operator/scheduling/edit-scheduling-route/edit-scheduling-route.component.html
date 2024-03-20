@@ -1,21 +1,21 @@
-<section class="tw-bg-white tw-w-full">
+<section class="bg-white w-full">
     <app-loader *ngIf="isLoading$ | async" [isContainer]="true" [fullScreen]="false"></app-loader>
     <form [formGroup]="planningForm" *ngIf="!(isLoading$ | async)">
-        <div class="tw-grid min-lg:tw-grid-cols-2 tw-grid-cols-1 tw-gap-x-10 tw-gap-y-4 tw-pt-[100px] tw-px-[50px]">
-            <div class="tw-flex tw-flex-col tw-gap-x-10 tw-gap-y-4 tw-px-[50px]">
-                <!-- <p class="tw-text-columnCell tw-font-bold"></p> -->
+        <div class="grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 gap-y-4 pt-[100px] px-[50px]">
+            <div class="flex flex-col gap-x-10 gap-y-4 px-[50px]">
+                <!-- <p class="text-columnCell font-bold"></p> -->
                 <div iconic-input-wrapper leftIcon="user">
                     <input inputRef type="text" placeholder="Convoy Type" formControlName="convoyType" />
                 </div>
-                <div class="tw-grid tw-grid-cols-2 tw-gap-x-8 tw-gap-y-4 tw-mb-5">
-                    <div class=" tw-flex tw-flex-col">
-                        <datepicker matTooltipClass="tw-drop-shadow-lg" matTooltipPosition="above"
+                <div class="grid grid-cols-2 gap-x-8 gap-y-4 mb-5">
+                    <div class=" flex flex-col">
+                        <datepicker matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
                             [matTooltip]="'Pick ETA date' | translate" [model]="filterDate"
                             [isHeaderPosition]="true" [height]="52" (dateChanged)="OnDateChange($event)">
                         </datepicker>
                     </div>
-                    <div class=" tw-flex tw-flex-col">
-                        <timepicker matTooltipClass="tw-drop-shadow-lg" matTooltipPosition="above"
+                    <div class=" flex flex-col">
+                        <timepicker matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
                             [matTooltip]="'Pick ETA time' | translate" [height]="52"
                             (modelChange)="OnTimeChange($event)"></timepicker>
                     </div>
@@ -56,7 +56,7 @@
                     <input inputRef type="text" placeholder="Pilot Company" formControlName="pilotCompany" />
                 </div>
             </div>
-            <div class="tw-flex tw-flex-col tw-gap-x-10 tw-gap-y-4 tw-px-[50px]">
+            <div class="flex flex-col gap-x-10 gap-y-4 px-[50px]">
                 <!-- <p>&nbsp;</p> -->
                 <div iconic-input-wrapper leftSvg="assets/images/scheduling_length.svg">
                     <input inputRef type="number" placeholder="Length (m)*" formControlName="length" />
@@ -84,11 +84,11 @@
                 </div>
             </div>
         </div>
-        <div class="tw-flex tw-gap-2 tw-justify-center min-md:tw-gap-20 max-md:tw-flex-col tw-py-3">
-            <button type="button" class="btn btn-outline-primary min-md:tw-min-w-[436px] tw-min-h-[50px] !tw-text-[18px]" [routerLink]="id ? '../../' : '../'">
+        <div class="flex gap-2 justify-center min-md:gap-20 max-md:flex-col py-3">
+            <button type="button" class="btn btn-outline-primary min-md:min-w-[436px] min-h-[50px] !text-[18px]" [routerLink]="id ? '../../' : '../'">
                 {{ "cancel" | translate }}
             </button>
-            <button type="button" class="btn btn-primary min-md:tw-min-w-[436px] tw-min-h-[50px] !tw-text-[18px]" (click)="updateRoutingDetails()">
+            <button type="button" class="btn btn-primary min-md:min-w-[436px] min-h-[50px] !text-[18px]" (click)="updateRoutingDetails()">
                 {{ "update" | translate }}
             </button>
         </div>

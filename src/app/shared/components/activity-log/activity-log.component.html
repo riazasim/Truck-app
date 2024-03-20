@@ -1,15 +1,15 @@
-<div class="tw-flex tw-justify-between">
-    <div class="tw-flex">
+<div class="flex justify-between">
+    <div class="flex">
         <div class="circle">
             <fa-icon *ngIf="icon" [icon]="icon" size="lg"></fa-icon>
         </div>
-        <div class="tw-ml-2">
-            <div class="tw-font-bold">Operation Type: {{shipmentLog?.operationType || '-'}}</div>
-            <div><span class="tw-font-bold">User</span> {{shipmentLog?.userFullName || '-'}}</div>
-            <div class="tw-max-w-[500px]"><span class="tw-font-bold">Details</span> {{shipmentLog?.message || '-'}}</div>
+        <div class="ml-2">
+            <div class="font-bold">Operation Type: {{shipmentLog?.operationType || '-'}}</div>
+            <div><span class="font-bold">User</span> {{shipmentLog?.userFullName || '-'}}</div>
+            <div class="max-w-[500px]"><span class="font-bold">Details</span> {{shipmentLog?.message || '-'}}</div>
         </div>
     </div>
-    <div class="tw-text-gray tw-italic">
+    <div class="text-gray italic">
         {{(shipmentLog?.createdAt | date : 'dd.MM.yyyy h:mm a') || '-'}}
     </div>
 </div>

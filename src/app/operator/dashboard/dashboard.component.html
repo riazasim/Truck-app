@@ -1,26 +1,26 @@
 <app-loader *ngIf="isLoading$ | async" [isContainer]="true" [fullScreen]="false"></app-loader>
-<div class="tw-flex-grow tw-flex tw-flex-col tw-gap-8" *ngIf="!(isLoading$ | async)">
-    <div class="tw-flex tw-justify-between sm:tw-justify-center md:tw-flex-row max-md:tw-flex-col">
+<div class="flex-grow flex flex-col gap-8" *ngIf="!(isLoading$ | async)">
+    <div class="flex justify-between sm:justify-center md:flex-row max-md:flex-col">
         <h3 class="heading-3">{{ "menu.dashboard" | translate }}</h3>
         <searchbar [minWidth]="500">
             <fa-icon icon="search" leftIcon></fa-icon>
-            <input input class="tw-rounded" type="text" placeholder="Search Client" />
+            <input input class="rounded" type="text" placeholder="Search Client" />
         </searchbar>
     </div>
-    <div class="tw-flex tw-flex-wrap tw-gap-8">
-        <div statistic-card-v2 dashSvg="assets/images/dashboard_routes.svg" class="tw-flex-grow slide-in-bottom"
+    <div class="flex flex-wrap gap-8">
+        <div statistic-card-v2 dashSvg="assets/images/dashboard_routes.svg" class="flex-grow slide-in-bottom"
             label="No. of routes" [numericValue]="dashboardData?.noOfPlanningRoutesCount" textColor="orange"
             colorStyle="orange"></div>
-        <div statistic-card-v2 dashSvg="assets/images/dashboard_tp.svg" class="tw-flex-grow slide-in-bottom"
+        <div statistic-card-v2 dashSvg="assets/images/dashboard_tp.svg" class="flex-grow slide-in-bottom"
             label="No. of touchpoints" [numericValue]="dashboardData?.noOfTouchPointsCount" textColor="#A32314"
             colorStyle="#A32314"></div>
-        <div statistic-card-v2 dashSvg="assets/images/dashboard_sid.svg" class="tw-flex-grow slide-in-bottom"
+        <div statistic-card-v2 dashSvg="assets/images/dashboard_sid.svg" class="flex-grow slide-in-bottom"
             label="No. of SID" [numericValue]="dashboardData?.noOfPlanningConvoySidsCount" textColor="#17A0B5"
             colorStyle="#17A0B5"></div>
     </div>
 
-    <!-- <div card class="tw-h-max-content tw-flex tw-gap-8"> -->
-    <!-- <div class="tw-flex-grow tw-h-[250px] min-md:tw-h-[250px]">
+    <!-- <div card class="h-max-content flex gap-8"> -->
+    <!-- <div class="flex-grow h-[250px] min-md:h-[250px]">
         <ngx-charts-line-chart
           [scheme]="lineChartDataColorScheme"
           [legend]=true
@@ -35,13 +35,13 @@
           [trimYAxisTicks]="true"
         ></ngx-charts-line-chart>
       </div> -->
-    <div class="tw-flex tw-w-full max-lg:tw-flex-col tw-gap-12">
-        <div class="tw-flex-1 tw-flex-grow tw-flex tw-flex-col tw-p-4 tw-bg-white tw-shadow-md">
+    <div class="flex w-full max-lg:flex-col gap-12">
+        <div class="flex-1 flex-grow flex flex-col p-4 bg-white shadow-md">
             <ngx-charts-pie-chart [view]="view" [scheme]="colorScheme" [results]="sidsByStatus" [legend]="true"
                 [legendPosition]="legendPosition" [doughnut]="false"
                 [legendTitle]="'sidsByStatus'"></ngx-charts-pie-chart>
         </div>
-        <div class="tw-flex-1 tw-flex-grow tw-flex tw-flex-col tw-p-4 tw-bg-white tw-shadow-md">
+        <div class="flex-1 flex-grow flex flex-col p-4 bg-white shadow-md">
             <ngx-charts-pie-chart [view]="view" [scheme]="colorScheme" [results]="timeBreakDown" [legend]="true"
                 [legendPosition]="legendPosition" [doughnut]="false"
                 [legendTitle]="'timeBreakDown'"></ngx-charts-pie-chart>

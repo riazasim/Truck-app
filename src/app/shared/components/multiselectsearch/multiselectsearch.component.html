@@ -54,7 +54,7 @@
           [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
           (matChipInputTokenEnd)="add($event)">
       </mat-chip-list>
-      <fa-icon *ngIf="rightIcon" [icon]="rightIcon" size="lg" class="icon tw-ml-auto tw-pr-3"></fa-icon>
+      <fa-icon *ngIf="rightIcon" [icon]="rightIcon" size="lg" class="icon ml-auto pr-3"></fa-icon>
     </div>
   </div>
   <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">

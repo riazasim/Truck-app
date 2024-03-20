@@ -2,7 +2,7 @@
   <a [routerLink]="logoRedirect" class="logo">
     <img *ngIf="logoSrc; else iconLogo" [src]="logoSrc" alt="logo" />
     <ng-template #iconLogo>
-      <fa-icon icon="truck-fast" size="3x" class="tw-text-primary"></fa-icon>
+      <fa-icon icon="truck-fast" size="3x" class="text-primary"></fa-icon>
     </ng-template>
   </a>
 
@@ -13,7 +13,7 @@
     </div>
     <div class="layout-wrapper" routerLink="../admin/scheduling">
       <fa-icon icon="calendar-range" size="2x"></fa-icon>
-      <span class="menu-item-label tw-text-gray">Scheduling</span>
+      <span class="menu-item-label text-gray">Scheduling</span>
     </div>
       <div class="layout-wrapper" routerLink="../admin/partners">
         <fa-icon icon="shield" size="2x"></fa-icon>
@@ -25,7 +25,7 @@
     </div>
     <div class="layout-wrapper" routerLink="../admin/list-management">
       <fa-icon icon="square-list" size="2x"></fa-icon>
-      <span class="menu-item-label tw-text-gray">List</span>
+      <span class="menu-item-label text-gray">List</span>
     </div>
   </div>
   <div class="lower-menu-items">

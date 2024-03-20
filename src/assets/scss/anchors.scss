@@ -1,14 +1,14 @@
 a {
   &[href] {
-    @apply tw-text-primary;
+    @apply text-primary;
     &.download {
       color: inherit;
     }
   }
   &:hover {
-    @apply tw-text-primary-light;
+    @apply text-primary-light;
   }
   &:visited {
-    @apply tw-text-primary-dark;
+    @apply text-primary-dark;
   }
 }

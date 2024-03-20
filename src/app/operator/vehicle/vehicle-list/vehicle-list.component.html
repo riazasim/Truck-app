@@ -3,19 +3,19 @@
       *ngIf="!isContained" [showSearchbar]="false" [showHeader]="true"
       buttonLabel="Add SID" tableTitle="Planning list" (buttonClicked)="redirectAddScheduling()">
     </material-panel-table>
-    <div table class="tw-w-full tw-shadow-lg tw-bg-white">
-        <ng-scrollbar track="all" class="tw-min-h-[calc(100vh-200px)]" 
+    <div table class="w-full shadow-lg bg-white">
+        <ng-scrollbar track="all" class="min-h-[calc(100vh-200px)]" 
         [appearance]="'standard'"
         (reachedBottom)="onBottomReached()" 
         [reachedOffset]="100">
-          <table class="material-table no-wrap tw-overflow-hidden" matSort
+          <table class="material-table no-wrap overflow-hidden" matSort
                  [class.loading]="(isLoading$ | async)"
                  [ngStyle]="{'maxHeight': dataSource.length ? 'calc(100vh - 190px)' : '', overflow: dataSource.length ? 'auto': ''}"
                  cdk-table [dataSource]="dataSource">
 
            <ng-container cdkColumnDef="sId">
-              <th cdk-header-cell *cdkHeaderCellDef scope="col" [ngClass]="{'tw-bg-white' : dataSource.length }">
-                  <section class="tw-flex tw-flex-col">
+              <th cdk-header-cell *cdkHeaderCellDef scope="col" [ngClass]="{'bg-white' : dataSource.length }">
+                  <section class="flex flex-col">
                       <div mat-sort-header="sId">Shipment ID</div>
                       <searchbar [minWidth]="150">
                         <fa-icon rightIcon icon="search"></fa-icon>
@@ -27,16 +27,16 @@
                   </section>
               </th>
               <td cdk-cell *cdkCellDef="let row">
-                <a class="tw-text-primary" href="javascript:void(0)" (click)="triggerOpenLogs.emit({ view: 'view', id: row.id, planning: row })">{{row.sId || '-'}}</a>
+                <a class="text-primary" href="javascript:void(0)" (click)="triggerOpenLogs.emit({ view: 'view', id: row.id, planning: row })">{{row.sId || '-'}}</a>
               </td>
-              <td cdk-footer-cell *cdkFooterCellDef [colSpan]="displayedColumns.length" class="tw-py-4 tw-font-bold tw-text-center">
+              <td cdk-footer-cell *cdkFooterCellDef [colSpan]="displayedColumns.length" class="py-4 font-bold text-center">
                 {{'messages.there-no-more-items' | translate}}
               </td>
             </ng-container>
 
             <ng-container cdkColumnDef="timeSlot">
-              <th cdk-header-cell *cdkHeaderCellDef scope="col" [ngClass]="{'tw-bg-white' : dataSource.length }">
-                  <section class="tw-flex tw-flex-col">
+              <th cdk-header-cell *cdkHeaderCellDef scope="col" [ngClass]="{'bg-white' : dataSource.length }">
+                  <section class="flex flex-col">
                       <div mat-sort-header="timeSlot">Timeslot</div>
                       <searchbar [minWidth]="150">
                         <fa-icon rightIcon icon="search"></fa-icon>
@@ -53,8 +53,8 @@
             </ng-container>
 
            <ng-container cdkColumnDef="truckLicensePlateFront">
-              <th cdk-header-cell *cdkHeaderCellDef scope="col" [ngClass]="{'tw-bg-white' : dataSource.length }">
-                  <section class="tw-flex tw-flex-col">
+              <th cdk-header-cell *cdkHeaderCellDef scope="col" [ngClass]="{'bg-white' : dataSource.length }">
+                  <section class="flex flex-col">
                       <div mat-sort-header="truckLicensePlateFront">Front License Plate</div>
                       <searchbar [minWidth]="150">
                         <fa-icon rightIcon icon="search"></fa-icon>
@@ -66,14 +66,14 @@
                   </section>
               </th>
               <td cdk-cell *cdkCellDef="let row">{{row.truckLicensePlateFront || '-'}}</td>
-              <td cdk-footer-cell *cdkFooterCellDef [colSpan]="displayedColumns.length" class="tw-py-4 tw-font-bold tw-text-center">
+              <td cdk-footer-cell *cdkFooterCellDef [colSpan]="displayedColumns.length" class="py-4 font-bold text-center">
                 <app-loader></app-loader>
               </td>
             </ng-container>
 
            <ng-container cdkColumnDef="truckLicensePlateBack">
-              <th cdk-header-cell *cdkHeaderCellDef scope="col" [ngClass]="{'tw-bg-white' : dataSource.length }">
-                  <section class="tw-flex tw-flex-col">
+              <th cdk-header-cell *cdkHeaderCellDef scope="col" [ngClass]="{'bg-white' : dataSource.length }">
+                  <section class="flex flex-col">
                       <div mat-sort-header="truckLicensePlateBack">Back License Plate</div>
                       <searchbar [minWidth]="150">
                         <fa-icon rightIcon icon="search"></fa-icon>
@@ -88,8 +88,8 @@
             </ng-container>
 
             <ng-container cdkColumnDef="goodsNoticeNr">
-              <th cdk-header-cell *cdkHeaderCellDef scope="col" [ngClass]="{'tw-bg-white' : dataSource.length }">
-                  <section class="tw-flex tw-flex-col">
+              <th cdk-header-cell *cdkHeaderCellDef scope="col" [ngClass]="{'bg-white' : dataSource.length }">
+                  <section class="flex flex-col">
                       <div mat-sort-header="goodsNoticeNr">{{'booking.goods-notice' | translate}}</div>
                       <searchbar [minWidth]="150">
                         <fa-icon rightIcon icon="search"></fa-icon>
@@ -106,8 +106,8 @@
             </ng-container>
 
             <ng-container cdkColumnDef="goodsBuyer">
-              <th cdk-header-cell *cdkHeaderCellDef scope="col" [ngClass]="{'tw-bg-white' : dataSource.length }">
-                  <section class="tw-flex tw-flex-col">
+              <th cdk-header-cell *cdkHeaderCellDef scope="col" [ngClass]="{'bg-white' : dataSource.length }">
+                  <section class="flex flex-col">
                       <div mat-sort-header="goodsBuyer">{{'booking.client' | translate}}</div>
                       <searchbar [minWidth]="150">
                         <fa-icon rightIcon icon="search"></fa-icon>
@@ -124,8 +124,8 @@
             </ng-container>
 
             <ng-container cdkColumnDef="goodsSupplier">
-              <th cdk-header-cell *cdkHeaderCellDef scope="col" [ngClass]="{'tw-bg-white' : dataSource.length }">
-                  <section class="tw-flex tw-flex-col">
+              <th cdk-header-cell *cdkHeaderCellDef scope="col" [ngClass]="{'bg-white' : dataSource.length }">
+                  <section class="flex flex-col">
                       <div mat-sort-header="goodsSupplier">{{'booking.supplier' | translate}}</div>
                       <searchbar [minWidth]="150">
                         <fa-icon rightIcon icon="search"></fa-icon>
@@ -142,8 +142,8 @@
             </ng-container>
 
             <ng-container cdkColumnDef="goodsName">
-              <th cdk-header-cell *cdkHeaderCellDef scope="col" [ngClass]="{'tw-bg-white' : dataSource.length }">
-                  <section class="tw-flex tw-flex-col">
+              <th cdk-header-cell *cdkHeaderCellDef scope="col" [ngClass]="{'bg-white' : dataSource.length }">
+                  <section class="flex flex-col">
                       <div mat-sort-header="goodsName">{{'booking.product' | translate}}</div>
                       <searchbar [minWidth]="150">
                         <fa-icon rightIcon icon="search"></fa-icon>
@@ -160,8 +160,8 @@
             </ng-container>
 
            <ng-container cdkColumnDef="location">
-              <th cdk-header-cell *cdkHeaderCellDef scope="col" [ngClass]="{'tw-bg-white' : dataSource.length }">
-                  <section class="tw-flex tw-flex-col">
+              <th cdk-header-cell *cdkHeaderCellDef scope="col" [ngClass]="{'bg-white' : dataSource.length }">
+                  <section class="flex flex-col">
                       <div mat-sort-header="location">Location</div>
                       <searchbar [minWidth]="150">
                         <fa-icon rightIcon icon="search"></fa-icon>
@@ -176,8 +176,8 @@
             </ng-container>
 
             <ng-container cdkColumnDef="dock">
-              <th cdk-header-cell *cdkHeaderCellDef scope="col" [ngClass]="{'tw-bg-white' : dataSource.length }">
-                  <section class="tw-flex tw-flex-col">
+              <th cdk-header-cell *cdkHeaderCellDef scope="col" [ngClass]="{'bg-white' : dataSource.length }">
+                  <section class="flex flex-col">
                     <div mat-sort-header="dock">Dock</div>
                     <searchbar [minWidth]="150">
                       <fa-icon rightIcon icon="search"></fa-icon>
@@ -192,8 +192,8 @@
             </ng-container>
 
             <ng-container cdkColumnDef="operation">
-              <th cdk-header-cell *cdkHeaderCellDef scope="col" [ngClass]="{'tw-bg-white' : dataSource.length }">
-                  <section class="tw-flex tw-flex-col">
+              <th cdk-header-cell *cdkHeaderCellDef scope="col" [ngClass]="{'bg-white' : dataSource.length }">
+                  <section class="flex flex-col">
                     <div mat-sort-header="operation">Operation</div>
                     <searchbar [minWidth]="150">
                       <fa-icon rightIcon icon="search"></fa-icon>
@@ -208,8 +208,8 @@
             </ng-container>
 
             <ng-container cdkColumnDef="driverName">
-              <th cdk-header-cell *cdkHeaderCellDef scope="col" [ngClass]="{'tw-bg-white' : dataSource.length }">
-                  <section class="tw-flex tw-flex-col">
+              <th cdk-header-cell *cdkHeaderCellDef scope="col" [ngClass]="{'bg-white' : dataSource.length }">
+                  <section class="flex flex-col">
                     <div mat-sort-header="driverName">Driver name</div>
                     <searchbar [minWidth]="150" [disabled]="true">
                       <fa-icon rightIcon icon="search"></fa-icon>
@@ -224,8 +224,8 @@
             </ng-container>
 
             <ng-container cdkColumnDef="createdBy">
-              <th cdk-header-cell *cdkHeaderCellDef scope="col" [ngClass]="{'tw-bg-white' : dataSource.length }">
-                  <section class="tw-flex tw-flex-col">
+              <th cdk-header-cell *cdkHeaderCellDef scope="col" [ngClass]="{'bg-white' : dataSource.length }">
+                  <section class="flex flex-col">
                     <div mat-sort-header="createdBy">Created by</div>
                     <searchbar [minWidth]="150" [disabled]="true">
                       <fa-icon rightIcon icon="search"></fa-icon>
@@ -239,8 +239,8 @@
             </ng-container>
 
             <ng-container cdkColumnDef="clientInstruction">
-              <th cdk-header-cell *cdkHeaderCellDef scope="col" [ngClass]="{'tw-bg-white' : dataSource.length }">
-                  <section class="tw-flex tw-flex-col">
+              <th cdk-header-cell *cdkHeaderCellDef scope="col" [ngClass]="{'bg-white' : dataSource.length }">
+                  <section class="flex flex-col">
                     <div mat-sort-header="clientInstruction">Comments</div>
                     <searchbar [minWidth]="150" [disabled]="true">
                       <fa-icon rightIcon icon="search"></fa-icon>
@@ -248,14 +248,14 @@
                   </searchbar>
                 </section>
               </th>
-              <td cdk-cell *cdkCellDef="let row" class="tw-whitespace-break-spaces">
+              <td cdk-cell *cdkCellDef="let row" class="whitespace-break-spaces">
                   {{row.clientInstruction }}
               </td>
             </ng-container>
 
             <ng-container cdkColumnDef="statusListStatus">
-              <th cdk-header-cell *cdkHeaderCellDef scope="col" [ngClass]="{'tw-bg-white' : dataSource.length }">
-                  <section class="tw-flex tw-flex-col">
+              <th cdk-header-cell *cdkHeaderCellDef scope="col" [ngClass]="{'bg-white' : dataSource.length }">
+                  <section class="flex flex-col">
                     <div mat-sort-header="statusListStatus">Status</div>
                     <searchbar [minWidth]="150">
                       <fa-icon rightIcon icon="search"></fa-icon>
@@ -278,16 +278,16 @@
             </ng-container>
 
             <ng-container cdkColumnDef="actions">
-              <th cdk-header-cell *cdkHeaderCellDef scope="col" [ngClass]="{'tw-bg-white' : dataSource.length }">
-                <section class="tw-flex tw-flex-col">
+              <th cdk-header-cell *cdkHeaderCellDef scope="col" [ngClass]="{'bg-white' : dataSource.length }">
+                <section class="flex flex-col">
                   <div>Actions</div>
                   <button type="button" class="btn btn-outline-primary">Mass update</button>
                 </section>
               </th>
-              <td cdk-cell *cdkCellDef="let row" class="tw-flex tw-gap-4">
-                <fa-icon matTooltipClass="tw-drop-shadow-lg" matTooltipPosition="above" [matTooltip]="'button.plan' | translate" (click)="triggerOpenEdit.emit({ view: 'edit', id: row.id })" icon="calendar-days" class="tw-text-primary tw-cursor-pointer" size="lg"></fa-icon>
-                <fa-icon matTooltipClass="tw-drop-shadow-lg" matTooltipPosition="above" [matTooltip]="'button.edit' | translate" icon="eye" class="tw-text-primary tw-cursor-pointer" size="lg" [routerLink]="['../edit', row.id]"></fa-icon>
-                <fa-icon matTooltipClass="tw-drop-shadow-lg" matTooltipPosition="above" [matTooltip]="'button.delete' | translate" icon="trash-can" class="tw-text-primary tw-cursor-pointer" size="lg" (click)="triggerDeletion.emit(row)"></fa-icon>
+              <td cdk-cell *cdkCellDef="let row" class="flex gap-4">
+                <fa-icon matTooltipClass="drop-shadow-lg" matTooltipPosition="above" [matTooltip]="'button.plan' | translate" (click)="triggerOpenEdit.emit({ view: 'edit', id: row.id })" icon="calendar-days" class="text-primary cursor-pointer" size="lg"></fa-icon>
+                <fa-icon matTooltipClass="drop-shadow-lg" matTooltipPosition="above" [matTooltip]="'button.edit' | translate" icon="eye" class="text-primary cursor-pointer" size="lg" [routerLink]="['../edit', row.id]"></fa-icon>
+                <fa-icon matTooltipClass="drop-shadow-lg" matTooltipPosition="above" [matTooltip]="'button.delete' | translate" icon="trash-can" class="text-primary cursor-pointer" size="lg" (click)="triggerDeletion.emit(row)"></fa-icon>
               </td>
             </ng-container>
 
@@ -304,7 +304,7 @@
           </table>
         </ng-scrollbar>
 
-        <!-- <mat-paginator [class.!tw-hidden]="dataSource.data.length === 0" class="paginator tw-rounded-b-[10px]"
+        <!-- <mat-paginator [class.!hidden]="dataSource.data.length === 0" class="paginator rounded-b-[10px]"
                        hidePageSize
                        aria-label="Select page" pageSize="10">
         </mat-paginator> -->

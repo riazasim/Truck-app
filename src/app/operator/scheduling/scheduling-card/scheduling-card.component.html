@@ -1,55 +1,55 @@
-<div class="tw-rounded-lg tw-mb-2 tw-overflow-hidden tw-shadow-lg tw-bg-white tw-p-5 tw-min-h-[203px] tw-border-l-[8px] tw-border-indigo-500 tw-cursor-pointer tw-items-center tw-flex tw-justify-center"
-    [ngClass]="{ 'tw-max-w-[400px]': !isMaxWidth, 'tw-w-full': isMaxWidth  }">
+<div class="rounded-lg mb-2 overflow-hidden shadow-lg bg-white p-5 min-h-[203px] border-l-[8px] border-indigo-500 cursor-pointer items-center flex justify-center"
+    [ngClass]="{ 'max-w-[400px]': !isMaxWidth, 'w-full': isMaxWidth  }">
     <app-loader [isContainer]="false" *ngIf="(isloading | async)" [fullScreen]="false"></app-loader>
 
-    <div class="tw-grid tw-grid-rows-9 tw-gap-2 tw-h-full tw-w-full" *ngIf="!(isloading | async)">
-        <div class="tw-grid tw-grid-cols-3 tw-gap-2 tw-border-b tw-mb-2 tw-border-lightgray">
-            <div class="tw-col-span-2">
+    <div class="grid grid-rows-9 gap-2 h-full w-full" *ngIf="!(isloading | async)">
+        <div class="grid grid-cols-3 gap-2 border-b mb-2 border-lightgray">
+            <div class="col-span-2">
                 <!-- <h5
-                    matTooltipClass="tw-drop-shadow-lg"
+                    matTooltipClass="drop-shadow-lg"
                     matTooltipPosition="above"
                     [matTooltip]="'booking.drag-drop-to-right' | translate"
-                    class="heading-5 tw-text-primary tw-font-bold"
+                    class="heading-5 text-primary font-bold"
                     (click)="setComponentName('view')"
                 >
                     SID - {{ planning.id }}
                 </h5> -->
-                <h5 matTooltipClass="tw-drop-shadow-lg" matTooltipPosition="above"
+                <h5 matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
                     [matTooltip]="'booking.drag-drop-to-right' | translate"
-                    class="heading-5 tw-text-primary tw-font-bold">
+                    class="heading-5 text-primary font-bold">
                     SID - {{ planning.id }}
                 </h5>
             </div>
-            <div class="tw-flex tw-gap-2 tw-justify-end">
-                <fa-icon matTooltipClass="tw-drop-shadow-lg" matTooltipPosition="above" [matTooltip]="'Send message'"
+            <div class="flex gap-2 justify-end">
+                <fa-icon matTooltipClass="drop-shadow-lg" matTooltipPosition="above" [matTooltip]="'Send message'"
                     icon="message-lines" size="lg" (click)="setComponentName('mess')"></fa-icon>
                 <!-- <fa-icon
-                    matTooltipClass="tw-drop-shadow-lg"
+                    matTooltipClass="drop-shadow-lg"
                     matTooltipPosition="above"
                     [matTooltip]="'button.edit' | translate"
                     icon="eye"
                     size="lg"
                     [routerLink]="['../', 'edit', planning.id]"
                 ></fa-icon> -->
-                <fa-icon matTooltipClass="tw-drop-shadow-lg" matTooltipPosition="above" [matTooltip]="'Edit'" icon="eye"
+                <fa-icon matTooltipClass="drop-shadow-lg" matTooltipPosition="above" [matTooltip]="'Edit'" icon="eye"
                     size="lg" [routerLink]="['../', 'edit', planning.id]"></fa-icon>
-                <fa-icon matTooltipClass="tw-drop-shadow-lg" matTooltipPosition="above" [matTooltip]="'Plan'"
+                <fa-icon matTooltipClass="drop-shadow-lg" matTooltipPosition="above" [matTooltip]="'Plan'"
                     icon="notes" size="lg" (click)="setComponentName('copy')"></fa-icon>
-                <fa-icon matTooltipClass="tw-drop-shadow-lg" matTooltipPosition="above"
+                <fa-icon matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
                     [matTooltip]="'button.delete' | translate" icon="trash" size="lg"
                     (click)="openDeleteModal(planning.id)"></fa-icon>
             </div>
         </div>
-        <div class="tw-grid tw-grid-cols-3 tw-gap-2">
-            <div class="tw-col-span-3 heading-6">
-                <div class="tw-flex tw-justify-between">
+        <div class="grid grid-cols-3 gap-2">
+            <div class="col-span-3 heading-6">
+                <div class="flex justify-between">
                     <div>
                         <p>
-                            <span class="tw-font-bold">Vessel Id:</span>
-                            <!-- <span class="tw-pl-2">{{
+                            <span class="font-bold">Vessel Id:</span>
+                            <!-- <span class="pl-2">{{
                                 planning.dockName || "-"
                             }}</span> -->
-                            <span class="tw-pl-2">{{
+                            <span class="pl-2">{{
                                 "-"
                                 }}</span>
                         </p>
@@ -65,12 +65,12 @@
                 </div>
             </div>
         </div>
-        <div class="tw-flex tw-justify-between">
+        <div class="flex justify-between">
             <div>
-                <span class="tw-font-bold">Berth:</span>
-                <span class="tw-pl-2">{{ "-" }}</span>
+                <span class="font-bold">Berth:</span>
+                <span class="pl-2">{{ "-" }}</span>
             </div>
-            <div class="tw-pl-2 tw-flex tw-justify-around tw-gap-2">
+            <div class="pl-2 flex justify-around gap-2">
                 <!-- <ng-container
                     *ngIf="planning.timeSlot && planning.status === 'Created'"
                 >
@@ -102,17 +102,17 @@
                                 item: { data: planning }
                             })
                         "
-                        class="tw-text-green-500"
+                        class="text-green-500"
                         icon="check"
                         size="lg"
                     ></fa-icon>
                 </ng-container> -->
                 <ng-container>
                     <span (click)="triggerCheckIn.emit(planning)"><b>Transfer</b></span>
-                    <span><img src="assets/images/mingcute_transfer.svg" alt="icon" class="tw-cursor-pointer"></span>
+                    <span><img src="assets/images/mingcute_transfer.svg" alt="icon" class="cursor-pointer"></span>
                     <!-- <fa-icon
                         (click)="triggerCheckIn.emit(planning)"
-                        class="tw-text-sidCheckIn tw--rotate-90 tw-origin-[8px_11px]"
+                        class="text-sidCheckIn -rotate-90 origin-[8px_11px]"
                         icon="arrow-down-to-bracket"
                         size="lg"
                     ></fa-icon> -->
@@ -123,7 +123,7 @@
                     >
                     <fa-icon
                         (click)="triggerCheckOut.emit(planning)"
-                        class="tw-text-sidCheckOut tw-rotate-90 tw-origin-[8px_11px]"
+                        class="text-sidCheckOut rotate-90 origin-[8px_11px]"
                         icon="arrow-down-to-bracket"
                         size="lg"
                     ></fa-icon>
@@ -137,18 +137,18 @@
             </div>
         </div>
         <div>
-            <span class="tw-font-bold">Numar aprobare manevra:</span>
-            <span class="tw-pl-2">{{
+            <span class="font-bold">Numar aprobare manevra:</span>
+            <span class="pl-2">{{
                 "-"
                 }}</span>
         </div>
 
         <div>
-            <span class="tw-font-bold">Products:</span>
-            <span class="tw-pl-2">{{
+            <span class="font-bold">Products:</span>
+            <span class="pl-2">{{
                 "-"
                 }}</span>
-            <!-- <span class="tw-pl-2">
+            <!-- <span class="pl-2">
                 <span *ngIf="planning.products && planning.goodsName"
                     >{{ planning.products }}, {{ planning.goodsName }}</span
                 >
@@ -162,24 +162,24 @@
             </span> -->
         </div>
         <div>
-            <span class="tw-font-bold">ETA:</span>
-            <span class="tw-pl-2">{{ planning.estimatedTimeArrival || "-" }}</span>
+            <span class="font-bold">ETA:</span>
+            <span class="pl-2">{{ planning.estimatedTimeArrival || "-" }}</span>
         </div>
         <div>
-            <span class="tw-font-bold">Created by:</span>
-            <span class="tw-pl-2">{{ planning.relativeTimeArrival || "-" }}</span>
+            <span class="font-bold">Created by:</span>
+            <span class="pl-2">{{ planning.relativeTimeArrival || "-" }}</span>
         </div>
         <!-- <scheduling-show-client-supplier-card-labels
             [isUmexOrganization]="isUmexOrganization"
             [planning]="planning"
         ></scheduling-show-client-supplier-card-labels> -->
         <div>
-            <span class="tw-font-bold">Delay:</span>
-            <span class="tw-pl-2">{{ "-" }}</span>
+            <span class="font-bold">Delay:</span>
+            <span class="pl-2">{{ "-" }}</span>
         </div>
         <div>
-            <span class="tw-font-bold">Coordinates:</span>
-            <span class="tw-pl-2">{{ "-" }}</span>
+            <span class="font-bold">Coordinates:</span>
+            <span class="pl-2">{{ "-" }}</span>
         </div>
     </div>
 </div>

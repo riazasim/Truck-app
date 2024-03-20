@@ -1,14 +1,14 @@
 <section *ngIf="(isLoading$ | async) || originalSource.length; else empty">
-    <material-panel-table Class="!tw-rounded-xl tw-shadow-lg tw-border tw-border-transparent" [showSearchbar]="false" [showHeader]="true" buttonLabel="Add User" tableTitle="Users list" (buttonClicked)="redirectAddUser()">
-    <div table class="tw-w-full tw-shadow-lg">
+    <material-panel-table Class="!rounded-xl shadow-lg border border-transparent" [showSearchbar]="false" [showHeader]="true" buttonLabel="Add User" tableTitle="Users list" (buttonClicked)="redirectAddUser()">
+    <div table class="w-full shadow-lg">
         <ng-scrollbar track="horizontal" [autoHeightDisabled]="false">
-          <table class="material-table no-wrap tw-overflow-hidden" matSort (matSortChange)="sortData($event)"
+          <table class="material-table no-wrap overflow-hidden" matSort (matSortChange)="sortData($event)"
                  [class.loading]="(isLoading$ | async)" aria-label="Usage Table"
                  cdk-table [dataSource]="dataSource">
 
             <ng-container cdkColumnDef="fullName">
               <th cdk-header-cell *cdkHeaderCellDef scope="col">
-                  <section class="tw-flex tw-flex-col">
+                  <section class="flex flex-col">
                       <div mat-sort-header="fullName">User Name</div>
                       <searchbar>
                         <fa-icon icon="search"></fa-icon>
@@ -24,7 +24,7 @@
 
             <ng-container cdkColumnDef="status">
               <th cdk-header-cell *cdkHeaderCellDef scope="col">
-                  <section class="tw-flex tw-flex-col">
+                  <section class="flex flex-col">
                     <div mat-sort-header="status">Status</div>
                     <select (change)="filterByStatus($event)" filter-select>
                         <option value="" selected>Select</option>
@@ -39,7 +39,7 @@
 
             <ng-container cdkColumnDef="userRole">
               <th cdk-header-cell *cdkHeaderCellDef scope="col">
-                  <section class="tw-flex tw-flex-col">
+                  <section class="flex flex-col">
                     <div mat-sort-header="userRole">User Role</div>
                   <select (change)="filterByRole($event)" filter-select>
                     <option value="" selected>Select</option>
@@ -58,7 +58,7 @@
 
             <ng-container cdkColumnDef="phone">
               <th cdk-header-cell *cdkHeaderCellDef scope="col">
-                  <section class="tw-flex tw-flex-col" (keyup)="applyFilter($event.target, 'phone')">
+                  <section class="flex flex-col" (keyup)="applyFilter($event.target, 'phone')">
                     <div mat-sort-header="phone">Phone</div>
                     <searchbar>
                       <fa-icon icon="search"></fa-icon>
@@ -74,7 +74,7 @@
 
             <ng-container cdkColumnDef="email">
               <th cdk-header-cell *cdkHeaderCellDef scope="col">
-                  <section class="tw-flex tw-flex-col">
+                  <section class="flex flex-col">
                     <div mat-sort-header="email">Email</div>
                     <searchbar>
                       <fa-icon icon="search"></fa-icon>
@@ -90,22 +90,22 @@
 
             <ng-container cdkColumnDef="actions">
               <th cdk-header-cell *cdkHeaderCellDef scope="col">
-                <section class="tw-flex tw-flex-col">
+                <section class="flex flex-col">
                   <div>Actions</div>
                   <button type="button" class="btn btn-outline-primary">Mass update</button>
                 </section>
               </th>
-              <td cdk-cell *cdkCellDef="let row" class="tw-flex tw-gap-4">
+              <td cdk-cell *cdkCellDef="let row" class="flex gap-4">
 
-<!--                  <span class="hover:tw-hidden" (mouseleave)="icon2.classList.add('tw-hidden');icon1.classList.remove('tw-hidden')" #icon2>-->
-<!--                  <fa-icon icon="user-lock" class="tw-text-primary tw-cursor-pointer" size="lg"></fa-icon>-->
+<!--                  <span class="hover:hidden" (mouseleave)="icon2.classList.add('hidden');icon1.classList.remove('hidden')" #icon2>-->
+<!--                  <fa-icon icon="user-lock" class="text-primary cursor-pointer" size="lg"></fa-icon>-->
 <!--                </span>-->
-<!--                <span #icon1 (mouseenter)="icon1.classList.add('tw-hidden');icon2.classList.remove('tw-hidden')">-->
-<!--                  <fa-icon icon="user-unlock" class="tw-text-primary tw-cursor-pointer" size="lg"></fa-icon>-->
+<!--                <span #icon1 (mouseenter)="icon1.classList.add('hidden');icon2.classList.remove('hidden')">-->
+<!--                  <fa-icon icon="user-unlock" class="text-primary cursor-pointer" size="lg"></fa-icon>-->
 <!--                </span>-->
 
-                <fa-icon icon="eye" class="tw-text-primary tw-cursor-pointer" size="lg" [routerLink]="['../edit', row.user.id]"></fa-icon>
-                <fa-icon icon="trash-can" class="tw-text-primary tw-cursor-pointer" size="lg" (click)="openDeleteModal(row.user.id)" *ngIf="data?.user?.userRole !== 'admin'"></fa-icon>
+                <fa-icon icon="eye" class="text-primary cursor-pointer" size="lg" [routerLink]="['../edit', row.user.id]"></fa-icon>
+                <fa-icon icon="trash-can" class="text-primary cursor-pointer" size="lg" (click)="openDeleteModal(row.user.id)" *ngIf="data?.user?.userRole !== 'admin'"></fa-icon>
               </td>
             </ng-container>
 
@@ -126,7 +126,7 @@
           </table>
         </ng-scrollbar>
 
-        <mat-paginator [class.!tw-hidden]="dataSource.length === 0"
+        <mat-paginator [class.!hidden]="dataSource.length === 0"
                        [pageSizeOptions]="pageSizeOptions"
                        [length]="length"
                        [pageIndex]="pageIndex"
@@ -135,7 +135,7 @@
                        showFirstLastButtons>
         </mat-paginator>
 
-<!--                <mat-paginator [class.!tw-hidden]="dataSource.length === 0"   class="paginator tw-rounded-b-[10px]"-->
+<!--                <mat-paginator [class.!hidden]="dataSource.length === 0"   class="paginator rounded-b-[10px]"-->
 <!--                               hidePageSize-->
 <!--                               aria-label="Select page" pageSize="10">-->
 <!--                </mat-paginator>-->
@@ -147,7 +147,7 @@
 <!--            -->
 <!--        </mat-paginator>-->
 
-<!--        <mat-paginator [class.!tw-hidden]="dataSource.length === 0"   class="paginator tw-rounded-b-[10px]"-->
+<!--        <mat-paginator [class.!hidden]="dataSource.length === 0"   class="paginator rounded-b-[10px]"-->
 <!--                       hidePageSize-->
 <!--                       aria-label="Select page" pageSize="10">-->
 <!--        </mat-paginator>-->

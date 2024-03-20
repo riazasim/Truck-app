@@ -3,7 +3,7 @@
     <div>
       <app-loader *ngIf="(isLoading$ | async)" [isContainer]="true" [fullScreen]="false"></app-loader>
       <form *ngIf="!(isLoading$ | async)" [formGroup]="messageForm">
-        <div class="tw-flex tw-flex-col tw-mx-auto tw-max-w-[440px] tw-gap-5">
+        <div class="flex flex-col mx-auto max-w-[440px] gap-5">
           <div>
             <div iconic-input-wrapper leftIcon="message-lines">
               <input inputRef type="text" placeholder="Name" formControlName="name">
@@ -16,12 +16,12 @@
           </div>
           <div>
             <label>Requires response</label>
-            <div class="tw-columns-2">
-              <div class="tw-flex tw-items-center tw-gap-2">
+            <div class="columns-2">
+              <div class="flex items-center gap-2">
                 <label>Yes</label>
                 <input type="radio" inputRef name="requiresResponseBit" [value]="true" formControlName="requiresResponseBit">
               </div>
-              <div class="tw-flex tw-items-center tw-gap-2">
+              <div class="flex items-center gap-2">
                 <label>No</label>
                 <input type="radio" inputRef name="requiresResponseBit" [value]="false" formControlName="requiresResponseBit">
               </div>

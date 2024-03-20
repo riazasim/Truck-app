@@ -1,11 +1,11 @@
 <header class="layout-wrapper">
-  <app-loader class="tw-m-auto tw-flex-grow" *ngIf="(isLoading$ | async)" [fullScreen]="false"></app-loader>
-  <!-- <div *ngIf="(companyName$ | async) && !(isLoading$ | async)" class="tw-flex tw-flex-grow tw-justify-center tw-items-center tw-gap-2">
-    <fa-icon (click)="openChangeLocationModal()" icon="location-dot" class="tw-text-primary tw-cursor-pointer"></fa-icon>
-    <span class="tw-text-3xl tw-font-bold">{{(companyName$ | async)}}</span>
+  <app-loader class="m-auto flex-grow" *ngIf="(isLoading$ | async)" [fullScreen]="false"></app-loader>
+  <!-- <div *ngIf="(companyName$ | async) && !(isLoading$ | async)" class="flex flex-grow justify-center items-center gap-2">
+    <fa-icon (click)="openChangeLocationModal()" icon="location-dot" class="text-primary cursor-pointer"></fa-icon>
+    <span class="text-3xl font-bold">{{(companyName$ | async)}}</span>
   </div> -->
-  <div class="tw-flex tw-flex-grow tw-justify-center tw-items-center tw-gap-2" *ngIf="!(companyName$ | async)">
-    <span class="tw-text-3xl tw-font-bold">Transport App</span>
+  <div class="flex flex-grow justify-center items-center gap-2" *ngIf="!(companyName$ | async)">
+    <span class="text-3xl font-bold">Transport App</span>
   </div>
   <div class="logo-container" *ngIf="logoSrc" [routerLink]="logoRedirect" [relativeTo]="activatedRoute.parent">
     <img [src]="logoSrc" alt="logo">
@@ -15,10 +15,10 @@
     <h2 class="heading-4 current-location">
       <span [matMenuTriggerFor]="menu" #trigger="matMenuTrigger"
       [ngClass]="{'fi-gb': (language$ | async) === 'en', 'fi-ro': (language$ | async) === 'ro'}"
-      class="fi tw-cursor-pointer"></span>
-      <mat-menu #menu="matMenu" class="!tw-bg-white">
-        <menu mat-menu-item (click)="localizeService.changeLanguage('ro')"><div class="tw-flex tw-gap-3"><span class="fi fi-ro"></span> Română</div></menu>
-        <menu mat-menu-item (click)="localizeService.changeLanguage('en')"><div class="tw-flex tw-gap-3"><span class="fi fi-gb"></span> English</div></menu>
+      class="fi cursor-pointer"></span>
+      <mat-menu #menu="matMenu" class="!bg-white">
+        <menu mat-menu-item (click)="localizeService.changeLanguage('ro')"><div class="flex gap-3"><span class="fi fi-ro"></span> Română</div></menu>
+        <menu mat-menu-item (click)="localizeService.changeLanguage('en')"><div class="flex gap-3"><span class="fi fi-gb"></span> English</div></menu>
       </mat-menu>
     </h2>
   </div>

@@ -9,7 +9,7 @@
           </fa-icon>
           <div *ngIf="notificationsCount !== null && notificationsCount > 0"
                [matBadge]="notificationsCount" matBadgeColor="warn"
-               class="tw-h-full tw-top-0 min-md:tw-top-[-10px] tw-right-[5px]">
+               class="h-full top-0 min-md:top-[-10px] right-[5px]">
           </div>
           <span class="menu-label">Notificări</span>
         </li>
@@ -31,8 +31,8 @@
     </navigation-menu>
         
     
-      <div main class="tw-p-4 min-md:tw-px-10 min-md:tw-pb-8 tw-min-h-full tw-flex tw-flex-col">
-        <router-outlet class="tw-hidden"></router-outlet>
+      <div main class="p-4 min-md:px-10 min-md:pb-8 min-h-full flex flex-col">
+        <router-outlet class="hidden"></router-outlet>
       </div>
     </div>
     

@@ -1,5 +1,5 @@
 <swiper [pagination]="{ dynamicBullets: true }" [navigation]="{disabledClass:'hide-swiper-btn'}" [centeredSlides]="true"
-  [keyboard]="{ enabled: true }" class="tw-h-full">
+  [keyboard]="{ enabled: true }" class="h-full">
   <ng-template swiperSlide *ngFor="let slide of slides | async">
     <onboarding-slide [slideContent]="slide"></onboarding-slide>
   </ng-template>

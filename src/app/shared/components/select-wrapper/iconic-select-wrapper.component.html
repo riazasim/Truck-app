@@ -1,7 +1,7 @@
 <div [class.valid]="isValid === true && isTouched" [class.invalid]="isValid === false && isTouched"
      [class.disabled]="isDisabled" class="iconic-layout-wrapper">
   <div class="input-container">
-    <img *ngIf="leftSvg" [src]="leftSvg" alt="icon" class="tw-mx-[10px] tw-max-h-5 tw-max-w-5">
+    <img *ngIf="leftSvg" [src]="leftSvg" alt="icon" class="mx-[10px] max-h-5 max-w-5">
     <fa-icon *ngIf="leftIcon" [icon]="leftIcon" size="lg" class="icon"></fa-icon>
     <div class="select-container">
       <ng-content select="select[inputRef]"></ng-content>

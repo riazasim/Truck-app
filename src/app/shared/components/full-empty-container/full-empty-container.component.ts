@@ -13,7 +13,7 @@ export class FullEmptyContainerComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     if (this.isCentered) {
-      this.classes.push('tw-justify-center tw-items-center')
+      this.classes.push('justify-center items-center')
     }
   }
 }

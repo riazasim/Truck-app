@@ -1,14 +1,14 @@
 <section *ngIf="(isLoading$ | async) || originalSource.length; else empty">
   <material-panel-table [showSearchbar]="false" [showHeader]="true" buttonLabel="Add Ship" tableTitle="Ships list" (buttonClicked)="redirectAddVehicle()">
-    <div table class="tw-w-full tw-shadow-lg">
+    <div table class="w-full shadow-lg">
       <ng-scrollbar track="horizontal" [autoHeightDisabled]="false">
-        <table class="material-table no-wrap tw-overflow-hidden" matSort (matSortChange)="sortData($event)"
+        <table class="material-table no-wrap overflow-hidden" matSort (matSortChange)="sortData($event)"
                [class.loading]="(isLoading$ | async)" aria-label="Usage Table"
                cdk-table [dataSource]="dataSource">
 
           <ng-container cdkColumnDef="name">
             <th cdk-header-cell *cdkHeaderCellDef scope="col">
-              <section class="tw-flex tw-flex-col">
+              <section class="flex flex-col">
                 <div mat-sort-header="name">Ship name</div>
                 <searchbar>
                   <fa-icon icon="search"></fa-icon>
@@ -23,7 +23,7 @@
           </ng-container>
           <ng-container cdkColumnDef="registrationNo">
             <th cdk-header-cell *cdkHeaderCellDef scope="col">
-              <section class="tw-flex tw-flex-col">
+              <section class="flex flex-col">
                 <div mat-sort-header="registrationNo">Ship reg-no</div>
                 <searchbar>
                   <fa-icon icon="search"></fa-icon>
@@ -39,7 +39,7 @@
 
           <ng-container cdkColumnDef="ais">
             <th cdk-header-cell *cdkHeaderCellDef scope="col">
-              <section class="tw-flex tw-flex-col">
+              <section class="flex flex-col">
                 <div mat-sort-header="ais">AIS</div>
                 <searchbar>
                   <fa-icon icon="search"></fa-icon>
@@ -54,7 +54,7 @@
           </ng-container>
           <ng-container cdkColumnDef="dock">
             <th cdk-header-cell *cdkHeaderCellDef scope="col">
-              <section class="tw-flex tw-flex-col">
+              <section class="flex flex-col">
                 <div mat-sort-header="dock">Dock</div>
                 <searchbar>
                   <fa-icon icon="search"></fa-icon>
@@ -69,7 +69,7 @@
           </ng-container>
           <ng-container cdkColumnDef="length">
             <th cdk-header-cell *cdkHeaderCellDef scope="col">
-              <section class="tw-flex tw-flex-col">
+              <section class="flex flex-col">
                 <div mat-sort-header="length">Length (m)*</div>
                 <searchbar>
                   <fa-icon icon="search"></fa-icon>
@@ -84,7 +84,7 @@
           </ng-container>
           <ng-container cdkColumnDef="width">
             <th cdk-header-cell *cdkHeaderCellDef scope="col">
-              <section class="tw-flex tw-flex-col">
+              <section class="flex flex-col">
                 <div mat-sort-header="width">Width (m)*</div>
                 <searchbar>
                   <fa-icon icon="search"></fa-icon>
@@ -99,7 +99,7 @@
           </ng-container>
           <ng-container cdkColumnDef="maxDraft">
             <th cdk-header-cell *cdkHeaderCellDef scope="col">
-              <section class="tw-flex tw-flex-col">
+              <section class="flex flex-col">
                 <div mat-sort-header="maxDraft">Max draft (m)*</div>
                 <searchbar>
                   <fa-icon icon="search"></fa-icon>
@@ -114,7 +114,7 @@
           </ng-container>
           <ng-container cdkColumnDef="aerialGauge">
             <th cdk-header-cell *cdkHeaderCellDef scope="col">
-              <section class="tw-flex tw-flex-col">
+              <section class="flex flex-col">
                 <div mat-sort-header="aerialGauge">Aerial gauge (m)*</div>
                 <searchbar>
                   <fa-icon icon="search"></fa-icon>
@@ -129,7 +129,7 @@
           </ng-container>
           <ng-container cdkColumnDef="maxCapacity">
             <th cdk-header-cell *cdkHeaderCellDef scope="col">
-              <section class="tw-flex tw-flex-col">
+              <section class="flex flex-col">
                 <div mat-sort-header="maxCapacity">Capacity max (m)*</div>
                 <searchbar>
                   <fa-icon icon="search"></fa-icon>
@@ -145,14 +145,14 @@
 
           <ng-container cdkColumnDef="actions">
             <th cdk-header-cell *cdkHeaderCellDef scope="col">
-              <section class="tw-flex tw-flex-col">
+              <section class="flex flex-col">
                 <div>Actions</div>
                 <button type="button" class="btn btn-outline-primary">Mass update</button>
               </section>
             </th>
-            <td cdk-cell *cdkCellDef="let row" class="tw-flex tw-gap-4">
-              <fa-icon icon="eye" class="tw-text-primary tw-cursor-pointer" size="lg" [routerLink]="['../edit', row.id]"></fa-icon>
-              <fa-icon icon="trash-can" class="tw-text-primary tw-cursor-pointer" size="lg" (click)="openDeleteModal(row.id)"></fa-icon>
+            <td cdk-cell *cdkCellDef="let row" class="flex gap-4">
+              <fa-icon icon="eye" class="text-primary cursor-pointer" size="lg" [routerLink]="['../edit', row.id]"></fa-icon>
+              <fa-icon icon="trash-can" class="text-primary cursor-pointer" size="lg" (click)="openDeleteModal(row.id)"></fa-icon>
             </td>
           </ng-container>
 
@@ -174,7 +174,7 @@
         </table>
       </ng-scrollbar>
 
-              <mat-paginator [class.!tw-hidden]="dataSource.length === 0"
+              <mat-paginator [class.!hidden]="dataSource.length === 0"
                              [pageSizeOptions]="pageSizeOptions"
                              [length]="length"
                              [pageIndex]="pageIndex"

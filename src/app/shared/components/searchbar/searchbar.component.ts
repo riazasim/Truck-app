@@ -53,7 +53,7 @@ export class SearchbarComponent implements OnInit {
       this.searchStyle['borderRadius'] = `${this.borderRadius}`;
     }
 
-    if (this.maxWidth) this.classes = 'tw-mx-auto';
+    if (this.maxWidth) this.classes = 'mx-auto';
     if (!this.maxWidth) this.classes = '';
   }
 

@@ -13,7 +13,7 @@ export class CardComponent extends ShadowDirective {
 
   @HostBinding('class')
   private get classList(): string {
-    return `tw-rounded-lg tw-p-4 tw-bg-white tw-relative tw-overflow-hidden ${CardShadows[this.shadow]}`;
+    return `rounded-lg p-4 bg-white relative overflow-hidden ${CardShadows[this.shadow]}`;
   }
 }
 

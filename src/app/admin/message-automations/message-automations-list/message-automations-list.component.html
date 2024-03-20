@@ -1,8 +1,8 @@
 <section *ngIf="dataSource.length; else empty">
     <material-panel-table [showSearchbar]="false" [showButton]="false" [showHeader]="true" tableTitle="Add message - automation trigger">
-    <div table class="tw-w-full tw-shadow-lg">
+    <div table class="w-full shadow-lg">
         <ng-scrollbar track="horizontal" [autoHeightDisabled]="false">
-          <table class="material-table no-wrap tw-overflow-hidden" matSort
+          <table class="material-table no-wrap overflow-hidden" matSort
                  [class.loading]="loading" aria-label="Usage Table"
                  cdk-table [dataSource]="dataSource">
 
@@ -10,7 +10,7 @@
               <th cdk-header-cell *cdkHeaderCellDef scope="col">
                 <div mat-sort-header="operation">Operation</div>
               </th>
-              <td cdk-cell *cdkCellDef="let row" class="tw-text-left" >{{row.operation}}</td>
+              <td cdk-cell *cdkCellDef="let row" class="text-left" >{{row.operation}}</td>
             </ng-container>
 
             <ng-container cdkColumnDef="trigger" >
@@ -51,14 +51,14 @@
           </table>
         </ng-scrollbar>
 
-        <!-- <mat-paginator [class.!tw-hidden]="dataSource.data.length === 0" class="paginator tw-rounded-b-[10px]"
+        <!-- <mat-paginator [class.!hidden]="dataSource.data.length === 0" class="paginator rounded-b-[10px]"
                        hidePageSize
                        aria-label="Select page" pageSize="10">
         </mat-paginator> -->
       </div>
-      <div optional class="tw-bg-white tw-p-4">
-          <button type="button" class="tw-text-primary">
-            <fa-icon icon="circle-plus" class="tw-text-primary"></fa-icon>
+      <div optional class="bg-white p-4">
+          <button type="button" class="text-primary">
+            <fa-icon icon="circle-plus" class="text-primary"></fa-icon>
             Add New Automation</button>
       </div>
     </material-panel-table>

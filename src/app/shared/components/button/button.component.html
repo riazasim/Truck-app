@@ -3,15 +3,15 @@
 [class]="class"
 [style]="style"
 [disabled]="disabled"
-class="btn tw-gap-4 tw-flex tw-items-center tw-justify-between"
+class="btn gap-4 flex items-center justify-between"
 [ngClass]="{
     'btn-primary': buttonType === 'primary',
     'btn-warning': buttonType === 'warn',
     'btn-disabled': buttonType === 'disabled',
     'btn-secondary': buttonType === 'secondary',
-    'tw-h-[50px]': buttonSize === 'medium',
-    'tw-w-[250px]': buttonSize === 'medium',
-    'tw-text-white': buttonType === 'disabled'
+    'h-[50px]': buttonSize === 'medium',
+    'w-[250px]': buttonSize === 'medium',
+    'text-white': buttonType === 'disabled'
 }">
 <div>&nbsp;</div>
 <div><ng-content></ng-content></div>

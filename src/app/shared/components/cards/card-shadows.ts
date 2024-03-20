@@ -1,16 +1,16 @@
 import { Directive, Input } from '@angular/core';
 
 export type CardShadow = 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'material';
-type shadow = 'tw-shadow';
+type shadow = 'shadow';
 type ShadowsMap = { [key in CardShadow]: `${shadow}-${key}` };
 
 export const CardShadows: Readonly<ShadowsMap> = Object.freeze({
-  sm: 'tw-shadow-sm',
-  md: 'tw-shadow-md',
-  lg: 'tw-shadow-lg',
-  xl: 'tw-shadow-xl',
-  '2xl': 'tw-shadow-2xl',
-  material: 'tw-shadow-material'
+  sm: 'shadow-sm',
+  md: 'shadow-md',
+  lg: 'shadow-lg',
+  xl: 'shadow-xl',
+  '2xl': 'shadow-2xl',
+  material: 'shadow-material'
 });
 
 @Directive()

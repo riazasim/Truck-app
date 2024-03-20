@@ -1,42 +1,42 @@
 <div>
-  <div class="tw-gap-8 tw-flex max-xl:tw-flex-col tw-justify-center tw-items-center">
-    <div class="tw-max-w-sm tw-rounded-lg tw-overflow-hidden tw-shadow-lg tw-bg-white tw-p-20 tw-min-h-[480px]
-      tw-cursor-pointer" [ngClass]="{'border': automationType.value == automationTypeEnum.noAutomation }"
+  <div class="gap-8 flex max-xl:flex-col justify-center items-center">
+    <div class="max-w-sm rounded-lg overflow-hidden shadow-lg bg-white p-20 min-h-[480px]
+      cursor-pointer" [ngClass]="{'border': automationType.value == automationTypeEnum.noAutomation }"
          (click)="typeEventEmitter.emit(automationTypeEnum.noAutomation)">
-        <div class="tw-flex tw-justify-center tw-p-10 tw-border tw-border-gray tw-rounded-full tw-h-[150px] tw-w-[150px] tw-items-center tw-m-auto">
-            <fa-icon icon="ban" size="5x" class="tw-text-primary"></fa-icon>
+        <div class="flex justify-center p-10 border border-gray rounded-full h-[150px] w-[150px] items-center m-auto">
+            <fa-icon icon="ban" size="5x" class="text-primary"></fa-icon>
         </div>
-        <div class="tw-flex tw-justify-center tw-pt-5 tw-pb-10">
-            <h4 class="heading-4 tw-text-panelColor">No automation</h4>
+        <div class="flex justify-center pt-5 pb-10">
+            <h4 class="heading-4 text-panelColor">No automation</h4>
         </div>
-        <div class="tw-flex tw-justify-center">
-            <p class="heading-5 tw-text-panelColor">Message will be saved as a template to be used by users as needed.</p>
+        <div class="flex justify-center">
+            <p class="heading-5 text-panelColor">Message will be saved as a template to be used by users as needed.</p>
         </div>
     </div>
-    <div class="tw-max-w-sm tw-rounded-lg tw-overflow-hidden tw-shadow-lg tw-bg-white tw-p-20 tw-min-h-[480px]
-    tw-cursor-pointer" [ngClass]="{'border': automationType.value == automationTypeEnum.actionBased }" 
+    <div class="max-w-sm rounded-lg overflow-hidden shadow-lg bg-white p-20 min-h-[480px]
+    cursor-pointer" [ngClass]="{'border': automationType.value == automationTypeEnum.actionBased }" 
         (click)="typeEventEmitter.emit(automationTypeEnum.actionBased)">
-        <div class="tw-flex tw-justify-center tw-p-10 tw-border tw-border-gray tw-rounded-full tw-h-[150px] tw-w-[150px] tw-items-center tw-m-auto">
-            <fa-icon icon="location-crosshairs" size="5x" class="tw-text-primary"></fa-icon>
+        <div class="flex justify-center p-10 border border-gray rounded-full h-[150px] w-[150px] items-center m-auto">
+            <fa-icon icon="location-crosshairs" size="5x" class="text-primary"></fa-icon>
         </div>
-        <div class="tw-flex tw-justify-center tw-pt-5 tw-pb-10">
-            <h4 class="heading-4 tw-text-panelColor">Action based</h4>
+        <div class="flex justify-center pt-5 pb-10">
+            <h4 class="heading-4 text-panelColor">Action based</h4>
         </div>
-        <div class="tw-flex tw-justify-center">
-            <p class="heading-5 tw-text-panelColor">Sends a message based on an action performed by the user if all conditions are true.</p>
+        <div class="flex justify-center">
+            <p class="heading-5 text-panelColor">Sends a message based on an action performed by the user if all conditions are true.</p>
         </div>
     </div>
-    <div class="tw-max-w-sm tw-rounded-lg tw-overflow-hidden tw-shadow-lg tw-bg-white tw-p-20 tw-min-h-[480px]
-          tw-cursor-pointer" [ngClass]="{'border': automationType.value == automationTypeEnum.timeBased }" 
+    <div class="max-w-sm rounded-lg overflow-hidden shadow-lg bg-white p-20 min-h-[480px]
+          cursor-pointer" [ngClass]="{'border': automationType.value == automationTypeEnum.timeBased }" 
           (click)="typeEventEmitter.emit(automationTypeEnum.timeBased)">
-        <div class="tw-flex tw-justify-center tw-p-10 tw-border tw-border-gray tw-rounded-full tw-h-[150px] tw-w-[150px] tw-items-center tw-m-auto">
-            <fa-icon icon="clock-five" size="5x" class="tw-text-primary"></fa-icon>
+        <div class="flex justify-center p-10 border border-gray rounded-full h-[150px] w-[150px] items-center m-auto">
+            <fa-icon icon="clock-five" size="5x" class="text-primary"></fa-icon>
         </div>
-        <div class="tw-flex tw-justify-center tw-pt-5 tw-pb-10">
-            <h4 class="heading-4 tw-text-panelColor">Time based</h4>
+        <div class="flex justify-center pt-5 pb-10">
+            <h4 class="heading-4 text-panelColor">Time based</h4>
         </div>
-        <div class="tw-flex tw-justify-center">
-            <p class="heading-5 tw-text-panelColor">Sends a message at a specific moment, as defined by the user, if all conditions are true.</p>
+        <div class="flex justify-center">
+            <p class="heading-5 text-panelColor">Sends a message at a specific moment, as defined by the user, if all conditions are true.</p>
         </div>
     </div>
   </div>

@@ -4,7 +4,7 @@
   [class.disabled]="isDisabled"
   class="iconic-layout-wrapper">
   <div class="input-container {{inputContainerClass}}">
-    <img *ngIf="leftSvg" [src]="leftSvg" alt="icon" class="tw-mx-[10px] tw-max-h-5 tw-max-w-5">
+    <img *ngIf="leftSvg" [src]="leftSvg" alt="icon" class="mx-[10px] max-h-5 max-w-5">
     <fa-icon *ngIf="leftIcon" [icon]="leftIcon" size="lg" class="icon"></fa-icon>
     <ng-content select="input[inputRef]"></ng-content>
     <ng-container *ngIf="appendedTemplate" [ngTemplateOutlet]="appendedTemplate"></ng-container>
@@ -13,7 +13,7 @@
   </div>
   <!-- <ng-container [hidden]="isTouched && showValidationMessages"> -->
     <div *ngIf="showValidation" class="errors-container" [style.visibility]="isTouched && showValidationMessages && errors ? 'visible': 'hidden'" [style.height.px]="21">
-      <div *ngFor="let error of (errors | keyvalue)" class="tw-text-center">
+      <div *ngFor="let error of (errors | keyvalue)" class="text-center">
         <span class="invalid">Invalid value</span>
       </div>
     </div>

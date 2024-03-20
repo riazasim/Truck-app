@@ -1,4 +1,4 @@
-<mat-sidenav-container [ngClass]="{'!tw-absolute tw-top-0 tw-bottom-0 tw-left-0 tw-right-0': sidenav.opened}" autosize>
+<mat-sidenav-container [ngClass]="{'!absolute top-0 bottom-0 left-0 right-0': sidenav.opened}" autosize>
     <mat-sidenav #sidenav mode="over" position="end" fullscreen>
         <ng-container [ngSwitch]="(componentName$ | async)">
             <scheduling-edit-plan *ngSwitchCase="'edit'" [sidenav]="sidenav" [isLoading]="!!(isLoading$ | async)"
@@ -11,29 +11,29 @@
         </ng-container>
     </mat-sidenav>
     <mat-sidenav-content>
-        <h3 class="max-xl:tw-block min-xl:tw-hidden heading-3 tw-mr-5 mobile-view">{{'Planning list' | translate}}</h3>
+        <h3 class="max-xl:block min-xl:hidden heading-3 mr-5 mobile-view">{{'Planning list' | translate}}</h3>
         <div
-            [ngClass]="{'tw-gap-8' : !(isTableView$ | async), 'tw-gap-0' : (isTableView$ | async) , 'tw-flex-grow tw-flex tw-flex-col' : true}">
+            [ngClass]="{'gap-8' : !(isTableView$ | async), 'gap-0' : (isTableView$ | async) , 'flex-grow flex flex-col' : true}">
             <div
-                class="tw-flex min-lg:tw-justify-between sm:tw-justify-center lg:tw-flex-row max-lg:tw-flex-col tw-gap-4">
-                <div class="tw-flex tw-gap-4 max-lg:tw-flex-col tw-items-center tw-justify-stretch">
-                    <h3 class="min-xl:tw-block max-xl:tw-hidden heading-4 tw-mr-5 tw-w-full desktop-view">
+                class="flex min-lg:justify-between sm:justify-center lg:flex-row max-lg:flex-col gap-4">
+                <div class="flex gap-4 max-lg:flex-col items-center justify-stretch">
+                    <h3 class="min-xl:block max-xl:hidden heading-4 mr-5 w-full desktop-view">
                         {{'Planning list' | translate}}</h3>
                     <app-scheduling-search-bar (emitFilterChange)="setSingleSearchFilter($event)">
                     </app-scheduling-search-bar>
-                    <div class="tw-w-full">
-                        <datepicker matTooltipClass="tw-drop-shadow-lg" matTooltipPosition="above"
+                    <div class="w-full">
+                        <datepicker matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
                             [matTooltip]="'Planning date' | translate" (dateChanged)="handleDateChange($event)"
                             [model]="filterDate" [isHeaderPosition]="true" [height]="37"></datepicker>
                     </div>
                     <div *ngIf="(isComvexOrganization$ | async)"
-                        class="tw-flex tw-items-center tw-gap-2 tw-h-[37px] tw-w-full">
+                        class="flex items-center gap-2 h-[37px] w-full">
                         <app-toggle (onModelChange)="isComvexReorder$.next($event)"
-                            [model]="!!(isComvexReorder$ | async)" class="tw-h-[30px]"></app-toggle>
+                            [model]="!!(isComvexReorder$ | async)" class="h-[30px]"></app-toggle>
                         <label>{{(isComvexReorder$ | async) ? 'Reorder mode' : 'Freezed mode'}}</label>
                     </div>
-                    <!-- <div *ngIf="!(isTableView$ | async)" class="tw-w-full">
-                        <select [disabled]="!!(isTimeSlotFilterMode$ | async)" class="tw-rounded tw-w-full" inputRef
+                    <!-- <div *ngIf="!(isTableView$ | async)" class="w-full">
+                        <select [disabled]="!!(isTimeSlotFilterMode$ | async)" class="rounded w-full" inputRef
                             name="sortBy" [value]="sortBy$ | async" (change)="sortBy$.next($any($event.target).value)">
                             <option [value]="null" disabled>{{'generics.sort-by' | translate}}</option>
                             <option value="0">SID</option>
@@ -44,82 +44,82 @@
                             <option value="12">Timeslot</option>
                         </select>
                     </div> -->
-                    <!-- <div *ngIf="!(isTableView$ | async)" matTooltipClass="tw-drop-shadow-lg" matTooltipPosition="above"
+                    <!-- <div *ngIf="!(isTableView$ | async)" matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
                         [matTooltip]="(sortOrder$ | async) === 'DESC' ? 'Sort ASC' : 'Sort DESC'"
                         (click)="sortOrder$.next(sortOrder$.value === 'DESC' ? 'ASC' : 'DESC')"
-                        class="tw-flex tw-items-center tw-justify-center tw-w-[37px] tw-h-[37px] tw-bg-white tw-border tw-border-borderColor tw-rounded tw-cursor-pointer tw-px-4 ">
+                        class="flex items-center justify-center w-[37px] h-[37px] bg-white border border-borderColor rounded cursor-pointer px-4 ">
                         <ng-container [ngSwitch]="sortOrder$ | async">
                             <fa-icon *ngSwitchCase="'DESC'" [icon]="['fas','arrow-down-short-wide']"></fa-icon>
                             <fa-icon *ngSwitchCase="'ASC'" [icon]="['fas','arrow-up-short-wide']"></fa-icon>
                             <fa-icon *ngSwitchDefault [icon]="['fas','arrow-up-short-wide']"></fa-icon>
                         </ng-container>
                     </div> -->
-                    <div *ngIf="false" class="tw-w-full">
-                        <div class="tw-flex tw-gap-4 tw-items-center tw-whitespace-nowrap">
+                    <div *ngIf="false" class="w-full">
+                        <div class="flex gap-4 items-center whitespace-nowrap">
                             <input id="viewed" type="checkbox"
-                                class="tw-border tw-border-textDefault tw-cursor-pointer tw-w-[28px] tw-h-[28px]">
+                                class="border border-textDefault cursor-pointer w-[28px] h-[28px]">
                             <label for="viewed"
-                                class="max-xl:tw-hidden min-xl:tw-block heading-5 tw-cursor-pointer">Exclude past
+                                class="max-xl:hidden min-xl:block heading-5 cursor-pointer">Exclude past
                                 SIDs</label>
-                            <label for="viewed" class="max-xl:tw-block min-xl:tw-hidden tw-cursor-pointer">Exclude past
+                            <label for="viewed" class="max-xl:block min-xl:hidden cursor-pointer">Exclude past
                                 SIDs</label>
                         </div>
                     </div>
                 </div>
-                <div class="tw-flex tw-items-center">
-                    <mat-button-toggle-group class="tw-flex tw-w-full tw-justify-end tw-items-center">
+                <div class="flex items-center">
+                    <mat-button-toggle-group class="flex w-full justify-end items-center">
                         <button routerLink="../add" [disabled]="(isLoading$ | async) || false"
-                            class="tw-bg-primary tw-text-white hover:tw-bg-primary-dark tw-py-2 tw-min-h-[35px] min-md:tw-min-w-[120px] max-sm:tw-w-full tw-rounded-l max-lg:tw-w-full"
+                            class="bg-primary text-white hover:bg-primary-dark py-2 min-h-[35px] min-md:min-w-[120px] max-sm:w-full rounded-l max-lg:w-full"
                             type="button">
                             {{'Add SID' | translate}}
                         </button>
                         <button [disabled]="(isLoading$ | async) || false"
-                            class="tw-bg-primary tw-text-white hover:tw-bg-primary-dark tw-min-h-[35px] min-md:tw-min-w-[30px] max-sm:tw-w-full tw-rounded-r"
+                            class="bg-primary text-white hover:bg-primary-dark min-h-[35px] min-md:min-w-[30px] max-sm:w-full rounded-r"
                             type="button" [matMenuTriggerFor]="menu">
                             <fa-icon [icon]="['fas', 'caret-down']" size="2x"
-                                class="tw-mx-2 tw-cursor-pointer tw-text-white">
+                                class="mx-2 cursor-pointer text-white">
                             </fa-icon>
                         </button>
-                        <mat-menu #menu="matMenu" xPosition="before" class="!tw-bg-white">
+                        <mat-menu #menu="matMenu" xPosition="before" class="!bg-white">
                             <button [disabled]="(isLoading$ | async) || false" (click)="openImportModal()"
                                 mat-menu-item>Import .xlsx</button>
                         </mat-menu>
                     </mat-button-toggle-group>
                     <fa-icon icon="truck" size="2x" [matMenuTriggerFor]="sidType" #trigger="matMenuTrigger"
-                        matTooltipClass="tw-drop-shadow-lg" matTooltipPosition="above"
-                        [matTooltip]="'truck' | translate" class="tw-mx-2 tw-cursor-pointer hover:tw-text-primary">
+                        matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
+                        [matTooltip]="'truck' | translate" class="mx-2 cursor-pointer hover:text-primary">
                     </fa-icon>
-                    <mat-menu #sidType="matMenu" class="!tw-bg-white" xPosition="before">
+                    <mat-menu #sidType="matMenu" class="!bg-white" xPosition="before">
                         <menu mat-menu-item>
-                            <fa-icon icon="ship" size="1x" class="tw-mx-2 tw-cursor-pointer hover:tw-text-primary">
+                            <fa-icon icon="ship" size="1x" class="mx-2 cursor-pointer hover:text-primary">
                             </fa-icon>
                             {{'ship' | translate}}
                         </menu>
                         <menu mat-menu-item>
-                            <fa-icon icon="train" size="1x" class="tw-mx-2 tw-cursor-pointer hover:tw-text-primary">
+                            <fa-icon icon="train" size="1x" class="mx-2 cursor-pointer hover:text-primary">
                             </fa-icon>
                             {{'train' | translate}}
                         </menu>
                         <menu mat-menu-item>
-                            <fa-icon icon="plane" size="1x" class="tw-mx-2 tw-cursor-pointer hover:tw-text-primary">
+                            <fa-icon icon="plane" size="1x" class="mx-2 cursor-pointer hover:text-primary">
                             </fa-icon>
                             {{'plane' | translate}}
                         </menu>
                     </mat-menu>
-                    <fa-icon icon="grid-2" size="2x" matTooltipClass="tw-drop-shadow-lg" matTooltipPosition="above"
+                    <fa-icon icon="grid-2" size="2x" matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
                         [matTooltip]="'table' | translate" *ngIf="!(isTableView$ | async)"
-                        [ngClass]="{'tw-text-[#17A0B5]': !(isTableView$ | async),'tw-mx-2 tw-cursor-pointer' : true}"
+                        [ngClass]="{'text-[#17A0B5]': !(isTableView$ | async),'mx-2 cursor-pointer' : true}"
                         (click)="isTableView$.next(true); retrievePlanningList()">
                     </fa-icon>
-                    <fa-icon icon="list" size="2x" matTooltipClass="tw-drop-shadow-lg" matTooltipPosition="above"
+                    <fa-icon icon="list" size="2x" matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
                         [matTooltip]="'card' | translate" *ngIf="(isTableView$ | async)"
-                        [ngClass]="{'tw-text-[#17A0B5]': (isTableView$ | async),'tw-mx-2 tw-cursor-pointer' : true}"
+                        [ngClass]="{'text-[#17A0B5]': (isTableView$ | async),'mx-2 cursor-pointer' : true}"
                         (click)="isTableView$.next(false)">
                     </fa-icon>
                 </div>
             </div>
             <div *ngIf="!(isTableView$ | async)"
-                class="min-lg:tw-grid tw-gap-4 min-lg:tw-grid-cols-[420px_minmax(900px,_1fr)_100px] max-lg:tw-flex max-lg:tw-flex-col"
+                class="min-lg:grid gap-4 min-lg:grid-cols-[420px_minmax(900px,_1fr)_100px] max-lg:flex max-lg:flex-col"
                 cdkDropListGroup>
                 <ng-scrollbar visibility="always" *ngIf="!(isMobileCardList$ | async)" track="vertical"
                     appearance="standard" (reachedBottom)="onBottomReached()" [reachedOffset]="350">
@@ -144,7 +144,7 @@
                         <no-scheduling *ngIf="!(isLoading$ | async) && !plannings.length"></no-scheduling>
                     </div>
                 </ng-scrollbar>
-                <!-- <div *ngIf="(isMobileCardList$ | async)" class="tw-flex tw-flex-col tw-gap-4 card-container">
+                <!-- <div *ngIf="(isMobileCardList$ | async)" class="flex flex-col gap-4 card-container">
                     <div dropListScroller cdkDropList [cdkDropListData]="plannings" (cdkDropListDropped)="drop($event)">
                         <app-loader [isContainer]="true" *ngIf="(isLoading$ | async)" [fullScreen]="false"></app-loader>
                         <ng-container *ngIf="!(isLoading$ | async)">
@@ -164,9 +164,9 @@
                         <no-scheduling *ngIf="!(isLoading$ | async) && !plannings.length"></no-scheduling>
                     </div>
                 </div> -->
-                <div class="tw-col-span-2">
-                    <div class="tw-bg-white tw-w-full tw-min-h-[550px]">
-                        <app-loader class="tw-m-auto tw-flex-grow" *ngIf="(isLoading$ | async)" [isContainer]="true"
+                <div class="col-span-2">
+                    <div class="bg-white w-full min-h-[550px]">
+                        <app-loader class="m-auto flex-grow" *ngIf="(isLoading$ | async)" [isContainer]="true"
                             [fullScreen]="false"></app-loader>
                         <scheduling-table [isToggleOpened]="!!(isToggleOpened$ | async)"
                             (onFilterTimeslot)="setTimeSlotFilterMode({ key: { prev: filterTypeEnum.timeSlot, curr: filterTypeEnum.timeSlot},  value: $event })"
@@ -175,7 +175,7 @@
                     </div>
                 </div>
             </div>
-            <div class="tw-grid" *ngIf="(isTableView$ | async)">
+            <div class="grid" *ngIf="(isTableView$ | async)">
                 <app-planning-list (triggerOpenLogs)="toggleSidenav($event)"></app-planning-list>
             </div>
         </div>

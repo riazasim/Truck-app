@@ -5,7 +5,7 @@ module.exports = {
   content: [
     join(__dirname, 'src/**/!(*.stories|*.spec).{ts,html}'),
   ],
-  prefix: 'tw-',
+  prefix: '',
   theme: {
     screens: {
       'min-sm': '576px',

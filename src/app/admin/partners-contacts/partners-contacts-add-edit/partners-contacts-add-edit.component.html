@@ -1,7 +1,7 @@
 <edit-container headerTitle="Add partner contact">
     <app-loader *ngIf="isLoading" [isContainer]="true" [fullScreen]="false"></app-loader>
     <form [formGroup]="partnerContactForm" *ngIf="!isLoading">
-        <div class="tw-flex tw-flex-col tw-mx-auto tw-max-w-[440px] tw-gap-5">
+        <div class="flex flex-col mx-auto max-w-[440px] gap-5">
             <div>
                 <div iconic-input-wrapper leftIcon="id-badge">
                     <input inputRef 
@@ -33,14 +33,14 @@
             </div>
             <div>
                 <div>
-                    <input id="partner" type="checkbox" class="tw-mr-2 tw-h-[25px] tw-w-[25px]">
-                    <label class="tw-cursor-pointer" for="partner">Add as partner user</label>
+                    <input id="partner" type="checkbox" class="mr-2 h-[25px] w-[25px]">
+                    <label class="cursor-pointer" for="partner">Add as partner user</label>
                 </div>
             </div>
         </div>
 
-        <div class="tw-flex tw-justify-end tw-pt-5">
-            <div class="tw-flex tw-gap-4">
+        <div class="flex justify-end pt-5">
+            <div class="flex gap-4">
                 <button [routerLink]="id ? '../../list' : '../list'" class="btn btn-outline-primary" type="button">Cancel</button>
                 <button class="btn btn-primary" type="button" (click)="savePartner()">Save</button>
             </div>

@@ -211,7 +211,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         if (this.isToggleOpened$.value) return;
         this.isToggleOpened$.next(true);
         this.toggleRef = this.snackBar.open('SID has been copied, please select the cell to schedule the planning!', 'Exit', {
-            panelClass: ['tw-bg-white']
+            panelClass: ['bg-white']
         })
 
         this.toggleRef.afterDismissed().subscribe(() => {

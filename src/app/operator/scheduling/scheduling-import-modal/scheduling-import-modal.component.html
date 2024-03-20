@@ -1,32 +1,32 @@
-<div class="tw-max-w-lg min-sm:tw-min-w-[500px]">
-  <div class="tw-flex tw-justify-between tw-px-4 tw-py-4">
-    <h2 class="tw-font-bold tw-text-columnCell tw-flex tw-items-center">Import XLS</h2>
-    <div *ngIf="!(isLoading$ | async)" class="close-button tw-text-[25px] tw-cursor-pointer" (click)="cancel()">&times;</div>
+<div class="max-w-lg min-sm:min-w-[500px]">
+  <div class="flex justify-between px-4 py-4">
+    <h2 class="font-bold text-columnCell flex items-center">Import XLS</h2>
+    <div *ngIf="!(isLoading$ | async)" class="close-button text-[25px] cursor-pointer" (click)="cancel()">&times;</div>
   </div>
-  <div mat-dialog-body class="tw-mb-8 tw-px-4 tw-py-4">
-    <app-loader class="tw-m-auto tw-flex-grow" *ngIf="(isLoading$ | async)" [fullScreen]="false"></app-loader>
+  <div mat-dialog-body class="mb-8 px-4 py-4">
+    <app-loader class="m-auto flex-grow" *ngIf="(isLoading$ | async)" [fullScreen]="false"></app-loader>
     <div *ngIf="!(isLoading$ | async)">
-      <div class="tw-flex">
-        <input #input class="tw-rounded-l tw-grow focus:tw-shadow-none focus:tw-border-0" (click)="file.click()" type="text" readonly placeholder="Choose file">
-        <button (click)="file.click()" class="tw-rounded-l-none tw-grow-1 tw-bg-primary tw-text-white tw-rounded-r tw-px-4">Search</button>
+      <div class="flex">
+        <input #input class="rounded-l grow focus:shadow-none focus:border-0" (click)="file.click()" type="text" readonly placeholder="Choose file">
+        <button (click)="file.click()" class="rounded-l-none grow-1 bg-primary text-white rounded-r px-4">Search</button>
       </div>
       <input #file [style.visibility]="'hidden'" accept=".xlsx" type="file" (change)="handleFileChange()">
-      <div class="tw-flex tw-items-center tw-gap-2">
-        <button class="btn btn-primary btn-icon tw-px-1" (click)="download()">
+      <div class="flex items-center gap-2">
+        <button class="btn btn-primary btn-icon px-1" (click)="download()">
           <fa-icon [icon]="['fas', 'cloud-arrow-down']" size="lg"></fa-icon>
         </button>
-        <span class="tw-font-bold tw-text-columnCell">
+        <span class="font-bold text-columnCell">
           Download XLSX template
         </span>
       </div>
     </div>
   </div>
 
-  <div class="tw-flex tw-justify-end tw-flex-wrap-reverse tw-gap-4 tw-p-4">
+  <div class="flex justify-end flex-wrap-reverse gap-4 p-4">
     <button [disabled]="(isLoading$ | async)" tabIndex="-1" (click)="confirm()"
-      class="tw-bg-primary tw-py-2 tw-text-white tw-min-w-[130px] tw-rounded-full">
+      class="bg-primary py-2 text-white min-w-[130px] rounded-full">
       <span *ngIf="!(isLoading$ | async)">{{ 'button.save' | translate }}</span>
-      <app-loader [isWhite]="true" class="tw-m-auto" *ngIf="(isLoading$ | async)" [fullScreen]="false" [size]="'lg'"></app-loader>
+      <app-loader [isWhite]="true" class="m-auto" *ngIf="(isLoading$ | async)" [fullScreen]="false" [size]="'lg'"></app-loader>
     </button>
   </div>
 </div>

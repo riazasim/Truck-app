@@ -4,7 +4,7 @@
   align-items: center;
   background-color: var(--body-bg, white);
   height: var(--header-height, 70px);
-  @apply min-lg:tw-pl-[2.2rem];
+  @apply min-lg:pl-[2.2rem];
 }
 
 .logo-container {
@@ -18,47 +18,47 @@
 .current-location-container {
   display: none;
 
-  @apply min-md:tw-flex tw-justify-center
-  tw-items-center tw-mx-auto;
+  @apply min-md:flex justify-center
+  items-center mx-auto;
 
   > .current-location {
-    @apply tw-overflow-ellipsis tw-overflow-hidden
-    tw-max-w-xs tw-whitespace-nowrap;
+    @apply overflow-ellipsis overflow-hidden
+    max-w-xs whitespace-nowrap;
   }
 }
 
 .expand-btn {
   margin-left: auto;
-  @apply min-md:tw-hidden;
+  @apply min-md:hidden;
 }
 
 .menu-container {
-  @apply max-md:tw-fixed max-md:tw-inset-0 max-md:tw-bg-white max-md:tw-z-10
-  max-md:tw-py-2 max-md:tw-px-0 max-md:tw-flex max-md:tw-flex-col;
+  @apply max-md:fixed max-md:inset-0 max-md:bg-white max-md:z-10
+  max-md:py-2 max-md:px-0 max-md:flex max-md:flex-col;
 
   &.closed {
-    @apply max-md:tw-hidden;
+    @apply max-md:hidden;
   }
 
   > .title-row {
-    @apply max-md:tw-flex max-md:tw-justify-between max-md:tw-items-center
-    max-md:tw-border-b max-md:tw-mx-4;
+    @apply max-md:flex max-md:justify-between max-md:items-center
+    max-md:border-b max-md:mx-4;
     border-color: var(--app-border-color);
   }
 
   > .menu-row {
-    @apply max-md:tw-mt-4;
+    @apply max-md:mt-4;
   }
 
-  @apply min-md:tw-flex;
+  @apply min-md:flex;
   display: flex;
 
   .title-row {
-    @apply min-md:tw-hidden;
+    @apply min-md:hidden;
     padding-bottom: 15px;
   }
 
   .menu-row {
-    @apply min-md:tw-flex-grow;
+    @apply min-md:flex-grow;
   }
 }

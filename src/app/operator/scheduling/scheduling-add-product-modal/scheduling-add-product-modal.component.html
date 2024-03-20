@@ -1,8 +1,8 @@
-<div class="tw-max-w-lg tw-px-4 tw-py-4">
+<div class="max-w-lg px-4 py-4">
     <h2 mat-dialog-title>Add product</h2>
-    <div mat-dialog-content class="tw-whitespace-pre-line tw-mb-8 ">
-        <div class="tw-flex tw-gap-2">
-            <div class="tw-w-full">
+    <div mat-dialog-content class="whitespace-pre-line mb-8 ">
+        <div class="flex gap-2">
+            <div class="w-full">
                 <div iconic-select-wrapper [rightIcon]="['fas', 'caret-down']">
                     <select [disabled]="!!product" inputRef name="product" id="product" (change)="setProduct($event)" [(ngModel)]="productId">
                         <option [value]="null" selected disabled>Select product</option>
@@ -10,13 +10,13 @@
                     </select>
                 </div>
             </div>
-            <div inputRef class="tw-flex tw-items-center tw-h-[53px]">
-                <button *ngIf="product" type="button" (click)="resetProduct()"><fa-icon class="tw-text-danger tw-font-bold" icon="close"></fa-icon></button>
+            <div inputRef class="flex items-center h-[53px]">
+                <button *ngIf="product" type="button" (click)="resetProduct()"><fa-icon class="text-danger font-bold" icon="close"></fa-icon></button>
             </div>
         </div>
-        <div class="tw-flex tw-flex-col tw-gap-4" *ngIf="product">
+        <div class="flex flex-col gap-4" *ngIf="product">
             <div>
-                <p class="tw-text-columnCell tw-font-bold tw-pb-3">Product details</p>
+                <p class="text-columnCell font-bold pb-3">Product details</p>
                 <div>
                     <div iconic-input-wrapper>
                         <input inputRef type="text" placeholder="Product name" [(ngModel)]="product.name">
@@ -47,9 +47,9 @@
         
     </div>
 
-    <div mat-dialog-actions class="tw-flex tw-justify-around tw-flex-wrap-reverse tw-gap-4">
-        <button tabIndex="-1" (click)="cancel()" class="btn btn-outline-primary tw-min-w-[130px]">Cancel</button>
-        <button [disabled]="!product" tabIndex="-1" (click)="confirm()" class="btn btn-primary tw-min-w-[130px]">Add</button>
+    <div mat-dialog-actions class="flex justify-around flex-wrap-reverse gap-4">
+        <button tabIndex="-1" (click)="cancel()" class="btn btn-outline-primary min-w-[130px]">Cancel</button>
+        <button [disabled]="!product" tabIndex="-1" (click)="confirm()" class="btn btn-primary min-w-[130px]">Add</button>
     </div>
 </div>
   

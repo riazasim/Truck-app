@@ -2,14 +2,14 @@
     <a [routerLink]="logoRedirect" class="logo">
         <img *ngIf="logoSrc; else iconLogo" [src]="logoSrc" alt="logo" />
         <ng-template #iconLogo>
-          <fa-icon icon="truck-fast" size="3x" class="tw-text-primary"></fa-icon>
+          <fa-icon icon="truck-fast" size="3x" class="text-primary"></fa-icon>
         </ng-template>
       </a>
   <!-- <a [routerLink]="logoRedirect" class="logo">
     <img [src]="logoSrc" alt="logo" *ngIf="logoSrc" />
   </a>
 
-  <a href="javascript:void(0)" class="tw-px-6 tw-pb-4">
+  <a href="javascript:void(0)" class="px-6 pb-4">
     <fa-icon size="2x" icon="truck-fast"></fa-icon>
   </a> -->
 

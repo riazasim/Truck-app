@@ -2,7 +2,7 @@
 <edit-container [headerTitle]="id ?  'Edit vehicle details':'Add vehicle details'">
   <app-loader *ngIf="(isLoading$ | async)" [isContainer]="true" [fullScreen]="false"></app-loader>
   <form [formGroup]="vehicleForm" *ngIf="!(isLoading$ | async)">
-      <div class="tw-flex tw-flex-col tw-mx-auto tw-max-w-[440px] tw-gap-5">
+      <div class="flex flex-col mx-auto max-w-[440px] gap-5">
         <div>
           <div iconic-input-wrapper leftIcon="id-badge">
             <input inputRef type="text" placeholder="License plate" formControlName="licensePlate">
@@ -33,8 +33,8 @@
         </div>
       </div>
 
-      <div class="tw-flex tw-justify-end tw-pt-5">
-        <div class="tw-flex tw-gap-4">
+      <div class="flex justify-end pt-5">
+        <div class="flex gap-4">
           <button [routerLink]="id ? '../../list' : '../list'" class="btn btn-outline-primary" type="button">Cancel</button>
           <button [disabled]="vehicleForm.invalid ||(isLoading$ | async)"  class="btn btn-primary" type="button" (click)="saveVehicle()">Save</button>
         </div>

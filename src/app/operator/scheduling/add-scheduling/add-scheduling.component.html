@@ -2,21 +2,21 @@
     <mat-step label="Route Details">
         <app-loader *ngIf="isLoading$ | async" [isContainer]="true" [fullScreen]="false"></app-loader>
         <form [formGroup]="schedulingForm" *ngIf="!(isLoading$ | async)">
-            <div class="tw-grid min-lg:tw-grid-cols-2 tw-grid-cols-1 tw-gap-x-10 tw-gap-y-4 tw-pt-[100px] tw-px-[50px]">
-                <div class="tw-flex tw-flex-col tw-gap-x-10 tw-gap-y-4 tw-px-[50px]">
-                    <!-- <p class="tw-text-columnCell tw-font-bold"></p> -->
+            <div class="grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 gap-y-4 pt-[100px] px-[50px]">
+                <div class="flex flex-col gap-x-10 gap-y-4 px-[50px]">
+                    <!-- <p class="text-columnCell font-bold"></p> -->
                     <div iconic-input-wrapper leftIcon="user" formGroupName="routingDetail">
                         <input inputRef type="text" placeholder="Convoy Type" formControlName="convoyType" />
                     </div>
-                    <div class="tw-grid tw-grid-cols-2 tw-gap-x-8 tw-gap-y-4 tw-mb-5">
-                        <div class=" tw-flex tw-flex-col" formGroupName="routingDetail">
-                            <datepicker matTooltipClass="tw-drop-shadow-lg" matTooltipPosition="above"
+                    <div class="grid grid-cols-2 gap-x-8 gap-y-4 mb-5">
+                        <div class=" flex flex-col" formGroupName="routingDetail">
+                            <datepicker matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
                                 [matTooltip]="'Pick ETA date' | translate" [model]="filterDate"
                                 [isHeaderPosition]="true" [height]="52" (dateChanged)="OnDateChange($event)">
                             </datepicker>
                         </div>
-                        <div class=" tw-flex tw-flex-col" formGroupName="routingDetail">
-                            <timepicker matTooltipClass="tw-drop-shadow-lg" matTooltipPosition="above"
+                        <div class=" flex flex-col" formGroupName="routingDetail">
+                            <timepicker matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
                                 [matTooltip]="'Pick ETA time' | translate" [height]="52"
                                 (modelChange)="OnTimeChange($event)"></timepicker>
                         </div>
@@ -57,7 +57,7 @@
                         <input inputRef type="text" placeholder="Pilot Company" formControlName="pilotCompany" />
                     </div>
                 </div>
-                <div class="tw-flex tw-flex-col tw-gap-x-10 tw-gap-y-4 tw-px-[50px]">
+                <div class="flex flex-col gap-x-10 gap-y-4 px-[50px]">
                     <!-- <p>&nbsp;</p> -->
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_length.svg"
                         formGroupName="routingDetail">
@@ -90,12 +90,12 @@
                     </div>
                 </div>
             </div>
-            <div class="tw-flex tw-gap-2 tw-justify-center min-md:tw-gap-20 max-md:tw-flex-col tw-py-3">
-                <button type="button" class="btn btn-primary min-md:tw-min-w-[436px] tw-min-h-[50px] !tw-text-[18px]"
+            <div class="flex gap-2 justify-center min-md:gap-20 max-md:flex-col py-3">
+                <button type="button" class="btn btn-primary min-md:min-w-[436px] min-h-[50px] !text-[18px]"
                     matStepperPrevious>
                     {{ "button.back" | translate }}
                 </button>
-                <button type="button" class="btn btn-primary min-md:tw-min-w-[436px] tw-min-h-[50px] !tw-text-[18px]"
+                <button type="button" class="btn btn-primary min-md:min-w-[436px] min-h-[50px] !text-[18px]"
                     [disabled]="!schedulingForm.valid" (click)="next(stepOne$, schedulingForm , 1)">
                     {{ "button.next" | translate }}
                 </button>
@@ -105,9 +105,9 @@
     <mat-step label="Convoi">
         <app-loader *ngIf="isLoading$ | async" [isContainer]="true" [fullScreen]="false"></app-loader>
         <form [formGroup]="convoyForm" *ngIf="!(isLoading$ | async)">
-            <div class="tw-grid min-lg:tw-grid-cols-2 tw-grid-cols-1 tw-gap-x-10 tw-gap-y-4 tw-pt-[100px] tw-px-[50px]">
-                <div class="tw-flex tw-flex-col tw-gap-x-10 tw-gap-y-4 tw-px-[50px]">
-                    <!-- <p class="tw-text-columnCell tw-font-bold"></p> -->
+            <div class="grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 gap-y-4 pt-[100px] px-[50px]">
+                <div class="flex flex-col gap-x-10 gap-y-4 px-[50px]">
+                    <!-- <p class="text-columnCell font-bold"></p> -->
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_navigation.svg">
                         <input inputRef type="text" placeholder="Navigation type*" formControlName="navigationType" />
                     </div>
@@ -158,7 +158,7 @@
                         <input inputRef type="text" placeholder="Manevra" formControlName="maneuvering" />
                     </div>
                 </div>
-                <div class="tw-flex tw-flex-col tw-gap-x-10 tw-gap-y-4 tw-px-[50px]">
+                <div class="flex flex-col gap-x-10 gap-y-4 px-[50px]">
                     <!-- <p>&nbsp;</p> -->
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_ship_owner.svg">
                         <input inputRef type="text" placeholder="Ship owner" formControlName="shipowner" />
@@ -233,12 +233,12 @@
                     </div>
                 </div>
             </div>
-            <div class="tw-flex tw-gap-2 tw-justify-center min-md:tw-gap-20 max-md:tw-flex-col tw-py-3">
-                <button type="button" class="btn btn-primary min-md:tw-min-w-[436px] tw-min-h-[50px] !tw-text-[18px]"
+            <div class="flex gap-2 justify-center min-md:gap-20 max-md:flex-col py-3">
+                <button type="button" class="btn btn-primary min-md:min-w-[436px] min-h-[50px] !text-[18px]"
                     matStepperPrevious>
                     {{ "button.back" | translate }}
                 </button>
-                <button type="button" class="btn btn-primary min-md:tw-min-w-[436px] tw-min-h-[50px] !tw-text-[18px]"
+                <button type="button" class="btn btn-primary min-md:min-w-[436px] min-h-[50px] !text-[18px]"
                     (click)="next(stepTwo$, convoyForm , 2)">
                     {{ "button.next" | translate }}
                 </button>
@@ -248,78 +248,78 @@
     <mat-step label="Additional Data">
         <app-loader *ngIf="isLoading$ | async" [isContainer]="true" [fullScreen]="false"></app-loader>
         <div *ngIf="!(isLoading$ | async)">
-            <div class="tw-pt-[100px] min-xl:tw-px-[50px]">
-                <form class="tw-grid min-lg:tw-grid-cols-2 tw-grid-cols-1 tw-gap-x-10 tw-gap-y-4"
+            <div class="pt-[100px] min-xl:px-[50px]">
+                <form class="grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 gap-y-4"
                     [formGroup]="convoyForm">
-                    <div class="tw-flex tw-flex-col tw-gap-x-10 tw-gap-y-4 tw-px-[50px]">
+                    <div class="flex flex-col gap-x-10 gap-y-4 px-[50px]">
                         <div iconic-input-wrapper leftIcon="user">
                             <input inputRef type="text" placeholder="Operator" formControlName="additionalOperator"
-                                class="tw-text-center" />
+                                class="text-center" />
                         </div>
-                        <mat-button-toggle-group class="tw-flex tw-w-full tw-justify-end tw-items-center tw-mb-[21px]">
+                        <mat-button-toggle-group class="flex w-full justify-end items-center mb-[21px]">
                             <button
-                                class="tw-min-h-[53px] min-md:tw-min-w-[53px] max-sm:tw-w-full tw-rounded-l-[10px] tw-border-y tw-border-l tw-border-borderColor tw-rounded-r-none">
-                                <fa-icon icon="file-lines" size="lg" class="tw-mx-2 tw-cursor-pointer">
+                                class="min-h-[53px] min-md:min-w-[53px] max-sm:w-full rounded-l-[10px] border-y border-l border-borderColor rounded-r-none">
+                                <fa-icon icon="file-lines" size="lg" class="mx-2 cursor-pointer">
                                 </fa-icon>
                             </button>
                             <input
-                                class="tw-text-center tw-w-full tw-outline-0 tw-shadow-none tw-ring-offset-0 focus:tw-ring-offset-0 focus:tw-shadow-none focus:tw-ring-0 tw-min-h-[53px] tw-border-x-0 tw-border-borderColor tw-rounded-x-0"
+                                class="text-center w-full outline-0 shadow-none ring-offset-0 focus:ring-offset-0 focus:shadow-none focus:ring-0 min-h-[53px] border-x-0 border-borderColor rounded-x-0"
                                 type="text" [value]="file1Text$ | async" (click)="file1.click()" readonly
                                 placeholder="Choose file" />
                             <input #file1 hidden type="file" (change)="
                                     patchFile($any($event.target).files[0] , 0)
                                 " />
                             <button (click)="file1.click()"
-                                class="tw-bg-primary tw-text-white hover:tw-bg-primary-dark tw-min-h-[53px] min-md:tw-min-w-[60px] max-sm:tw-w-full tw-rounded">
-                                <fa-icon icon="upload" size="2x" class="tw-mx-2 tw-cursor-pointer tw-text-white">
+                                class="bg-primary text-white hover:bg-primary-dark min-h-[53px] min-md:min-w-[60px] max-sm:w-full rounded">
+                                <fa-icon icon="upload" size="2x" class="mx-2 cursor-pointer text-white">
                                 </fa-icon>
                             </button>
                         </mat-button-toggle-group>
-                        <mat-button-toggle-group class="tw-flex tw-w-full tw-justify-end tw-items-center tw-mb-[21px]">
+                        <mat-button-toggle-group class="flex w-full justify-end items-center mb-[21px]">
                             <button
-                                class="tw-min-h-[53px] min-md:tw-min-w-[53px] max-sm:tw-w-full tw-rounded-l-[10px] tw-border-y tw-border-l tw-border-borderColor tw-rounded-r-none">
-                                <fa-icon icon="file-lines" size="lg" class="tw-mx-2 tw-cursor-pointer">
+                                class="min-h-[53px] min-md:min-w-[53px] max-sm:w-full rounded-l-[10px] border-y border-l border-borderColor rounded-r-none">
+                                <fa-icon icon="file-lines" size="lg" class="mx-2 cursor-pointer">
                                 </fa-icon>
                             </button>
                             <input
-                                class="tw-text-center tw-w-full tw-outline-0 tw-shadow-none tw-ring-offset-0 focus:tw-ring-offset-0 focus:tw-shadow-none focus:tw-ring-0 tw-min-h-[53px] tw-border-x-0 tw-border-borderColor tw-rounded-x-0"
+                                class="text-center w-full outline-0 shadow-none ring-offset-0 focus:ring-offset-0 focus:shadow-none focus:ring-0 min-h-[53px] border-x-0 border-borderColor rounded-x-0"
                                 type="text" [value]="file2Text$ | async" (click)="file2.click()" readonly
                                 placeholder="Choose file" />
                             <input #file2 hidden type="file" (change)="
                                     patchFile($any($event.target).files[0] , 1)
                                 " />
                             <button (click)="file2.click()"
-                                class="tw-bg-primary tw-text-white hover:tw-bg-primary-dark tw-min-h-[53px] min-md:tw-min-w-[60px] max-sm:tw-w-full tw-rounded">
-                                <fa-icon icon="upload" size="2x" class="tw-mx-2 tw-cursor-pointer tw-text-white">
+                                class="bg-primary text-white hover:bg-primary-dark min-h-[53px] min-md:min-w-[60px] max-sm:w-full rounded">
+                                <fa-icon icon="upload" size="2x" class="mx-2 cursor-pointer text-white">
                                 </fa-icon>
                             </button>
                         </mat-button-toggle-group>
                         <button *ngIf="!(showFileThree$ | async)" type="button"
-                            class="tw-text-primary tw-font-bold tw-mr-auto" (click)="showFileThree$.next(true)">
+                            class="text-primary font-bold mr-auto" (click)="showFileThree$.next(true)">
                             <fa-icon icon="circle-plus"></fa-icon> Add New
                             Document
                         </button>
                     </div>
-                    <div class="tw-grid tw-grid-rows-2 tw-gap-x-10 tw-gap-y-4 tw-px-[50px]">
+                    <div class="grid grid-rows-2 gap-x-10 gap-y-4 px-[50px]">
                         <div textarea-wrapper leftIcon="user" [isFullHeight]="true">
-                            <textarea class="tw-break-words tw-whitespace-pre-wrap tw-resize-none" inputRef
+                            <textarea class="break-words whitespace-pre-wrap resize-none" inputRef
                                 placeholder="Client's comments:" rows="10" cols="1"
                                 formControlName="clientComments"></textarea>
                         </div>
                         <div textarea-wrapper leftIcon="id-card" [isFullHeight]="true">
-                            <textarea class="tw-break-words tw-whitespace-pre-wrap tw-resize-none" inputRef
+                            <textarea class="break-words whitespace-pre-wrap resize-none" inputRef
                                 placeholder="Operator's comments" rows="10" cols="1"
                                 formControlName="operatorComments"></textarea>
                         </div>
                     </div>
                 </form>
             </div>
-            <div class="tw-flex tw-justify-center min-md:tw-gap-20 tw-gap-3 tw-py-3">
-                <button type="button" class="btn btn-primary min-md:tw-min-w-[436px] tw-min-h-[50px] !tw-text-[18px]"
+            <div class="flex justify-center min-md:gap-20 gap-3 py-3">
+                <button type="button" class="btn btn-primary min-md:min-w-[436px] min-h-[50px] !text-[18px]"
                     matStepperPrevious>
                     {{ "button.back" | translate }}
                 </button>
-                <button type="button" class="btn btn-primary min-md:tw-min-w-[436px] tw-min-h-[50px] !tw-text-[18px]"
+                <button type="button" class="btn btn-primary min-md:min-w-[436px] min-h-[50px] !text-[18px]"
                     (click)="next(stepThree$, convoyForm , 3)">
                     {{ "button.next" | translate }}
                 </button>
@@ -328,45 +328,45 @@
     </mat-step>
     <mat-step label="Save or Extend">
         <app-loader *ngIf="isLoading$ | async" [isContainer]="true" [fullScreen]="false"></app-loader>
-        <div class="tw-flex tw-flex-col tw-justify-center" *ngIf="!(isLoading$ | async)">
-            <div class="tw-flex-1 tw-flex tw-justify-center tw-gap-10 tw-w-full">
+        <div class="flex flex-col justify-center" *ngIf="!(isLoading$ | async)">
+            <div class="flex-1 flex justify-center gap-10 w-full">
                 <div (click)="saveScheduling()"
-                    class="tw-flex tw-flex-col tw-gap-5 tw-items-center tw-justify-evenly tw-w-[400px] tw-h-[520px] tw-rounded-[10px] tw-border tw-border-transparent tw-shadow-md">
-                    <div class="tw-flex tw-flex-col tw-gap-2 tw-items-center">
+                    class="flex flex-col gap-5 items-center justify-evenly w-[400px] h-[520px] rounded-[10px] border border-transparent shadow-md">
+                    <div class="flex flex-col gap-2 items-center">
                         <div
-                            class="tw-border tw-border-[#B7B7B7] tw-rounded-full tw-flex tw-justify-center tw-items-center tw-w-[155px] tw-h-[155px]">
+                            class="border border-[#B7B7B7] rounded-full flex justify-center items-center w-[155px] h-[155px]">
                             <img src="assets/images/scheduling_flag.svg" alt="Flag">
                         </div>
-                        <h2 class="tw-text-4xl tw-text-[#696969] tw-font-bold">Convoi ended</h2>
+                        <h2 class="text-4xl text-[#696969] font-bold">Convoi ended</h2>
                     </div>
-                    <div class="tw-w-[335px] tw-mx-[auto] tw-text-center">
-                        <p class="tw-text-3xl tw-text-[#696969] tw-font-normal">
+                    <div class="w-[335px] mx-[auto] text-center">
+                        <p class="text-3xl text-[#696969] font-normal">
                             Click this button if you added all the ships of the convoy.
                         </p>
                     </div>
                 </div>
                 <div (click)="navigate(1)"
-                    class="tw-flex tw-flex-col tw-justify-evenly tw-gap-5 tw-items-center tw-w-[400px] tw-h-[520px] tw-rounded-[10px] tw-border tw-border-transparent tw-shadow-md">
-                    <div class="tw-flex tw-flex-col tw-gap-2 tw-items-center">
+                    class="flex flex-col justify-evenly gap-5 items-center w-[400px] h-[520px] rounded-[10px] border border-transparent shadow-md">
+                    <div class="flex flex-col gap-2 items-center">
                         <div
-                            class="tw-border tw-border-[#B7B7B7] tw-rounded-full tw-flex tw-justify-center tw-items-center tw-w-[155px] tw-h-[155px]">
+                            class="border border-[#B7B7B7] rounded-full flex justify-center items-center w-[155px] h-[155px]">
                             <img src="assets/images/scheduling_boat.svg" alt="Flag">
                         </div>
-                        <h2 class="tw-text-4xl tw-text-[#696969] tw-font-bold">Add ship to convoy</h2>
+                        <h2 class="text-4xl text-[#696969] font-bold">Add ship to convoy</h2>
                     </div>
-                    <div class="tw-w-[335px] tw-mx-[auto] tw-text-center">
-                        <p class="tw-text-3xl tw-text-[#696969] tw-font-normal">
+                    <div class="w-[335px] mx-[auto] text-center">
+                        <p class="text-3xl text-[#696969] font-normal">
                             Click this button to add a new ship to the convoy.
                         </p>
                     </div>
                 </div>
             </div>
-            <div class="tw-flex tw-flex-[0.2] tw-justify-center min-md:tw-gap-20 tw-gap-3 tw-py-3">
-                <button type="button" class="btn btn-primary min-md:tw-min-w-[436px] tw-min-h-[50px] !tw-text-[18px]"
+            <div class="flex flex-[0.2] justify-center min-md:gap-20 gap-3 py-3">
+                <button type="button" class="btn btn-primary min-md:min-w-[436px] min-h-[50px] !text-[18px]"
                     matStepperPrevious>
                     {{ "button.back" | translate }}
                 </button>
-                <!-- <button type="button" class="btn btn-primary min-md:tw-min-w-[436px] tw-min-h-[50px] !tw-text-[18px]"
+                <!-- <button type="button" class="btn btn-primary min-md:min-w-[436px] min-h-[50px] !text-[18px]"
                     (click)="saveScheduling()">
                     {{ "button.next" | translate }}
                 </button> -->

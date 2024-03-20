@@ -7,7 +7,7 @@
   }
   
   ul li {
-    @apply tw-px-5 tw-my-2 hover:tw-bg-lightgray tw-cursor-pointer;
+    @apply px-5 my-2 hover:bg-lightgray cursor-pointer;
   }
 :host {
   ::ng-deep.mat-menu-panel {

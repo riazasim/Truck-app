@@ -26,5 +26,5 @@
     left: 0;
   }
 
-  @apply min-lg:tw-max-w-[75vw] min-xl:tw-max-w-[50vw];
+  @apply min-lg:max-w-[75vw] min-xl:max-w-[50vw];
 }

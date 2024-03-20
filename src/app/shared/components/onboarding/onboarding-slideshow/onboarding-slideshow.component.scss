@@ -43,7 +43,7 @@
     .swiper-button-next,
     .swiper-button-prev {
       display: none;
-      @apply min-md:tw-block;
+      @apply min-md:block;
     }
 
     .swiper-button-next {

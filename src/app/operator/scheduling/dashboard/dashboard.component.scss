@@ -1,6 +1,6 @@
 :host {
     ::ng-deep div[scrollviewport] {
-        @apply tw-flex tw-flex-col tw-gap-4;
+        @apply flex flex-col gap-4;
     }
 }
 

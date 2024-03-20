@@ -1,11 +1,11 @@
 <header class="layout-wrapper">
-  <!-- <app-loader class="tw-m-auto tw-flex-grow" *ngIf="(isLoading$ | async) || !(companyName$ | async)" [fullScreen]="false"></app-loader> -->
-  <div *ngIf="(companyName$ | async) && !(isLoading$ | async)" class="tw-flex tw-flex-grow tw-justify-center tw-items-center tw-gap-2">
-    <fa-icon (click)="openChangeLocationModal()" icon="location-dot" class="tw-text-primary tw-cursor-pointer"></fa-icon>
-    <span class="tw-text-3xl tw-font-bold">{{(companyName$ | async)}}</span>
+  <!-- <app-loader class="m-auto flex-grow" *ngIf="(isLoading$ | async) || !(companyName$ | async)" [fullScreen]="false"></app-loader> -->
+  <div *ngIf="(companyName$ | async) && !(isLoading$ | async)" class="flex flex-grow justify-center items-center gap-2">
+    <fa-icon (click)="openChangeLocationModal()" icon="location-dot" class="text-primary cursor-pointer"></fa-icon>
+    <span class="text-3xl font-bold">{{(companyName$ | async)}}</span>
   </div>
-  <div class="tw-flex tw-flex-grow tw-justify-center tw-items-center tw-gap-2" *ngIf="!(companyName$ | async)">
-    <span class="tw-text-3xl tw-font-bold">Transport App</span>
+  <div class="flex flex-grow justify-center items-center gap-2" *ngIf="!(companyName$ | async)">
+    <span class="text-3xl font-bold">Transport App</span>
   </div>
   <div class="logo-container" *ngIf="logoSrc" [routerLink]="logoRedirect" [relativeTo]="activatedRoute.parent">
     <img [src]="logoSrc" alt="logo">
