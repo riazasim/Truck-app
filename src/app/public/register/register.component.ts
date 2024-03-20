@@ -65,27 +65,27 @@ export class RegisterComponent {
     // @ts-ignore
     registerForm: FormGroup<{
         userSetting: FormGroup<{
-            phone: FormControl<string | null>;
+            // phone: FormControl<string | null>;
             lastName: FormControl<string | null>;
-            language: FormControl<string | null>;
+            // language: FormControl<string | null>;
             firstName: FormControl<string | null>;
-            phoneRegionCode: FormControl<string | null>
+            // phoneRegionCode: FormControl<string | null>
         }>;
-        user: FormGroup<{ email: FormControl<string | null> }>
+        user: FormGroup<{ email: FormControl<string | null>;
+                          userRole: FormControl<string | null>}>,
     }> = new FormGroup({
         user:new FormGroup({
-            email:new FormControl(null, [Validators.required, Validators.email])
+            email:new FormControl(null, [Validators.required, Validators.email]),
+            userRole:new FormControl(null, [Validators.required]),
         }),
         userSetting:new FormGroup({
             firstName: new FormControl(null, [Validators.required]),
             lastName: new FormControl(null, [Validators.required]),
-            language: new FormControl(null, [Validators.required]),
-            phone: new FormControl(null, [Validators.required]),
-            phoneRegionCode: new FormControl(null, [Validators.required])
+            // language: new FormControl(null, [Validators.required]),
+            // phone: new FormControl(null, [Validators.required]),
+            // phoneRegionCode: new FormControl(null, [Validators.required])
         })
     })
-
-    // email = this.registerForm.getRawValue().user.email;
 
 
 
@@ -97,6 +97,15 @@ export class RegisterComponent {
               private loaderService: LoaderOrchestratorService,
               private readonly snackBar: MatSnackBar) {
        this.preCompleteSignUp();
+  }
+setRoleValue(event: MouseEvent): void {
+    const clickedElement = event.target as HTMLElement;
+    const value = clickedElement.getAttribute('value');
+    if (value) {
+      console.log('Clicked value:', value);
+      this.registerForm.get('user.userRole')?.setValue(value);
+      // You can perform further actions with the value here
+    }
   }
 
     preCompleteSignUp(): void {
@@ -117,14 +126,15 @@ export class RegisterComponent {
 
             this.registerForm = new FormGroup({
                 user:new FormGroup({
-                    email:new FormControl("mrumari@gmail.com",{nonNullable: false})
+                    email:new FormControl("mrumari@gmail.com",{nonNullable: false}),
+                    userRole:new FormControl("ROLE_USER_TRANSPORT",{nonNullable: false}),
                 }),
                 userSetting:new FormGroup({
                     firstName: new FormControl("Asim", {nonNullable: false}),
                     lastName: new FormControl("Channar", {nonNullable: false}),
-                    language: new FormControl("EN", {nonNullable: false}),
-                    phone: new FormControl("33365356", {nonNullable: false}),
-                    phoneRegionCode: new FormControl("+92", {nonNullable: false})
+                    // language: new FormControl("EN", {nonNullable: false}),
+                    // phone: new FormControl("33365356", {nonNullable: false}),
+                    // phoneRegionCode: new FormControl("+92", {nonNullable: false})
                 })
             });
 
@@ -136,11 +146,11 @@ export class RegisterComponent {
         if (this.registerForm.valid) {
         this.registerForm.disable();
         this.isLoading$.next(true);
-           let language="RO";
-            if (this.isEnglish$){
-                language ="EN"
-            }
-            this.registerForm.patchValue({userSetting:{language:language}});
+        //    let language="RO";
+        //     if (this.isEnglish$){
+        //         language ="EN"
+        //     }
+        //     this.registerForm.patchValue();
               // let data = {
               //     "user": {
               //         "email": this.registerForm.value.email
