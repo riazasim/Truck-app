@@ -21,13 +21,15 @@ export class LocationSettingsComponent {
   }, {
     name: 'Locations',
     link: '../locations'
-  }, {
-    name: 'Partners',
-    link: '../partners'
-  }, {
-    name: 'Partners\' contacts',
-    link: '../partners-contacts'
   },
+  //  {
+  //   name: 'Partners',
+  //   link: '../partners'
+  // },
+  //  {
+  //   name: 'Partners\' contacts',
+  //   link: '../partners-contacts'
+  // },
   {
     name: 'Notifications⚠️',
     link: '../notifications'

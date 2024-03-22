@@ -19,8 +19,8 @@
                 <div class="flex gap-4 max-lg:flex-col items-center justify-stretch">
                     <h3 class="min-xl:block max-xl:hidden heading-4 mr-5 w-full desktop-view">
                         {{'Planning list' | translate}}</h3>
-                    <app-scheduling-search-bar (emitFilterChange)="setSingleSearchFilter($event)">
-                    </app-scheduling-search-bar>
+                    <!-- <app-scheduling-search-bar (emitFilterChange)="setSingleSearchFilter($event)">
+                    </app-scheduling-search-bar> -->
                     <div class="w-full">
                         <datepicker matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
                             [matTooltip]="'Planning date' | translate" (dateChanged)="handleDateChange($event)"

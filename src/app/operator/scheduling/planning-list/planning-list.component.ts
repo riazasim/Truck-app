@@ -8,6 +8,7 @@ import { PlanningService } from 'src/app/core/services/planning.service';
 import { PlanningModel } from 'src/app/core/models/planning.model';
 import { SchedulingDeleteModalComponent } from '../scheduling-delete-modal/scheduling-delete-modal.component';
 import { SchedulingImportModalComponent } from '../scheduling-import-modal/scheduling-import-modal.component';
+import { SchedulingTransferComponent } from '../scheduling-transfer/scheduling-transfer.component';
 
 @Component({
     selector: 'app-planning-list',
@@ -17,6 +18,7 @@ import { SchedulingImportModalComponent } from '../scheduling-import-modal/sched
 })
 export class PlanningListComponent {
     @Output() triggerOpenLogs: EventEmitter<{ view: string, id: number, planning: PlanningModel }> = new EventEmitter();
+    @Output() triggerOpenTransfer: EventEmitter<any> = new EventEmitter();
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     displayedColumns: string[] = ['id', 'manevre', 'vesselId', 'berth', 'products', 'estimatedTimeArrival', 'relativeTimeArrival', 'delay', 'coordinates', 'shipmentStatus', 'actions'];
     dataSource: PlanningModel[] = [];
@@ -89,6 +91,50 @@ export class PlanningListComponent {
                 }
             });
     }
+
+    openDialog() {
+        const dialogRef = this.dialogService.open(SchedulingTransferComponent,{
+          data:{
+            message: 'Are you sure want to delete?',
+            buttonText: {
+              ok: 'Save',
+              cancel: 'No'
+            }
+          }
+        });
+        // const snack = this.snackBar.open('Snack bar open before dialog');
+    
+        // dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+        //   if (confirmed) {
+        //     snack.dismiss();
+        //     const a = document.createElement('a');
+        //     a.click();
+        //     a.remove();
+        //     snack.dismiss();
+        //     this.snackBar.open('Closing snack bar in a few seconds', 'Fechar', {
+        //       duration: 2000,
+        //     });
+        //   }
+        // });
+      }
+    // openTransferModal() {
+    //     this.dialogService.open(SchedulingTransferComponent, {
+            // data: image
+            // data: { "id": id, "title": "planning" }
+        // })
+        // .afterClosed()
+            // .subscribe({
+            //     next: (isDelete: boolean) => {
+            //         if (isDelete) {
+            //             this.isLoading$.next(true);
+            //             this.planningService.delete(id).subscribe(() => {
+            //                 this.retrievePlanningList();
+            //                 this.cd.detectChanges();
+            //             })
+            //         }
+            //     }
+            // });
+    // }
 
     applyFilter(target: any, column: string, isMultipleSearch = false): void {
         if (target.value) {

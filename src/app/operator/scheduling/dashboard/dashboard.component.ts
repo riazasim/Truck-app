@@ -257,11 +257,38 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     handleDateChange(event: string | Date): void {
-        this.filterDate = <Date>event;
+        this.filterDate = event instanceof Date ? event : new Date(event);
+        // this.filterDate = <Date>event;
         this.plannings.length = 0;
         this.isLoading$.next(true);
         this.retrievePlanningList();
     }
+
+    retrievePlannings(fetchMore: boolean = false): void {
+        if (fetchMore && this.hasReachedEndPage$.getValue() || this.isTableView$.getValue()) {
+          return;
+        }
+    
+        if (!fetchMore) this.pageSettings = {...defaultPageSettings};
+        if (fetchMore) this.cardLoading$.next(true);
+        this.planningService.list({ schedulingDate: getFormattedDate(this.filterDate), ...this.appliedFilters, ...this.pageSettings })
+                            .subscribe((response: any) => {
+          if (fetchMore) {
+            if (!response.length) {
+              this.hasReachedEndPage$.next(true);
+              this.cardLoading$.next(false);
+              return;
+            }
+            this.plannings.push(...<any[]>response);
+            this.cardLoading$.next(false);
+          } else {
+            this.plannings = <any[]>response;
+            this.hasReachedEndPage$.next(false);
+          }
+    
+          this.isLoading$.next(false);
+        });
+      }
 
     handleOpenPlanUpgradeWarning(): void {
         this.sidenav.close();
@@ -453,20 +480,76 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         });
     }
 
+    // retrievePlanningList(): void {
+    //     let data = {
+    //         "start": this.pageSettings.start,
+    //         "length": this.pageSettings.length,
+    //         "filters": ["", "", "", "", "", ""],//["firstname/lastname", "status", "role", "phone", "email"]
+    //         "order": [{ "dir": "DESC", "column": 0 }]
+    //     }
+    //     this.planningService.pagination(data).subscribe((response: any) => {
+    //         this.plannings = response.items;
+    //         this.isLoading$.next(false);
+    //         this.newCardsLoading$.next(false);
+    //         this.cd.detectChanges();
+    //     })
+    // }
+
     retrievePlanningList(): void {
+        // Ensure filterDate is not null or undefined before proceeding
+        if (!this.filterDate) {
+            return;
+        }
+    
         let data = {
             "start": this.pageSettings.start,
             "length": this.pageSettings.length,
-            "filters": ["", "", "", "", "", ""],//["firstname/lastname", "status", "role", "phone", "email"]
-            "order": [{ "dir": "DESC", "column": 0 }]
-        }
+            "filters": ["", "", "", "", "", ""], // Assuming these are for other filters
+            "order": [{ "dir": "DESC", "column": 0 }],
+            "dateFilter": this.formatDate(this.filterDate) // Add date filter based on selected date
+        };
+    
         this.planningService.pagination(data).subscribe((response: any) => {
             this.plannings = response.items;
             this.isLoading$.next(false);
             this.newCardsLoading$.next(false);
             this.cd.detectChanges();
-        })
+        });
     }
+
+    formatDate(date: Date | string): string {
+        let formattedDate = '';
+        
+        if (typeof date === 'string') {
+            // Convert the string to a Date object
+            const tempDate = new Date(date);
+            formattedDate = this.formatDateObject(tempDate);
+        } else {
+            formattedDate = this.formatDateObject(date);
+        }
+    
+        return formattedDate;
+    }
+    
+    private formatDateObject(date: Date): string {
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1; // Months are 0-indexed
+        const day = date.getDate();
+    
+        const formattedDate = `${year}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`;
+        return formattedDate;
+    }
+    
+    // Helper function to format date as required by your API
+    // formatDate(date: Date): string {
+    //     // Assuming your API requires date in 'YYYY-MM-DD' format
+    //     const year = date.getFullYear();
+    //     const month = date.getMonth() + 1; // Months are 0-indexed
+    //     const day = date.getDate();
+    
+    //     const formattedDate = `${year}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`;
+    //     return formattedDate;
+    // }
 
     openPlanEditModal(event: any): void {
         const planning = this.editPlanning$.getValue();
@@ -540,14 +623,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
                             })
                             return;
                         }
-                        this.updatePlanning(<any>{
-                            assigningDate: getFormattedDate(this.filterDate),
-                            hour: this.getHour(data.index),
-                            planning: planning.id,
-                            dock: data.dock,
-                            statusListStatus: plannedStatus.id,
-                            timeSlot: this.getHour(data.index)
-                        });
+                        // this
                     } else {
                         this.toggleRef.dismiss();
                     }

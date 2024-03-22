@@ -71,7 +71,7 @@ export const MY_FORMATS = {
         CustomTooltipDirective,
         SafeHtmlPipe,
         ToggleComponent,
-        TimepickerComponent
+        TimepickerComponent,
     ],
     imports: [
         CommonModule,

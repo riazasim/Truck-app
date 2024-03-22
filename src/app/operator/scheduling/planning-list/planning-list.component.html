@@ -151,7 +151,8 @@
                         </th>
                         <td cdk-cell *cdkCellDef="let row" class="flex justify-center gap-4 w-max-content">
                             <div class="flex gap-4">
-                                <img src="assets/images/left-right-list-icon.png" alt="icon" class="cursor-pointer">
+                                <a class="text-primary" (click)="openDialog()"><img src="assets/images/left-right-list-icon.png" alt="icon" class="cursor-pointer"></a>
+                                <!-- <img src="assets/images/left-right-list-icon.png" alt="icon" class="cursor-pointer"> -->
                                 <fa-icon icon="xmark" class="text-[#17A0B5] cursor-pointer" size="lg"
                                     (click)="openDeleteModal(row.id)"></fa-icon>
                             </div>

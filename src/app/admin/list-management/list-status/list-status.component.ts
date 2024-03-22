@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StatusDeleteModalComponent } from '../status-delete-modal/status-delete-modal.component';
@@ -6,6 +6,13 @@ import { StatusListService } from '../../../core/services/status-list.service';
 import { StatusListModel, StatusTypeEnum } from '../../../core/models/status-list.model';
 import { BehaviorSubject } from 'rxjs';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { PlanningModel } from 'src/app/core/models/planning.model';
+import { PlanningService } from 'src/app/core/services/planning.service';
+import { PageEvent } from '@angular/material/paginator';
+import { SchedulingDeleteModalComponent } from 'src/app/operator/scheduling/scheduling-delete-modal/scheduling-delete-modal.component';
+import { Sort } from '@angular/material/sort';
+import { compare } from '@rxweb/reactive-form-validators';
+import { SchedulingImportModalComponent } from 'src/app/operator/scheduling/scheduling-import-modal/scheduling-import-modal.component';
 
 @Component({
   selector: 'app-list-status',
@@ -13,241 +20,168 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
   styleUrls: ['./list-status.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ListStatusComponent implements OnInit {
-  listTitle: string = '';
+export class ListStatusComponent {
+  @Output() triggerOpenLogs: EventEmitter<{ view: string, id: number, planning: PlanningModel }> = new EventEmitter();
   isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
-  isLoadingColor$: BehaviorSubject<boolean[]> = new BehaviorSubject<boolean[]>([]);
-  displayedColumns = ['name', 'type', 'description', 'actions'];
-  dataSource: StatusListModel[] = [];
-  originalSource: StatusListModel[] = [];
+  displayedColumns: string[] = ['id', 'manevre', 'vesselId', 'berth', 'products', 'estimatedTimeArrival', 'relativeTimeArrival', 'delay', 'coordinates', 'shipmentStatus'];
+  dataSource: PlanningModel[] = [];
+  originalSource: PlanningModel[] = [];
   appliedFilters: any = {};
-  isSid: boolean;
-  statusType: StatusTypeEnum = StatusTypeEnum.UNKNOWN;
-  statusTypeEnum = StatusTypeEnum;
-  pageSizeOptions: number[] = [5, 10, 12, 15];
+
+  pageSizeOptions: number[] = [20];
   pageIndex: number;
   pageSize: number;
   length: number;
 
   constructor(private readonly dialogService: MatDialog,
-              private readonly router: Router,
-              private readonly statusListService: StatusListService,
-              private readonly route: ActivatedRoute) {
+      private readonly planningService: PlanningService,
+      private readonly cd: ChangeDetectorRef) {
+      this.retrievePlanningList();
   }
 
-  ngOnInit(): void {
-    this.decideStatus();
-    this.retrieveLists();
-  }
 
-  drop(event: CdkDragDrop<any>) {
-    if (this.isLoading$.value) return;
-    this.isLoading$.next(true);
-    const previousItem = this.dataSource[event.currentIndex];
+  retrievePlanningList(): void {
 
-    switch (this.statusType) {
-      case StatusTypeEnum.TIMESLOT:
-        this.isLoading$.next(false);
-        // this.statusListService.updateDockPosition(event.item.data.id,
-        //   this.getNextPosition(event.item.data.position, previousItem.position)).subscribe(() => {
-        //     this.retrieveLists();
-        // });
-        break;
-      case StatusTypeEnum.SID:
-        this.statusListService.updateSidPosition(event.item.data.id,
-          this.getNextPosition(event.item.data.position, previousItem.position)).subscribe(() => {
-            this.retrieveLists();
-        });
-        break;
-      case StatusTypeEnum.GOODS:
-        this.statusListService.updateGoodsPosition(event.item.data.id,
-          this.getNextPosition(event.item.data.position, previousItem.position)).subscribe(() => {
-            this.retrieveLists();
-        });
-        break;
-    }
-  }
+      this.pageIndex = 0;
+      this.pageSize = 20;
 
-  handleUpdateColor(event: any, statusListStatusId: number, index: number): void {
-    if (!event?.target?.value) return;
-    this.isLoading$.next(true);
-    const updatedLoadingColors = this.isLoadingColor$.value.map((c, i) => {
-      if (i === index) return true;
-
-      return c;
-    })
-    this.isLoadingColor$.next(updatedLoadingColors);
-
-    switch (this.statusType) {
-      case StatusTypeEnum.TIMESLOT:
-        this.isLoadingColor$.next(updatedLoadingColors.map(() => false));
-        this.isLoading$.next(false);
-        // this.statusListService.updateDockColor(statusListStatusId, event.target.value).subscribe((response: StatusListModel[]) => {
-        //   this.processResponse(response);
-        // });
-        break;
-      case StatusTypeEnum.SID:
-        this.statusListService.updateSidColor(statusListStatusId, event.target.value).subscribe((response: StatusListModel[]) => {
-          this.processResponse(response);
-        });
-        break;
-      case StatusTypeEnum.GOODS:
-        this.statusListService.updateGoodsColor(statusListStatusId, event.target.value).subscribe((response: StatusListModel[]) => {
-          this.processResponse(response);
-        });
-        break;
-    }
-  }
-
-  getNextPosition(currentPosition: number, replacePosition: number): number {
-    const step = replacePosition - currentPosition;
-
-    if (step < 0) {
-      return (replacePosition - 1) < 0 ? 1 : replacePosition - 1;
-    }
-
-    if (step === 0) {
-      return currentPosition + 1;
-    }
-
-    if (step > 0) {
-      return replacePosition + 1;
-    }
-
-    return 1;
-  }
-
-  openDeleteModal(statusList: StatusListModel): void {
-    this.dialogService.open(StatusDeleteModalComponent, {
-      disableClose: true,
-      data: {
-        name: statusList.name
+      let data = {
+          "start": this.pageIndex,
+          "length": this.pageSize,
+          "filters": ["", "", "", "", "", ""],//["firstname/lastname", "status", "role", "phone", "email"]
+          "order": [{ "dir": "DESC", "column": 0 }]
       }
-    }).afterClosed()
-      .subscribe({
-        next: (isDelete: boolean) => {
-          if (isDelete) {
-            this.isLoading$.next(true);
-            switch (this.statusType) {
-              case StatusTypeEnum.TIMESLOT:
-                this.isLoading$.next(false);
-                // this.statusListService.deleteDock(statusList.statusListStatusId).subscribe({
-                //   next: () => {
-                //     this.retrieveLists();
-                //   },
-                //   error: () => {
-                //     this.isLoading$.next(false);
-                //   }
-                // })
-                break;
-              case StatusTypeEnum.SID:
-                this.statusListService.deleteSid(statusList.id).subscribe(() => {
-                    this.retrieveLists();
-                  })
-                break;
-              case StatusTypeEnum.GOODS:
-                this.statusListService.deleteGoods(statusList.statusListStatusId).subscribe({
-                  next: () => {
-                  this.retrieveLists();
-                  },
-                  error: () => {
-                      this.isLoading$.next(false);
+      this.planningService.pagination(data).subscribe((response: any) => {
+          this.dataSource = response.items;
+          this.originalSource = response.items;
+          this.length = response.noTotal;
+          this.isLoading$.next(false)
+          this.cd.detectChanges();
+      })
+  }
+
+  onPaginateChange(event: PageEvent) {
+      this.isLoading$.next(true);
+      let data = {
+          "start": event.pageIndex ? event.pageIndex * event.pageSize : event.pageIndex,
+
+          "length": event.pageSize,
+          "filters": ["", "", "", "", "", ""],//["firstname/lastname", "status", "role", "phone", "email"]
+          "order": [{ "dir": "DESC", "column": 0 }]
+      }
+      this.planningService.pagination(data).subscribe(response => {
+          this.dataSource = response.items;
+          this.originalSource = response.items;
+          this.isLoading$.next(false);
+          this.cd.detectChanges();
+      })
+  }
+
+  openDeleteModal(id: number) {
+      this.dialogService.open(SchedulingDeleteModalComponent, {
+          disableClose: true,
+          data: { "id": id, "title": "planning" }
+      }).afterClosed()
+          .subscribe({
+              next: (isDelete: boolean) => {
+                  if (isDelete) {
+                      this.isLoading$.next(true);
+                      this.planningService.delete(id).subscribe(() => {
+                          this.retrievePlanningList();
+                          this.cd.detectChanges();
+                      })
                   }
-                })
-                break;
-            }
+              }
+          });
+  }
+
+  applyFilter(target: any, column: string, isMultipleSearch = false): void {
+      if (target.value) {
+          if (isMultipleSearch) {
+              this.appliedFilters['contactFirstName'] = target.value;
+              this.appliedFilters['contactLastName'] = target.value;
+              this.appliedFilters['contactPhoneRegionCode'] = target.value;
+              this.appliedFilters['contactPhone'] = target.value;
+              this.appliedFilters['contactEmail'] = target.value;
+          } else {
+              this.appliedFilters[column] = target.value;
           }
-        }
+      } else {
+          if (isMultipleSearch) {
+              delete this.appliedFilters['contactFirstName']
+              delete this.appliedFilters['contactLastName']
+              delete this.appliedFilters['contactPhoneRegionCode']
+              delete this.appliedFilters['contactPhone']
+              delete this.appliedFilters['contactEmail']
+          } else {
+              delete this.appliedFilters[column];
+          }
+      }
+
+      this.dataSource = this.originalSource.filter((el: any) => {
+          if (Object.keys(this.appliedFilters).length) {
+              let expression = false;
+              if (isMultipleSearch && target.value) {
+                  expression =
+                      el['contactFirstName'].concat(' ', el['contactLastName']).toLowerCase().includes(this.appliedFilters['contactFirstName'].toLowerCase()) ||
+                      el['contactLastName'].concat(' ', el['contactFirstName']).toLowerCase().includes(this.appliedFilters['contactLastName'].toLowerCase()) ||
+                      el['contactPhoneRegionCode'].toLowerCase().includes(this.appliedFilters['contactPhoneRegionCode'].toLowerCase()) ||
+                      el['contactPhone'].toLowerCase().includes(this.appliedFilters['contactPhone'].toLowerCase()) ||
+                      el['contactEmail'].toLowerCase().includes(this.appliedFilters['contactEmail'].toLowerCase());
+
+                  return expression;
+              } else {
+                  for (let filter in this.appliedFilters) {
+                      expression = el[filter].toLowerCase().includes(this.appliedFilters[filter].toLowerCase());
+                      if (!expression) break;
+                  }
+
+                  return expression;
+              }
+          }
+
+          return isMultipleSearch ? true : el[column].includes(target.value);
       });
   }
 
-  applyFilter(target: any, column: string): void {
-    if (target.value) {
-      this.appliedFilters[column] = target.value;
-    } else {
-      delete this.appliedFilters[column];
-    }
-
-    this.dataSource = this.originalSource.filter((el: any) => {
-      if (Object.keys(this.appliedFilters).length) {
-        let expression = false;
-        for (let filter in this.appliedFilters) {
-          expression = el[filter]?.toLowerCase().includes(this.appliedFilters[filter].toLowerCase())
-          if (!expression) break;
-        }
-
-        return expression;
+  sortData(sort: Sort): void {
+      const data = this.dataSource.slice();
+      if (!sort.active || sort.direction === '') {
+          this.dataSource = data;
+          return;
       }
 
-      if (!target.value) return true;
-
-      return el[column].toLowerCase().includes(target.value.toLowerCase());
-    });
+      // this.dataSource = data.sort((a: any, b: any) => {
+      //     const isAsc = sort.direction === 'asc';
+      //     switch (sort.active) {
+      //         case 'id': return compare(a.id, b.id, isAsc);
+      //         case 'manevre': return compare(a.manevre, b.manevre, isAsc);
+      //         case 'vesselId': return compare(a.vesselId, b.vesselId, isAsc);
+      //         case 'berth': return compare(a.berth, b.berth, isAsc);
+      //         case 'products': return compare(a.products, b.products, isAsc);
+      //         case 'estimatedTimeArrival': return compare(a.estimatedTimeArrival, b.estimatedTimeArrival, isAsc);
+      //         case 'relativeTimeArrival': return compare(a.relativeTimeArrival, b.relativeTimeArrival, isAsc);
+      //         case 'delay': return compare(a.delay, b.delay, isAsc);
+      //         case 'coordinates': return compare(a.coordinates, b.coordinates, isAsc);
+      //         case 'shipmentStatus': return compare(a.shipmentStatus, b.shipmentStatus, isAsc);
+      //         default: return 0;
+      //     }
+      // });
   }
-
-  redirectAddList(): void {
-    this.router.navigate(['../add'], { relativeTo: this.route });
-  }
-
-  transformHex(stringColor: string) {
-    if (!stringColor.startsWith('#')) {
-      const ctx = document.createElement('canvas').getContext('2d');
-      (ctx as any).fillStyle = stringColor;
-      return (ctx as any).fillStyle;
-    }
-
-    return stringColor;
-  }
-
-  retrieveLists(): void {
-    switch (this.statusType) {
-      case StatusTypeEnum.TIMESLOT:
-        this.listTitle = 'Timeslot Status';
-        this.statusListService.listTimeSlots().subscribe((response: StatusListModel[]) => this.processResponse(response))
-        break;
-      case StatusTypeEnum.SID:
-        this.listTitle = 'SID Status';
-        this.pageIndex=0;
-        this.pageSize=5;
-
-        let data={
-            "start": this.pageIndex,
-            "length": this.pageSize,
-            "filters": ["","","",""],
-            "order": [{"dir": "DESC", "column": 0}]
-        }
-        this.statusListService.paginationSid(data).subscribe(response => {
-                 this.dataSource = response.items;
-                 this.originalSource = response.items;
-                 this.length=response.noTotal;
-                 this.isLoading$.next(false);
-        })
-        break;
-      case StatusTypeEnum.GOODS:
-        this.listTitle = 'Goods Status';
-      this.statusListService.listGoods().subscribe((response: StatusListModel[]) => this.processResponse(response))
-        break;
-    }
-  }
-
-  private decideStatus(): void {
-    const isTimeSlot = this.router.url.endsWith('timeslot-status');
-    const isSid = this.router.url.endsWith('sid-status');
-    const isGoods = this.router.url.endsWith('goods-status');
-
-    switch(true) {
-      case isTimeSlot: this.statusType = StatusTypeEnum.TIMESLOT; break;
-      case isSid: this.statusType = StatusTypeEnum.SID; break;
-      case isGoods: this.statusType = StatusTypeEnum.GOODS; break;
-      default: this.statusType = StatusTypeEnum.UNKNOWN; break;
-    }
-  }
-
-  private processResponse(response: StatusListModel[]): void {
-    const sortedList = response.sort((a,b) => a.position - b.position);
-    this.dataSource = sortedList;
-    this.originalSource = sortedList;
-    this.isLoading$.next(false);
-    this.isLoadingColor$.next(response.map(() => false));
+  openImportModal(): void {
+      this.isLoading$.next(true);
+      this.dialogService.open(SchedulingImportModalComponent, {
+          disableClose: true,
+          data: {}
+      }).afterClosed()
+          .subscribe({
+              next: (isImported) => {
+                  if (isImported) {
+                      this.retrievePlanningList();
+                  } else {
+                      this.isLoading$.next(false);
+                  }
+              }
+          });
   }
 }

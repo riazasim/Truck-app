@@ -56,13 +56,13 @@
         <div class="flex flex-col gap-8 text-center">
             <button [disabled]="isLoading$ | async" type="submit" class="btn btn-primary w-full"
                 (click)="step$.next(3)">Continue</button>
-            <div class="flex flex-col gap-2">
+            <!-- <div class="flex flex-col gap-2">
                 <p>Or sign up with another account</p>
                 <div class="flex gap-12 justify-center">
                     <img src="assets/images/AppleLogo.svg" alt="Apple Logo">
                     <img src="assets/images/GoogleLogo.svg" alt="Google Logo">
                 </div>
-            </div>
+            </div> -->
             <p class="heading-5 text-textDefault font-bold">Already have an account? <a
                     class="text-primary cursor-pointer" routerLink="../sign-in">Sign in</a></p>
         </div>

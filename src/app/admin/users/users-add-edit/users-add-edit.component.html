@@ -58,8 +58,9 @@
                     >
                         <option value="" disabled>Select user role</option>
                         <option value="OPERATOR">OPERATOR</option>
-                        <option value="DRIVER">DRIVER</option>
-                        <option value="PARTNER">PARTNER</option>
+                        <option value="CAPTAIN">CAPTAIN</option>
+                        <!-- <option value="DRIVER">DRIVER</option> -->
+                        <!-- <option value="PARTNER">PARTNER</option> -->
                     </select>
                 </div>
             </div>
@@ -76,8 +77,8 @@
                         formControlName="status"
                     >
                         <option value="" disabled>Select status</option>
-                        <option value="true">Active</option>
-                        <option value="false">Inactive</option>
+                        <option [value]="status.value" *ngFor="let status of status">{{status.name}}</option>
+                        <!-- <option [value] = 'false'>Inactive</option> -->
                     </select>
                 </div>
             </div>

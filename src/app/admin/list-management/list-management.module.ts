@@ -24,6 +24,8 @@ import { StatusDeleteModalComponent } from './status-delete-modal/status-delete-
 import { StatusSuccessComponent } from './status-success/status-success.component';
 import { MatSortModule } from '@angular/material/sort';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatChipsModule } from '@angular/material/chips';
 
 
 @NgModule({
@@ -52,7 +54,9 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     FormsModule,
     ReactiveFormsModule,
     MatAutocompleteModule,
-    DragDropModule
+    DragDropModule,
+    MatPaginatorModule,
+    MatChipsModule
   ],
 })
 export class ListManagementModule { }

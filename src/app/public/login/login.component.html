@@ -16,5 +16,6 @@
 
   <div class="text-center">
     <button [disabled]="isLoading$ | async" type="submit" class="btn btn-primary min-w-xs" (click)="sigIn()">Sign In</button>
+    <button [disabled]="isLoading$ | async" type="submit" class="btn btn-outline-primary min-w-xs mt-5" routerLink="../sign-up">Sign Up</button>
   </div>
 </div>

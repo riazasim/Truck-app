@@ -30,7 +30,7 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   create(data: UserModel): Observable<any> {
-    return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/createUser`, wrapJsonForRequest(data));
+    return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/createUser`, data);
   }
 
   edit(id:number,data: UserModel): Observable<any> {
