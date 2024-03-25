@@ -48,13 +48,18 @@
                 <div mat-sort-header="status">Status</div>
                 <select (change)="filterByStatus($event)" filter-select>
                   <option value="" selected>Select</option>
-                  <option value="true">ACTIVE</option>
-                  <option value="false">INACTIVE</option>
+                  <option value="true">Active</option>
+                  <option value="false">Inactive</option>
                 </select>
               </section>
             </th>
-<!--            <td cdk-cell *cdkCellDef="let row">{{row.status}}</td>-->
-             <td cdk-cell *cdkCellDef="let row">{{row.status ? 'ACTIVE': 'INACTIVE'}}</td>
+             <td cdk-cell *cdkCellDef="let row">
+              <!-- {{row.status ? 'Active': 'Inactive'}} -->
+              <mat-chip
+              [ngStyle]="{'background-color': row.status === true ? 'green' : 'red'}"
+          >
+              {{ row.status === true ? 'Active' : 'Inactive'}}
+          </mat-chip></td>
           </ng-container>
 
           <ng-container cdkColumnDef="loadingCapacity">

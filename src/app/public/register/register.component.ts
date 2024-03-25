@@ -180,7 +180,7 @@ export class RegisterComponent {
                             //     panelClass: ['success-snackbar'],
                             //     verticalPosition: 'bottom',
                             // });
-                            handleSuccess(this.snackBar, response, this.isLoading$)
+                            handleSuccess(this.snackBar, response.data.attributes, this.isLoading$)
                             this.loaderService.hideLoader()
                         })
                 }, error: (body) => {

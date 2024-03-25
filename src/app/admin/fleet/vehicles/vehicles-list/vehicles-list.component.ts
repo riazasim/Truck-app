@@ -14,9 +14,8 @@ import { compare } from 'src/app/shared/utils/sort.function';
 @Component({
   selector: 'app-vehicles-list',
   templateUrl: './vehicles-list.component.html',
-  // templateUrl: './simple-mat-table.component.html',
+  styleUrl: './vehicles-list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  //styleUrls: ['./simple-mat-table.component.scss']
 })
 export class VehiclesListComponent implements OnInit {
   isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
