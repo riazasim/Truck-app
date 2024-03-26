@@ -15,11 +15,15 @@
                             </section>
                         </th>
                         <td cdk-cell *cdkCellDef="let row">
-                            <a class="text-primary" href="javascript:void(0)" (click)="triggerOpenLogs.emit({ view: 'view', id: row.id, planning: row })">{{row.id || '-'}}</a>
-                          </td>
-                          <td cdk-footer-cell *cdkFooterCellDef [colSpan]="displayedColumns.length" class="py-4 font-bold text-center">
+                            {{row.id || '-'}}
+                            <!-- <a class="text-primary" href="javascript:void(0)"
+                                (click)="triggerOpenLogs.emit({ view: 'view', id: row.id, planning: row , modal : 'shipment' })">{{row.id
+                                || '-'}}</a> -->
+                        </td>
+                        <td cdk-footer-cell *cdkFooterCellDef [colSpan]="displayedColumns.length"
+                            class="py-4 font-bold text-center">
                             {{'messages.there-no-more-items' | translate}}
-                          </td>
+                        </td>
                     </ng-container>
                     <ng-container cdkColumnDef="manevre">
                         <th cdk-header-cell *cdkHeaderCellDef scope="col" class="max-w-20">
@@ -28,7 +32,7 @@
                             </section>
                         </th>
                         <td cdk-cell *cdkCellDef="let row">
-                            {{ row.manevre || "-" }}
+                            {{ row.planning.manevre || "-" }}
                         </td>
                     </ng-container>
 
@@ -39,7 +43,7 @@
                             </section>
                         </th>
                         <td cdk-cell *cdkCellDef="let row">
-                            {{ row.vesselId || "-" }}
+                            {{ row.planning.vesselId || "-" }}
                         </td>
                     </ng-container>
 
@@ -52,7 +56,7 @@
                             </section>
                         </th>
                         <td cdk-cell *cdkCellDef="let row">
-                            {{ row.berth || "-" }}
+                            {{ row.planning.berth || "-" }}
                         </td>
                     </ng-container>
                     <ng-container cdkColumnDef="products">
@@ -64,7 +68,7 @@
                             </section>
                         </th>
                         <td cdk-cell *cdkCellDef="let row">
-                            {{ row.products || "-" }}
+                            {{ row.planning.products || "-" }}
                         </td>
                     </ng-container>
                     <ng-container cdkColumnDef="estimatedTimeArrival">
@@ -76,7 +80,7 @@
                             </section>
                         </th>
                         <td cdk-cell *cdkCellDef="let row">
-                            {{ row.estimatedTimeArrival || "-" }}
+                            {{ row.planning.estimatedTimeArrival || "-" }}
                         </td>
                     </ng-container>
                     <ng-container cdkColumnDef="relativeTimeArrival">
@@ -88,7 +92,7 @@
                             </section>
                         </th>
                         <td cdk-cell *cdkCellDef="let row">
-                            {{ row.relativeTimeArrival || "-" }}
+                            {{ row.planning.relativeTimeArrival || "-" }}
                         </td>
                     </ng-container>
                     <ng-container cdkColumnDef="delay">
@@ -100,7 +104,7 @@
                             </section>
                         </th>
                         <td cdk-cell *cdkCellDef="let row">
-                            {{ row.delay || "-" }}
+                            {{ row.planning.delay || "-" }}
                         </td>
                     </ng-container>
                     <ng-container cdkColumnDef="coordinates">
@@ -112,7 +116,7 @@
                             </section>
                         </th>
                         <td cdk-cell *cdkCellDef="let row">
-                            {{ row.coordinates || "-" }}
+                            {{ row.planning.coordinates || "-" }}
                         </td>
                     </ng-container>
                     <ng-container cdkColumnDef="shipmentStatus">
@@ -126,9 +130,8 @@
                         <td cdk-cell *cdkCellDef="let row">
                             <!-- {{ row.shipmentStatus }} -->
                             <mat-chip
-                                [ngStyle]="{'background-color': row.shipmentStatus === 'Port Queue' ? '#3386FE' : '#1C3F47'}"
-                                >
-                                {{ row.shipmentStatus === 'Port Queue' ? 'Port Queue' : row.shipmentStatus === 'Service'
+                                [ngStyle]="{'background-color': row.planning.shipmentStatus === 'Port Queue' ? '#3386FE' : '#1C3F47'}">
+                                {{ row.planning.shipmentStatus === 'Port Queue' ? 'Port Queue' : row.planning.shipmentStatus === 'Service'
                                 ? 'Service' : 'Closed' }}
                             </mat-chip>
                             <!-- <mat-chip
@@ -151,7 +154,10 @@
                         </th>
                         <td cdk-cell *cdkCellDef="let row" class="flex justify-center gap-4 w-max-content">
                             <div class="flex gap-4">
-                                <a class="text-primary" (click)="openDialog()"><img src="assets/images/left-right-list-icon.png" alt="icon" class="cursor-pointer"></a>
+                                <a class="text-primary" href="javascript:void(0)"
+                                    (click)="triggerOpenLogs.emit({ view: 'view', id: row.id, planning: row , modal : 'transfer' })"><img
+                                        src="assets/images/left-right-list-icon.png" alt="icon"
+                                        class="cursor-pointer"></a>
                                 <!-- <img src="assets/images/left-right-list-icon.png" alt="icon" class="cursor-pointer"> -->
                                 <fa-icon icon="xmark" class="text-[#17A0B5] cursor-pointer" size="lg"
                                     (click)="openDeleteModal(row.id)"></fa-icon>
@@ -159,8 +165,12 @@
                             <div class="flex gap-4">
                                 <fa-icon icon="eye" class="text-[#17A0B5] cursor-pointer" size="lg"
                                     [routerLink]="['../edit', row.id]"></fa-icon>
-                                <img src="assets/images/boat.svg" alt="icon" class="cursor-pointer max-w-5 max-h-5" [routerLink]="['../route',row.id ,'convoy-list']" >
-                                <a class="text-primary" href="javascript:void(0)" (click)="triggerOpenLogs.emit({ view: 'view', id: row.id, planning: row })"><img src="assets/images/rotate-left-list-icon.svg" alt="icon" class="cursor-pointer"></a>
+                                <img src="assets/images/boat.svg" alt="icon" class="cursor-pointer max-w-5 max-h-5"
+                                    [routerLink]="['../route',row.id ,'convoy-list']">
+                                <a class="text-primary" href="javascript:void(0)"
+                                    (click)="triggerOpenLogs.emit({ view: 'view', id: row.id, planning: row , modal : 'shipment' })"><img
+                                        src="assets/images/rotate-left-list-icon.svg" alt="icon"
+                                        class="cursor-pointer"></a>
                             </div>
                         </td>
                     </ng-container>

@@ -17,8 +17,8 @@ import { SchedulingTransferComponent } from '../scheduling-transfer/scheduling-t
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PlanningListComponent {
-    @Output() triggerOpenLogs: EventEmitter<{ view: string, id: number, planning: PlanningModel }> = new EventEmitter();
-    @Output() triggerOpenTransfer: EventEmitter<any> = new EventEmitter();
+    @Output() triggerOpenLogs: EventEmitter<{ view: string, id: number, planning: PlanningModel , modal : string }> = new EventEmitter();
+    @Output() triggerOpenTransfer: EventEmitter<{ view: string, id: number, planning: PlanningModel , modal : string }> = new EventEmitter();
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     displayedColumns: string[] = ['id', 'manevre', 'vesselId', 'berth', 'products', 'estimatedTimeArrival', 'relativeTimeArrival', 'delay', 'coordinates', 'shipmentStatus', 'actions'];
     dataSource: PlanningModel[] = [];

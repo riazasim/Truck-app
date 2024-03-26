@@ -20,8 +20,8 @@ export interface convoyModel {
     width: number;
     maxDraft: number;
     maxQuantity: number;
-    agent: string;
-    maneuvering: string;
+    agent?: string;
+    maneuvering?: string;
     shipowner: string;
     purpose: string;
     operator: string;

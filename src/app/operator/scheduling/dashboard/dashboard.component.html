@@ -4,7 +4,7 @@
             <scheduling-edit-plan *ngSwitchCase="'edit'" [sidenav]="sidenav" [isLoading]="!!(isLoading$ | async)"
                 [planning$]="editPlanning$" (triggerUpdatePlanning)="openPlanEditModal($event)"
                 [filterDate]="filterDate" (triggerFetchPlannings)="handleDateChange($event)"></scheduling-edit-plan>
-            <scheduling-view-log [planning$]="editPlanning$" [id]="logId" *ngSwitchCase="'view'"
+            <scheduling-view-log [planning$]="editPlanning$" [id]="logId" *ngSwitchCase="'view'" [modal]="logModal"
                 [sidenav]="sidenav"></scheduling-view-log>
             <scheduling-send-message [planning$]="editPlanning$" *ngSwitchCase="'mess'" [sidenav]="sidenav"
                 (triggerPlanUpgradeWarning)="handleOpenPlanUpgradeWarning()"></scheduling-send-message>

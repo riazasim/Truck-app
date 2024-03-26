@@ -43,7 +43,10 @@
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_weight.svg">
                         <input inputRef type="number" placeholder="C.max (t)*" formControlName="maxQuantity" />
                     </div>
-                    <div iconic-select-wrapper leftIcon="user" [rightIcon]="['fas', 'caret-down']">
+                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_ship_owner.svg">
+                        <input inputRef type="text" placeholder="Ship owner" formControlName="shipowner" />
+                    </div>
+                    <!-- <div iconic-select-wrapper leftIcon="user" [rightIcon]="['fas', 'caret-down']">
                         <select inputRef name="agent" id="agent" formControlName="agent">
                             <option disabled selected>Agent</option>
                             <option *ngFor="let agent of agent" [value]="agent.id">
@@ -53,13 +56,13 @@
                     </div>
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_manevra.svg">
                         <input inputRef type="text" placeholder="maneuvering" formControlName="maneuvering" />
-                    </div>
+                    </div> -->
                 </div>
                 <div class="flex flex-col gap-x-10 gap-y-4 px-[50px]">
                     <!-- <p>&nbsp;</p> -->
-                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_ship_owner.svg">
+                    <!-- <div iconic-input-wrapper leftSvg="assets/images/scheduling_ship_owner.svg">
                         <input inputRef type="text" placeholder="Ship owner" formControlName="shipowner" />
-                    </div>
+                    </div> -->
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_purpose.svg">
                         <input inputRef type="text" placeholder="Purpose" formControlName="purpose" />
                     </div>

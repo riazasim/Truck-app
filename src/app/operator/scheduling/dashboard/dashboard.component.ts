@@ -57,6 +57,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     filterTypeEnum = FilterTypeENum;
 
     logId: number;
+    logModal : string;
 
     toggleRef: MatSnackBarRef<TextOnlySnackBar>;
     statuses: StatusListModel[] = [];
@@ -631,7 +632,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
             });
     }
 
-    toggleSidenav(data: { view: string, id: number, planning?: PlanningModel }) {
+    toggleSidenav(data: { view: string, id: number, planning?: PlanningModel ,modal : string }) {
+        this.logModal = data.modal
         switch (data.view) {
             case 'copy':
                 this.logId = data.id;

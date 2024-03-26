@@ -32,6 +32,8 @@ import { getFormatHourSlot } from '../scheduling-box.helper';
 import * as moment from 'moment';
 import { extractPhoneNumber } from 'src/app/shared/validators/phone-numbers';
 import { PlanningModel, convoyModel } from 'src/app/core/models/planning.model';
+import { ShipsService } from 'src/app/core/services/ships.service';
+import { ShipModel } from 'src/app/core/models/ship.model';
 
 @Component({
     selector: 'app-add-scheduling',
@@ -100,7 +102,7 @@ export class AddSchedulingComponent implements OnInit, OnDestroy {
     getFormatHourSlot: Function;
 
     id: number;
-
+    shipsList: ShipModel[] = [];
     filterDate: Date = new Date();
     zone = [
         { id: 1, name: 'zone1' },
@@ -181,6 +183,7 @@ export class AddSchedulingComponent implements OnInit, OnDestroy {
         private readonly buildingService: BuildingService,
         private readonly statusListStatus: StatusListService,
         private readonly snackBar: MatSnackBar,
+        private readonly shipsService: ShipsService,
         private readonly organizationService: OrganizationService) {
         this.getFormatHourSlot = getFormatHourSlot.bind(this);
     }
@@ -208,6 +211,8 @@ export class AddSchedulingComponent implements OnInit, OnDestroy {
             // Update the step status accordingly
             if (this.matStepper.selectedIndex === 0) {
                 this.stepOne$.next(true);
+                this.retrieveShips();
+                
             } else if (this.matStepper.selectedIndex === 1) {
                 this.stepTwo$.next(true);
             } else if (this.matStepper.selectedIndex === 2) {
@@ -238,6 +243,32 @@ export class AddSchedulingComponent implements OnInit, OnDestroy {
     }
     OnTimeChange(value : any){
         this.timeVal = value
+    }
+
+    retrieveShips(): void {
+         let data = {
+          "start": '',
+          "length": '',
+          "filters": ["", "", "", "", ""],
+          "order": [{ "dir": "DESC", "column": 0 }]
+        }
+        this.shipsService.pagination(data).subscribe(response => {
+          this.shipsList = response.items;
+          this.isLoading$.next(false);
+        })
+      }
+
+      onShipSelected(ev : any): void {
+        const selectedShipId = ev.target.value
+        const selectedShip = this.shipsList.find(ship => Number(ship.id) === Number(selectedShipId));
+    
+        if (selectedShip) {
+            this.convoyForm.patchValue({
+                width: selectedShip.width || '',
+                maxDraft: selectedShip.maxDraft || '',
+                maxQuantity: selectedShip.maxCapacity || ''
+            });
+        }
     }
 
     // subscribeForDockChanges(): void

@@ -140,6 +140,20 @@ export class PlanningService {
                 })
             );
     }
+    getTransferData(data: any): Observable<any> {
+        return this.http.post<ResponseArrayPaginationWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getUsersByUserRole`, wrapJsonForRequest(data))
+            .pipe(pluckArrayPaginationWrapperData<any, ResponseArrayPaginationWrapper<any>>(),
+                map((u: any) => {
+                    u.items = (<any>u.items).map(((c: CustomFieldData) => c.attributes));
+                    return u;
+                })
+            );
+    }
+
+    assignTransferData(data: any): Observable<any> {
+        return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/assignPlanningToUser`, data);
+    }
+
 
     /**
      * filters
