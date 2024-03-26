@@ -47,8 +47,8 @@ export class AuthService {
     return this.http.get(`${environment.apiUrl}/api/logout`);
   }
 
-  public checkCredentials(): Observable<boolean> {
-    return of(true);
+  public checkCredentials(): Observable<any> {
+    return this.http.get(`${environment.apiUrl}${environment.apiVersion}/checkAPICredentials`);
   }
 
   saveAuth(data: AuthModel): void {

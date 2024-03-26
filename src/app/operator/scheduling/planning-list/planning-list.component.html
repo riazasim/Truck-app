@@ -155,7 +155,7 @@
                         <td cdk-cell *cdkCellDef="let row" class="flex justify-center gap-4 w-max-content">
                             <div class="flex gap-4">
                                 <a class="text-primary" href="javascript:void(0)"
-                                    (click)="triggerOpenLogs.emit({ view: 'view', id: row.id, planning: row , modal : 'transfer' })"><img
+                                    (click)="OnEmit(row , 'transfer')"><img
                                         src="assets/images/left-right-list-icon.png" alt="icon"
                                         class="cursor-pointer"></a>
                                 <!-- <img src="assets/images/left-right-list-icon.png" alt="icon" class="cursor-pointer"> -->
@@ -168,7 +168,7 @@
                                 <img src="assets/images/boat.svg" alt="icon" class="cursor-pointer max-w-5 max-h-5"
                                     [routerLink]="['../route',row.id ,'convoy-list']">
                                 <a class="text-primary" href="javascript:void(0)"
-                                    (click)="triggerOpenLogs.emit({ view: 'view', id: row.id, planning: row , modal : 'shipment' })"><img
+                                    (click)="OnEmit(row , 'shipment')"><img
                                         src="assets/images/rotate-left-list-icon.svg" alt="icon"
                                         class="cursor-pointer"></a>
                             </div>

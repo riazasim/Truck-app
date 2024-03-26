@@ -12,43 +12,43 @@ import { CredentialsGuard } from "./core/guards/credentials.guard";
 import { USER_TYPE_ADMIN } from "./core/constants/roles.constant";
 
 const routes: Routes = [
-  {
-    path: '',
-    loadChildren: () => import('./public/public.module').then(m => m.PublicModule)
-  },
-  {
-    path: 'admin',
-    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule),
-    canLoad: [CredentialsGuard],
-    data: {
-      roleGuardData: {
-        requiredRoles: [USER_TYPE_ADMIN],
-        fallbackRoute: '/sign-in',
-      },
-      credentialsGuardData: {
-        canDeactivate: {
-          inverse: true
-        }
-      }
+    {
+        path: '',
+        loadChildren: () => import('./public/public.module').then(m => m.PublicModule)
+    },
+    {
+        path: 'admin',
+        loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule),
+        // canLoad: [CredentialsGuard],
+        // data: {
+        //     roleGuardData: {
+        //         requiredRoles: [],
+        //         fallbackRoute: '/sign-in',
+        //     },
+        //     credentialsGuardData: {
+        //         canDeactivate: {
+        //             inverse: true
+        //         }
+        //     }
+        // }
+    },
+    {
+        path: 'operator',
+        loadChildren: () => import('./operator/operator.module').then(m => m.OperatorModule),
+        // canLoad: [CredentialsGuard],
+        // canDeactivate: [CredentialsGuard],
+        // data: {
+        //   roleGuardData: {
+        //     requiredRoles: [USER_TYPE_OPERATOR, USER_TYPE_ADMIN],
+        //     fallbackRoute: '/sign-in',
+        //   },
+        //   credentialsGuardData: {
+        //     canDeactivate: {
+        //       inverse: false
+        //     }
+        //   }
+        // }
     }
-  },
-  {
-    path: 'operator',
-    loadChildren: () => import('./operator/operator.module').then(m => m.OperatorModule),
-    // canLoad: [CredentialsGuard],
-    // canDeactivate: [CredentialsGuard],
-    // data: {
-    //   roleGuardData: {
-    //     requiredRoles: [USER_TYPE_OPERATOR, USER_TYPE_ADMIN],
-    //     fallbackRoute: '/sign-in',
-    //   },
-    //   credentialsGuardData: {
-    //     canDeactivate: {
-    //       inverse: false
-    //     }
-    //   }
-    // }
-  }
 ];
 
 // @NgModule({

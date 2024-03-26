@@ -8,7 +8,6 @@ import { PlanningListComponent } from './planning-list/planning-list.component';
 import { EditSchedulingRouteComponent } from './edit-scheduling-route/edit-scheduling-route.component';
 import { EditSchedulingConvoyComponent } from './edit-scheduling-convoy/edit-scheduling-convoy.component';
 import { EditSchedulingConvoyPageComponent } from './edit-scheduling-convoy/edit-scheduling-convoy-page/edit-scheduling-convoy-page.component';
-import { SchedulingTransferComponent } from './scheduling-transfer/scheduling-transfer.component';
 import { NoRestrictionsComponent } from './no-restrictions/no-restrictions.component';
 import { RestrictionsComponent } from './restrictions/restrictions.component';
 
@@ -45,10 +44,6 @@ const routes: Routes = [
       {
         path: 'route/:id/convoy-list/:id',
         component:  EditSchedulingConvoyPageComponent
-      },
-      {
-        path: 'transfer',
-        component:  SchedulingTransferComponent
       },
       {
         path: 'no-restrictions',
