@@ -164,9 +164,9 @@
                             </div>
                             <div class="flex gap-4">
                                 <fa-icon icon="eye" class="text-[#17A0B5] cursor-pointer" size="lg"
-                                    [routerLink]="['../edit', row.id]"></fa-icon>
+                                    [routerLink]="['../edit', row.planning.id]"></fa-icon>
                                 <img src="assets/images/boat.svg" alt="icon" class="cursor-pointer max-w-5 max-h-5"
-                                    [routerLink]="['../route',row.id ,'convoy-list']">
+                                    [routerLink]="['../route',row.planning.id ,'convoy-list']">
                                 <a class="text-primary" href="javascript:void(0)"
                                     (click)="OnEmit(row , 'shipment')"><img
                                         src="assets/images/rotate-left-list-icon.svg" alt="icon"

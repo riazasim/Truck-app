@@ -5,15 +5,6 @@
     <div class="grid grid-rows-9 gap-2 h-full w-full" *ngIf="!(isloading | async)">
         <div class="grid grid-cols-3 gap-2 border-b mb-2 border-lightgray">
             <div class="col-span-2">
-                <!-- <h5
-                    matTooltipClass="drop-shadow-lg"
-                    matTooltipPosition="above"
-                    [matTooltip]="'booking.drag-drop-to-right' | translate"
-                    class="heading-5 text-primary font-bold"
-                    (click)="setComponentName('view')"
-                >
-                    SID - {{ planning.id }}
-                </h5> -->
                 <h5 matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
                     [matTooltip]="'booking.drag-drop-to-right' | translate"
                     class="heading-5 text-primary font-bold">
@@ -23,14 +14,6 @@
             <div class="flex gap-2 justify-end">
                 <fa-icon matTooltipClass="drop-shadow-lg" matTooltipPosition="above" [matTooltip]="'Send message'"
                     icon="message-lines" size="lg" (click)="setComponentName('mess')"></fa-icon>
-                <!-- <fa-icon
-                    matTooltipClass="drop-shadow-lg"
-                    matTooltipPosition="above"
-                    [matTooltip]="'button.edit' | translate"
-                    icon="eye"
-                    size="lg"
-                    [routerLink]="['../', 'edit', planning.id]"
-                ></fa-icon> -->
                 <fa-icon matTooltipClass="drop-shadow-lg" matTooltipPosition="above" [matTooltip]="'Edit'" icon="eye"
                     size="lg" [routerLink]="['../', 'edit', planning.id]"></fa-icon>
                 <fa-icon matTooltipClass="drop-shadow-lg" matTooltipPosition="above" [matTooltip]="'Plan'"
@@ -46,9 +29,6 @@
                     <div>
                         <p>
                             <span class="font-bold">Vessel Id:</span>
-                            <!-- <span class="pl-2">{{
-                                planning.dockName || "-"
-                            }}</span> -->
                             <span class="pl-2">{{
                                 "-"
                                 }}</span>
@@ -56,10 +36,8 @@
                     </div>
                     <div>
                         <mat-chip
-                            [ngStyle]="{'background-color': planning.shipmentStatus === 'Port Queue' ? '#3386FE' : '#1C3F47'}">
-                            {{ planning.shipmentStatus === 'Port Queue' ? 'Port Queue' : planning.shipmentStatus ===
-                            'Service'
-                            ? 'Service' : 'Closed' }}
+                            [ngStyle]="{'background-color': planning.planning.shipmentStatus === 'Port Queue' ? '#3386FE' : '#1C3F47'}">
+                            {{ planning.shipmentStatus === 'Port Queue' ? 'Port Queue': 'Closed' }}
                         </mat-chip>
                     </div>
                 </div>
@@ -71,68 +49,15 @@
                 <span class="pl-2">{{ "-" }}</span>
             </div>
             <div class="pl-2 flex justify-around gap-2">
-                <!-- <ng-container
-                    *ngIf="planning.timeSlot && planning.status === 'Created'"
-                >
-                    <span
-                        (click)="
-                            triggerAccept.emit({
-                                container: {
-                                    data: {
-                                        index: +planning.timeSlot.slice(0, 2),
-                                        name: planning.dockName,
-                                        dock: +planning.dockId
-                                    }
-                                },
-                                item: { data: planning }
-                            })
-                        "
-                        ><b>{{ "button.accept" | translate }}</b></span
-                    >
-                    <fa-icon
-                        (click)="
-                            triggerAccept.emit({
-                                container: {
-                                    data: {
-                                        index: +planning.timeSlot.slice(0, 2),
-                                        name: planning.dockName,
-                                        dock: +planning.dockId
-                                    }
-                                },
-                                item: { data: planning }
-                            })
-                        "
-                        class="text-green-500"
-                        icon="check"
-                        size="lg"
-                    ></fa-icon>
-                </ng-container> -->
                 <ng-container>
-                    <span (click)="triggerCheckIn.emit(planning)"><b>Assign</b></span>
+                    <span ><b>Assign</b></span>
                     <span><img src="assets/images/mingcute_transfer.svg" alt="icon" class="cursor-pointer"></span>
-                    <!-- <fa-icon
-                        (click)="triggerCheckIn.emit(planning)"
-                        class="text-sidCheckIn -rotate-90 origin-[8px_11px]"
-                        icon="arrow-down-to-bracket"
-                        size="lg"
-                    ></fa-icon> -->
                 </ng-container>
-                <!-- <ng-container >
-                    <span (click)="triggerCheckOut.emit(planning)"
-                        ><b>{{ "button.check-out" | translate }}</b></span
-                    >
-                    <fa-icon
-                        (click)="triggerCheckOut.emit(planning)"
-                        class="text-sidCheckOut rotate-90 origin-[8px_11px]"
-                        icon="arrow-down-to-bracket"
-                        size="lg"
-                    ></fa-icon>
-                </ng-container> -->
                 <span>|</span>
-                <ng-container>
-                    <fa-icon (click)="handleTriggerAction(planning)" class="text-color" icon="xmark"
+                <ng-container >
+                    <fa-icon (click)="openDeleteModal(planning.id)" class="text-color" icon="xmark"
                         size="lg"></fa-icon>
-                    <span (click)="handleTriggerAction(planning)"><b>Cancel</b></span>
+                    <span ><b (click)="openDeleteModal(planning.id)">Cancel</b></span>
                 </ng-container>
             </div>
         </div>
@@ -163,16 +88,12 @@
         </div>
         <div>
             <span class="font-bold">ETA:</span>
-            <span class="pl-2">{{ planning.estimatedTimeArrival || "-" }}</span>
+            <span class="pl-2">{{ planning.planning.estimatedTimeArrival || "-" }}</span>
         </div>
         <div>
             <span class="font-bold">Created by:</span>
-            <span class="pl-2">{{ planning.relativeTimeArrival || "-" }}</span>
+            <span class="pl-2">{{ planning.planning.relativeTimeArrival || "-" }}</span>
         </div>
-        <!-- <scheduling-show-client-supplier-card-labels
-            [isUmexOrganization]="isUmexOrganization"
-            [planning]="planning"
-        ></scheduling-show-client-supplier-card-labels> -->
         <div>
             <span class="font-bold">Delay:</span>
             <span class="pl-2">{{ "-" }}</span>

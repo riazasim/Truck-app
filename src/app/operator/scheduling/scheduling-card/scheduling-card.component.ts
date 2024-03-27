@@ -14,7 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SchedulingCardComponent {
-    @Input() planning: PlanningModel;
+    @Input() planning: any;
     // @Input() planning: SchedulingPreviewModel;
     @Input() isUmexOrganization: boolean | null;
     @Input() isMaxWidth: boolean;
@@ -55,6 +55,7 @@ export class SchedulingCardComponent {
         }
         this.planningService.pagination(data).subscribe((response:any) => {
             this.plannings = response.items;
+            console.log('plannings',this.plannings)
             this.originalSource = response.items;
             this.length=response.noTotal;
             this.isLoading$.next(false)

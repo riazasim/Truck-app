@@ -19,7 +19,7 @@
                     <ng-container cdkColumnDef="manevure">
                         <th cdk-header-cell *cdkHeaderCellDef scope="col" class="max-w-20">
                             <section class="flex flex-col gap-4">
-                                <div mat-header="manevure">manevure</div>
+                                <div mat-header="manevure">Manevure</div>
                             </section>
                         </th>
                         <td cdk-cell *cdkCellDef="let row">
@@ -32,19 +32,19 @@
                         <th cdk-header-cell *cdkHeaderCellDef scope="col" class="max-w-20">
                             <section class="flex flex-col gap-4">
                                 <div mat-header="ship">
-                                    ship
+                                    Ship
                                 </div>
                             </section>
                         </th>
                         <td cdk-cell *cdkCellDef="let row">
-                            {{ row.ship || "-" }}
+                            {{ row.ship.name || "-" }}
                         </td>
                     </ng-container>
                     <ng-container cdkColumnDef="operator">
                         <th cdk-header-cell *cdkHeaderCellDef scope="col" class="max-w-20">
                             <section class="flex flex-col gap-4">
                                 <div mat-header="operator">
-                                    operator
+                                    Operator
                                 </div>
                             </section>
                         </th>

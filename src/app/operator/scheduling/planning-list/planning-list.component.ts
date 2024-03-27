@@ -74,9 +74,9 @@ export class PlanningListComponent {
     }
 
     OnEmit(row: any, modal: string) {
-        if (row.assigningStatus === false) {
+        // if (row.assigningStatus === false) {
             this.triggerOpenLogs.emit({ view: 'view', id: row.planning.id, planning: row, modal: modal })
-        }
+        // }
     }
 
     openDeleteModal(id: number) {
