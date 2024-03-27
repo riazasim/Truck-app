@@ -34,6 +34,8 @@ export class RegisterComponent {
     isEnglish$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     step$: BehaviorSubject<number> = new BehaviorSubject<number>(1);
     value: string | null;
+    isCheckboxChecked: boolean = false;
+    optionSelected: boolean = false;
     public readonly isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
     @HostListener('document:keydown.enter', ['$event']) onKeydownHandler(event: KeyboardEvent) {
@@ -78,12 +80,12 @@ export class RegisterComponent {
         }>,
     }> = new FormGroup({
         user: new FormGroup({
-            email: new FormControl(null, [Validators.required, Validators.email]),
+            email: new FormControl([Validators.required, Validators.email]),
             userRole: new FormControl(null, [Validators.required]),
         }),
         userSetting: new FormGroup({
-            firstName: new FormControl(null, [Validators.required]),
-            lastName: new FormControl(null, [Validators.required]),
+            firstName: new FormControl([Validators.required]),
+            lastName: new FormControl([Validators.required]),
             // language: new FormControl(null, [Validators.required]),
             // phone: new FormControl(null, [Validators.required]),
             // phoneRegionCode: new FormControl(null, [Validators.required])
@@ -106,9 +108,17 @@ export class RegisterComponent {
         this.value = clickedElement.getAttribute('value');
         if (this.value) {
             this.registerForm.get('user.userRole')?.setValue(this.value);
+            this.optionSelected = true;
             // You can perform further actions with the value here
         }
     }
+
+    handleCheckboxChange(event: Event): void {
+        this.isCheckboxChecked = (event.target as HTMLInputElement).checked;
+      }
+      shouldDisable(): boolean {
+        return this.isLoading$.value || !this.registerForm.valid;
+      }
 
     preCompleteSignUp(): void {
         const user = this.auth.getAuth();
@@ -190,4 +200,5 @@ export class RegisterComponent {
             });
         }
     }
+
 }

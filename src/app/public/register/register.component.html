@@ -13,14 +13,14 @@
             </p>
 
             <div class="flex gap-4 items-center">
-                <input id="viewed" type="checkbox" class="border border-defaultText cursor-pointer">
+                <input id="viewed" type="checkbox" class="border border-defaultText cursor-pointer" (change)="handleCheckboxChange($event)" [(ngModel)]="isCheckboxChecked">
                 <label for="viewed" class="text-xl text-[#08073A]">I read and understood the privacy
                     notice</label>
             </div>
         </div>
         <div>
-            <button class="btn btn-primary w-full" (click)="step$.next(2)">Continue</button>
-            <button class="btn btn-primary w-full" (click)="step$.next(1)">Continue</button>
+            <button class="btn btn-primary w-full" [disabled]="!isCheckboxChecked" (click)="step$.next(2)">Continue</button>
+            <button class="btn btn-outline-primary w-full mt-5" routerLink="../sign-in">Back</button>
         </div>
     </div>
 </section>
@@ -35,13 +35,13 @@
                 <input formControlName="firstName" type="text" inputRef placeholder="First Name"
                     class="text-center" />
             </div>
-            <div formGroupName="userSetting" iconic-input-wrapper leftIcon="user" class="w-full"
+            <div formGroupName="userSetting" iconic-input-wrapper required leftIcon="user" class="w-full"
                 [withCheckmark]="true">
-                <input formControlName="lastName" type="text" inputRef placeholder="Last Name" class="text-center" />
+                <input formControlName="lastName" required type="text" inputRef placeholder="Last Name" class="text-center" />
             </div>
 
             <div formGroupName="user" iconic-input-wrapper leftIcon="envelope" class="w-full" [withCheckmark]="true">
-                <input formControlName="email" type="text" inputRef placeholder="Email" class="text-center" />
+                <input formControlName="email" required type="text" inputRef placeholder="Email" class="text-center" />
             </div>
 
             <!-- <div formGroupName="userSetting" iconic-input-wrapper [withCheckmark]="true" leftIcon="phone"
@@ -54,9 +54,12 @@
                     class="text-center">
             </div> -->
         </form>
-        <div class="flex flex-col gap-8 text-center">
-            <button [disabled]="isLoading$ | async" type="submit" class="btn btn-primary w-full"
+        <div class="flex flex-col gap-5 text-center">
+            <button [disabled]="shouldDisable()" type="submit" class="btn btn-primary w-full"
                 (click)="step$.next(3)">Continue</button>
+                
+
+                <button class="btn btn-outline-primary w-full" (click)="step$.next(1)">Back</button>
             <!-- <div class="flex flex-col gap-2">
                 <p>Or sign up with another account</p>
                 <div class="flex gap-12 justify-center">
@@ -101,8 +104,9 @@
                     <h1 class="text text-4xl font-bold" value="ROLE_USER_MANEUVERING" (click)="setRoleValue($event)">Maneuvering company</h1>
                 </div>
             </div>
-            <div class="">
-                <button class="btn btn-primary w-full" (click)="step$.next(4)">Next</button>
+            <div>
+                <button class="btn btn-primary w-full" [disabled]="!optionSelected" (click)="step$.next(4)">Next</button>
+                <button class="btn btn-outline-primary mt-5 w-full" (click)="step$.next(2)">Back</button>
             </div>
         </div>
     </div>
@@ -119,9 +123,10 @@
                 automatically deleted.
             </p>
         </div>
-        <div class="">
+        <div>
             <button [disabled]="isLoading$ | async" type="submit" class="btn btn-primary w-full" (click)="signUp()"
                 form="signUpForm">Home</button>
+                <button class="btn btn-outline-primary mt-5 w-full" (click)="step$.next(3)">Back</button>
         </div>
     </div>
 </section>
