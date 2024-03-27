@@ -19,6 +19,7 @@ export class SchedulingCardComponent {
     @Input() isUmexOrganization: boolean | null;
     @Input() isMaxWidth: boolean;
     @Input() isloading: BehaviorSubject<boolean>;
+    @Input() userRole : string;
     @Output() readonly triggerSideNav = new EventEmitter<{ view: string, id: number, sId: number , modal : string}>();
     @Output() readonly triggerDeletion: EventEmitter<PlanningModel | null> = new EventEmitter<PlanningModel | null>();
     @Output() readonly triggerCancellation: EventEmitter<PlanningModel> = new EventEmitter<PlanningModel>();
@@ -26,6 +27,7 @@ export class SchedulingCardComponent {
     @Output() readonly triggerAccept: EventEmitter<any> = new EventEmitter<any>();
     @Output() readonly triggerCheckIn: EventEmitter<PlanningModel> = new EventEmitter<PlanningModel>();
     @Output() readonly triggerCheckOut: EventEmitter<PlanningModel> = new EventEmitter<PlanningModel>();
+    @Output() triggerOpenLogs: EventEmitter<{ view: string, id: number, planning: PlanningModel, modal: string }> = new EventEmitter();
     @Input() statuses: StatusListModel[] = [];
 
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
@@ -81,10 +83,14 @@ export class SchedulingCardComponent {
             });
     }
 
+    OnEmit(row: any, modal: string) {
+            this.triggerOpenLogs.emit({ view: 'view', id: row.planning.id, planning: row, modal: modal })
+    }
+
     setComponentName(value: string): void {
 
         if (value === 'copy') this.clipboard.copy(this.planning.id + '');
-        this.triggerSideNav.emit({ view: value, id: <number>this.planning.id, sId: <number>this.planning.sId , modal : 'shipment' });
+        this.triggerSideNav.emit({ view: value, id: this.planning.plnanning.id, sId: this.planning.planning.rId , modal : 'shipment' });
     }
 
     // showProducts(): string {

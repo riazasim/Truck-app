@@ -44,7 +44,7 @@ export class SchedulingViewModalComponent implements OnChanges {
     transferData: any[];
     dataSource: MatTableDataSource<any>
     selection: any;
-    userRole : any;
+    userRole : string;
 
     constructor(
         private readonly planningService: PlanningService,
@@ -52,14 +52,14 @@ export class SchedulingViewModalComponent implements OnChanges {
         private readonly snackBar: MatSnackBar,
         private readonly authService : AuthService
     ) {
-        this.getUserRole()
+        this.getUser()
     }
 
     ngOnChanges(): void {
         this.retrieveLogHistory();
     }
 
-    getUserRole(){
+    getUser(){
         this.isLoading$.next(true)
         this.authService.checkCredentials().subscribe(
             res =>{

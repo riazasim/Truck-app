@@ -15,7 +15,7 @@
                             </section>
                         </th>
                         <td cdk-cell *cdkCellDef="let row">
-                            {{row.id || '-'}}
+                            {{row.planning.rId || '-'}}
                             <!-- <a class="text-primary" href="javascript:void(0)"
                                 (click)="triggerOpenLogs.emit({ view: 'view', id: row.id, planning: row , modal : 'shipment' })">{{row.id
                                 || '-'}}</a> -->
@@ -159,13 +159,13 @@
                                         src="assets/images/left-right-list-icon.png" alt="icon"
                                         class="cursor-pointer"></a>
                                 <!-- <img src="assets/images/left-right-list-icon.png" alt="icon" class="cursor-pointer"> -->
-                                <fa-icon icon="xmark" class="text-[#17A0B5] cursor-pointer" size="lg"
+                                <fa-icon icon="xmark" class="text-[#17A0B5] cursor-pointer" size="lg" *ngIf="userRole === 'ROLE_USER_TRANSPORT'"
                                     (click)="openDeleteModal(row.id)"></fa-icon>
                             </div>
                             <div class="flex gap-4">
-                                <fa-icon icon="eye" class="text-[#17A0B5] cursor-pointer" size="lg"
+                                <fa-icon icon="eye" class="text-[#17A0B5] cursor-pointer" size="lg" *ngIf="userRole === 'ROLE_USER_TRANSPORT'"
                                     [routerLink]="['../edit', row.planning.id]"></fa-icon>
-                                <img src="assets/images/boat.svg" alt="icon" class="cursor-pointer max-w-5 max-h-5"
+                                <img src="assets/images/boat.svg" alt="icon" class="cursor-pointer max-w-5 max-h-5" *ngIf="userRole === 'ROLE_USER_TRANSPORT'"
                                     [routerLink]="['../route',row.planning.id ,'convoy-list']">
                                 <a class="text-primary" href="javascript:void(0)"
                                     (click)="OnEmit(row , 'shipment')"><img
@@ -204,6 +204,6 @@
         </div>
     </material-panel-table>
 </section>
-<ng-template #empty>
+<ng-template #empty class="mt-12">
     <no-scheduling></no-scheduling>
 </ng-template>
