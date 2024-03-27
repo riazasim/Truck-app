@@ -26,6 +26,7 @@ import { ComvexListComponent } from '../../vehicle/comvex-list/comvex-list.compo
 import { ComvexListReorderComponent } from '../../vehicle/comvex-list-reorder/comvex-list-reorder.component';
 import { PageSettingsModel } from 'src/app/core/models/page.model';
 import defaultPageSettings from '../../../core/constants/page.constant';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
     selector: 'app-dashboard',
@@ -55,7 +56,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     plannings: PlanningModel[] = []
     filterDate: Date = new Date();
     filterTypeEnum = FilterTypeENum;
-
+    userRole : string;
     logId: number;
     logModal : string;
 
@@ -83,7 +84,9 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         private readonly snackBar: MatSnackBar,
         private readonly statusListService: StatusListService,
         private readonly cd: ChangeDetectorRef,
-        private readonly organizationService: OrganizationService) { }
+        private readonly organizationService: OrganizationService,
+        private readonly authService : AuthService
+        ) { }
 
     ngOnInit(): void {
         this.retrievePlanningList();
@@ -92,11 +95,22 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         this.subscribeForSortByChanges(true);
         this.subscribeForSortOrderChanges(true);
         this.subscribeForOrganizationChanges();
+        this.getUserRole()
     }
 
     ngAfterViewInit(): void {
         this.innerWidth = window.innerWidth;
         this.applyMobileView();
+    }
+
+    getUserRole(){
+        this.isLoading$.next(true)
+        this.authService.checkCredentials().subscribe(
+            res =>{
+                this.userRole = res?.data?.attributes?.userRole
+                this.isLoading$.next(false)
+            }
+        )
     }
 
     subscribeForOrganizationChanges(): void {
@@ -269,7 +283,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         if (fetchMore && this.hasReachedEndPage$.getValue() || this.isTableView$.getValue()) {
           return;
         }
-    
+
         if (!fetchMore) this.pageSettings = {...defaultPageSettings};
         if (fetchMore) this.cardLoading$.next(true);
         this.planningService.list({ schedulingDate: getFormattedDate(this.filterDate), ...this.appliedFilters, ...this.pageSettings })
@@ -286,7 +300,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
             this.plannings = <any[]>response;
             this.hasReachedEndPage$.next(false);
           }
-    
+
           this.isLoading$.next(false);
         });
       }
@@ -498,18 +512,14 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
     retrievePlanningList(): void {
         // Ensure filterDate is not null or undefined before proceeding
-        if (!this.filterDate) {
-            return;
-        }
-    
+
         let data = {
             "start": this.pageSettings.start,
             "length": this.pageSettings.length,
-            "filters": ["", "", "", "", "", ""], // Assuming these are for other filters
+            "filters": [this.formatDate(this.filterDate), "", "", "", "", ""], // Assuming these are for other filters
             "order": [{ "dir": "DESC", "column": 0 }],
-            "dateFilter": this.formatDate(this.filterDate) // Add date filter based on selected date
         };
-    
+
         this.planningService.pagination(data).subscribe((response: any) => {
             this.plannings = response.items;
             this.isLoading$.next(false);
@@ -520,7 +530,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
     formatDate(date: Date | string): string {
         let formattedDate = '';
-        
+
         if (typeof date === 'string') {
             // Convert the string to a Date object
             const tempDate = new Date(date);
@@ -528,26 +538,26 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         } else {
             formattedDate = this.formatDateObject(date);
         }
-    
+
         return formattedDate;
     }
-    
+
     private formatDateObject(date: Date): string {
         const year = date.getFullYear();
         const month = date.getMonth() + 1; // Months are 0-indexed
         const day = date.getDate();
-    
+
         const formattedDate = `${year}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`;
         return formattedDate;
     }
-    
+
     // Helper function to format date as required by your API
     // formatDate(date: Date): string {
     //     // Assuming your API requires date in 'YYYY-MM-DD' format
     //     const year = date.getFullYear();
     //     const month = date.getMonth() + 1; // Months are 0-indexed
     //     const day = date.getDate();
-    
+
     //     const formattedDate = `${year}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`;
     //     return formattedDate;
     // }

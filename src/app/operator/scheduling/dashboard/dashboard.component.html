@@ -67,7 +67,7 @@
                     </div>
                 </div>
                 <div class="flex items-center">
-                    <mat-button-toggle-group class="flex w-full justify-end items-center">
+                    <mat-button-toggle-group class="flex w-full justify-end items-center" *ngIf="userRole === 'ROLE_USER_TRANSPORT'">
                         <button routerLink="../add" [disabled]="(isLoading$ | async) || false"
                             class="bg-primary text-white hover:bg-primary-dark py-2 min-h-[35px] min-md:min-w-[120px] max-sm:w-full rounded-l max-lg:w-full"
                             type="button">
@@ -133,7 +133,10 @@
                                 (triggerCheckIn)="openCheckinModal($event)"
                                 (triggerCheckOut)="openCheckOutModal($event)" (triggerReject)="openRejectModal($event)"
                                 (triggerAccept)="openPlanModal($event)" (triggerDeletion)="openDeleteModal($event)"
-                                [cdkDragData]="item" cdkDrag [planning]="item">
+                                [cdkDragData]="item" cdkDrag [planning]="item"
+                                [userRole]="userRole"
+                                (triggerOpenLogs)="toggleSidenav($event)"
+                                >
                                 <div *cdkDragPreview class="square" [ngStyle]="{backgroundColor: 'blue' }">
                                 </div>
                             </scheduling-card>
@@ -175,8 +178,8 @@
                     </div>
                 </div>
             </div>
-            <div class="grid" *ngIf="(isTableView$ | async)">
-                <app-planning-list (triggerOpenLogs)="toggleSidenav($event)"></app-planning-list>
+            <div class="grid mt-4" *ngIf="(isTableView$ | async)">
+                <app-planning-list (triggerOpenLogs)="toggleSidenav($event)" [userRole]="userRole" [filterDate]="formatDate(filterDate)"></app-planning-list>
             </div>
         </div>
     </mat-sidenav-content>

@@ -1,4 +1,4 @@
-﻿import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Output } from '@angular/core';
+﻿import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Sort } from '@angular/material/sort';
 import { compare } from 'src/app/shared/utils/sort.function';
@@ -8,6 +8,7 @@ import { PlanningService } from 'src/app/core/services/planning.service';
 import { PlanningModel } from 'src/app/core/models/planning.model';
 import { SchedulingDeleteModalComponent } from '../scheduling-delete-modal/scheduling-delete-modal.component';
 import { SchedulingImportModalComponent } from '../scheduling-import-modal/scheduling-import-modal.component';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
     selector: 'app-planning-list',
@@ -15,15 +16,15 @@ import { SchedulingImportModalComponent } from '../scheduling-import-modal/sched
     styleUrl: './planning-list.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PlanningListComponent {
+export class PlanningListComponent implements OnChanges {
     @Output() triggerOpenLogs: EventEmitter<{ view: string, id: number, planning: PlanningModel, modal: string }> = new EventEmitter();
-    @Output() triggerOpenTransfer: EventEmitter<{ view: string, id: number, planning: PlanningModel, modal: string }> = new EventEmitter();
+    @Input() userRole : string;
+    @Input() filterDate : string;
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     displayedColumns: string[] = ['id', 'manevre', 'vesselId', 'berth', 'products', 'estimatedTimeArrival', 'relativeTimeArrival', 'delay', 'coordinates', 'shipmentStatus', 'actions'];
     dataSource: PlanningModel[] = [];
     originalSource: PlanningModel[] = [];
     appliedFilters: any = {};
-
     pageSizeOptions: number[] = [5, 10, 12, 15];
     pageIndex: number;
     pageSize: number;
@@ -31,12 +32,16 @@ export class PlanningListComponent {
 
     constructor(private readonly dialogService: MatDialog,
         private readonly planningService: PlanningService,
-        private readonly cd: ChangeDetectorRef) {
-        this.retrievePlanningList();
+        private readonly cd: ChangeDetectorRef,
+        private readonly authService : AuthService
+        ) {
+        this.retrievePlanningList('');
+    }
+    ngOnChanges(changes: SimpleChanges): void {
+        this.retrievePlanningList(this.filterDate)
     }
 
-
-    retrievePlanningList(): void {
+    retrievePlanningList(filterDate : string): void {
 
         this.pageIndex = 0;
         this.pageSize = 5;
@@ -44,7 +49,7 @@ export class PlanningListComponent {
         let data = {
             "start": this.pageIndex,
             "length": this.pageSize,
-            "filters": ["", "", "", "", "", ""],//["firstname/lastname", "status", "role", "phone", "email"]
+            "filters": [filterDate, "", "", "", "", ""],//["firstname/lastname", "status", "role", "phone", "email"]
             "order": [{ "dir": "DESC", "column": 0 }]
         }
         this.planningService.pagination(data).subscribe((response: any) => {
@@ -89,7 +94,7 @@ export class PlanningListComponent {
                     if (isDelete) {
                         this.isLoading$.next(true);
                         this.planningService.delete(id).subscribe(() => {
-                            this.retrievePlanningList();
+                            this.retrievePlanningList('');
                             this.cd.detectChanges();
                         })
                     }
@@ -197,7 +202,7 @@ export class PlanningListComponent {
             .subscribe({
                 next: (isImported) => {
                     if (isImported) {
-                        this.retrievePlanningList();
+                        this.retrievePlanningList('');
                     } else {
                         this.isLoading$.next(false);
                     }
