@@ -9,11 +9,12 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { handleSuccess } from 'src/app/shared/utils/success-handling.function';
 import { handleError } from 'src/app/shared/utils/error-handling.function';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
-    selector: 'scheduling-view-log',
-    templateUrl: './scheduling-view-log.component.html',
-    styleUrls: ['./scheduling-view-log.component.scss'],
+    selector: 'scheduling-view-modal',
+    templateUrl: './scheduling-view-modal.component.html',
+    styleUrls: ['./scheduling-view-modal.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     animations: [
         trigger('slideOut', [
@@ -29,7 +30,7 @@ import { handleError } from 'src/app/shared/utils/error-handling.function';
         ])
     ]
 })
-export class SchedulingViewLogComponent implements OnChanges {
+export class SchedulingViewModalComponent implements OnChanges {
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     @Input() id: number;
     @Input() modal: string;
@@ -43,15 +44,29 @@ export class SchedulingViewLogComponent implements OnChanges {
     transferData: any[];
     dataSource: MatTableDataSource<any>
     selection: any;
+    userRole : any;
 
-
-    constructor(private readonly planningService: PlanningService,
+    constructor(
+        private readonly planningService: PlanningService,
         private readonly dialog: MatDialog,
-        private readonly snackBar: MatSnackBar
-    ) { }
+        private readonly snackBar: MatSnackBar,
+        private readonly authService : AuthService
+    ) {
+        this.getUserRole()
+    }
 
     ngOnChanges(): void {
         this.retrieveLogHistory();
+    }
+
+    getUserRole(){
+        this.isLoading$.next(true)
+        this.authService.checkCredentials().subscribe(
+            res =>{
+                this.userRole = res?.data?.attributes?.userRole
+                this.isLoading$.next(false)
+            }
+        )
     }
 
     openImageModal(image: string): void {

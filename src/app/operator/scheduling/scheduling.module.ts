@@ -24,7 +24,7 @@ import { SchedulingSuccessComponent } from './scheduling-success/scheduling-succ
 import { SchedulingImportModalComponent } from './scheduling-import-modal/scheduling-import-modal.component';
 import { SchedulingPlanModalComponent } from './scheduling-plan-modal/scheduling-plan-modal.component';
 import { SchedulingEditPlanComponent } from './scheduling-edit-plan/scheduling-edit-plan.component';
-import { SchedulingViewLogComponent } from './scheduling-view-log/scheduling-view-log.component';
+import { SchedulingViewModalComponent } from './scheduling-view-modal/scheduling-view-modal.component';
 import { MatIconModule } from '@angular/material/icon';
 import { SchedulingSendMessageComponent } from './scheduling-send-message/scheduling-send-message.component';
 import { SchedulingDeleteModalComponent } from './scheduling-delete-modal/scheduling-delete-modal.component';
@@ -60,7 +60,6 @@ import { MatInputModule } from '@angular/material/input';
 import { EditSchedulingRouteComponent } from './edit-scheduling-route/edit-scheduling-route.component';
 import { EditSchedulingConvoyComponent } from './edit-scheduling-convoy/edit-scheduling-convoy.component';
 import { EditSchedulingConvoyPageComponent } from './edit-scheduling-convoy/edit-scheduling-convoy-page/edit-scheduling-convoy-page.component';
-import { SchedulingTransferComponent } from './scheduling-transfer/scheduling-transfer.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NoRestrictionsComponent } from './no-restrictions/no-restrictions.component';
 import { RestrictionsComponent } from './restrictions/restrictions.component';
@@ -77,7 +76,7 @@ import { RestrictionsComponent } from './restrictions/restrictions.component';
     SchedulingImportModalComponent,
     SchedulingPlanModalComponent,
     SchedulingEditPlanComponent,
-    SchedulingViewLogComponent,
+    SchedulingViewModalComponent,
     SchedulingSendMessageComponent,
     SchedulingDeleteModalComponent,
     NoSchedulingComponent,
@@ -94,7 +93,6 @@ import { RestrictionsComponent } from './restrictions/restrictions.component';
     EditSchedulingRouteComponent,
     EditSchedulingConvoyComponent,
     EditSchedulingConvoyPageComponent,
-    SchedulingTransferComponent,
     NoRestrictionsComponent,
     RestrictionsComponent
   ],
