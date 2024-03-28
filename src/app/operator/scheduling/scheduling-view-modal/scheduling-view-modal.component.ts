@@ -45,6 +45,7 @@ export class SchedulingViewModalComponent implements OnChanges {
     dataSource: MatTableDataSource<any>
     selection: any;
     userRole : string;
+    selectedRole : string;
 
     constructor(
         private readonly planningService: PlanningService,
@@ -76,6 +77,7 @@ export class SchedulingViewModalComponent implements OnChanges {
     }
     onRoleSelect(userRole: string): void {
         this.isLoading$.next(true)
+        this.selectedRole = userRole;
         const userRoleData = {
             "start": 0,
             "length": 0,
@@ -99,6 +101,7 @@ export class SchedulingViewModalComponent implements OnChanges {
     }
     onUserSelect(id: any): void {
         this.userId = id;
+        console.log(id)
     }
 
     onAssign(): void {

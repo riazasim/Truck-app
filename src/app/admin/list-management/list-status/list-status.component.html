@@ -15,7 +15,7 @@
                             </section>
                         </th>
                         <td cdk-cell *cdkCellDef="let row">
-                          {{row.id || '-'}}
+                          {{row.planning.rId || '-'}}
                             <!-- <a class="text-primary" href="javascript:void(0)" (click)="triggerOpenLogs.emit({ view: 'view', id: row.id, planning: row })">{{row.id || '-'}}</a> -->
                           </td>
                           <td cdk-footer-cell *cdkFooterCellDef [colSpan]="displayedColumns.length" class="py-4 font-bold text-center">
@@ -29,7 +29,7 @@
                             </section>
                         </th>
                         <td cdk-cell *cdkCellDef="let row">
-                            {{ row.manevre || "-" }}
+                            {{ row.planning.manevre || "-" }}
                         </td>
                     </ng-container>
 
@@ -40,7 +40,7 @@
                             </section>
                         </th>
                         <td cdk-cell *cdkCellDef="let row">
-                            {{ row.vesselId || "-" }}
+                            {{ row.planning.vesselId || "-" }}
                         </td>
                     </ng-container>
 
@@ -53,7 +53,7 @@
                             </section>
                         </th>
                         <td cdk-cell *cdkCellDef="let row">
-                            {{ row.berth || "-" }}
+                            {{ row.planning.berth || "-" }}
                         </td>
                     </ng-container>
                     <ng-container cdkColumnDef="products">
@@ -65,7 +65,7 @@
                             </section>
                         </th>
                         <td cdk-cell *cdkCellDef="let row">
-                            {{ row.products || "-" }}
+                            {{ row.planning.products || "-" }}
                         </td>
                     </ng-container>
                     <ng-container cdkColumnDef="estimatedTimeArrival">
@@ -77,7 +77,7 @@
                             </section>
                         </th>
                         <td cdk-cell *cdkCellDef="let row">
-                            {{ row.estimatedTimeArrival || "-" }}
+                            {{ row.planning.estimatedTimeArrival || "-" }}
                         </td>
                     </ng-container>
                     <ng-container cdkColumnDef="relativeTimeArrival">
@@ -89,7 +89,7 @@
                             </section>
                         </th>
                         <td cdk-cell *cdkCellDef="let row">
-                            {{ row.relativeTimeArrival || "-" }}
+                            {{ row.planning.relativeTimeArrival || "-" }}
                         </td>
                     </ng-container>
                     <ng-container cdkColumnDef="delay">
@@ -113,7 +113,7 @@
                             </section>
                         </th>
                         <td cdk-cell *cdkCellDef="let row">
-                            {{ row.coordinates || "-" }}
+                            {{ row.planning.coordinates || "-" }}
                         </td>
                     </ng-container>
                     <ng-container cdkColumnDef="shipmentStatus">
@@ -127,9 +127,9 @@
                         <td cdk-cell *cdkCellDef="let row">
                             <!-- {{ row.shipmentStatus }} -->
                             <mat-chip
-                                [ngStyle]="{'background-color': row.shipmentStatus === 'Port Queue' ? '#3386FE' : '#1C3F47'}"
+                                [ngStyle]="{'background-color': row.planning.shipmentStatus === 'Port Queue' ? '#3386FE' : '#1C3F47'}"
                                 >
-                                {{ row.shipmentStatus === 'Port Queue' ? 'Port Queue' : row.shipmentStatus === 'Service'
+                                {{ row.planning.shipmentStatus === 'Port Queue' ? 'Port Queue' : row.planning.shipmentStatus === 'Service'
                                 ? 'Service' : 'Closed' }}
                             </mat-chip>
                             <!-- <mat-chip

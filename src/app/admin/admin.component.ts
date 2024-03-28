@@ -20,7 +20,7 @@ export class AdminComponent {
   notificationsCount: any;
   optionsTitle: string = 'Options';
   isMenuClosed: boolean = true
-
+  isLoading$ : BehaviorSubject<boolean> = new BehaviorSubject(false);
   logoSrc: string = '';
   logoImgSrc: string = '';
   logoRedirect: string = '';
@@ -42,9 +42,11 @@ export class AdminComponent {
    }
 
    logout(): void {
+    this.isLoading$.next(true)
     this.authService.logout().subscribe(() => {
       this.authService.removeAuth();
       this.router.navigate(['/']);
+      this.isLoading$.next(false)
     });
    }
 
