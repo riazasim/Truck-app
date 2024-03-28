@@ -80,12 +80,12 @@ export class RegisterComponent {
         }>,
     }> = new FormGroup({
         user: new FormGroup({
-            email: new FormControl([Validators.required, Validators.email]),
-            userRole: new FormControl(null, [Validators.required]),
+            email: new FormControl(),
+            userRole: new FormControl(),
         }),
         userSetting: new FormGroup({
-            firstName: new FormControl([Validators.required]),
-            lastName: new FormControl([Validators.required]),
+            firstName: new FormControl(),
+            lastName: new FormControl(),
             // language: new FormControl(null, [Validators.required]),
             // phone: new FormControl(null, [Validators.required]),
             // phoneRegionCode: new FormControl(null, [Validators.required])
@@ -138,12 +138,12 @@ export class RegisterComponent {
 
             this.registerForm = new FormGroup({
                 user: new FormGroup({
-                    email: new FormControl("mrumari@gmail.com", { nonNullable: false }),
-                    userRole: new FormControl("ROLE_USER_TRANSPORT", { nonNullable: false }),
+                    email: new FormControl("mrumari@gmail.com"),
+                    userRole: new FormControl("ROLE_USER_TRANSPORT"),
                 }),
                 userSetting: new FormGroup({
-                    firstName: new FormControl("Asim", { nonNullable: false }),
-                    lastName: new FormControl("Channar", { nonNullable: false }),
+                    firstName: new FormControl("Asim"),
+                    lastName: new FormControl("Channar"),
                     // language: new FormControl("EN", {nonNullable: false}),
                     // phone: new FormControl("33365356", {nonNullable: false}),
                     // phoneRegionCode: new FormControl("+92", {nonNullable: false})
