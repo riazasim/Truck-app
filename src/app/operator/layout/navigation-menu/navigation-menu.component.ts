@@ -28,8 +28,4 @@ export class NavigationMenuComponent {
   @Input()
   public lowerMenuConfig: Nullable<NavigationMenuConfig[]> = null;
 
-  get isAdmin() {
-    return this.roleService.isUserInRole(USER_TYPE_ADMIN);
-  }
-
 }

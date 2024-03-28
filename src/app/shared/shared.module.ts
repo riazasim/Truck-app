@@ -33,6 +33,8 @@ import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { TimepickerComponent } from './components/timepicker/timepicker.component';
 import { MatMenuModule } from '@angular/material/menu';
+import {MatRadioModule} from '@angular/material/radio';
+
 
 export const MY_FORMATS = {
     parse: {
@@ -83,7 +85,8 @@ export const MY_FORMATS = {
         MatDatepickerModule,
         TranslateModule,
         ReactiveFormsModule,
-        MatMenuModule
+        MatMenuModule,
+        MatRadioModule
     ],
     exports: [
         IconicInputWrapperComponent,
@@ -109,7 +112,8 @@ export const MY_FORMATS = {
         CustomTooltipDirective,
         SafeHtmlPipe,
         ToggleComponent,
-        TimepickerComponent
+        TimepickerComponent,
+        MatRadioModule
     ],
     providers: [
         { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
