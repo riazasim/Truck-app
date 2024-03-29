@@ -22,12 +22,19 @@
         <div class="flex-1 flex-grow flex flex-col p-4 bg-white shadow-md">
             <ngx-charts-pie-chart [view]="view" [scheme]="colorScheme" [results]="sidsByStatus" [legend]="true"
                 [legendPosition]="legendPosition" [doughnut]="false"
-                [legendTitle]="'sidsByStatus'"></ngx-charts-pie-chart>
+                [legendTitle]="'SIDs by status'"></ngx-charts-pie-chart> -->
+                <ngx-charts-pie-chart [view]="view" [scheme]="colorScheme" [legend]="true" [legendPosition]="legendPosition"
+        [doughnut]="false" [legendTitle]="'SID by status'">
+        <!-- <ng-container *ngFor="let item of sidsByStatus"> -->
+            <!-- <ngx-charts-series-vertical [shipmentStatus]="item.shipmentStatus" [count]="item.count"></ngx-charts-series-vertical> -->
+        <!-- </ng-container> -->
+    </ngx-charts-pie-chart>
         </div>
+        
         <div class="flex-1 flex-grow flex flex-col p-4 bg-white shadow-md">
             <ngx-charts-pie-chart [view]="view" [scheme]="colorScheme" [results]="timeBreakDown" [legend]="true"
                 [legendPosition]="legendPosition" [doughnut]="false"
-                [legendTitle]="'timeBreakDown'"></ngx-charts-pie-chart>
+                [legendTitle]="'Time breakdown'"></ngx-charts-pie-chart>
         </div>
     </div>
     <app-map Title="SIDs by Port"></app-map>
