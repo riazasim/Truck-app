@@ -1,3 +1,5 @@
+<app-loader [isContainer]="false" *ngIf="(isLoading$ | async)" [fullScreen]="true"></app-loader>
+
 <div operator-layout version="latest">
 
     <operator-header header optionsTitle="Menu" [companyName$]="companyName$">
@@ -26,13 +28,12 @@
         </li>
       </ul>
     </operator-header>
-  
+
     <navigation-menu aside [logoSrc]="logoImgSrc">
     </navigation-menu>
-        
-    
+
+
       <div main class="p-4 min-md:px-10 min-md:pb-8 min-h-full flex flex-col">
         <router-outlet class="hidden"></router-outlet>
       </div>
     </div>
-    

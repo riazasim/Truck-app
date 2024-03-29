@@ -212,7 +212,7 @@ export class AddSchedulingComponent implements OnInit, OnDestroy {
             if (this.matStepper.selectedIndex === 0) {
                 this.stepOne$.next(true);
                 this.retrieveShips();
-                
+
             } else if (this.matStepper.selectedIndex === 1) {
                 this.stepTwo$.next(true);
             } else if (this.matStepper.selectedIndex === 2) {
@@ -254,6 +254,7 @@ export class AddSchedulingComponent implements OnInit, OnDestroy {
         }
         this.shipsService.pagination(data).subscribe(response => {
           this.shipsList = response.items;
+
           this.isLoading$.next(false);
         })
       }
@@ -261,7 +262,7 @@ export class AddSchedulingComponent implements OnInit, OnDestroy {
       onShipSelected(ev : any): void {
         const selectedShipId = ev.target.value
         const selectedShip = this.shipsList.find(ship => Number(ship.id) === Number(selectedShipId));
-    
+
         if (selectedShip) {
             this.convoyForm.patchValue({
                 width: selectedShip.width || '',

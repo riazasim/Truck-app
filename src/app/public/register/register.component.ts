@@ -115,10 +115,10 @@ export class RegisterComponent {
 
     handleCheckboxChange(event: Event): void {
         this.isCheckboxChecked = (event.target as HTMLInputElement).checked;
-      }
-      shouldDisable(): boolean {
+    }
+    shouldDisable(): boolean {
         return this.isLoading$.value || !this.registerForm.valid;
-      }
+    }
 
     preCompleteSignUp(): void {
         const user = this.auth.getAuth();

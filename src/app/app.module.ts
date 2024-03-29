@@ -11,6 +11,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpLoaderFactory } from './core/factories/http-loader.factory';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {Location} from "@angular/common";
+import { StoreModule } from '@ngrx/store';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import {Location} from "@angular/common";
       }
     }),
     FontAwesomeModule,
+
   ],
   providers: [TranslatePipe, Location],
   bootstrap: [AppComponent]
