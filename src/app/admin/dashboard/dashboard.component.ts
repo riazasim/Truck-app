@@ -20,16 +20,16 @@ export class DashboardComponent  {
     sidsByStatus: pieData[] = [
         {
             name: "on Route",
-            value: 0
-        },
-        {
-            name: "Port",
             value: 1
         },
-        {
-            name: "Berth",
-            value: 0
-        },
+        // {
+        //     name: "Port",
+        //     value: 1
+        // },
+        // {
+        //     name: "Berth",
+        //     value: 0
+        // },
     ];
     timeBreakDown: pieData[] = [
         {
@@ -104,7 +104,7 @@ export class DashboardComponent  {
             //         count: item.count
             //     }));}
             // this.sidsByStatus[0].value = this.dashboardData.sidsByStatus.onRouteCount
-            this.sidsByStatus[1].value = this.dashboardData.sidsByStatus.onPortCount
+            this.sidsByStatus[0].value = this.dashboardData.ridsByStatus.onPortQueueCount
             // this.sidsByStatus[2].value = this.dashboardData.sidsByStatus.onBerthCount
             this.timeBreakDown[0].value = this.dashboardData.timeBreakDown.operationTime
             this.timeBreakDown[1].value = this.dashboardData.timeBreakDown.berthTime
