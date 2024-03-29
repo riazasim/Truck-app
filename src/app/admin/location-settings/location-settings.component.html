@@ -15,7 +15,7 @@
                     <h5 class="text-xl font-bold">General</h5>
                 </li>
                 <li *ngIf="userRole !== 'ROLE_USER_OPERATOR'">
-                    <a href="../users">Users</a>
+                    <a routerLink="../users">Users</a>
                 </li>
                 <li *ngFor="let item of general | filter: search : 'name'">
                     <a *ngIf="!item.link" href="javascript:void(0)">{{item.name}}</a>
