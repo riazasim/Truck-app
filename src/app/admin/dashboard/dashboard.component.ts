@@ -17,7 +17,12 @@ export class DashboardComponent  {
   innerWidth: any;
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     dashboardData: any;
-    sidsByStatus = [];
+    sidsByStatus: pieData[] = [
+        {
+            name: "Port Queue Count",
+            value: 1
+        },
+    ];
     timeBreakDown: pieData[] = [
         {
             name: "operation Time",
@@ -84,13 +89,7 @@ export class DashboardComponent  {
     getDashboardData() {
         this.statService.getDashboardStats().subscribe(response => {
             this.dashboardData = response?.data?.attributes;
-            if (this.dashboardData) {
-                // Map ridsByStatus from API response to sidsByStatus in your component
-                this.sidsByStatus = this.dashboardData.ridsByStatus.map((item: { shipmentStatus: string, count: number }) => ({
-                    shipmentStatus: item.shipmentStatus,
-                    count: item.count
-                }));}
-            // this.sidsByStatus[0].value = this.dashboardData.sidsByStatus.onRouteCount
+            this.sidsByStatus[0].value = this.dashboardData.ridsByStatus.onPortQueueCount
             // this.sidsByStatus[1].value = this.dashboardData.sidsByStatus.onPortCount
             // this.sidsByStatus[2].value = this.dashboardData.sidsByStatus.onBerthCount
             this.timeBreakDown[0].value = this.dashboardData.timeBreakDown.operationTime
