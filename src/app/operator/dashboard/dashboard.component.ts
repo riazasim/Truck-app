@@ -23,7 +23,7 @@ export class DashboardComponent implements OnInit {
     sidsByStatus: pieData[] = [
         {
             name: "on Route",
-            value: 1
+            value: 0
         },
         {
             name: "Port",
@@ -31,7 +31,7 @@ export class DashboardComponent implements OnInit {
         },
         {
             name: "Berth",
-            value: 1
+            value: 0
         },
     ];
     timeBreakDown: pieData[] = [
@@ -121,9 +121,9 @@ export class DashboardComponent implements OnInit {
     getDashboardData() {
         this.statService.getDashboardStats().subscribe(response => {
             this.dashboardData = response?.data?.attributes;
-            this.sidsByStatus[0].value = this.dashboardData.sidsByStatus.onRouteCount
-            this.sidsByStatus[1].value = this.dashboardData.sidsByStatus.onPortCount
-            this.sidsByStatus[2].value = this.dashboardData.sidsByStatus.onBerthCount
+            // this.sidsByStatus[0].value = this.dashboardData.sidsByStatus.onRouteCount
+            this.sidsByStatus[1].value = this.dashboardData.ridsByStatus.onPortQueueCount
+            // this.sidsByStatus[2].value = this.dashboardData.sidsByStatus.onBerthCount
             this.timeBreakDown[0].value = this.dashboardData.timeBreakDown.operationTime
             this.timeBreakDown[1].value = this.dashboardData.timeBreakDown.berthTime
             this.timeBreakDown[2].value = this.dashboardData.timeBreakDown.waitingTime
