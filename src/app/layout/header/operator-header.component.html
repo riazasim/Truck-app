@@ -1,0 +1,35 @@
+<header class="layout-wrapper">
+  <!-- <app-loader class="m-auto flex-grow" *ngIf="(isLoading$ | async) || !(companyName$ | async)" [fullScreen]="false"></app-loader> -->
+  <div *ngIf="(companyName$ | async) && !(isLoading$ | async)" class="flex flex-grow justify-center items-center gap-2">
+    <fa-icon (click)="openChangeLocationModal()" icon="location-dot" class="text-primary cursor-pointer"></fa-icon>
+    <span class="text-3xl font-bold">{{(companyName$ | async)}}</span>
+  </div>
+  <div class="flex flex-grow justify-center items-center gap-2" *ngIf="!(companyName$ | async)">
+    <span class="text-3xl font-bold">Transport App</span>
+  </div>
+  <div class="logo-container" *ngIf="logoSrc" [routerLink]="logoRedirect" [relativeTo]="activatedRoute.parent">
+    <img [src]="logoSrc" alt="logo">
+  </div>
+  
+  <div class="current-location-container">
+    <h2 class="heading-4 current-location">
+      <span class="fi fi-{{currentLocation}}"></span>
+    </h2>
+  </div>
+
+  <button class="expand-btn" (click)="isMenuClosed = false">
+    <fa-icon [icon]="expandBtnIcon" size="lg"></fa-icon>
+  </button>
+
+  <div [class.closed]="isMenuClosed"
+    class="menu-container">
+    <div class="title-row">
+      <h4>{{optionsTitle}}</h4>
+      <fa-icon [icon]="closeBtnIcon" size="lg" role="button" (click)="isMenuClosed = true"></fa-icon>
+    </div>
+    <div class="menu-row">
+      <ng-content select="[menu]"></ng-content>
+    </div>
+
+  </div>
+</header>

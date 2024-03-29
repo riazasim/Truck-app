@@ -18,6 +18,7 @@ import {handleSuccess} from "../../shared/utils/success-handling.function";
 })
 export class LoginComponent {
   public readonly isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public user : string;
 
   @HostListener('document:keydown.enter', ['$event']) onKeydownHandler(event: KeyboardEvent) {
     this.sigIn();
@@ -46,7 +47,7 @@ export class LoginComponent {
 
     if (!environment.production) {
       this.loginForm = new UntypedFormGroup({
-        username: new UntypedFormControl('mrumari@gmail.com', [Validators.required, Validators.email]),
+        username: new UntypedFormControl('transport@gmail.com', [Validators.required, Validators.email]),
         password: new UntypedFormControl('12345678', [Validators.required, Validators.pattern('')]),
       })
     }
@@ -65,7 +66,9 @@ export class LoginComponent {
       //     [isTutorialTrue ? '/admin' : '../admin/dashboard'], { relativeTo: this.route }
       // )
       //   .then(() => {
-        this.router.navigate(['../admin'], { relativeTo: this.route }).then(() => {
+        console.log(response?.userRole)
+        this.user =  response?.userRole === 'USER_ROLE_OPERATOR' ? 'operator' : 'admin'
+        this.router.navigate([`../*`], { relativeTo: this.route }).then(() => {
           this.loginForm.enable();
         // this.snackBar.open("Login success!", "", {
         //   duration: 3000,

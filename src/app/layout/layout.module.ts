@@ -1,18 +1,13 @@
-import {APP_INITIALIZER, Injector, NgModule} from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { AdminRoutingModule } from './admin-routing.module';
-import { DashboardComponent } from "./dashboard/dashboard.component";
-import { AdminComponent } from "./admin.component";
-import { AdminHeaderComponent } from "./layout/header/admin-header.component";
-import { AdminLayoutComponent } from "./layout/admin/admin-layout.component";
-import { NavigationMenuComponent } from "./layout/navigation-menu/navigation-menu.component";
-import { BrandingComponent } from "./branding/branding.component";
-import { LocationSettingsComponent } from "./location-settings/location-settings.component";
-import { ChangeLocationModalComponent } from "./layout/change-location-modal/change-location-modal.component";
+import { AdminHeaderComponent } from "./header/admin-header.component";
+import { NavigationMenuComponent } from "./navigation-menu/navigation-menu.component";
+import { BrandingComponent } from "../admin/branding/branding.component";
+import { LocationSettingsComponent } from "../admin/location-settings/location-settings.component";
+import { ChangeLocationModalComponent } from "./change-location-modal/change-location-modal.component";
 import { CdkMenuModule } from "@angular/cdk/menu";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatBadgeModule } from "@angular/material/badge";
 import { MatDialogModule } from "@angular/material/dialog";
 import { RolePipesModule } from "../core/pipes/role-pipes.module";
@@ -25,26 +20,27 @@ import { CredentialsGuard } from "../core/guards/credentials.guard";
 import { LineChartModule, PieChartModule } from "@swimlane/ngx-charts";
 import { StatisticCardV2Module } from "../shared/components/cards/statistic-card-v2/statistic-card-v2.component";
 import { CardModule } from "../shared/components/cards/card.module";
-import {MatMenuModule} from "@angular/material/menu";
-import {HttpClientModule} from "@angular/common/http";
-import {TranslateModule} from "@ngx-translate/core";
+import { MatMenuModule } from "@angular/material/menu";
+import { HttpClientModule } from "@angular/common/http";
+import { TranslateModule } from "@ngx-translate/core";
 import { OperatorModule } from "../operator/operator.module";
 import { SchedulingModule } from '../operator/scheduling/scheduling.module';
 import { MatTableModule } from '@angular/material/table';
 import { CdkTableModule } from '@angular/cdk/table';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { LayoutRoutingModule } from './layout-routing.module';
+import { GLobalLayoutComponent } from './global/global-layout.component';
+import { LayoutComponent } from './layout.component';
+
 
 
 
 @NgModule({
     declarations: [
-        DashboardComponent,
-        AdminComponent,
+        LayoutComponent,
         AdminHeaderComponent,
         NavigationMenuComponent,
-        AdminLayoutComponent,
-        BrandingComponent,
-        LocationSettingsComponent,
+        GLobalLayoutComponent,
         ChangeLocationModalComponent,
     ],
     providers: [
@@ -54,7 +50,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     ],
     imports: [
         CommonModule,
-        AdminRoutingModule,
+        LayoutRoutingModule,
         CdkMenuModule,
         MatSnackBarModule,
         FormsModule,
@@ -79,4 +75,4 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
         MatCheckboxModule
     ]
 })
-export class AdminModule { }
+export class LayoutModule { }
