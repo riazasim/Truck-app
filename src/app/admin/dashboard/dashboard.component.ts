@@ -1,7 +1,7 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { ChangeDetectionStrategy, Component, HostListener } from '@angular/core';
-import { Color, LegendPosition, ScaleType } from '@swimlane/ngx-charts';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Color, LegendPosition } from '@swimlane/ngx-charts';
+import { BehaviorSubject } from 'rxjs';
 import { StatsService } from 'src/app/core/services/stats.service';
 
 interface pieData {
@@ -97,15 +97,7 @@ export class DashboardComponent  {
     getDashboardData() {
         this.statService.getDashboardStats().subscribe(response => {
             this.dashboardData = response?.data?.attributes;
-            // if (this.dashboardData) {
-            //     Map ridsByStatus from API response to sidsByStatus in your component
-            //     this.sidsByStatus = this.dashboardData.ridsByStatus.map((item: { shipmentStatus: string, count: number }) => ({
-            //         shipmentStatus: item.shipmentStatus,
-            //         count: item.count
-            //     }));}
-            // this.sidsByStatus[0].value = this.dashboardData.sidsByStatus.onRouteCount
             this.sidsByStatus[0].value = this.dashboardData.ridsByStatus.onPortQueueCount
-            // this.sidsByStatus[2].value = this.dashboardData.sidsByStatus.onBerthCount
             this.timeBreakDown[0].value = this.dashboardData.timeBreakDown.operationTime
             this.timeBreakDown[1].value = this.dashboardData.timeBreakDown.berthTime
             this.timeBreakDown[2].value = this.dashboardData.timeBreakDown.waitingTime
