@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DashboardComponent } from "./dashboard/dashboard.component";
 import { BrandingComponent } from "./branding/branding.component";
 import { LocationSettingsComponent } from "./location-settings/location-settings.component";
 import { AdminComponent } from "./admin.component";
@@ -13,12 +12,8 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'dashboard',
+        redirectTo: '/#/en/operator',
         pathMatch: 'full'
-      },
-      {
-        path: 'dashboard',
-        component: DashboardComponent
       },
       {
         path: 'branding',

@@ -91,18 +91,18 @@
                     </fa-icon>
                     <mat-menu #sidType="matMenu" class="!bg-white" xPosition="before">
                         <menu mat-menu-item>
-                            <fa-icon icon="ship" size="1x" class="mx-2 cursor-pointer hover:text-primary">
-                            </fa-icon>
+                            <!-- <fa-icon icon="ship" size="1x" class="mx-2 cursor-pointer hover:text-primary">
+                            </fa-icon> -->
                             {{'ship' | translate}}
                         </menu>
                         <menu mat-menu-item>
-                            <fa-icon icon="train" size="1x" class="mx-2 cursor-pointer hover:text-primary">
-                            </fa-icon>
+                            <!-- <fa-icon icon="train" size="1x" class="mx-2 cursor-pointer hover:text-primary">
+                            </fa-icon> -->
                             {{'train' | translate}}
                         </menu>
                         <menu mat-menu-item>
-                            <fa-icon icon="plane" size="1x" class="mx-2 cursor-pointer hover:text-primary">
-                            </fa-icon>
+                            <!-- <fa-icon icon="plane" size="1x" class="mx-2 cursor-pointer hover:text-primary">
+                            </fa-icon> -->
                             {{'plane' | translate}}
                         </menu>
                     </mat-menu>
@@ -127,7 +127,7 @@
                         (cdkDropListDropped)="drop($event)">
                         <app-loader [isContainer]="true" *ngIf="(isLoading$ | async)" [fullScreen]="false"></app-loader>
                         <ng-container *ngIf="!(isLoading$ | async)">
-                            <scheduling-card *ngFor="let item of plannings" (triggerSideNav)="toggleSidenav($event)"
+                            <scheduling-card *ngFor="let item of plannings" (triggerSideNav)="toggleSidenav($event)" (click)="cardDetails$.next(true); getCardDetails(item)"
                                 [statuses]="statuses" (triggerCancellation)="openCancellationModal($event)"
                                 [isUmexOrganization]="(isUmexOrganization$ | async)"
                                 (triggerCheckIn)="openCheckinModal($event)"
@@ -169,12 +169,12 @@
                 </div> -->
                 <div class="col-span-2">
                     <div class="bg-white w-full min-h-[550px]">
-                        <app-loader class="m-auto flex-grow" *ngIf="(isLoading$ | async)" [isContainer]="true"
+                        <!-- <app-loader class="m-auto flex-grow" *ngIf="(isLoading$ | async)" [isContainer]="true"
                             [fullScreen]="false"></app-loader>
                         <scheduling-table [isToggleOpened]="!!(isToggleOpened$ | async)"
                             (onFilterTimeslot)="setTimeSlotFilterMode({ key: { prev: filterTypeEnum.timeSlot, curr: filterTypeEnum.timeSlot},  value: $event })"
                             [filterDate]="filterDate" (onToggleModal)="openPlanModal($event)"
-                            [isLoadingDashboard]="isLoading$ | async" (onDrop)="drop($event)"></scheduling-table>
+                            [isLoadingDashboard]="isLoading$ | async" (onDrop)="drop($event)"></scheduling-table> -->
                     </div>
                 </div>
             </div>

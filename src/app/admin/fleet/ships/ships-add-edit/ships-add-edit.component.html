@@ -89,7 +89,7 @@
     </div>
     <div class="flex gap-2 justify-center min-md:gap-20 max-md:flex-col py-3">
         <button [routerLink]="id ? '../../list' : '../list'" class="btn btn-outline-primary min-md:min-w-[436px] min-h-[50px] !text-[18px]" type="button">Cancel</button>
-          <button [disabled]="shipForm.invalid ||(isLoading$ | async)"  class="btn btn-primary min-md:min-w-[436px] min-h-[50px] !text-[18px]" type="button" (click)="saveVehicle()">Save</button>
+          <button [disabled]="shipForm.invalid ||(isLoading$ | async)"  class="btn btn-primary min-md:min-w-[436px] min-h-[50px] !text-[18px]" type="button" (click)="saveShip()">Save</button>
     </div>
 </form>
 </edit-container>

@@ -7,12 +7,9 @@
         <h4 class="heading-4 text-center pb-10">{{'There are no operation schedulings' | translate}}</h4>
         <p class="heading-6 text-center text-gray" [innerHTML]="'Use add sid button' | translate | safeHtml"></p>
         <div class="text-center pt-10 flex justify-center px-10">
-            <div class="">
+            <div *ngIf="userRole === 'ROLE_USER_TRANSPORT'">
                 <button routerLink="../add" type="button" class="btn btn-primary rounded-r-lg flex-grow h-[50px] max-w-[200px]">
                     <span class="text-lg">{{'Add SID' | translate}}</span>
-                </button>
-                <button>
-
                 </button>
             </div>
         </div>

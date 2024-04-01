@@ -1,8 +1,6 @@
-<app-loader [isContainer]="false" *ngIf="(isLoading$ | async)" [fullScreen]="true"></app-loader>
-
+<app-loader [isContainer]="false" *ngIf="(isLoading$ | async)" [fullScreen]="true" message="Logining Out"></app-loader>
 <div admin-layout version="latest">
     <!--    [companyName$]="companyName$"-->
-
     <admin-header header optionsTitle="Menu">
         <ul menu class="header-menu-list">
             <li class="header-menu-list-item">
@@ -35,11 +33,8 @@
             </li>
         </ul>
     </admin-header>
-
     <navigation-menu aside [logoSrc]="logoImgSrc">
     </navigation-menu>
-
-
     <div main class="p-4 min-md:px-10 min-md:pb-8 min-h-full flex flex-col">
         <router-outlet class="hidden"></router-outlet>
     </div>

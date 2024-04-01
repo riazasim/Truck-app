@@ -52,6 +52,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     readonly sortBy$: BehaviorSubject<number> = new BehaviorSubject<number>(12);
     readonly sortOrder$: BehaviorSubject<string> = new BehaviorSubject('DESC');
     readonly isComvexReorder$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    readonly cardDetails$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
     plannings: PlanningModel[] = []
     filterDate: Date = new Date();
@@ -90,7 +91,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
     ngOnInit(): void {
         this.retrievePlanningList();
-        this.retrieveSIDStatuses();
+        // this.retrieveSIDStatuses();
         this.subscribeForLocationChange(true);
         this.subscribeForSortByChanges(true);
         this.subscribeForSortOrderChanges(true);
@@ -111,6 +112,14 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.isLoading$.next(false)
             }
         )
+    }
+
+    getCardDetails(item:any){
+        this.planningService.get(item.planning.id).subscribe({
+            next:(res)=>{
+                console.log(res)
+            }
+        })
     }
 
     subscribeForOrganizationChanges(): void {

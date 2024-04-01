@@ -1,49 +1,49 @@
 <mat-chip [matMenuTriggerFor]="(hasDropdown$ | async)?menu:null" #trigger="matMenuTrigger"
 [ngStyle]="{
-    'background': planning?.statusColor,
+    'background': planning.statusColor,
     'color': (planning.status === 'Checked-out' || planning.status === 'Checked-in')?'white' :'#595959'
 }">
-<div class="flex gap-2" 
+<div class="flex gap-2"
 [ngClass]="{'justify-between': (hasDropdown$ | async), 'justify-center': !(hasDropdown$ | async)}">
-  <span>{{planning?.status || '-'}}</span>
+  <span>{{planning.status || '-'}}</span>
   <fa-icon *ngIf="hasDropdown$ | async" icon="angle-down"></fa-icon>
 </div>
 </mat-chip>
 <mat-menu #menu="matMenu" class="!bg-white">
     <div class="px-2 flex flex-col gap-4 cursor-pointer">
         <ng-container *ngIf="(hasDropdown$ | async) && planning.status === 'Created'">
-          <mat-chip  (click)="triggerAccept.emit({ 
+          <mat-chip  (click)="triggerAccept.emit({
             container: { data: { index: +planning.timeSlot.slice(0,2), name: planning.dockName, dock: +planning.dockId } },
             item: { data: planning }
           })" class="!cursor-pointer" [ngStyle]="{
-            'background': plannedStatus?.color,
+            'background': plannedStatus.color,
         }">{{'button.accept' | translate}}</mat-chip>
           <mat-chip (click)="triggerReject.emit(planning)"
           class="!cursor-pointer" [ngStyle]="{
-              'background': cancelledStatus?.color,
+              'background': cancelledStatus.color,
           }">{{('button.reject' | translate)}}</mat-chip>
         </ng-container>
-    
+
         <ng-container *ngIf="planning.status === 'Planned'">
           <mat-chip (click)="triggerCheckIn.emit(planning)"
           class="!cursor-pointer" [ngStyle]="{
-              'background': checkedInStatus?.color,
+              'background': checkedInStatus.color,
           }">{{'button.check-in' | translate}}</mat-chip>
           <mat-chip (click)="triggerCancellation.emit(planning)"
           class="cursor-pointer" [ngStyle]="{
-              'background': cancelledStatus?.color,
+              'background': cancelledStatus.color,
           }">{{('button.cancel' | translate)}}</mat-chip>
         </ng-container>
-      
+
         <ng-container *ngIf="planning.status === 'Checked-in'">
           <mat-chip (click)="triggerCheckOut.emit(planning)"
           class="cursor-pointer" [ngStyle]="{
-              'background': checkedOutStatus?.color,
+              'background': checkedOutStatus.color,
               'color': 'white'
           }">{{'button.check-out' | translate}}</mat-chip>
           <mat-chip (click)="triggerCancellation.emit(planning)"
           class="cursor-pointer" [ngStyle]="{
-              'background': cancelledStatus?.color,
+              'background': cancelledStatus.color,
           }">{{('button.cancel' | translate)}}</mat-chip>
         </ng-container>
     </div>
