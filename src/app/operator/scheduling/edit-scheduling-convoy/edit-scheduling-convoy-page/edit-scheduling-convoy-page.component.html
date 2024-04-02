@@ -2,8 +2,8 @@
     <mat-step label="Convoi">
         <app-loader *ngIf="isLoading$ | async" [isContainer]="true" [fullScreen]="false"></app-loader>
         <form [formGroup]="convoyForm" *ngIf="!(isLoading$ | async)">
-            <div class="grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 gap-y-4 pt-[100px] px-[50px]">
-                <div class="flex flex-col gap-x-10 gap-y-4 px-[50px]">
+            <div class="grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20 gap-y-4 pt-[100px] min-xl:px-[50px]">
+                <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
                     <!-- <p class="text-columnCell font-bold"></p> -->
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_navigation.svg">
                         <input inputRef type="text" placeholder="Navigation type*" formControlName="navigationType" />
@@ -58,7 +58,7 @@
                         <input inputRef type="text" placeholder="maneuvering" formControlName="maneuvering" />
                     </div> -->
                 </div>
-                <div class="flex flex-col gap-x-10 gap-y-4 px-[50px]">
+                <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
                     <!-- <p>&nbsp;</p> -->
                     <!-- <div iconic-input-wrapper leftSvg="assets/images/scheduling_ship_owner.svg">
                         <input inputRef type="text" placeholder="Ship owner" formControlName="shipowner" />
@@ -133,14 +133,19 @@
                     </div>
                 </div>
             </div>
-            <div class="flex gap-2 justify-center min-md:gap-20 max-md:flex-col py-3">
-                <button type="button" class="btn btn-outline-primary min-md:min-w-[436px] min-h-[50px] !text-[18px]" [routerLink]="['../']">
-                    {{ "cancel" | translate }}
-                </button>
-                <button type="button" class="btn btn-primary min-md:min-w-[436px] min-h-[50px] !text-[18px]"
-                    (click)="next(stepOne$, convoyForm , 1)">
-                    {{ "button.next" | translate }}
-                </button>
+            <div class="min-xl:px-[50px] grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20">
+                <div class="gap-y-4 mb-5 min-xl:px-[50px]">
+                    <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]"
+                        [routerLink]="['../']">
+                        {{ "button.back" | translate }}
+                    </button>
+                </div>
+                <div class="gap-y-4 mb-5 min-xl:px-[50px]">
+                    <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]"
+                        (click)="next(stepOne$, convoyForm , 1)">
+                        {{ "button.next" | translate }}
+                    </button>
+                </div>
             </div>
         </form>
     </mat-step>
@@ -148,9 +153,8 @@
         <app-loader *ngIf="isLoading$ | async" [isContainer]="true" [fullScreen]="false"></app-loader>
         <div *ngIf="!(isLoading$ | async)">
             <div class="pt-[100px] min-xl:px-[50px]">
-                <form class="grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 gap-y-4"
-                    [formGroup]="convoyForm">
-                    <div class="flex flex-col gap-x-10 gap-y-4 px-[50px]">
+                <form class="grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20 gap-y-4" [formGroup]="convoyForm">
+                    <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
                         <div iconic-input-wrapper leftIcon="user">
                             <input inputRef type="text" placeholder="Operator" formControlName="additionalOperator"
                                 class="text-center" />
@@ -193,13 +197,13 @@
                                 </fa-icon>
                             </button>
                         </mat-button-toggle-group>
-                        <button *ngIf="!(showFileThree$ | async)" type="button"
-                            class="text-primary font-bold mr-auto" (click)="showFileThree$.next(true)">
+                        <button *ngIf="!(showFileThree$ | async)" type="button" class="text-primary font-bold mr-auto"
+                            (click)="showFileThree$.next(true)">
                             <fa-icon icon="circle-plus"></fa-icon> Add New
                             Document
                         </button>
                     </div>
-                    <div class="grid grid-rows-2 gap-x-10 gap-y-4 px-[50px]">
+                    <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
                         <div textarea-wrapper leftIcon="user" [isFullHeight]="true">
                             <textarea class="break-words whitespace-pre-wrap resize-none" inputRef
                                 placeholder="Client's comments:" rows="10" cols="1"
@@ -213,7 +217,20 @@
                     </div>
                 </form>
             </div>
-            <div class="flex justify-center min-md:gap-20 gap-3 py-3">
+            <div class="min-xl:px-[50px] grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20 mt-12">
+                <div class="gap-y-4 mb-5 min-xl:px-[50px]">
+                    <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]" matStepperPrevious>
+                        {{ "button.back" | translate }}
+                    </button>
+                </div>
+                <div class="gap-y-4 mb-5 min-xl:px-[50px]">
+                    <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]"
+                        [disabled]="!convoyForm.valid" (click)="updateConvoys()">
+                        {{ "update" | translate }}
+                    </button>
+                </div>
+            </div>
+            <!-- <div class="flex justify-center min-md:gap-20 gap-3 py-3">
                 <button type="button" class="btn btn-primary min-md:min-w-[436px] min-h-[50px] !text-[18px]"
                     matStepperPrevious>
                     {{ "button.back" | translate }}
@@ -222,7 +239,7 @@
                 (click)="updateConvoys()">
                     {{ "update" | translate }}
                 </button>
-            </div>
+            </div> -->
         </div>
     </mat-step>
 </mat-stepper>

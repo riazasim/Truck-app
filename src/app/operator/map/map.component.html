@@ -1,7 +1,7 @@
-<div id="map" style="height: 750px; width: 100%;"></div>
-<app-search id="search"></app-search>
-
-
+<div class="relative">
+    <div id="map" style="height: 750px; width: 100%;"></div>
+    <app-search id="search"></app-search>
+</div>
 
 
 <!-- <section>
@@ -38,8 +38,8 @@
     <header class="flex min-md:flex-row flex-col justify-between pb-2">
         <h3 class="heading-3 font-bold">Map</h3>
     </header> -->
-    <!-- Search Input -->
-    <!-- <input type="text" [(ngModel)]="searchQuery" placeholder="Search location" />
+<!-- Search Input -->
+<!-- <input type="text" [(ngModel)]="searchQuery" placeholder="Search location" />
     <button (click)="searchLocation()">Search</button> -->
 <!-- </section>
 <google-map
@@ -51,16 +51,16 @@
     (mapMousemove)="move($event)"
 >
 <div class="search bg-white">Hi -->
-    <!-- <app-search></app-search> -->
+<!-- <app-search></app-search> -->
 <!-- </div>
 <div class="overlay-content"> -->
-    <!-- Content to overlay on the map -->
-    <!-- <h1>This is an overlay</h1>
+<!-- Content to overlay on the map -->
+<!-- <h1>This is an overlay</h1>
   </div> -->
 <!-- <map-ground-overlay [url]="imageUrl" [bounds]="searchCard"></map-ground-overlay> -->
 
-    <!-- Map Markers -->
-    <!-- <map-marker
+<!-- Map Markers -->
+<!-- <map-marker
         #marker="mapMarker"
         *ngFor="let markerPosition of markerPositions"
         [position]="markerPosition"

@@ -19,8 +19,8 @@ export class SchedulingCardComponent {
     @Input() isUmexOrganization: boolean | null;
     @Input() isMaxWidth: boolean;
     @Input() isloading: BehaviorSubject<boolean>;
-    @Input() userRole : string;
-    @Output() readonly triggerSideNav = new EventEmitter<{ view: string, id: number, sId: number , modal : string}>();
+    @Input() userRole: string;
+    @Output() readonly triggerSideNav = new EventEmitter<{ view: string, id: number, sId: number, modal: string }>();
     @Output() readonly triggerDeletion: EventEmitter<PlanningModel | null> = new EventEmitter<PlanningModel | null>();
     @Output() readonly triggerCancellation: EventEmitter<PlanningModel> = new EventEmitter<PlanningModel>();
     @Output() readonly triggerReject: EventEmitter<PlanningModel> = new EventEmitter<PlanningModel>();
@@ -41,25 +41,25 @@ export class SchedulingCardComponent {
         private readonly dialogService: MatDialog,
         private readonly planningService: PlanningService,
         private readonly cd: ChangeDetectorRef) {
-          this.retrievePlanningList();
-         }
+        //   this.retrievePlanningList();
+    }
 
     retrievePlanningList(): void {
 
-        this.pageIndex=0;
-        this.pageSize=0;
+        this.pageIndex = 0;
+        this.pageSize = 0;
 
-        let data={
+        let data = {
             "start": this.pageIndex,
             "length": this.pageSize,
-            "filters": ["","","","","",""],//["firstname/lastname", "status", "role", "phone", "email"]
-            "order": [{"dir": "DESC", "column": 0}]
+            "filters": ["", "", "", "", "", ""],//["firstname/lastname", "status", "role", "phone", "email"]
+            "order": [{ "dir": "DESC", "column": 0 }]
         }
-        this.planningService.pagination(data).subscribe((response:any) => {
+        this.planningService.pagination(data).subscribe((response: any) => {
             this.plannings = response.items;
-            console.log('plannings',this.plannings)
+            console.log('plannings', this.plannings)
             this.originalSource = response.items;
-            this.length=response.noTotal;
+            this.length = response.noTotal;
             this.isLoading$.next(false)
             this.cd.detectChanges();
         })
@@ -84,13 +84,13 @@ export class SchedulingCardComponent {
     }
 
     OnEmit(row: any, modal: string) {
-            this.triggerOpenLogs.emit({ view: 'view', id: row.planning.id, planning: row, modal: modal })
+        this.triggerOpenLogs.emit({ view: 'view', id: row.planning.id, planning: row, modal: modal })
     }
 
     setComponentName(value: string): void {
 
         if (value === 'copy') this.clipboard.copy(this.planning.id + '');
-        this.triggerSideNav.emit({ view: value, id: this.planning.plnanning.id, sId: this.planning.planning.rId , modal : 'shipment' });
+        this.triggerSideNav.emit({ view: value, id: this.planning.plnanning.id, sId: this.planning.planning.rId, modal: 'shipment' });
     }
 
     // showProducts(): string {
@@ -98,12 +98,12 @@ export class SchedulingCardComponent {
     // }
 
     handleTriggerAction(planning: PlanningModel): void {
-    //     if (planning.status.toLowerCase() === 'created') {
-    //         this.triggerReject.emit(planning);
-    //     }
+        //     if (planning.status.toLowerCase() === 'created') {
+        //         this.triggerReject.emit(planning);
+        //     }
 
-    //     if (planning.status.toLowerCase() === 'planned' || planning.status.toLowerCase() === 'checked-in') {
-    //         this.triggerCancellation.emit(planning);
-    //     }
+        //     if (planning.status.toLowerCase() === 'planned' || planning.status.toLowerCase() === 'checked-in') {
+        //         this.triggerCancellation.emit(planning);
+        //     }
     }
 }

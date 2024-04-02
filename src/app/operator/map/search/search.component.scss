@@ -125,8 +125,8 @@ background: white;
 
 .overlay-content {
     position: absolute;
-    top: 18%;
-    left: 78%;
+    top: 5%;
+    right: 5%;
     background-color: transparent;
     padding: 10px;
     // border: 1px solid black;
@@ -144,28 +144,28 @@ background: white;
     }
   @media screen and (min-width: 1171px) and (max-width: 1400px) {
     .overlay-content {
-      top: 18%; 
-      left: 70%; 
+      top: 18%;
+      left: 70%;
     }
   }
   @media screen and (min-width: 1000px) and (max-width: 1170px) {
     .overlay-content {
-      top: 18%; 
-      left: 65%; 
+      top: 18%;
+      left: 65%;
     }
   }
   @media screen and (min-width: 870px) and (max-width: 999px) {
     .overlay-content {
-      top: 18%; 
-      left: 60%; 
+      top: 18%;
+      left: 60%;
     }
   }
   @media screen and (min-width: 773px) and (max-width: 869px) {
     .overlay-content {
-      top: 18%; 
-      left: 55%; 
+      top: 18%;
+      left: 55%;
     }
   }
-  
-  
+
+
   }
