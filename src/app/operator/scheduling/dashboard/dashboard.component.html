@@ -14,8 +14,7 @@
         <h3 class="max-xl:block min-xl:hidden heading-3 mr-5 mobile-view">{{'Planning list' | translate}}</h3>
         <div
             [ngClass]="{'gap-8' : !(isTableView$ | async), 'gap-0' : (isTableView$ | async) , 'flex-grow flex flex-col' : true}">
-            <div
-                class="flex min-lg:justify-between sm:justify-center lg:flex-row max-lg:flex-col gap-4">
+            <div class="flex min-lg:justify-between sm:justify-center lg:flex-row max-lg:flex-col gap-4">
                 <div class="flex gap-4 max-lg:flex-col items-center justify-stretch">
                     <h3 class="min-xl:block max-xl:hidden heading-4 mr-5 w-full desktop-view">
                         {{'Planning list' | translate}}</h3>
@@ -26,8 +25,7 @@
                             [matTooltip]="'Planning date' | translate" (dateChanged)="handleDateChange($event)"
                             [model]="filterDate" [isHeaderPosition]="true" [height]="37"></datepicker>
                     </div>
-                    <div *ngIf="(isComvexOrganization$ | async)"
-                        class="flex items-center gap-2 h-[37px] w-full">
+                    <div *ngIf="(isComvexOrganization$ | async)" class="flex items-center gap-2 h-[37px] w-full">
                         <app-toggle (onModelChange)="isComvexReorder$.next($event)"
                             [model]="!!(isComvexReorder$ | async)" class="h-[30px]"></app-toggle>
                         <label>{{(isComvexReorder$ | async) ? 'Reorder mode' : 'Freezed mode'}}</label>
@@ -58,8 +56,7 @@
                         <div class="flex gap-4 items-center whitespace-nowrap">
                             <input id="viewed" type="checkbox"
                                 class="border border-textDefault cursor-pointer w-[28px] h-[28px]">
-                            <label for="viewed"
-                                class="max-xl:hidden min-xl:block heading-5 cursor-pointer">Exclude past
+                            <label for="viewed" class="max-xl:hidden min-xl:block heading-5 cursor-pointer">Exclude past
                                 SIDs</label>
                             <label for="viewed" class="max-xl:block min-xl:hidden cursor-pointer">Exclude past
                                 SIDs</label>
@@ -67,7 +64,8 @@
                     </div>
                 </div>
                 <div class="flex items-center">
-                    <mat-button-toggle-group class="flex w-full justify-end items-center" *ngIf="userRole === 'ROLE_USER_TRANSPORT'">
+                    <mat-button-toggle-group class="flex w-full justify-end items-center"
+                        *ngIf="userRole === 'ROLE_USER_TRANSPORT'">
                         <button routerLink="../add" [disabled]="(isLoading$ | async) || false"
                             class="bg-primary text-white hover:bg-primary-dark py-2 min-h-[35px] min-md:min-w-[120px] max-sm:w-full rounded-l max-lg:w-full"
                             type="button">
@@ -76,8 +74,7 @@
                         <button [disabled]="(isLoading$ | async) || false"
                             class="bg-primary text-white hover:bg-primary-dark min-h-[35px] min-md:min-w-[30px] max-sm:w-full rounded-r"
                             type="button" [matMenuTriggerFor]="menu">
-                            <fa-icon [icon]="['fas', 'caret-down']" size="2x"
-                                class="mx-2 cursor-pointer text-white">
+                            <fa-icon [icon]="['fas', 'caret-down']" size="2x" class="mx-2 cursor-pointer text-white">
                             </fa-icon>
                         </button>
                         <mat-menu #menu="matMenu" xPosition="before" class="!bg-white">
@@ -86,8 +83,8 @@
                         </mat-menu>
                     </mat-button-toggle-group>
                     <fa-icon icon="truck" size="2x" [matMenuTriggerFor]="sidType" #trigger="matMenuTrigger"
-                        matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
-                        [matTooltip]="'truck' | translate" class="mx-2 cursor-pointer hover:text-primary">
+                        matTooltipClass="drop-shadow-lg" matTooltipPosition="above" [matTooltip]="'truck' | translate"
+                        class="mx-2 cursor-pointer hover:text-primary">
                     </fa-icon>
                     <mat-menu #sidType="matMenu" class="!bg-white" xPosition="before">
                         <menu mat-menu-item>
@@ -127,24 +124,25 @@
                         (cdkDropListDropped)="drop($event)">
                         <app-loader [isContainer]="true" *ngIf="(isLoading$ | async)" [fullScreen]="false"></app-loader>
                         <ng-container *ngIf="!(isLoading$ | async)">
-                            <scheduling-card *ngFor="let item of plannings" (triggerSideNav)="toggleSidenav($event)" (click)="cardDetails$.next(true); getCardDetails(item)"
-                                [statuses]="statuses" (triggerCancellation)="openCancellationModal($event)"
+                            <scheduling-card *ngFor="let item of plannings" (triggerSideNav)="toggleSidenav($event)"
+                                (click)="getCardDetails(item)" [statuses]="statuses"
+                                (triggerCancellation)="openCancellationModal($event)"
                                 [isUmexOrganization]="(isUmexOrganization$ | async)"
                                 (triggerCheckIn)="openCheckinModal($event)"
                                 (triggerCheckOut)="openCheckOutModal($event)" (triggerReject)="openRejectModal($event)"
                                 (triggerAccept)="openPlanModal($event)" (triggerDeletion)="openDeleteModal($event)"
-                                [cdkDragData]="item" cdkDrag [planning]="item"
-                                [userRole]="userRole"
-                                (triggerOpenLogs)="toggleSidenav($event)"
-                                >
+                                [cdkDragData]="item" cdkDrag (cdkDragStarted)="getCardDetails(item)" [planning]="item" [userRole]="userRole"
+                                (triggerOpenLogs)="toggleSidenav($event)">
                                 <div *cdkDragPreview class="square" [ngStyle]="{backgroundColor: 'blue' }">
                                 </div>
                             </scheduling-card>
-                            <scheduling-card [isloading]="newCardsLoading$" *ngIf="(newCardsLoading$ | async)"></scheduling-card>
+                            <scheduling-card [isloading]="newCardsLoading$"
+                                *ngIf="(newCardsLoading$ | async)"></scheduling-card>
                             <app-loader [isContainer]="false" *ngIf="(cardLoading$ | async)"
                                 [fullScreen]="false"></app-loader>
                         </ng-container>
-                        <no-scheduling *ngIf="!(isLoading$ | async) && !plannings.length"></no-scheduling>
+                        <no-scheduling *ngIf="!(isLoading$ | async) && !plannings.length"
+                            [userRole]="userRole"></no-scheduling>
                     </div>
                 </ng-scrollbar>
                 <!-- <div *ngIf="(isMobileCardList$ | async)" class="flex flex-col gap-4 card-container">
@@ -168,18 +166,50 @@
                     </div>
                 </div> -->
                 <div class="col-span-2">
-                    <div class="bg-white w-full min-h-[550px]">
-                        <!-- <app-loader class="m-auto flex-grow" *ngIf="(isLoading$ | async)" [isContainer]="true"
-                            [fullScreen]="false"></app-loader>
-                        <scheduling-table [isToggleOpened]="!!(isToggleOpened$ | async)"
-                            (onFilterTimeslot)="setTimeSlotFilterMode({ key: { prev: filterTypeEnum.timeSlot, curr: filterTypeEnum.timeSlot},  value: $event })"
-                            [filterDate]="filterDate" (onToggleModal)="openPlanModal($event)"
-                            [isLoadingDashboard]="isLoading$ | async" (onDrop)="drop($event)"></scheduling-table> -->
+                    <div
+                        class="bg-white w-full min-h-[550px] items-center justify-center {{!(isCardDetailsLoading$ | async) ? '' : 'flex'}}">
+                        <app-loader class="m-auto flex-grow" *ngIf="(isCardDetailsLoading$ | async)"
+                            [fullScreen]="false" [isContainer]="false"></app-loader>
+                        <div *ngIf="!(isCardDetailsLoading$ | async) && plannings.length" class="p-12">
+                            <div class="flex justify-between min-lg:items-center max-lg:flex-col">
+                                <div>
+                                    <h2 class="heading-2 font-bold text-primary">Shipment SID - {{planning.rId || '-'}}
+                                    </h2>
+                                </div>
+                            </div>
+                            <div class="pb-10 pt-4">
+                                <div class="flex min-lg:justify-between min-lg:items-center max-lg:flex-col">
+                                    <div>
+                                        <h3 class="heading-2 text-primary">Route Details : </h3>
+                                    </div>
+                                </div>
+                                <div  class="grid min-lg:grid-cols-2 max-md:grid-cols-1 py-2 gap-y-4">
+                                    <div class="font-bold text-xl"><span class="font-bold heading-5">Convoy Type : </span>- {{planning.convoyType}}</div>
+                                    <div class="font-bold text-xl"><span class="font-bold heading-5">Arrival Gauge : </span>- {{planning.arrivalGauge}}</div>
+                                    <div class="font-bold text-xl"><span class="font-bold heading-5">Arrival Port : </span>- {{planning.arrivalPort}}</div>
+                                    <div class="font-bold text-xl"><span class="font-bold heading-5">Departure Port : </span>- {{planning.departurePort}}</div>
+                                    <div class="font-bold text-xl"><span class="font-bold heading-5">Location Port : </span>- {{planning.locationPort}}</div>
+                                    <div class="font-bold text-xl"><span class="font-bold heading-5">Pilot Company : </span>- {{planning.pilotCompany}}</div>
+                                    <div class="font-bold text-xl"><span class="font-bold heading-5">Max Capacity : </span>- {{planning.maxCapacity}}</div>
+                                    <div class="font-bold text-xl"><span class="font-bold heading-5">Max Draft : </span>- {{planning.maxDraft}}</div>
+                                    <div class="font-bold text-xl"><span class="font-bold heading-5">Length : </span>- {{planning.length}}</div>
+                                    <div class="font-bold text-xl"><span class="font-bold heading-5">Width : </span>- {{planning.width}}</div>
+                                    <div class="font-bold text-xl"><span class="font-bold heading-5">Zone : </span>- {{planning.zone}}</div>
+                                    <div class="font-bold text-xl"><span class="font-bold heading-5">Lock Type : </span>- {{planning.lockType}}</div>
+                                    <div class="font-bold text-xl"><span class="font-bold heading-5">ETA : </span>- {{planning.estimatedTimeArrival}}</div>
+                                    <div class="font-bold text-xl"><span class="font-bold heading-5">RTA : </span>- {{planning.relativeTimeArrival}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <no-scheduling *ngIf="!(isCardDetailsLoading$ | async) && !plannings.length"
+                            [userRole]="userRole"></no-scheduling>
                     </div>
                 </div>
             </div>
             <div class="grid mt-4" *ngIf="(isTableView$ | async)">
-                <app-planning-list (triggerOpenLogs)="toggleSidenav($event)" [userRole]="userRole" [filterDate]="formatDate(filterDate)"></app-planning-list>
+                <app-loader *ngIf="isLoading$ | async" [isContainer]="true" [fullScreen]="false"></app-loader>
+                <app-planning-list *ngIf="!(isLoading$ | async)" (triggerOpenLogs)="toggleSidenav($event)"
+                    [userRole]="userRole" [filterDate]="formatDate(filterDate)"></app-planning-list>
             </div>
         </div>
     </mat-sidenav-content>

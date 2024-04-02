@@ -40,6 +40,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     @ViewChild(ComvexListComponent) comvexListComponent: ComvexListComponent;
     @ViewChild(ComvexListReorderComponent) comvexListReorderComponent: ComvexListReorderComponent;
     readonly isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+    readonly isCardDetailsLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     readonly cardLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     readonly newCardsLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     readonly componentName$: BehaviorSubject<string> = new BehaviorSubject<string>('');
@@ -52,20 +53,19 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     readonly sortBy$: BehaviorSubject<number> = new BehaviorSubject<number>(12);
     readonly sortOrder$: BehaviorSubject<string> = new BehaviorSubject('DESC');
     readonly isComvexReorder$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-    readonly cardDetails$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
     plannings: PlanningModel[] = []
     filterDate: Date = new Date();
     filterTypeEnum = FilterTypeENum;
-    userRole : string;
+    userRole: string;
     logId: number;
-    logModal : string;
-
+    logModal: string;
+    planning: any;
     toggleRef: MatSnackBarRef<TextOnlySnackBar>;
     statuses: StatusListModel[] = [];
     operations: OperationModel[] = [];
 
-    pageSettings: PageSettingsModel = { start : 0 , length : 5 };
+    pageSettings: PageSettingsModel = { start: 0, length: 5 };
     appliedFilters: any = {};
 
     innerWidth: number;
@@ -86,8 +86,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         private readonly statusListService: StatusListService,
         private readonly cd: ChangeDetectorRef,
         private readonly organizationService: OrganizationService,
-        private readonly authService : AuthService
-        ) { }
+        private readonly authService: AuthService
+    ) { }
 
     ngOnInit(): void {
         this.retrievePlanningList();
@@ -96,7 +96,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         this.subscribeForSortByChanges(true);
         this.subscribeForSortOrderChanges(true);
         this.subscribeForOrganizationChanges();
-        this.getUserRole()
+        this.getUserRole();
+        this.getCardDetails()
     }
 
     ngAfterViewInit(): void {
@@ -104,22 +105,50 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         this.applyMobileView();
     }
 
-    getUserRole(){
+    getUserRole() {
         this.isLoading$.next(true)
         this.authService.checkCredentials().subscribe(
-            res =>{
+            res => {
                 this.userRole = res?.data?.attributes?.userRole
                 this.isLoading$.next(false)
             }
         )
     }
 
-    getCardDetails(item:any){
-        this.planningService.get(item.planning.id).subscribe({
-            next:(res)=>{
-                console.log(res)
-            }
-        })
+    getCardDetails(item: any = 0) {
+        this.isCardDetailsLoading$.next(true)
+        if (item !== 0) {
+            this.planningService.get(item.planning.id).subscribe({
+                next: (res) => {
+                    this.planning = res
+                    this.isCardDetailsLoading$.next(false)
+                },
+                error: (body) => {
+                    this.isCardDetailsLoading$.next(false)
+                    handleError(this.snackBar, body, this.isCardDetailsLoading$)
+                }
+            })
+        }
+        else {
+            let data = {
+                "start": this.pageSettings.start,
+                "length": this.pageSettings.length,
+                "filters": [this.formatDate(this.filterDate), "", "", "", "", ""], // Assuming these are for other filters
+                "order": [{ "dir": "DESC", "column": 0 }],
+            };
+            this.planningService.pagination(data).subscribe({
+                next: (res) => {
+                    this.planning = res.items[0]?.planning;
+                    this.isCardDetailsLoading$.next(false)
+
+                    console.log(this.planning)
+                },
+                error: (body) => {
+                    this.isCardDetailsLoading$.next(false)
+                    handleError(this.snackBar, body, this.isCardDetailsLoading$)
+                }
+            })
+        }
     }
 
     subscribeForOrganizationChanges(): void {
@@ -286,33 +315,34 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         this.plannings.length = 0;
         this.isLoading$.next(true);
         this.retrievePlanningList();
+        this.getCardDetails()
     }
 
     retrievePlannings(fetchMore: boolean = false): void {
         if (fetchMore && this.hasReachedEndPage$.getValue() || this.isTableView$.getValue()) {
-          return;
+            return;
         }
 
-        if (!fetchMore) this.pageSettings = {...defaultPageSettings};
+        if (!fetchMore) this.pageSettings = { ...defaultPageSettings };
         if (fetchMore) this.cardLoading$.next(true);
         this.planningService.list({ schedulingDate: getFormattedDate(this.filterDate), ...this.appliedFilters, ...this.pageSettings })
-                            .subscribe((response: any) => {
-          if (fetchMore) {
-            if (!response.length) {
-              this.hasReachedEndPage$.next(true);
-              this.cardLoading$.next(false);
-              return;
-            }
-            this.plannings.push(...<any[]>response);
-            this.cardLoading$.next(false);
-          } else {
-            this.plannings = <any[]>response;
-            this.hasReachedEndPage$.next(false);
-          }
+            .subscribe((response: any) => {
+                if (fetchMore) {
+                    if (!response.length) {
+                        this.hasReachedEndPage$.next(true);
+                        this.cardLoading$.next(false);
+                        return;
+                    }
+                    this.plannings.push(...<any[]>response);
+                    this.cardLoading$.next(false);
+                } else {
+                    this.plannings = <any[]>response;
+                    this.hasReachedEndPage$.next(false);
+                }
 
-          this.isLoading$.next(false);
-        });
-      }
+                this.isLoading$.next(false);
+            });
+    }
 
     handleOpenPlanUpgradeWarning(): void {
         this.sidenav.close();
@@ -651,7 +681,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
             });
     }
 
-    toggleSidenav(data: { view: string, id: number, planning?: PlanningModel ,modal : string }) {
+    toggleSidenav(data: { view: string, id: number, planning?: PlanningModel, modal: string }) {
         this.logModal = data.modal
         switch (data.view) {
             case 'copy':

@@ -35,7 +35,6 @@ export class EditSchedulingConvoyComponent {
     retrievePlanningList(): void {
         this.id = this.route.snapshot.params['id'];
         this.planningService.get(this.id).subscribe(response => {
-            console.log(response)
             this.dataSource = response.planningConvoys;
             this.originalSource = response.planningConvoys;
             this.isLoading$.next(false);

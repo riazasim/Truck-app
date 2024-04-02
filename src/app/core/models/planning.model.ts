@@ -46,6 +46,7 @@ export interface PlanningModel {
     id?: number | undefined;
     planningId?: number;
     sId?: number;
+    planning : any;
     relativeTimeArrival?: string;
     shipmentStatus?: string;
     estimatedTimeArrival: string;

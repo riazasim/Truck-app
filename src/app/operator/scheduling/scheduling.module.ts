@@ -37,7 +37,6 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatChipsModule } from '@angular/material/chips';
-import { EditSchedulingComponent } from './edit-scheduling/edit-scheduling.component';
 import { SchedulingTableBoxComponent } from './scheduling-table-box/scheduling-table-box.component';
 import { SchedulingUpgradeWarningModalComponent } from './scheduling-upgrade-warning-modal/scheduling-upgrade-warning-modal.component';
 import { SchedulingCancelModalComponent } from './scheduling-cancel-modal/scheduling-cancel-modal.component';
@@ -81,7 +80,6 @@ import { RestrictionsComponent } from './restrictions/restrictions.component';
     SchedulingDeleteModalComponent,
     NoSchedulingComponent,
     SchedulingAddProductModalComponent,
-    EditSchedulingComponent,
     SchedulingTableBoxComponent,
     SchedulingUpgradeWarningModalComponent,
     SchedulingCancelModalComponent,
