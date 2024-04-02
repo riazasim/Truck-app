@@ -1,18 +1,73 @@
-<div class="flex flex-col w-full gap-4 bg-white px-[auto] shadow-md py-4">
-    <div class="flex flex-[0.1] w-[98%] mx-[auto] items-center justify-between">
-        <h2 class="text-xl font-medium">{{Title}}</h2>
-        <form [formGroup]="searchForm" (ngSubmit)="searchLocation()" class="min-w-[500px] h-full rounded-md flex border border-[#9E9E9E]">
-            <button type="submit">
-                <fa-icon icon="search" class="mx-2 cursor-pointer text-black"></fa-icon>
-            </button>
-            <input class="h-full border-transparent w-full rounded-md" inputRef type="text" formControlName="searchQuery"
-                placeholder="Enter coordinates (lat, lng)">
-                <button type="button">
-                    <fa-icon [icon]="['fas' , 'caret-down']" class="mx-2 cursor-pointer text-black"></fa-icon>
-                </button>
-        </form>
-    </div>
-    <div class="w-full flex-1">
-        <div id="map" style="height: 750px; width: 98%; margin: 0 auto;"></div>
-    </div>
-</div>
+<div id="map" style="height: 750px; width: 100%;"></div>
+<app-search id="search"></app-search>
+
+
+
+
+<!-- <section>
+    <header
+        class="flex min-md:flex-row flex-col justify-between pb-2"
+    >
+        <h3 class="heading-3 font-bold">Map</h3>
+    </header>
+</section>
+<google-map
+    height="470px"
+    width="100%"
+    [center]="center"
+    [zoom]="zoom"
+    (mapClick)="addMarker($event)"
+    (mapMousemove)="move($event)"
+>
+    <map-marker
+        #marker="mapMarker"
+        *ngFor="let markerPosition of markerPositions"
+        [position]="markerPosition"
+        (mapClick)="openInfoWindow(marker)"
+    ></map-marker>
+    <map-info-window *ngFor="let markerPosition of markerPositions">
+        {{ markerPosition.lat }}
+        {{ markerPosition.lng }}
+    </map-info-window>
+</google-map> -->
+
+<!-- <div>Latitude: {{ display?.lat }}</div>
+<div>Longitude: {{ display?.lng }}</div> -->
+
+<!-- <section>
+    <header class="flex min-md:flex-row flex-col justify-between pb-2">
+        <h3 class="heading-3 font-bold">Map</h3>
+    </header> -->
+    <!-- Search Input -->
+    <!-- <input type="text" [(ngModel)]="searchQuery" placeholder="Search location" />
+    <button (click)="searchLocation()">Search</button> -->
+<!-- </section>
+<google-map
+    height="470px"
+    width="100%"
+    [center]="center"
+    [zoom]="zoom"
+    (mapClick)="addMarker($event)"
+    (mapMousemove)="move($event)"
+>
+<div class="search bg-white">Hi -->
+    <!-- <app-search></app-search> -->
+<!-- </div>
+<div class="overlay-content"> -->
+    <!-- Content to overlay on the map -->
+    <!-- <h1>This is an overlay</h1>
+  </div> -->
+<!-- <map-ground-overlay [url]="imageUrl" [bounds]="searchCard"></map-ground-overlay> -->
+
+    <!-- Map Markers -->
+    <!-- <map-marker
+        #marker="mapMarker"
+        *ngFor="let markerPosition of markerPositions"
+        [position]="markerPosition"
+        (mapClick)="openInfoWindow(marker)"
+    ></map-marker>
+    <map-info-window *ngFor="let markerPosition of markerPositions">
+        {{ markerPosition.lat }}
+        {{ markerPosition.lng }}
+    </map-info-window>
+</google-map> -->

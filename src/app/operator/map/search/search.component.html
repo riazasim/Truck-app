@@ -1,0 +1,345 @@
+<div class="overlay-content">
+    <div class="card">
+        <div class="left">
+            <div class="bg-[#FFFFFF] rounded-full w-[36px] h-[36px]">
+                <img
+                    src="assets/images/circum_filter.svg"
+                    alt=""
+                    class="translate-x-[6px] translate-y-[8px]"
+                />
+            </div>
+        </div>
+        <div class="right">
+            <div class="top">
+                <div *ngIf="isActive === 1" class="w-[198px]">
+                    <h2 class="mb-2 text-[#000000] text-sm font-normal">
+                        Filter by company
+                    </h2>
+                    <div iconic-select-wrapper [rightIcon]="['fas', 'caret-down']">
+                        <mat-label>Cars</mat-label>
+                        <select inputRef disabled label="Company" name="companyId" id="companyId">
+                            <option value="" disabled selected>Company</option>
+                            <!-- <option
+                                *ngFor="let company of companies"
+                                [value]="company.companyId"
+                            >
+                                {{ company.name }}
+                            </option> -->
+                        </select>
+                    </div>
+                </div>
+                <div *ngIf="isActive === 2" class="w-[198px]">
+                    <h2 class="mb-2 text-[#000000] text-sm font-normal">
+                        Filter by Status
+                    </h2>
+                    <div class="grid grid-cols-2">
+                        <div
+                            class="flex gap-1 items-center w-[100px] px-5"
+                        >
+                            <input
+                                type="checkbox"
+                                id="On route"
+                                name="On route"
+                                class="h-4 w-4"
+                            />
+                            <label
+                                for="On route"
+                                class="text-[#354050] text-sm font-normal"
+                                >On route</label
+                            >
+                        </div>
+                        <div
+                            class="flex gap-1 items-center w-[100px] px-5"
+                        >
+                            <input
+                                type="checkbox"
+                                id="Port"
+                                name="Port"
+                                class="h-4 w-4"
+                            />
+                            <label
+                                for="Port"
+                                class="text-[#354050] text-sm font-normal"
+                                >Port</label
+                            >
+                        </div>
+                    </div>
+                    <div class="flex flex-row mt-3">
+                        <div class="flex items-center w-[100px] px-5">
+                            <input
+                                type="checkbox"
+                                id="Berth"
+                                name="Berth"
+                                class="h-4 w-4"
+                            />&nbsp;
+                            <label
+                                for="Berth"
+                                class="text-[#354050] text-sm font-normal"
+                                >Berth</label
+                            >
+                        </div>
+                        <div class="flex items-center w-[100px] px-5">
+                            <input
+                                type="checkbox"
+                                id="Exit"
+                                name="Exit"
+                                class="h-4 w-4"
+                            />&nbsp;
+                            <label
+                                for="Exit"
+                                class="text-[#354050] text-sm font-normal"
+                                >Exit</label
+                            >
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="isActive === 3" class="w-[198px]">
+                    <h2 class="mb-1 text-[#000000] text-sm font-normal">
+                        Filter by Time
+                    </h2>
+                    <div iconic-select-wrapper [rightIcon]="['fas', 'caret-down']">
+                        <select inputRef name="companyId" id="companyId">
+                            <option value="" disabled selected>Total Time</option>
+                            <!-- <option
+                                *ngFor="let company of companies"
+                                [value]="company.companyId"
+                            >
+                                {{ company.name }}
+                            </option> -->
+                        </select>
+                    </div>
+                    <div
+                        class="flex justify-between items-center w-[195px]"
+                    >
+                        <div class="flex gap-1 items-center">
+                            <input
+                                type="radio"
+                                id="Between"
+                                name="Time"
+                                value="Between"
+                                checked
+                                class="h-2 w-2"
+                            />
+                            <label
+                                for="Between"
+                                class="text-xs mt-1 text-[#354050]"
+                                >Between</label
+                            >
+                        </div>
+                        <div class="flex gap-1 items-center">
+                            <input
+                                type="radio"
+                                id="More than"
+                                name="Time"
+                                value="More than"
+                                class="h-2 w-2"
+                            />
+                            <label
+                                for="More than"
+                                class="text-xs mt-1 text-[#354050]"
+                                >More than</label
+                            >
+                        </div>
+                        <div class="flex gap-1 items-center">
+                            <input
+                                type="radio"
+                                id="Less than"
+                                name="Time"
+                                value="Less than"
+                                class="h-2 w-2"
+                            />
+                            <label
+                                for="Less than"
+                                class="text-xs mt-1 text-[#354050]"
+                                >Less than</label
+                            >
+                        </div>
+                    </div>
+                    <div class="flex justify-between gap-2">
+                        <div iconic-input-wrapper>
+                            <input inputRef type="text" placeholder="Minutes" />
+                        </div>
+                        <div iconic-input-wrapper>
+                            <input inputRef type="text" placeholder="Minutes" />
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="flex flex-col gap-1"
+                    *ngIf="isActive === 4"
+                    class="w-[198px]"
+                >
+                    <h2 class="text-[#000000] text-sm font-normal">
+                        Filter by SID
+                    </h2>
+                    <div class="mb-1">
+                        <mat-form-field class="example-form-field">
+                            <mat-label>ETA</mat-label>
+                            <input matInput [matDatepicker]="datepicker" />
+                            <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
+                            <mat-datepicker-toggle
+                                matIconSuffix
+                                [for]="datepicker"
+                            ></mat-datepicker-toggle>
+                            <mat-datepicker #datepicker>
+                                <!-- <mat-datepicker-actions>
+                                <button mat-button matDatepickerCancel>Cancel</button>
+                                <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+                              </mat-datepicker-actions> -->
+                            </mat-datepicker>
+                        </mat-form-field>
+                        <!-- <mat-form-field>
+                            <mat-label>ETA</mat-label>
+                            <input matInput [matDatepicker]="picker">
+                            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field> -->
+                    </div>
+                    <div
+                        iconic-select-wrapper
+                        class="mb-1"
+                        [rightIcon]="['fas', 'caret-down']"
+                    >
+                        <select inputRef name="companyId" id="companyId">
+                            <option value="" disabled selected>
+                                Departure port
+                            </option>
+                            <!-- <option
+                                *ngFor="let company of companies"
+                                [value]="company.companyId"
+                            >
+                                {{ company.name }}
+                            </option> -->
+                        </select>
+                    </div>
+                    <div
+                        iconic-select-wrapper
+                        class="mb-1"
+                        [rightIcon]="['fas', 'caret-down']"
+                    >
+                        <select inputRef name="companyId" id="companyId">
+                            <option value="" disabled selected>Arival port</option>
+                            <!-- <option
+                                *ngFor="let company of companies"
+                                [value]="company.companyId"
+                            >
+                                {{ company.name }}
+                            </option> -->
+                        </select>
+                    </div>
+                    <div iconic-input-wrapper class="mb-1">
+                        <input placeholder="Pilot Company" inputRef type="text" />
+                    </div>
+                    <div iconic-input-wrapper class="mb-1">
+                        <input placeholder="Agent" inputRef type="text" />
+                    </div>
+                </div>
+            </div>
+            <div class="flex justify-center">
+                <hr class="text-[#CCCCCC] w-[194px]" />
+            </div>
+            <div class="bottom content-center">
+                <div class="flex-col mt-2 w-25">
+                    <img
+                        [src]="
+                            isActive === 1
+                                ? 'assets/images/cardBuilding2.svg'
+                                : 'assets/images/cardBuilding.svg'
+                        "
+                        alt=""
+                        (click)="onImgClick(1)"
+                    />
+                </div>
+                <span class="vl"></span>
+                <div class="flex-col mt-2 w-25">
+                    <img
+                        [src]="
+                            isActive === 2
+                                ? 'assets/images/cardChain2.svg'
+                                : 'assets/images/cardChain.svg'
+                        "
+                        alt=""
+                        (click)="onImgClick(2)"
+                    />
+                </div>
+                <span class="vl"></span>
+                <div class="flex-col mt-2 w-25">
+                    <img
+                        [src]="
+                            isActive === 3
+                                ? 'assets/images/cardClock2.svg'
+                                : 'assets/images/cardClock.svg'
+                        "
+                        alt=""
+                        (click)="onImgClick(3)"
+                    />
+                </div>
+                <span class="vl"></span>
+                <div class="flex-col mt-2 w-25">
+                    <img
+                        [src]="
+                            isActive === 4
+                                ? 'assets/images/cardBoat2.svg'
+                                : 'assets/images/cardBoat.svg'
+                        "
+                        alt=""
+                        (click)="onImgClick(4)"
+                    />
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="mt-5" *ngIf="isActive === 1">
+    <section class="result-container mat-elevation-z8" tabindex="0">
+        <table mat-table > 
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef class=" tbl-header"> Results (Filter by company) </th>
+            <td class="bg-white" mat-cell *matCellDef="let element"> {{element.name}} </td>
+          </ng-container>
+      
+          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </section>
+    </div>
+    <div class="mt-5" *ngIf="isActive === 2">
+    <section class="result-container mat-elevation-z8" tabindex="0">
+        <table mat-table > 
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef class=" tbl-header"> Results (Filter by status)</th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+          </ng-container>
+      
+          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </section>
+    </div>
+    <div class="mt-5" *ngIf="isActive === 3">
+    <section class="result-container mat-elevation-z8" tabindex="0">
+        <table mat-table > 
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef class=" tbl-header"> Results (Filter by time)</th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+          </ng-container>
+      
+          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </section>
+    </div>
+    <div class="mt-5" *ngIf="isActive === 4">
+    <section class="result-container mat-elevation-z8" tabindex="0">
+        <table mat-table > 
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef class=" tbl-header"> Results (Filter by SID)</th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+          </ng-container>
+      
+          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </section>
+    </div>
+  </div>

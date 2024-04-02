@@ -29,12 +29,29 @@ import { CustomTooltipDirective } from './directives/custom-tooltip.directive';
 import { SafeHtmlPipe } from '../core/pipes/safe-html.pipe';
 import { ToggleComponent } from './components/toggle/toggle.component';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
-import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { TimepickerComponent } from './components/timepicker/timepicker.component';
 import { MatMenuModule } from '@angular/material/menu';
 import {MatRadioModule} from '@angular/material/radio';
 import { GenericWrapperComponent } from './components/generic-wrapper/generic-wrapper.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 export const MY_FORMATS = {
@@ -116,7 +133,28 @@ export const MY_FORMATS = {
         ToggleComponent,
         TimepickerComponent,
         MatRadioModule,
-        CommonModule
+        CommonModule,
+        DatepickerComponent,
+    MatCheckboxModule,
+    MatFormFieldModule,
+    MatInputModule,
+    
+    MatButtonModule,
+    MatButtonToggleModule,
+    MatChipsModule,
+    MatStepperModule,
+    MatDialogModule,
+    MatIconModule,
+    MatNativeDateModule,
+    MatPaginatorModule,
+    MatRippleModule,
+    MatSelectModule,
+    MatSidenavModule,
+    MatSlideToggleModule,
+    MatSnackBarModule,
+    MatSortModule,
+    MatTableModule,
+    MatTooltipModule,
     ],
     providers: [
         { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
