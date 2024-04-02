@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'no-scheduling',
   templateUrl: './no-scheduling.component.html'
 })
-export class NoSchedulingComponent {}
+export class NoSchedulingComponent {
+    @Input() userRole : string;
+}

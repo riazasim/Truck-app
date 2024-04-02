@@ -131,19 +131,20 @@
                         />
                     </div>
                 </div>
-    
+
                 <div formGroupName="userSetting">
                     <div iconic-input-wrapper leftIcon="phone">
                         <input
                             inputRef
                             type="text"
+                            maxlength="4"
                             id="phoneRegionCode"
                             placeholder="Phone Region Code"
                             formControlName="phoneRegionCode"
                         />
                     </div>
                 </div>
-    
+
                 <div
                     formGroupName="userSetting"
                     *ngIf="(selectedRole$ | async) === 'DRIVER'"
@@ -167,7 +168,7 @@
                         </select>
                     </div>
                 </div>
-    
+
                 <div
                     formGroupName="userSetting"
                     *ngIf="(selectedRole$ | async) === 'DRIVER'"
@@ -183,7 +184,7 @@
                     </div>
                 </div>
             </div>
-    
+
             <div class="flex justify-end pt-5">
                 <div class="flex gap-4">
                     <button
@@ -205,4 +206,3 @@
             </div>
         </form>
     </edit-container>
-    

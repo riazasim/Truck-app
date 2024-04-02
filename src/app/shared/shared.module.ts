@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IconicInputWrapperComponent } from './components/input-wrapper/iconic-input-wrapper.component';
 import { IconicPasswordWrapperComponent } from './components/password-wrapper/iconic-password-wrapper.component';
@@ -34,6 +34,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { TimepickerComponent } from './components/timepicker/timepicker.component';
 import { MatMenuModule } from '@angular/material/menu';
 import {MatRadioModule} from '@angular/material/radio';
+import { GenericWrapperComponent } from './components/generic-wrapper/generic-wrapper.component';
 
 
 export const MY_FORMATS = {
@@ -74,9 +75,9 @@ export const MY_FORMATS = {
         SafeHtmlPipe,
         ToggleComponent,
         TimepickerComponent,
+        GenericWrapperComponent
     ],
     imports: [
-        CommonModule,
         FontAwesomeModule,
         FormsModule,
         ReactiveFormsModule,
@@ -86,7 +87,8 @@ export const MY_FORMATS = {
         TranslateModule,
         ReactiveFormsModule,
         MatMenuModule,
-        MatRadioModule
+        MatRadioModule,
+        CommonModule
     ],
     exports: [
         IconicInputWrapperComponent,
@@ -113,11 +115,13 @@ export const MY_FORMATS = {
         SafeHtmlPipe,
         ToggleComponent,
         TimepickerComponent,
-        MatRadioModule
+        MatRadioModule,
+        CommonModule
     ],
     providers: [
         { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
         { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS }
-    ]
+    ],
+    schemas : []
 })
 export class SharedModule { }

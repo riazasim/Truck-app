@@ -1,8 +1,6 @@
 import {APP_INITIALIZER, Injector, NgModule} from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { AdminRoutingModule } from './admin-routing.module';
-import { DashboardComponent } from "./dashboard/dashboard.component";
 import { AdminComponent } from "./admin.component";
 import { AdminHeaderComponent } from "./layout/header/admin-header.component";
 import { AdminLayoutComponent } from "./layout/admin/admin-layout.component";
@@ -39,7 +37,6 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
     declarations: [
-        DashboardComponent,
         AdminComponent,
         AdminHeaderComponent,
         NavigationMenuComponent,

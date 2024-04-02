@@ -2,8 +2,9 @@
     <mat-step label="Route Details">
         <app-loader *ngIf="isLoading$ | async" [isContainer]="true" [fullScreen]="false"></app-loader>
         <form [formGroup]="schedulingForm" *ngIf="!(isLoading$ | async)">
-            <div class="grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 gap-y-4 pt-[100px] px-[50px]">
-                <div class="flex flex-col gap-x-10 gap-y-4 px-[50px]">
+            <div
+                class="grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20 gap-y-4 pt-[100px] min-xl:px-[50px]">
+                <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
                     <!-- <p class="text-columnCell font-bold"></p> -->
                     <div iconic-input-wrapper leftIcon="user" formGroupName="routingDetail">
                         <input inputRef type="text" placeholder="Convoy Type" formControlName="convoyType" />
@@ -27,7 +28,7 @@
                     <div iconic-select-wrapper leftSvg="assets/images/scheduling_map_location.svg"
                         [rightIcon]="['fas', 'caret-down']" formGroupName="routingDetail">
                         <select inputRef name="zone" id="zone" formControlName="zone">
-                            <option disabled selected>Zone</option>
+                            <option disabled value="">Zone</option>
                             <option *ngFor="let zone of zone" [value]="zone.id">
                                 {{ zone.name }}
                             </option>
@@ -36,7 +37,7 @@
                     <div iconic-select-wrapper leftSvg="assets/images/scheduling_ship_type.svg"
                         [rightIcon]="['fas', 'caret-down']" formGroupName="routingDetail">
                         <select inputRef name="departurePort" id="departurePort" formControlName="departurePort">
-                            <option disabled selected>
+                            <option disabled value="">
                                 Departure Port
                             </option>
                             <option *ngFor="let departurePort of departurePort" [value]="departurePort.id">
@@ -47,7 +48,7 @@
                     <div iconic-select-wrapper leftSvg="assets/images/scheduling_arrival_port.svg"
                         [rightIcon]="['fas', 'caret-down']" formGroupName="routingDetail">
                         <select inputRef name="arrivalPort" id="arrivalPort" formControlName="arrivalPort">
-                            <option disabled selected>Arival Port</option>
+                            <option disabled value="">Arival Port</option>
                             <option *ngFor="let arivalPort of arivalPort" [value]="arivalPort.id">
                                 {{ arivalPort.name }}
                             </option>
@@ -57,7 +58,7 @@
                         <input inputRef type="text" placeholder="Pilot Company" formControlName="pilotCompany" />
                     </div>
                 </div>
-                <div class="flex flex-col gap-x-10 gap-y-4 px-[50px]">
+                <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
                     <!-- <p>&nbsp;</p> -->
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_length.svg"
                         formGroupName="routingDetail">
@@ -82,7 +83,7 @@
                     <div iconic-select-wrapper leftSvg="assets/images/scheduling_lock.svg"
                         [rightIcon]="['fas', 'caret-down']" formGroupName="routingDetail">
                         <select inputRef name="typeOfLock" id="typeOfLock" formControlName="lockType">
-                            <option disabled selected>Type of lock</option>
+                            <option disabled value="">Type of lock</option>
                             <option *ngFor="let typeOfLock of typeOfLock" [value]="typeOfLock.id">
                                 {{ typeOfLock.name }}
                             </option>
@@ -90,30 +91,34 @@
                     </div>
                 </div>
             </div>
-            <div class="flex gap-2 justify-center min-md:gap-20 max-md:flex-col py-3">
-                <button type="button" class="btn btn-primary min-md:min-w-[436px] min-h-[50px] !text-[18px]"
-                    matStepperPrevious>
-                    {{ "button.back" | translate }}
-                </button>
-                <button type="button" class="btn btn-primary min-md:min-w-[436px] min-h-[50px] !text-[18px]"
-                    [disabled]="!schedulingForm.valid" (click)="next(stepOne$, schedulingForm , 1)">
-                    {{ "button.next" | translate }}
-                </button>
+            <div class="min-xl:px-[50px] grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20">
+                <div class="gap-y-4 mb-5 min-xl:px-[50px]">
+                    <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]" matStepperPrevious>
+                        {{ "button.back" | translate }}
+                    </button>
+                </div>
+                <div class="gap-y-4 mb-5 min-xl:px-[50px]">
+                    <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]"
+                        [disabled]="!schedulingForm.valid" (click)="next(stepOne$, schedulingForm , 1)">
+                        {{ "button.next" | translate }}
+                    </button>
+                </div>
             </div>
         </form>
     </mat-step>
     <mat-step label="Convoi">
         <app-loader *ngIf="isLoading$ | async" [isContainer]="true" [fullScreen]="false"></app-loader>
         <form [formGroup]="convoyForm" *ngIf="!(isLoading$ | async)">
-            <div class="grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 gap-y-4 pt-[100px] px-[50px]">
-                <div class="flex flex-col gap-x-10 gap-y-4 px-[50px]">
+            <div
+                class="grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20 gap-y-4 pt-[100px] min-xl:px-[50px]">
+                <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
                     <!-- <p class="text-columnCell font-bold"></p> -->
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_navigation.svg">
                         <input inputRef type="text" placeholder="Navigation type*" formControlName="navigationType" />
                     </div>
                     <div iconic-select-wrapper leftIcon="grid-2" [rightIcon]="['fas', 'caret-down']">
                         <select inputRef name="ship" id="ship" (change)="onShipSelected($event)" formControlName="ship">
-                            <option disabled selected>Ship</option>
+                            <option disabled value="">Ship</option>
                             <option *ngFor="let ship of shipsList" [value]="ship.id">
                                 {{ ship.name }}
                             </option>
@@ -122,7 +127,7 @@
                     <div iconic-select-wrapper leftSvg="assets/images/scheduling_ship_type.svg"
                         [rightIcon]="['fas', 'caret-down']">
                         <select inputRef name="shipType" id="shipType" formControlName="shipType">
-                            <option disabled selected>Ship type*</option>
+                            <option disabled value="">Ship type*</option>
                             <option *ngFor="let shipType of shipType" [value]="shipType.id">
                                 {{ shipType.name }}
                             </option>
@@ -151,7 +156,7 @@
                     </div>
                     <!-- <div iconic-select-wrapper leftIcon="user" [rightIcon]="['fas', 'caret-down']">
                         <select inputRef name="agent" id="agent" formControlName="agent">
-                            <option disabled selected>Agent</option>
+                            <option disabled value="">Agent</option>
                             <option *ngFor="let agent of agent" [value]="agent.id">
                                 {{ agent.name }}
                             </option>
@@ -161,7 +166,7 @@
                         <input inputRef type="text" placeholder="Manevra" formControlName="maneuvering" />
                     </div> -->
                 </div>
-                <div class="flex flex-col gap-x-10 gap-y-4 px-[50px]">
+                <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
                     <!-- <p>&nbsp;</p> -->
                     <!-- <div iconic-input-wrapper leftSvg="assets/images/scheduling_ship_owner.svg">
                         <input inputRef type="text" placeholder="Ship owner" formControlName="shipowner" />
@@ -172,7 +177,7 @@
                     <div iconic-select-wrapper leftSvg="assets/images/scheduling_operator.svg"
                         [rightIcon]="['fas', 'caret-down']">
                         <select inputRef name="operator" id="operator" formControlName="operator">
-                            <option disabled selected>Operator*</option>
+                            <option disabled value="">Operator*</option>
                             <option *ngFor="let operator of operator" [value]="operator.id">
                                 {{ operator.name }}
                             </option>
@@ -181,7 +186,7 @@
                     <div iconic-select-wrapper leftSvg="assets/images/scheduling_trafic_type.svg"
                         [rightIcon]="['fas', 'caret-down']">
                         <select inputRef name="trafficType" id="trafficType" formControlName="trafficType">
-                            <option disabled selected>Traffic type*</option>
+                            <option disabled value="">Traffic type*</option>
                             <option *ngFor="let trafficType of trafficType" [value]="trafficType.id">
                                 {{ trafficType.name }}
                             </option>
@@ -190,7 +195,7 @@
                     <div iconic-select-wrapper leftSvg="assets/images/scheduling_operation_type.svg"
                         [rightIcon]="['fas', 'caret-down']">
                         <select inputRef name="operationType" id="operationType" formControlName="operatonType">
-                            <option disabled selected>Operation type</option>
+                            <option disabled value="">Operation type</option>
                             <option *ngFor="let operationType of operationType" [value]="operationType.id">
                                 {{ operationType.name }}
                             </option>
@@ -199,7 +204,7 @@
                     <div iconic-select-wrapper leftSvg="assets/images/scheduling_cargo.svg"
                         [rightIcon]="['fas', 'caret-down']">
                         <select inputRef name="cargo" id="cargo" formControlName="cargo">
-                            <option disabled selected>Cargo*</option>
+                            <option disabled value="">Cargo*</option>
                             <option *ngFor="let cargo of cargo" [value]="cargo.id">
                                 {{ cargo.name }}
                             </option>
@@ -214,7 +219,7 @@
                     <div iconic-select-wrapper leftSvg="assets/images/scheduling_port.svg"
                         [rightIcon]="['fas', 'caret-down']">
                         <select inputRef name="portOfOrigin" id="portOfOrigin" formControlName="originPort">
-                            <option disabled selected>
+                            <option disabled value="">
                                 Port of origin
                             </option>
                             <option *ngFor="let portOfOrigin of portOfOrigin" [value]="portOfOrigin.id">
@@ -225,7 +230,7 @@
                     <div iconic-select-wrapper leftSvg="assets/images/scheduling_destination.svg"
                         [rightIcon]="['fas', 'caret-down']">
                         <select inputRef name="destination" id="destination" formControlName="destination">
-                            <option disabled selected>Destination</option>
+                            <option disabled value="">Destination</option>
                             <option *ngFor="let destination of destination" [value]="destination.id">
                                 {{ destination.name }}
                             </option>
@@ -236,15 +241,18 @@
                     </div>
                 </div>
             </div>
-            <div class="flex gap-2 justify-center min-md:gap-20 max-md:flex-col py-3">
-                <button type="button" class="btn btn-primary min-md:min-w-[436px] min-h-[50px] !text-[18px]"
-                    matStepperPrevious>
-                    {{ "button.back" | translate }}
-                </button>
-                <button type="button" class="btn btn-primary min-md:min-w-[436px] min-h-[50px] !text-[18px]"
-                    (click)="next(stepTwo$, convoyForm , 2)">
-                    {{ "button.next" | translate }}
-                </button>
+            <div class="min-xl:px-[50px] grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20">
+                <div class="gap-y-4 mb-5 min-xl:px-[50px]">
+                    <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]" matStepperPrevious>
+                        {{ "button.back" | translate }}
+                    </button>
+                </div>
+                <div class="gap-y-4 mb-5 min-xl:px-[50px]">
+                    <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]"
+                        (click)="next(stepTwo$, convoyForm , 2)">
+                        {{ "button.next" | translate }}
+                    </button>
+                </div>
             </div>
         </form>
     </mat-step>
@@ -252,9 +260,9 @@
         <app-loader *ngIf="isLoading$ | async" [isContainer]="true" [fullScreen]="false"></app-loader>
         <div *ngIf="!(isLoading$ | async)">
             <div class="pt-[100px] min-xl:px-[50px]">
-                <form class="grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 gap-y-4"
+                <form class="grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20 gap-y-4"
                     [formGroup]="convoyForm">
-                    <div class="flex flex-col gap-x-10 gap-y-4 px-[50px]">
+                    <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
                         <div iconic-input-wrapper leftIcon="user">
                             <input inputRef type="text" placeholder="Operator" formControlName="additionalOperator"
                                 class="text-center" />
@@ -297,13 +305,13 @@
                                 </fa-icon>
                             </button>
                         </mat-button-toggle-group>
-                        <button *ngIf="!(showFileThree$ | async)" type="button"
-                            class="text-primary font-bold mr-auto" (click)="showFileThree$.next(true)">
+                        <button *ngIf="!(showFileThree$ | async)" type="button" class="text-primary font-bold mr-auto"
+                            (click)="showFileThree$.next(true)">
                             <fa-icon icon="circle-plus"></fa-icon> Add New
                             Document
                         </button>
                     </div>
-                    <div class="grid grid-rows-2 gap-x-10 gap-y-4 px-[50px]">
+                    <div class="grid grid-rows-2 gap-y-4 min-xl:px-[50px]">
                         <div textarea-wrapper leftIcon="user" [isFullHeight]="true">
                             <textarea class="break-words whitespace-pre-wrap resize-none" inputRef
                                 placeholder="Client's comments:" rows="10" cols="1"
@@ -317,24 +325,27 @@
                     </div>
                 </form>
             </div>
-            <div class="flex justify-center min-md:gap-20 gap-3 py-3">
-                <button type="button" class="btn btn-primary min-md:min-w-[436px] min-h-[50px] !text-[18px]"
-                    matStepperPrevious>
-                    {{ "button.back" | translate }}
-                </button>
-                <button type="button" class="btn btn-primary min-md:min-w-[436px] min-h-[50px] !text-[18px]"
-                    (click)="next(stepThree$, convoyForm , 3)">
-                    {{ "button.next" | translate }}
-                </button>
+            <div class="min-xl:px-[50px] mt-8 grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20">
+                <div class="gap-y-4 mb-5 min-xl:px-[50px]">
+                    <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]" matStepperPrevious>
+                        {{ "button.back" | translate }}
+                    </button>
+                </div>
+                <div class="gap-y-4 mb-5 min-xl:px-[50px]">
+                    <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]"
+                        (click)="next(stepThree$, convoyForm , 3)">
+                        {{ "button.next" | translate }}
+                    </button>
+                </div>
             </div>
         </div>
     </mat-step>
     <mat-step label="Save or Extend">
         <app-loader *ngIf="isLoading$ | async" [isContainer]="true" [fullScreen]="false"></app-loader>
         <div class="flex flex-col justify-center" *ngIf="!(isLoading$ | async)">
-            <div class="flex-1 flex justify-center gap-10 w-full">
+            <div class="flex-1 flex justify-center gap-10 w-full max-lg:flex-col">
                 <div (click)="saveScheduling()"
-                    class="flex flex-col gap-5 items-center justify-evenly w-[400px] h-[520px] rounded-[10px] border border-transparent shadow-md">
+                    class="flex min-lg:flex-col gap-5 items-center justify-evenly w-full min-lg:w-[400px] h-[520px] rounded-[10px] border border-transparent shadow-md">
                     <div class="flex flex-col gap-2 items-center">
                         <div
                             class="border border-[#B7B7B7] rounded-full flex justify-center items-center w-[155px] h-[155px]">
@@ -349,7 +360,7 @@
                     </div>
                 </div>
                 <div (click)="navigate(1)"
-                    class="flex flex-col justify-evenly gap-5 items-center w-[400px] h-[520px] rounded-[10px] border border-transparent shadow-md">
+                    class="flex min-lg:flex-col justify-evenly gap-5 items-center w-full min-lg:w-[400px] h-[520px] rounded-[10px] border border-transparent shadow-md">
                     <div class="flex flex-col gap-2 items-center">
                         <div
                             class="border border-[#B7B7B7] rounded-full flex justify-center items-center w-[155px] h-[155px]">
@@ -364,16 +375,21 @@
                     </div>
                 </div>
             </div>
-            <div class="flex flex-[0.2] justify-center min-md:gap-20 gap-3 py-3">
-                <button type="button" class="btn btn-primary min-md:min-w-[436px] min-h-[50px] !text-[18px]"
-                    matStepperPrevious>
+            <div class="flex justify-center mt-8">
+                <button type="button" class="btn btn-primary w-[440px] min-h-[50px] !text-[18px]" matStepperPrevious>
                     {{ "button.back" | translate }}
                 </button>
-                <!-- <button type="button" class="btn btn-primary min-md:min-w-[436px] min-h-[50px] !text-[18px]"
-                    (click)="saveScheduling()">
-                    {{ "button.next" | translate }}
-                </button> -->
             </div>
+            <!-- <div class="min-xl:px-[50px] grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20">
+                <div class="gap-y-4 mb-5 min-xl:px-[50px]">
+                </div>
+                <div class="gap-y-4 mb-5 min-xl:px-[50px]">
+                    <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]"
+                        (click)="next(stepThree$, convoyForm , 3)">
+                        {{ "button.next" | translate }}
+                    </button>
+                </div>
+            </div> -->
         </div>
     </mat-step>
 </mat-stepper>

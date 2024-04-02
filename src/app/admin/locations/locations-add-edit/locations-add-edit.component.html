@@ -1,5 +1,5 @@
 ﻿<!--<edit-container headerTitle="Add location">-->
-    <edit-container [headerTitle]="id ?  'Edit location details':'Add location details'">
+<edit-container [headerTitle]="id ?  'Edit location details':'Add location details'">
     <app-loader *ngIf="(isLoading$ | async)" [isContainer]="true" [fullScreen]="false"></app-loader>
     <form *ngIf="!(isLoading$ | async)" [formGroup]="locationForm">
         <div>
@@ -8,29 +8,33 @@
                 <div class="min-xl:columns-3">
                     <div class="h-[90px]">
                         <div iconic-input-wrapper leftIcon="location-dot">
-                            <input placeholder="Location Name" inputRef type="text" id="locationName" formControlName="name">
+                            <input placeholder="Location Name" inputRef type="text" id="locationName"
+                                formControlName="name">
                         </div>
                     </div>
                     <div class="h-[90px]">
                         <div iconic-input-wrapper leftIcon="compass">
-                            <input placeholder="Google Maps coordinates (Plus code)" inputRef type="text" formControlName="addrCoordinates">
+                            <input placeholder="Google Maps coordinates (Plus code)" inputRef type="text"
+                                formControlName="addrCoordinates">
                         </div>
                     </div>
                     <div class="h-[90px]">
                         <div *ngIf="(location$ | async)?.imgPreview">
-                            <label >&nbsp;</label>
+                            <label>&nbsp;</label>
                             <div class="relative w-[50px]">
                                 <span class="absolute top-1/2 left-1/2
                                 transform -translate-x-1/2 -translate-y-1/2 text-gray text-3xl
-                                cursor-pointer"
-                                (click)="clearImgPreview()">&times;</span>
+                                cursor-pointer" (click)="clearImgPreview()">&times;</span>
                                 <img [src]="(location$ | async)?.imgPreview" alt="imgPreview" width="50" height="50">
                             </div>
                         </div>
                         <div *ngIf="!(location$ | async)?.imgPreview">
-                            <div iconic-input-wrapper leftIcon="camera" class="cursor-pointer" (click)="triggerFile.click()">
-                                <input inputRef type="text" placeholder="Picture (480 x 300 px)" readonly #inputReference>
-                                <input style="display: none;" type="file"  #triggerFile accept="image/*" (change)="setImgPreview($event.target, inputReference)">
+                            <div iconic-input-wrapper leftIcon="camera" class="cursor-pointer"
+                                (click)="triggerFile.click()">
+                                <input inputRef type="text" placeholder="Picture (480 x 300 px)" readonly
+                                    #inputReference>
+                                <input style="display: none;" type="file" #triggerFile accept="image/*"
+                                    (change)="setImgPreview($event.target, inputReference)">
                             </div>
                         </div>
                     </div>
@@ -38,7 +42,9 @@
             </div>
             <div class="min-xl:columns-3">
                 <div>&nbsp;</div>
-                <div><div class="text-right font-bold cursor-pointer">How do I find Google maps coordinates?</div></div>
+                <div>
+                    <div class="text-right font-bold cursor-pointer">How do I find Google maps coordinates?</div>
+                </div>
                 <div>&nbsp;</div>
             </div>
             <div>
@@ -46,7 +52,8 @@
                 <div class="min-xl:columns-3">
                     <div class="h-[110px]">
                         <div iconic-input-wrapper leftIcon="location-crosshairs">
-                            <input placeholder="Street" inputRef type="text" id="addrStreet" formControlName="addrStreet">
+                            <input placeholder="Street" inputRef type="text" id="addrStreet"
+                                formControlName="addrStreet">
                         </div>
                     </div>
                     <div class="h-[110px]">
@@ -75,11 +82,11 @@
                                     <input placeholder="Country" inputRef type="text" formControlName="addrCountry">
                                 </div>
                             </div>
-                                <div class="flex-1">
+                            <div class="flex-1">
                                 <div iconic-input-wrapper>
                                     <input placeholder="Zip Code" inputRef type="text" formControlName="addrZipCode">
                                 </div>
-                                </div>
+                            </div>
 
                         </div>
                     </div>
@@ -88,25 +95,29 @@
             <div>
                 <h6 class="font-bold">Contact</h6>
                 <div class="min-xl:columns-4">
-                  <div>
-                    <div iconic-input-wrapper leftIcon="user">
-                      <input inputRef placeholder="First Name" type="text" id="contactFirstName" formControlName="contactFirstName">
+                    <div>
+                        <div iconic-input-wrapper leftIcon="user">
+                            <input inputRef placeholder="First Name" type="text" id="contactFirstName"
+                                formControlName="contactFirstName">
+                        </div>
                     </div>
-                  </div>
-                  <div class="flex flex-col">
-                    <div iconic-input-wrapper leftIcon="user">
-                      <input inputRef placeholder="Last Name" type="text" id="contactLastName" formControlName="contactLastName">
+                    <div class="flex flex-col">
+                        <div iconic-input-wrapper leftIcon="user">
+                            <input inputRef placeholder="Last Name" type="text" id="contactLastName"
+                                formControlName="contactLastName">
+                        </div>
                     </div>
-                  </div>
-                  <div>
-                    <div iconic-input-wrapper leftIcon="mobile">
-                      <input inputRef placeholder="Phone" type="text" id="contactPhone" formControlName="contactPhone">
+                    <div>
+                        <div iconic-input-wrapper leftIcon="mobile">
+                            <input inputRef placeholder="Phone" type="text" id="contactPhone"
+                                formControlName="contactPhone">
+                        </div>
                     </div>
-                  </div>
 
                     <div>
                         <div iconic-input-wrapper leftIcon="mobile">
-                            <input inputRef placeholder="Phone Region Code" type="text" id="contactPhoneRegionCode" formControlName="contactPhoneRegionCode">
+                            <input inputRef placeholder="Phone Region Code" type="text" id="contactPhoneRegionCode" maxlength="4"
+                                formControlName="contactPhoneRegionCode">
                         </div>
                     </div>
                 </div>
@@ -116,7 +127,8 @@
                 <div>
                     <div>
                         <div iconic-input-wrapper leftIcon="envelope">
-                            <input inputRef placeholder="Email" type="text" id="contactEmail" formControlName="contactEmail">
+                            <input inputRef placeholder="Email" type="text" id="contactEmail"
+                                formControlName="contactEmail">
                         </div>
                     </div>
 
@@ -138,26 +150,29 @@
 
 
 
-                    <div>
-                        <div textarea-wrapper leftIcon="message-lines">
-                            <textarea inputRef cols="137" rows="10" type="text" placeholder="Comments" formControlName="comments"></textarea>
-                        </div>
-                        <!--                        <div textarea-wrapper class="min-xl:columns-12">-->
-                        <!--                            <textarea style="width: auto" placeholder="Comments" inputRef type="textarea" formControlName="comments"></textarea>-->
-                        <!--                        </div>-->
+                <div>
+                    <div textarea-wrapper leftIcon="message-lines">
+                        <textarea inputRef cols="137" rows="10" type="text" placeholder="Comments"
+                            formControlName="comments"></textarea>
                     </div>
+                    <!--                        <div textarea-wrapper class="min-xl:columns-12">-->
+                    <!--                            <textarea style="width: auto" placeholder="Comments" inputRef type="textarea" formControlName="comments"></textarea>-->
+                    <!--                        </div>-->
+                </div>
 
             </div>
-<!--          <div>-->
-<!--            <h6 class="font-bold">Custom Fileds</h6>-->
-<!--            <h6 *ngIf="true">There are no custom fields defined for this form</h6>-->
-<!--          </div>-->
+            <!--          <div>-->
+            <!--            <h6 class="font-bold">Custom Fileds</h6>-->
+            <!--            <h6 *ngIf="true">There are no custom fields defined for this form</h6>-->
+            <!--          </div>-->
         </div>
 
         <div class="flex justify-end pt-5">
             <div class="flex gap-4">
-                <button [routerLink]="id ? '../../list': '../list'" class="btn btn-outline-primary" type="button" [disabled]="(isLoading$ | async)">Cancel</button>
-                <button class="btn btn-primary" type="button" (click)="saveLocation()" [disabled]="locationForm.invalid || (isLoading$ | async)">Save</button>
+                <button [routerLink]="id ? '../../list': '../list'" class="btn btn-outline-primary" type="button"
+                    [disabled]="(isLoading$ | async)">Cancel</button>
+                <button class="btn btn-primary" type="button" (click)="saveLocation()"
+                    [disabled]="locationForm.invalid || (isLoading$ | async)">Save</button>
             </div>
         </div>
     </form>
