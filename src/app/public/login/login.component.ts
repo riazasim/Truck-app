@@ -40,10 +40,10 @@ export class LoginComponent {
     preCompleteSignIn(): void {
         const user = this.auth.getAuth();
 
-        if (user) {
-            this.router.navigate(['operator/dashboard'], { relativeTo: this.route.parent });
-            return;
-        }
+        // if (user) {
+        //     this.router.navigate(['operator/dashboard'], { relativeTo: this.route.parent });
+        //     return;
+        // }
 
         if (!environment.production) {
             this.loginForm = new UntypedFormGroup({

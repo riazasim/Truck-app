@@ -22,7 +22,7 @@ export class DashboardComponent implements OnInit {
     dashboardData: any;
     sidsByStatus: pieData[] = [
         {
-            name: "on Route",
+            name: "On Route",
             value: 0
         },
         {
@@ -36,15 +36,15 @@ export class DashboardComponent implements OnInit {
     ];
     timeBreakDown: pieData[] = [
         {
-            name: "operation Time",
+            name: "Operation Time",
             value: 1
         },
         {
-            name: "berth Time",
+            name: "Berth Time",
             value: 1
         },
         {
-            name: "waiting Time",
+            name: "Waiting Time",
             value: 1
         },
     ];

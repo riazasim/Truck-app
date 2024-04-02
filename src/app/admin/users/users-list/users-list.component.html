@@ -58,7 +58,7 @@
 <!--              <td cdk-cell *cdkCellDef="let row">-->
 <!--                {{row?.user?.attributes?.roles[0] || '-'}}-->
 <!--              </td>-->
-              <td cdk-cell *cdkCellDef="let row">{{row.user.userRole}}</td>
+              <td cdk-cell *cdkCellDef="let row">{{row.user.userRole === 'ROLE_USER_OPERATOR' ? 'OPERATOR' : 'CAPTAIN'}}</td>
               
           </ng-container>
 
