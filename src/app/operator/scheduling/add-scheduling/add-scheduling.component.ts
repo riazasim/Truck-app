@@ -540,7 +540,7 @@ export class AddSchedulingComponent implements OnInit, OnDestroy {
             // ship: this.fb.control(data?.ship || ''),
             ship: this.fb.control(data?.ship,[Validators.required]),
             shipType: this.fb.control(data?.shipType || '',[Validators.required]),
-            pavilion: this.fb.control(data?.pavilion || null,[Validators.required]),
+            pavilion: this.fb.control(data?.pavilion || '',[Validators.required]),
             enginePower: this.fb.control(data?.enginePower || null,[Validators.required]),
             lengthOverall: this.fb.control(data?.lengthOverall || null,[Validators.required]),
             width: this.fb.control(data?.width || null,[Validators.required]),
