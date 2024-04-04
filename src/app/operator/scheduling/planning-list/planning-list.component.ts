@@ -18,8 +18,9 @@ import { AuthService } from 'src/app/core/services/auth.service';
 })
 export class PlanningListComponent implements OnChanges {
     @Output() triggerOpenLogs: EventEmitter<{ view: string, id: number, planning: PlanningModel, modal: string }> = new EventEmitter();
-    @Input() userRole : string;
-    @Input() filterDate : string;
+    @Input() userRole: string;
+    @Input() filterDate: string;
+    @Input() plannings: PlanningModel[] = [];
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     displayedColumns: string[] = ['id', 'manevre', 'vesselId', 'berth', 'products', 'estimatedTimeArrival', 'relativeTimeArrival', 'delay', 'coordinates', 'shipmentStatus', 'actions'];
     dataSource: PlanningModel[] = [];
@@ -33,31 +34,40 @@ export class PlanningListComponent implements OnChanges {
     constructor(private readonly dialogService: MatDialog,
         private readonly planningService: PlanningService,
         private readonly cd: ChangeDetectorRef,
-        private readonly authService : AuthService
-        ) {
-        this.retrievePlanningList('');
+        private readonly authService: AuthService
+    ) {
+        this.dataSource = this.plannings;
+        this.originalSource = this.plannings;
+        this.isLoading$.next(false)
+        // this.retrievePlanningList('');
     }
     ngOnChanges(changes: SimpleChanges): void {
-        this.retrievePlanningList(this.filterDate)
+        if (changes['filterDate']) {
+            this.dataSource = this.plannings;
+            this.originalSource = this.plannings;
+            this.isLoading$.next(false)
+            // this.retrievePlanningList(this.filterDate)
+        }
     }
 
-    retrievePlanningList(filterDate : string): void {
-
+    retrievePlanningList(filterDate: string): void {
+        this.isLoading$.next(true);
         this.pageIndex = 0;
         this.pageSize = 5;
-
         let data = {
             "start": this.pageIndex,
             "length": this.pageSize,
             "filters": [filterDate, "", "", "", "", ""],//["firstname/lastname", "status", "role", "phone", "email"]
             "order": [{ "dir": "DESC", "column": 0 }]
         }
-        this.planningService.pagination(data).subscribe((response: any) => {
-            this.dataSource = response.items;
-            this.originalSource = response.items;
-            this.length = response.noTotal;
-            this.isLoading$.next(false)
-            this.cd.detectChanges();
+        this.planningService.pagination(data).subscribe({
+            next: response => {
+                this.dataSource = response.items;
+                this.originalSource = response.items;
+                this.length = response.noTotal;
+                this.cd.detectChanges();
+                this.isLoading$.next(false);
+            }
         })
     }
 
@@ -65,22 +75,23 @@ export class PlanningListComponent implements OnChanges {
         this.isLoading$.next(true);
         let data = {
             "start": event.pageIndex ? event.pageIndex * event.pageSize : event.pageIndex,
-
             "length": event.pageSize,
             "filters": ["", "", "", "", "", ""],//["firstname/lastname", "status", "role", "phone", "email"]
             "order": [{ "dir": "DESC", "column": 0 }]
         }
-        this.planningService.pagination(data).subscribe(response => {
-            this.dataSource = response.items;
-            this.originalSource = response.items;
-            this.isLoading$.next(false);
-            this.cd.detectChanges();
+        this.planningService.pagination(data).subscribe({
+            next: response => {
+                this.dataSource = response.items;
+                this.originalSource = response.items;
+                this.cd.detectChanges();
+                this.isLoading$.next(false);
+            }
         })
     }
 
     OnEmit(row: any, modal: string) {
         // if (row.assigningStatus === false) {
-            this.triggerOpenLogs.emit({ view: 'view', id: row.planning.id, planning: row, modal: modal })
+        this.triggerOpenLogs.emit({ view: 'view', id: row.planning.id, planning: row, modal: modal })
         // }
     }
 

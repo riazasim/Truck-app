@@ -1,28 +1,32 @@
-import { ChangeDetectionStrategy, Component, HostListener } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { AfterViewChecked, ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener } from '@angular/core';
+import { FormControl, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { RolesService } from 'src/app/core/services/roles.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LoaderOrchestratorService } from '../../core/services/loader-orchestrator.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, merge } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { handleError } from 'src/app/shared/utils/error-handling.function';
 import { handleSuccess } from "../../shared/utils/success-handling.function";
 import { createEmailValidator } from 'src/app/shared/validators/generic-validators';
-
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LoginComponent {
+export class LoginComponent implements AfterViewChecked {
+    ngAfterViewChecked() {
+        this.ref.detectChanges();
+    }
     public readonly isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
     @HostListener('document:keydown.enter', ['$event']) onKeydownHandler(event: KeyboardEvent) {
         this.sigIn();
     }
+    username = new FormControl('', [Validators.required, Validators.email]);
 
     loginForm: UntypedFormGroup = new UntypedFormGroup({
         username: new UntypedFormControl(null, [Validators.required, Validators.email]),
@@ -33,10 +37,13 @@ export class LoginComponent {
         private readonly snackBar: MatSnackBar,
         private readonly auth: AuthService,
         private loaderService: LoaderOrchestratorService,
-        private readonly rolesService: RolesService) {
+        private readonly rolesService: RolesService,
+        private ref: ChangeDetectorRef) {
+        merge(this.username.statusChanges, this.username.valueChanges)
+            .pipe(takeUntilDestroyed())
+            .subscribe(() => console.log("ok"));
         this.preCompleteSignIn();
     }
-
     preCompleteSignIn(): void {
         const user = this.auth.getAuth();
 
