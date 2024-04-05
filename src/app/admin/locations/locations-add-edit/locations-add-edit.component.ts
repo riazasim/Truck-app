@@ -6,7 +6,6 @@ import { BehaviorSubject } from 'rxjs';
 import { LocationModel } from 'src/app/core/models/location.model';
 import { LocationService } from 'src/app/core/services/location.service';
 import { handleError } from 'src/app/shared/utils/error-handling.function';
-import { createMaxLengthValidator, createMinLengthValidator, createRequiredValidators } from 'src/app/shared/validators/generic-validators';
 
 @Component({
     selector: 'app-locations-add-edit',
@@ -53,20 +52,20 @@ export class LocationsAddEditComponent implements OnInit {
     initForm(data: LocationModel = <LocationModel>{}): void {
         this.locationForm = this.fb.group({
             //locationId: this.fb.control(data?.id),
-            name: this.fb.control(data?.name || '', [...createRequiredValidators()]),
-            addrCoordinates: this.fb.control(data?.addrCoordinates || '', [...createRequiredValidators()]),
-            addrStreet: this.fb.control(data?.addrStreet || '', [...createRequiredValidators()]),
-            addrNumber: this.fb.control(data?.addrNumber || '', [...createRequiredValidators()]),
-            addrCity: this.fb.control(data?.addrCity || '', [...createRequiredValidators()]),
-            addrCountry: this.fb.control(data?.addrCountry || '', [...createRequiredValidators()]),
-            addrCounty: this.fb.control(data?.addrCounty || '', [...createRequiredValidators()]),
-            addrZipCode: this.fb.control(data?.addrZipCode || '', [...createRequiredValidators()]),
-            addrTimezone: this.fb.control(data?.addrTimezone || '', [...createRequiredValidators()]),
-            contactFirstName: this.fb.control(data?.contactFirstName || '', [...createRequiredValidators()]),
-            contactLastName: this.fb.control(data?.contactLastName || '', [...createRequiredValidators()]),
-            contactPhone: this.fb.control(data?.contactPhone || '', [...createRequiredValidators() , Validators.pattern("[- +()0-9]+") , ...createMinLengthValidator(7) , ...createMaxLengthValidator(15)]),
-            contactPhoneRegionCode: this.fb.control(data?.contactPhoneRegionCode || '', [...createRequiredValidators(), ...createMaxLengthValidator(4) , Validators.pattern("[- +()0-9]+")]),
-            contactEmail: this.fb.control(data?.contactEmail || '', [...createRequiredValidators(), Validators.email]),
+            name: this.fb.control(data?.name || '', [Validators.required]),
+            addrCoordinates: this.fb.control(data?.addrCoordinates || '', [Validators.required]),
+            addrStreet: this.fb.control(data?.addrStreet || '', [Validators.required]),
+            addrNumber: this.fb.control(data?.addrNumber || '', [Validators.required]),
+            addrCity: this.fb.control(data?.addrCity || '', [Validators.required]),
+            addrCountry: this.fb.control(data?.addrCountry || '', [Validators.required]),
+            addrCounty: this.fb.control(data?.addrCounty || '', [Validators.required]),
+            addrZipCode: this.fb.control(data?.addrZipCode || '', [Validators.required]),
+            addrTimezone: this.fb.control(data?.addrTimezone || '', [Validators.required]),
+            contactFirstName: this.fb.control(data?.contactFirstName || '', [Validators.required]),
+            contactLastName: this.fb.control(data?.contactLastName || '', [Validators.required]),
+            contactPhone: this.fb.control(data?.contactPhone || '', [Validators.required, Validators.max(4)]),
+            contactPhoneRegionCode: this.fb.control(data?.contactPhoneRegionCode || '', [Validators.required]),
+            contactEmail: this.fb.control(data?.contactEmail || '', [Validators.required, Validators.email]),
             comments: this.fb.control(data?.comments || '', []),
             imgPreview: this.fb.control(data?.imgPreview, []),
             // customFields: this.fb.control(data?.customFields, []),

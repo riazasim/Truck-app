@@ -3,7 +3,7 @@ import { FormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PartnerDockRelationships, PartnerModel } from 'src/app/core/models/partner.model';
 import { PartnerService } from '../../../core/services/partner.service';
-import { createEmailValidator, createRequiredValidators } from 'src/app/shared/validators/generic-validators';
+import { createEmailValidator } from 'src/app/shared/validators/generic-validators';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { animate, transition, trigger, style } from '@angular/animations';
 import { DockService } from 'src/app/core/services/dock.service';
@@ -116,13 +116,13 @@ export class PartnersAddEditComponent {
   initForm(data: PartnerModel = <PartnerModel>{}): void {
     this.partnerForm = this.fb.group({
       id: this.fb.control(data?.id),
-      fullName: this.fb.control(data?.fullName || '', [...createRequiredValidators()]),
-      email: this.fb.control(data?.email || '', [...createRequiredValidators(), ...createEmailValidator()]),
-      contactNumber: this.fb.control(data?.contactNumber || '', [...createRequiredValidators()]),
-      address: this.fb.control(data?.address || '', [...createRequiredValidators()]),
-      status: this.fb.control(data?.status ?? false, [...createRequiredValidators()]),
-      partnerSpecialStatus: this.fb.control(data?.partnerSpecialStatus || 0, [...createRequiredValidators()]),
-      partnerType: this.fb.control(data?.partnerType || '', [...createRequiredValidators()]),
+      fullName: this.fb.control(data?.fullName || '', [Validators.required]),
+      email: this.fb.control(data?.email || '', [Validators.required, ...createEmailValidator()]),
+      contactNumber: this.fb.control(data?.contactNumber || '', [Validators.required]),
+      address: this.fb.control(data?.address || '', [Validators.required]),
+      status: this.fb.control(data?.status ?? false, [Validators.required]),
+      partnerSpecialStatus: this.fb.control(data?.partnerSpecialStatus || 0, [Validators.required]),
+      partnerType: this.fb.control(data?.partnerType || '', [Validators.required]),
       blockSidStatus: this.fb.control(data?.blockSidStatus ?? false, []),
       partnerDockRelationships: this.fb.control(data?.partnerDockRelationships || [])
     });

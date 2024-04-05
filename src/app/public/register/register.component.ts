@@ -10,7 +10,6 @@ import { environment } from "../../../environments/environment";
 import { handleError } from "../../shared/utils/error-handling.function";
 import { LoaderOrchestratorService } from "../../core/services/loader-orchestrator.service";
 import { handleSuccess } from "../../shared/utils/success-handling.function";
-import { createRequiredValidators } from 'src/app/shared/validators/generic-validators';
 
 @Component({
     selector: 'app-register',
@@ -45,11 +44,11 @@ export class RegisterComponent {
 
 
     // registerForm: UntypedFormGroup = new UntypedFormGroup({
-    //     first_name: new UntypedFormControl(null, [...createRequiredValidators()]),
-    //     last_name: new UntypedFormControl(null, [...createRequiredValidators()]),
-    //     email: new UntypedFormControl(null, [...createRequiredValidators(), Validators.email]),
-    //     phone: new UntypedFormControl(null, [...createRequiredValidators()]),
-    //     phone_region_code: new UntypedFormControl(null, [...createRequiredValidators()]),
+    //     first_name: new UntypedFormControl(null, [Validators.required]),
+    //     last_name: new UntypedFormControl(null, [Validators.required]),
+    //     email: new UntypedFormControl(null, [Validators.required, Validators.email]),
+    //     phone: new UntypedFormControl(null, [Validators.required]),
+    //     phone_region_code: new UntypedFormControl(null, [Validators.required]),
     // })
 
     // personForm = new FormGroup({
@@ -87,9 +86,9 @@ export class RegisterComponent {
         userSetting: new FormGroup({
             firstName: new FormControl(),
             lastName: new FormControl(),
-            // language: new FormControl(null, [...createRequiredValidators()]),
-            // phone: new FormControl(null, [...createRequiredValidators()]),
-            // phoneRegionCode: new FormControl(null, [...createRequiredValidators()])
+            // language: new FormControl(null, [Validators.required]),
+            // phone: new FormControl(null, [Validators.required]),
+            // phoneRegionCode: new FormControl(null, [Validators.required])
         })
     })
 
@@ -130,11 +129,11 @@ export class RegisterComponent {
 
         if (!environment.production) {
             // this.registerForm = new UntypedFormGroup({
-                // first_name: new UntypedFormControl('Iqbal', [...createRequiredValidators()]),
-            //     last_name: new UntypedFormControl('Channar', [...createRequiredValidators()]),
-            //     email: new UntypedFormControl('iqbalchannar796@gmail.com', [...createRequiredValidators(), Validators.email]),
-            //     phone: new UntypedFormControl('3006831796', [...createRequiredValidators()]),
-            //     phone_region_code: new UntypedFormControl('+92', [...createRequiredValidators()]),
+            //     first_name: new UntypedFormControl('Iqbal', [Validators.required]),
+            //     last_name: new UntypedFormControl('Channar', [Validators.required]),
+            //     email: new UntypedFormControl('iqbalchannar796@gmail.com', [Validators.required, Validators.email]),
+            //     phone: new UntypedFormControl('3006831796', [Validators.required]),
+            //     phone_region_code: new UntypedFormControl('+92', [Validators.required]),
             // })
 
             this.registerForm = new FormGroup({
