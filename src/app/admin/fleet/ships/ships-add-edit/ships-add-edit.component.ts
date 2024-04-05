@@ -6,7 +6,6 @@ import { ShipsService } from 'src/app/core/services/ships.service';
 import { ShipModel } from 'src/app/core/models/ship.model';
 import { handleError } from 'src/app/shared/utils/error-handling.function';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { createRequiredValidators } from 'src/app/shared/validators/generic-validators';
 
 @Component({
     selector: "app-ships-add-edit",
@@ -63,16 +62,16 @@ export class ShipsAddEditComponent {
 
     initForm(data: ShipModel = <ShipModel>{}): void {
         this.shipForm = this.fb.group({
-            name: this.fb.control(data?.name || '', [...createRequiredValidators()]),
-            registrationNo: this.fb.control(data?.registrationNo || '', [...createRequiredValidators()]),
-            ais: this.fb.control(data?.ais || '', [...createRequiredValidators()]),
-            selfPropelled: this.fb.control(data?.selfPropelled || '', [...createRequiredValidators()]),
-            lockType: this.fb.control(data?.lockType || '', [...createRequiredValidators()]),
-            length: this.fb.control(data?.length || '', [...createRequiredValidators()]),
-            width: this.fb.control(data?.width || '', [...createRequiredValidators()]),
-            maxDraft: this.fb.control(data?.maxDraft || '', [...createRequiredValidators()]),
-            aerialGauge: this.fb.control(data?.aerialGauge || '', [...createRequiredValidators()]),
-            maxCapacity: this.fb.control(data?.maxCapacity || '', [...createRequiredValidators()]),
+            name: this.fb.control(data?.name || '', [Validators.required]),
+            registrationNo: this.fb.control(data?.registrationNo || '', [Validators.required]),
+            ais: this.fb.control(data?.ais || '', [Validators.required]),
+            selfPropelled: this.fb.control(data?.selfPropelled || '', [Validators.required]),
+            lockType: this.fb.control(data?.lockType || '', [Validators.required]),
+            length: this.fb.control(data?.length || '', [Validators.required]),
+            width: this.fb.control(data?.width || '', [Validators.required]),
+            maxDraft: this.fb.control(data?.maxDraft || '', [Validators.required]),
+            aerialGauge: this.fb.control(data?.aerialGauge || '', [Validators.required]),
+            maxCapacity: this.fb.control(data?.maxCapacity || '', [Validators.required]),
         });
     }
 

@@ -8,7 +8,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { handleError } from 'src/app/shared/utils/error-handling.function';
 import { getFormatHourSlot } from '../scheduling-box.helper';
 import { PlanningDetailModel } from 'src/app/core/models/planning.model';
-import { createRequiredValidators } from 'src/app/shared/validators/generic-validators';
 
 
 @Component({
@@ -67,19 +66,19 @@ export class EditSchedulingRouteComponent implements OnInit {
 
     initForm(data?: PlanningDetailModel): void {
         this.planningForm = this.fb.group({
-            convoyType: this.fb.control(data?.convoyType || '',[...createRequiredValidators()]),
-            estimatedTimeArrival: this.fb.control(data?.estimatedTimeArrival || '',[...createRequiredValidators()]),
-            locationPort: this.fb.control(data?.locationPort || '',[...createRequiredValidators()]),
-            zone: this.fb.control(data?.zone || null,[...createRequiredValidators()]),
-            departurePort: this.fb.control(data?.departurePort || '',[...createRequiredValidators()]),
-            arrivalPort: this.fb.control(data?.arrivalPort || '',[...createRequiredValidators()]),
-            pilotCompany: this.fb.control(data?.pilotCompany || '',[...createRequiredValidators()]),
-            length: this.fb.control(data?.length || null,[...createRequiredValidators()]),
-            width: this.fb.control(data?.width || null,[...createRequiredValidators()]),
-            maxDraft: this.fb.control(data?.maxDraft || null,[...createRequiredValidators()]),
-            arrivalGauge: this.fb.control(data?.arrivalGauge || null,[...createRequiredValidators()]),
-            maxCapacity: this.fb.control(data?.maxCapacity || null,[...createRequiredValidators()]),
-            lockType: this.fb.control(data?.lockType || '',[...createRequiredValidators()]),
+            convoyType: this.fb.control(data?.convoyType || '',[Validators.required]),
+            estimatedTimeArrival: this.fb.control(data?.estimatedTimeArrival || '',[Validators.required]),
+            locationPort: this.fb.control(data?.locationPort || '',[Validators.required]),
+            zone: this.fb.control(data?.zone || null,[Validators.required]),
+            departurePort: this.fb.control(data?.departurePort || '',[Validators.required]),
+            arrivalPort: this.fb.control(data?.arrivalPort || '',[Validators.required]),
+            pilotCompany: this.fb.control(data?.pilotCompany || '',[Validators.required]),
+            length: this.fb.control(data?.length || null,[Validators.required]),
+            width: this.fb.control(data?.width || null,[Validators.required]),
+            maxDraft: this.fb.control(data?.maxDraft || null,[Validators.required]),
+            arrivalGauge: this.fb.control(data?.arrivalGauge || null,[Validators.required]),
+            maxCapacity: this.fb.control(data?.maxCapacity || null,[Validators.required]),
+            lockType: this.fb.control(data?.lockType || '',[Validators.required]),
         })
     }
 

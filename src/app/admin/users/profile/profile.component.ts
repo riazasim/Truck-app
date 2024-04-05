@@ -5,7 +5,6 @@ import { BehaviorSubject} from 'rxjs';
 import { animate, transition, trigger, style } from '@angular/animations';
 import { ProfileModel } from 'src/app/core/models/profile.model';
 import { UserService } from 'src/app/core/services/user.service';
-import { createRequiredValidators } from 'src/app/shared/validators/generic-validators';
 
 @Component({
   selector: 'app-profile',
@@ -39,8 +38,8 @@ export class ProfileComponent {
      }
       initForm(data: ProfileModel = <ProfileModel>{}): void {
         this.profileForm = this.fb.group({
-          imgLogo: this.fb.control(data?.imgLogo || '', [...createRequiredValidators()]),
-          imgCover: this.fb.control(data?.imgCover || '', [...createRequiredValidators()]),
+          imgLogo: this.fb.control(data?.imgLogo || '', [Validators.required]),
+          imgCover: this.fb.control(data?.imgCover || '', [Validators.required]),
         });
       }
 

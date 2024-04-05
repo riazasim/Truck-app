@@ -7,7 +7,6 @@ import {BehaviorSubject} from "rxjs";
 import {handleSuccess} from "../../shared/utils/success-handling.function";
 import {handleError} from "../../shared/utils/error-handling.function";
 import {LoaderOrchestratorService} from "../../core/services/loader-orchestrator.service";
-import { createEmailValidator, createRequiredValidators } from 'src/app/shared/validators/generic-validators';
 
 @Component({
   templateUrl: './forgot-password.component.html',
@@ -32,7 +31,7 @@ export class ForgotPasswordComponent {
               private readonly snackBar: MatSnackBar
   ) {
     this.formGroup = fb.group({
-      email: ['', [...createRequiredValidators(), ...createEmailValidator()]]
+      email: ['', [Validators.required, Validators.email]]
     });
   }
 

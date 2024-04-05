@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { OperationModel } from 'src/app/core/models/operation.model';
 import { OperationService } from 'src/app/core/services/operation.service';
-import { createRequiredValidators } from 'src/app/shared/validators/generic-validators';
 
 @Component({
   selector: 'app-operations-add-edit',
@@ -45,10 +44,10 @@ export class OperationsAddEditComponent implements OnInit {
   initForm(data: OperationModel = <OperationModel>{}): void {
     this.operationForm = this.fb.group({
       id: this.fb.control(data?.id),
-      name: this.fb.control(data?.name || '', [...createRequiredValidators()]),
-      type: this.fb.control(data?.type || '', [...createRequiredValidators()]),
-      allocatedTime: this.fb.control(data?.allocatedTime || '', [...createRequiredValidators()]),
-      description: this.fb.control(data?.description || '', [...createRequiredValidators()]),
+      name: this.fb.control(data?.name || '', [Validators.required]),
+      type: this.fb.control(data?.type || '', [Validators.required]),
+      allocatedTime: this.fb.control(data?.allocatedTime || '', [Validators.required]),
+      description: this.fb.control(data?.description || '', [Validators.required]),
     });
   }
 

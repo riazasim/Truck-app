@@ -14,7 +14,6 @@ import { SignupModel } from "../../../core/models/signup.model";
 import { handleSuccess } from "../../../shared/utils/success-handling.function";
 import { handleError } from "../../../shared/utils/error-handling.function";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { createMaxLengthValidator, createMinLengthValidator, createRequiredValidators } from 'src/app/shared/validators/generic-validators';
 
 @Component({
     selector: 'app-users-add-edit',
@@ -86,8 +85,8 @@ export class UsersAddEditComponent {
                 firstName: this.fb.control(data?.userSetting?.firstName || '', { nonNullable: false }),
                 lastName: this.fb.control(data?.userSetting?.lastName || '', { nonNullable: false }),
                 language: this.fb.control(data?.userSetting?.language || '', { nonNullable: false }),
-                phone: this.fb.control(data?.userSetting?.phone || '', [...createRequiredValidators() , Validators.pattern("[- +()0-9]+") , ...createMinLengthValidator(7) , ...createMaxLengthValidator(15)]),
-                phoneRegionCode: this.fb.control(data?.userSetting?.phoneRegionCode || '', [...createRequiredValidators(), ...createMaxLengthValidator(4) , Validators.pattern("[- +()0-9]+")]),
+                phone: this.fb.control(data?.userSetting?.phone || '', { nonNullable: false }),
+                phoneRegionCode: this.fb.control(data?.userSetting?.phoneRegionCode || '', { nonNullable: false }),
                 identityDocumentType: this.fb.control(data?.userSetting?.identityDocumentType || '', { nonNullable: false }),
                 idNumber: this.fb.control(data?.userSetting?.idNumber || '', { nonNullable: false })
             })

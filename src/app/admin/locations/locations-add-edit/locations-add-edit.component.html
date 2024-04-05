@@ -87,6 +87,7 @@
                                     <input placeholder="Zip Code" inputRef type="text" formControlName="addrZipCode">
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -108,18 +109,20 @@
                     </div>
                     <div>
                         <div iconic-input-wrapper leftIcon="mobile">
-                            <input inputRef placeholder="Phone" type="tel" minlength="7" maxlength="15" id="contactPhone"
+                            <input inputRef placeholder="Phone" type="text" id="contactPhone"
                                 formControlName="contactPhone">
                         </div>
                     </div>
+
                     <div>
                         <div iconic-input-wrapper leftIcon="mobile">
-                            <input inputRef placeholder="Phone Region Code" type="tel" id="contactPhoneRegionCode" maxlength="4"
+                            <input inputRef placeholder="Phone Region Code" type="text" id="contactPhoneRegionCode" maxlength="4"
                                 formControlName="contactPhoneRegionCode">
                         </div>
                     </div>
                 </div>
             </div>
+
             <div>
                 <div>
                     <div>
@@ -128,6 +131,9 @@
                                 formControlName="contactEmail">
                         </div>
                     </div>
+
+
+
                     <div>
                         <div iconic-select-wrapper leftIcon="eye" [rightIcon]="['fas', 'caret-down']">
                             <select inputRef name="addrTimezone" id="timezone" formControlName="addrTimezone">
@@ -139,15 +145,28 @@
                     </div>
                 </div>
             </div>
+
             <div>
+
+
+
                 <div>
                     <div textarea-wrapper leftIcon="message-lines">
                         <textarea inputRef cols="137" rows="10" type="text" placeholder="Comments"
                             formControlName="comments"></textarea>
                     </div>
+                    <!--                        <div textarea-wrapper class="min-xl:columns-12">-->
+                    <!--                            <textarea style="width: auto" placeholder="Comments" inputRef type="textarea" formControlName="comments"></textarea>-->
+                    <!--                        </div>-->
                 </div>
+
             </div>
+            <!--          <div>-->
+            <!--            <h6 class="font-bold">Custom Fileds</h6>-->
+            <!--            <h6 *ngIf="true">There are no custom fields defined for this form</h6>-->
+            <!--          </div>-->
         </div>
+
         <div class="flex justify-end pt-5">
             <div class="flex gap-4">
                 <button [routerLink]="id ? '../../list': '../list'" class="btn btn-outline-primary" type="button"

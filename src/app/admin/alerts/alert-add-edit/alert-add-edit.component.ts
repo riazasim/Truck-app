@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { LocationModel } from 'src/app/core/models/location.model';
 import { LocationService } from 'src/app/core/services/location.service';
-import { createRequiredValidators } from 'src/app/shared/validators/generic-validators';
+
 @Component({
   selector: 'app-alert-add-edit',
   templateUrl: './alert-add-edit.component.html',
@@ -47,18 +47,18 @@ export class AlertAddEditComponent {
   initForm(data: LocationModel = <LocationModel>{}): void {
     this.locationForm = this.fb.group({
       id: this.fb.control(data?.id),
-      name: this.fb.control(data?.name || '', [...createRequiredValidators()]),
-      googleMapCoordinate: this.fb.control(data?.googleMapCoordinate || '', [...createRequiredValidators()]),
-      street: this.fb.control(data?.street || '', [...createRequiredValidators()]),
-      streetNo: this.fb.control(data?.streetNo || '', [...createRequiredValidators()]),
-      city: this.fb.control(data?.city || '', [...createRequiredValidators()]),
-      county: this.fb.control(data?.county || '', [...createRequiredValidators()]),
-      country: this.fb.control(data?.country || '', [...createRequiredValidators()]),
-      zipCode: this.fb.control(data?.zipCode || '', [...createRequiredValidators()]),
-      firstName: this.fb.control(data?.firstName || '', [...createRequiredValidators()]),
-      lastName: this.fb.control(data?.lastName || '', [...createRequiredValidators()]),
-      mobile: this.fb.control(data?.mobile || '', [...createRequiredValidators()]),
-      email: this.fb.control(data?.email || '', [...createRequiredValidators(), Validators.email]),
+      name: this.fb.control(data?.name || '', [Validators.required]),
+      googleMapCoordinate: this.fb.control(data?.googleMapCoordinate || '', [Validators.required]),
+      street: this.fb.control(data?.street || '', [Validators.required]),
+      streetNo: this.fb.control(data?.streetNo || '', [Validators.required]),
+      city: this.fb.control(data?.city || '', [Validators.required]),
+      county: this.fb.control(data?.county || '', [Validators.required]),
+      country: this.fb.control(data?.country || '', [Validators.required]),
+      zipCode: this.fb.control(data?.zipCode || '', [Validators.required]),
+      firstName: this.fb.control(data?.firstName || '', [Validators.required]),
+      lastName: this.fb.control(data?.lastName || '', [Validators.required]),
+      mobile: this.fb.control(data?.mobile || '', [Validators.required]),
+      email: this.fb.control(data?.email || '', [Validators.required, Validators.email]),
       image: this.fb.control(data?.image, []),
       customFields: this.fb.control(data?.customFields, []),
     });
