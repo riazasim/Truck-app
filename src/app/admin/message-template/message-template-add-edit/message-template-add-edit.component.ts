@@ -10,6 +10,7 @@ import { MessageTemplateConditionsComponent } from '../message-template-conditio
 import { MessageTemplateAddEditStepperComponent } from '../message-template-add-edit-stepper/message-template-add-edit-stepper.component';
 import { NativeResponseWrapper } from 'src/app/core/models/response-wrappers.types';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { createRequiredValidators } from 'src/app/shared/validators/generic-validators';
 
 @Component({
   selector: 'app-message-template-add-edit',
@@ -74,14 +75,14 @@ export class MessageTemplateAddEditComponent implements OnInit, OnDestroy {
 
   initForm(data?: MessageModel): void {
     this.messageForm = this.fb.group({
-      name: this.fb.control(data?.name || '', [Validators.required]),
-      message: this.fb.control(data?.message || '', [Validators.required]),
-      tags: this.fb.control(data?.tags || [], [Validators.required]),
-      requiresResponseBit: this.fb.control(data?.requiresResponseBit || true, [Validators.required]),
-      automationBit: this.fb.control(data?.automationBit || 0, [Validators.required]),
-      messageAutomationEvent: this.fb.control(data?.messageAutomationEvent || '', [Validators.required]),
+      name: this.fb.control(data?.name || '', [...createRequiredValidators()]),
+      message: this.fb.control(data?.message || '', [...createRequiredValidators()]),
+      tags: this.fb.control(data?.tags || [], [...createRequiredValidators()]),
+      requiresResponseBit: this.fb.control(data?.requiresResponseBit || true, [...createRequiredValidators()]),
+      automationBit: this.fb.control(data?.automationBit || 0, [...createRequiredValidators()]),
+      messageAutomationEvent: this.fb.control(data?.messageAutomationEvent || '', [...createRequiredValidators()]),
       whereQuery: this.fb.control(data?.whereQuery  || []),
-      automationDate: this.fb.control(data?.automationDate || '2023-11-22 11:07:34',[Validators.required]),
+      automationDate: this.fb.control(data?.automationDate || '2023-11-22 11:07:34',[...createRequiredValidators()]),
       repeatOption: this.fb.control(data?.repeatOption ?? RepeatOptionEnum.doesNotRepeat),
       id: this.fb.control(data?.id),
     });
