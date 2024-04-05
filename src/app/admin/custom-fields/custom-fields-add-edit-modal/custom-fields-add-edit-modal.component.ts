@@ -16,6 +16,7 @@ import {
 import { CustomFieldList, CustomFieldModel, ResponseCustomFieldModel } from 'src/app/core/models/custom-field.model';
 import { NativeResponseWrapper } from 'src/app/core/models/response-wrappers.types';
 import { CustomFieldService } from 'src/app/core/services/custom-field.service';
+import { createRequiredValidators } from 'src/app/shared/validators/generic-validators';
 
 @Component({
   selector: 'app-custom-fields-add-edit-modal',
@@ -50,13 +51,13 @@ export class CustomFieldsAddEditModalComponent implements OnInit {
   initForm(data: ResponseCustomFieldModel = <ResponseCustomFieldModel>{}): void {
     this.customFieldGroup = this.fb.group({
       label: this.fb.control(data?.label || null, []),
-      name: this.fb.control(data?.name || null, [Validators.required]),
-      type: this.fb.control(data?.type || '', [Validators.required]),
+      name: this.fb.control(data?.name || null, [...createRequiredValidators()]),
+      type: this.fb.control(data?.type || '', [...createRequiredValidators()]),
       format: this.fb.control(data?.format || '', []),
       required: this.fb.control(data?.required || null, []),
       placeholder: this.fb.control(data?.placeholder || null, []),
       description: this.fb.control(data?.description || null, []),
-      module: this.fb.control(this.setModule(data?.module) || null, [Validators.required]),
+      module: this.fb.control(this.setModule(data?.module) || null, [...createRequiredValidators()]),
       customFieldLists: this.fb.array(
         (<CustomFieldList[]>data?.customFieldLists)?.length ?
         (<CustomFieldList[]>data.customFieldLists).map(x => this.createCustomFieldList(x)) : []

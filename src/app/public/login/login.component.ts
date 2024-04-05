@@ -1,4 +1,4 @@
-import { AfterViewChecked, ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener } from '@angular/core';
 import { FormControl, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth.service';
@@ -9,28 +9,24 @@ import { BehaviorSubject, merge } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { handleError } from 'src/app/shared/utils/error-handling.function';
 import { handleSuccess } from "../../shared/utils/success-handling.function";
-import { createEmailValidator } from 'src/app/shared/validators/generic-validators';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { createEmailValidator, createRequiredValidators } from 'src/app/shared/validators/generic-validators';
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LoginComponent implements AfterViewChecked {
-    ngAfterViewChecked() {
-        this.ref.detectChanges();
-    }
+export class LoginComponent {
     public readonly isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
     @HostListener('document:keydown.enter', ['$event']) onKeydownHandler(event: KeyboardEvent) {
         this.sigIn();
     }
-    username = new FormControl('', [Validators.required, Validators.email]);
+    username = new FormControl('', [...createRequiredValidators(), Validators.email]);
 
     loginForm: UntypedFormGroup = new UntypedFormGroup({
-        username: new UntypedFormControl(null, [Validators.required, Validators.email]),
-        password: new UntypedFormControl(null, [Validators.required, Validators.pattern('')]),
+        username: new UntypedFormControl(null, [...createRequiredValidators(), Validators.email]),
+        password: new UntypedFormControl(null, [...createRequiredValidators(), Validators.pattern('')]),
     })
     constructor(private readonly router: Router,
         private readonly route: ActivatedRoute,
@@ -39,23 +35,21 @@ export class LoginComponent implements AfterViewChecked {
         private loaderService: LoaderOrchestratorService,
         private readonly rolesService: RolesService,
         private ref: ChangeDetectorRef) {
-        merge(this.username.statusChanges, this.username.valueChanges)
-            .pipe(takeUntilDestroyed())
-            .subscribe(() => console.log("ok"));
         this.preCompleteSignIn();
     }
     preCompleteSignIn(): void {
         const user = this.auth.getAuth();
 
         // if (user) {
+        //     console.log(user)
         //     this.router.navigate(['operator/dashboard'], { relativeTo: this.route.parent });
         //     return;
         // }
 
         if (!environment.production) {
             this.loginForm = new UntypedFormGroup({
-                username: new UntypedFormControl('transport@gmail.com', [Validators.required, ...createEmailValidator()]),
-                password: new UntypedFormControl('12345678', [Validators.required, Validators.pattern('')]),
+                username: new UntypedFormControl('transport@gmail.com', [...createRequiredValidators(), ...createEmailValidator()]),
+                password: new UntypedFormControl('12345678', [...createRequiredValidators(), Validators.pattern('')]),
             })
         }
     }

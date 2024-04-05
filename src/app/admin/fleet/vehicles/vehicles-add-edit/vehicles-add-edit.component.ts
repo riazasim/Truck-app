@@ -6,6 +6,7 @@ import { VehicleService } from 'src/app/core/services/vehicle.service';
 import { VehicleModel } from 'src/app/core/models/vehicle.model';
 import { handleError } from 'src/app/shared/utils/error-handling.function';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { createRequiredValidators } from 'src/app/shared/validators/generic-validators';
 
 @Component({
     selector: "app-vehicles-add-edit",
@@ -60,11 +61,11 @@ export class VehiclesAddEditComponent {
     initForm(data: VehicleModel = <VehicleModel>{}): void {
         this.vehicleForm = this.fb.group({
             //vehicleId: this.fb.control(data?.id),
-            licensePlate: this.fb.control(data?.licensePlate || '', [Validators.required]),
-            type: this.fb.control(data?.type || '', [Validators.required]),
-            status: this.fb.control(data?.status || '', [Validators.required]),
-            loadingCapacity: this.fb.control(data?.loadingCapacity || '', [Validators.required]),
-            // loading_capacities: this.fb.control(data?.loading_capacities|| [], [Validators.required]),
+            licensePlate: this.fb.control(data?.licensePlate || '', [...createRequiredValidators()]),
+            type: this.fb.control(data?.type || '', [...createRequiredValidators()]),
+            status: this.fb.control(data?.status || '', [...createRequiredValidators()]),
+            loadingCapacity: this.fb.control(data?.loadingCapacity || '', [...createRequiredValidators()]),
+            // loading_capacities: this.fb.control(data?.loading_capacities|| [], [...createRequiredValidators()]),
         });
     }
 
