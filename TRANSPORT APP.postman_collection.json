@@ -7,6 +7,311 @@
 	},
 	"item": [
 		{
+			"name": "Mobile",
+			"item": [
+				{
+					"name": "Auth",
+					"item": [
+						{
+							"name": "signIn",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = pm.response.json();\r",
+											"pm.environment.set('jwtToken', res.data.attributes.token);\r",
+											"pm.test(res.data.attributes.token, function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"captain@gmail.com\",\r\n    \"password\": \"12345678\"//testare123\r\n}"
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/mobile/signIn",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"mobile",
+										"signIn"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "setPassword",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"password\":\"12345678\",\r\n    \"confirmPassword\":\"12345678\"\r\n\r\n}"
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/mobile/setPassword?token=mIOfV9v5uZRzKwkkbXJVfKavHcVtwTQXfK6AtQGxLqA",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"mobile",
+										"setPassword"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "mIOfV9v5uZRzKwkkbXJVfKavHcVtwTQXfK6AtQGxLqA"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "forgotPassword",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\":\"captain1@gmail.com\"\r\n}"
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/mobile/forgotPassword",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"mobile",
+										"forgotPassword"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "resetPassword",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"password\":\"12345678\",\r\n    \"confirmPassword\":\"12345678\"\r\n\r\n}"
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/mobile/resetPassword?token=-6Whzz41Jhk_GNRp1dqc71mi4Pn92xN6MIqsryTb6o0",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"mobile",
+										"resetPassword"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "-6Whzz41Jhk_GNRp1dqc71mi4Pn92xN6MIqsryTb6o0"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "logout",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{jwtToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{BASE_URL}}/mobile/logout",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"mobile",
+										"logout"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Planning",
+					"item": [
+						{
+							"name": "paginatePlannings",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{jwtToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"start\": 0,\r\n    \"length\": 0,\r\n    \"filters\": [\"\",\"\",\"\",\"\",\"\",\"\",\"\"],\r\n    \"order\": [{\"dir\": \"DESC\", \"column\": 0}]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/mobile/paginatePlannings",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"mobile",
+										"paginatePlannings"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getPlanning",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{jwtToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"planningId\":2\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/mobile/getPlanning",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"mobile",
+										"getPlanning"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getPlanningConvoy",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{jwtToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n   \"planningConvoyId\":3\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/mobile/getPlanningConvoy",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"mobile",
+										"getPlanningConvoy"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
 			"name": "Auth",
 			"item": [
 				{
@@ -23,7 +328,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"mrumari@gmail.com\",\r\n    \"password\": \"12345678\"//testare123\r\n}"
+							"raw": "{\r\n    \"username\": \"transport1@gmail.com\",\r\n    \"password\": \"12345678\"//testare123\r\n}"
 						},
 						"url": {
 							"raw": "{{BASE_URL}}/api/signIn",
@@ -52,7 +357,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"user\":{\r\n        \"email\": \"mrumaredseRTRTFFeee@gmail.com\"\r\n    },\r\n    \"userSetting\":{\r\n        \"timezone\": \"Europe/Bucharest\",\r\n        \"firstName\": \"Firstname\",\r\n        \"lastName\": \"Lastname\",\r\n        \"language\": \"EN\",\r\n        \"phone\": \"3007766453\",\r\n        \"phoneRegionCode\": \"92\"\r\n    }\r\n}"
+							"raw": "{\r\n    \"user\":{\r\n        \"email\": \"mEEEETTEEfffYUGGfgDgfdfddffggdGdd@gmail.com\",\r\n        \"userRole\":\"ROLE_USER_AGENT\"//'ROLE_USER_TRANSPORT','ROLE_USER_AGENT','ROLE_USER_MANEUVERING',\r\n    },\r\n    \"userSetting\":{\r\n      //  \"timezone\": \"Europe/Bucharest\",\r\n        \"firstName\": \"MANEUVERING 4\",\r\n        \"lastName\": \"MANEUVERING 4\"\r\n        //\"language\": \"EN\",\r\n        //\"phone\": \"3007766453\",\r\n        //\"phoneRegionCode\": \"92\"\r\n    }\r\n}"
 						},
 						"url": {
 							"raw": "{{BASE_URL}}/api/signUp",
@@ -204,14 +509,36 @@
 							}
 						],
 						"url": {
-							"raw": "{{BASE_URL}}/security/api/logout",
+							"raw": "{{BASE_URL}}/api/logout",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
-								"security",
 								"api",
 								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Dashboard",
+			"item": [
+				{
+					"name": "getDashboardStats",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/getDashboardStats",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"getDashboardStats"
 							]
 						}
 					},
@@ -254,7 +581,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"timezone\": \"Europe/Bucharest\",\r\n    \"first_name\": \"Umar1\",\r\n    \"last_name\": \"Farooq\",\r\n    \"language\": \"EN\",\r\n    \"phone\": \"3335643234\",\r\n    \"phone_region_code\": \"92\"\r\n}",
+							"raw": "{\r\n    \"timezone\": \"Europe/Bucharest\",\r\n    \"firstName\": \"Umar1\",\r\n    \"lastName\": \"Farooq\",\r\n    //\"language\": \"EN\",\r\n    \"phone\": \"3335643234\"\r\n    //\"phoneRegion_code\": \"92\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -319,7 +646,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"user\":{\r\n        \"email\": \"mrumRfRd788rdfd78t434gyy@gmail.com\",\r\n        \"roles\": [\"ROLE_USER_OPERATOR\"], //ROLE_USER_OPERATOR, ROLE_USER_DRIVER, ROLE_USER_PARTNER\r\n        \"userRole\":\"ROLE_USER_OPERATOR\",\r\n        \"status\": \"ACTIVE\"\r\n    },\r\n    \"userSetting\":{\r\n        \"timezone\": \"Europe/Bucharest\",\r\n        \"firstName\": \"umar\",\r\n        \"lastName\": \"Lastname\",\r\n        \"language\": \"EN\",\r\n        \"phone\": \"3007766453\",\r\n        \"phoneRegionCode\": \"92\",\r\n        \"identityDocumentType\": \"New\",\r\n        \"idNumber\": \"23432423-234234-34\"\r\n    }\r\n}",
+							"raw": "{\r\n    \"user\":{\r\n        \"email\": \"operator1@gmail.com\",\r\n        \"userRole\":\"ROLE_USER_OPERATOR\",//'ROLE_USER_CAPTAIN',, ROLE_USER_OPERATOR\r\n        \"status\": false\r\n    },\r\n    \"userSetting\":{\r\n        //\"timezone\": \"Europe/Bucharest\",\r\n        \"firstName\": \"OPERATOR 4\",\r\n        \"lastName\": \"OPERATOR 4\",\r\n       // \"language\": \"EN\",\r\n        \"phone\": \"3007766453\",\r\n        //\"phoneRegionCode\": \"92\",\r\n        \"identityDocumentType\": \"New\",\r\n        \"idNumber\": \"23432423-234234-34\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -346,7 +673,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"user_id\": 37\r\n}",
+							"raw": "{\r\n    \"userId\": 14\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -373,7 +700,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"user_id\": 37,\r\n    \"timezone\": \"Europe/Bucharest\",\r\n    \"first_name\": \"Umar2\",\r\n    \"last_name\": \"Farooq\",\r\n    \"language\": \"EN\",\r\n    \"phone\": \"3335643234\",\r\n    \"phone_region_code\": \"92\",\r\n    \"identity_document_type\": \"New\",\r\n    \"id_number\": \"23432423-234234-34\"\r\n}",
+							"raw": "{\r\n    \"userId\":14,\r\n    \"user\":{\r\n        //\"email\": \"mrumRfRd788rdfGGd78GGt4FF34gyy@gmail.com\",\r\n        //\"roles\": [\"ROLE_USER_OPERATOR\"], //ROLE_USER_SHIPOWNER,ROLE_USER_AGENT, ROLE_USER_PUSHER, ROLE_USER_DRIVER, ROLE_USER_OPERATOR\r\n        \"userRole\":\"ROLE_USER_OPERATOR\",//'ROLE_USER_CAPTAIN'\r\n        \"status\": true\r\n    },\r\n    \"userSetting\":{\r\n        //\"timezone\": \"Europe/Bucharest\",\r\n        \"firstName\": \"umar\",\r\n        \"lastName\": \"Lastname\",\r\n       // \"language\": \"EN\",\r\n        \"phone\": \"3007766453\",\r\n        //\"phoneRegionCode\": \"92\",\r\n        \"identityDocumentType\": \"New\",\r\n        \"idNumber\": \"23432423-234234-34\"\r\n    }\r\n}\r\n\r\n\r\n// {\r\n//     \"userId\": 14,\r\n//    // \"timezone\": \"Europe/Bucharest\",\r\n//     \"firstName\": \"Umar2\",\r\n//     \"lastName\": \"Farooq\",\r\n//     //\"language\": \"EN\",\r\n//     \"phone\": \"3335643234\"\r\n//    // \"phone_region_code\": \"92\",\r\n//    // \"identity_document_type\": \"New\",\r\n//     //\"id_number\": \"23432423-234234-34\"\r\n// }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -492,7 +819,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"licensePlate\": \"TestResident\",\r\n    \"type\": \"Truck\", //Truck and Trailer\r\n    \"status\": \"ACTIVE\",\r\n    \"loadingCapacities\": [\"34\",\"54\",\"65\"]\r\n}",
+							"raw": "{\r\n    \"licensePlate\": \"TestResident\",\r\n    \"type\": \"Truck\", //Truck and Trailer\r\n    \"status\": false,\r\n    \"loadingCapacities\": [\"34\",\"54\",\"65\"]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -519,7 +846,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"vehicleId\": 17\r\n}",
+							"raw": "{\r\n    \"vehicleId\": 19\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -546,7 +873,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"vehicle_id\": 1,\r\n     \"license_plate\": \"TestResident 343\",\r\n    \"type\": \"Trailer\", //Truck and Trailer\r\n    \"status\": \"ACTIVE\",\r\n    \"loading_capacities\": [\"34\",\"54\",\"60\"]\r\n}",
+							"raw": "{\r\n    \"vehicleId\": 19,\r\n     \"licensePlate\": \"TestResident 343\",\r\n    \"type\": \"Trailer\", //Truck and Trailer\r\n    \"status\": false,\r\n    \"loadingCapacities\": [\"34\",\"54\",\"60\"]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -573,7 +900,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"vehicle_id\": 3\r\n}",
+							"raw": "{\r\n    \"vehicleId\": 3\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -875,7 +1202,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"location_id\": 1\r\n}",
+							"raw": "{\r\n    \"locationId\": 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1313,6 +1640,146 @@
 			]
 		},
 		{
+			"name": "Ship",
+			"item": [
+				{
+					"name": "createShip",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Incarcare camion\",\r\n    \"registrationNo\":\"345345345\",\r\n    \"ais\":30,\r\n    \"selfPropelled\": \"Please\",    \r\n    \"lockType\":\"Loading\",\r\n    \"length\":30,\r\n    \"width\": 45,\r\n    \"maxDraft\": 45,    \r\n    \"aerialGauge\":45,\r\n    \"maxCapacity\":30 \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/createShip",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"createShip"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getShip",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"shipId\":2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/getShip",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"getShip"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateShip",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"shipId\":2,\r\n    \"name\":\"Incarcare camion\",\r\n    \"registrationNo\":\"345345345\",\r\n    \"ais\":30,\r\n    \"selfPropelled\": \"Please\",    \r\n    \"lockType\":\"Loading\",\r\n    \"length\":30,\r\n    \"width\": 40,\r\n    \"maxDraft\": 40,    \r\n    \"aerialGauge\":40,\r\n    \"maxCapacity\":30 \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/updateShip",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"updateShip"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteShip",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"shipId\":2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/deleteShip",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"deleteShip"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "paginateShips",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"start\": 0,\r\n    \"length\": 0,\r\n    \"filters\": [\"\",\"\",\"\",\"\"],\r\n    \"order\": [{\"dir\": \"DESC\", \"column\": 0}]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/paginateShips",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"paginateShips"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Status List Of List",
 			"item": [
 				{
@@ -1515,51 +1982,6 @@
 			"name": "Planning",
 			"item": [
 				{
-					"name": "Get All Plannings By scheduling Date",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/api/admin/plannings?query={\"schedulingDate\":\"2023-05-31\"}",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"api",
-								"admin",
-								"plannings"
-							],
-							"query": [
-								{
-									"key": "query",
-									"value": "{\"schedulingDate\":\"2023-05-31\"}"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Download All Plannings",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/api/admin/plannings/download",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"api",
-								"admin",
-								"plannings",
-								"download"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "createPlanning",
 					"request": {
 						"method": "POST",
@@ -1581,7 +2003,7 @@
 								},
 								{
 									"key": "routingDetail[estimatedTimeArrival]",
-									"value": "2024-03-02 12:46:25",
+									"value": "2024-03-02 16:46:25",
 									"type": "text"
 								},
 								{
@@ -1646,7 +2068,7 @@
 								},
 								{
 									"key": "convoyDetail[0][ship]",
-									"value": "wer",
+									"value": "4",
 									"type": "text"
 								},
 								{
@@ -1687,12 +2109,14 @@
 								{
 									"key": "convoyDetail[0][agent]",
 									"value": "erwer",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "convoyDetail[0][maneuvering]",
 									"value": "wer",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "convoyDetail[0][shipowner]",
@@ -1763,6 +2187,149 @@
 									"key": "convoyDetail[0][operatorComments]",
 									"value": "werewr",
 									"type": "text"
+								},
+								{
+									"key": "documents[0][]",
+									"type": "file",
+									"src": [
+										"/C:/Users/Grace/Desktop/430118863_325097510558025_8907027621629879053_n.jpg",
+										"/C:/Users/Grace/Desktop/431880069_1490558311842949_1585731222518850521_n.jpg"
+									]
+								},
+								{
+									"key": "convoyDetail[1][navigationType]",
+									"value": "hhh",
+									"type": "text"
+								},
+								{
+									"key": "convoyDetail[1][ship]",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "convoyDetail[1][shipType]",
+									"value": "rer",
+									"type": "text"
+								},
+								{
+									"key": "convoyDetail[1][pavilion]",
+									"value": "erer",
+									"type": "text"
+								},
+								{
+									"key": "convoyDetail[1][enginePower]",
+									"value": "erer",
+									"type": "text"
+								},
+								{
+									"key": "convoyDetail[1][lengthOverall]",
+									"value": "34",
+									"type": "text"
+								},
+								{
+									"key": "convoyDetail[1][width]",
+									"value": "343",
+									"type": "text"
+								},
+								{
+									"key": "convoyDetail[1][maxDraft]",
+									"value": "34",
+									"type": "text"
+								},
+								{
+									"key": "convoyDetail[1][maxQuantity]",
+									"value": "343",
+									"type": "text"
+								},
+								{
+									"key": "convoyDetail[1][agent]",
+									"value": "dfdf",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "convoyDetail[1][maneuvering]",
+									"value": "3434",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "convoyDetail[1][shipowner]",
+									"value": "34",
+									"type": "text"
+								},
+								{
+									"key": "convoyDetail[1][purpose]",
+									"value": "343",
+									"type": "text"
+								},
+								{
+									"key": "convoyDetail[1][operator]",
+									"value": "34",
+									"type": "text"
+								},
+								{
+									"key": "convoyDetail[1][trafficType]",
+									"value": "sdfd",
+									"type": "text"
+								},
+								{
+									"key": "convoyDetail[1][operatonType]",
+									"value": "dfdf",
+									"type": "text"
+								},
+								{
+									"key": "convoyDetail[1][cargo]",
+									"value": "dfd",
+									"type": "text"
+								},
+								{
+									"key": "convoyDetail[1][quantity]",
+									"value": "34",
+									"type": "text"
+								},
+								{
+									"key": "convoyDetail[1][unitNo]",
+									"value": "34",
+									"type": "text"
+								},
+								{
+									"key": "convoyDetail[1][originPort]",
+									"value": "dsff",
+									"type": "text"
+								},
+								{
+									"key": "convoyDetail[1][destination]",
+									"value": "dsfsdf",
+									"type": "text"
+								},
+								{
+									"key": "convoyDetail[1][observation]",
+									"value": "fsdf",
+									"type": "text"
+								},
+								{
+									"key": "convoyDetail[1][additionalOperator]",
+									"value": "fsdf",
+									"type": "text"
+								},
+								{
+									"key": "convoyDetail[1][clientComments]",
+									"value": "sdfsdf",
+									"type": "text"
+								},
+								{
+									"key": "convoyDetail[1][operatorComments]",
+									"value": "sdfds",
+									"type": "text"
+								},
+								{
+									"key": "documents[1][]",
+									"type": "file",
+									"src": [
+										"/C:/Users/Grace/Desktop/Screenshot_14.png",
+										"/C:/Users/Grace/Desktop/Screenshot_15.png"
+									]
 								}
 							]
 						},
@@ -1786,7 +2353,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"planningId\":5\r\n}",
+							"raw": "{\r\n    \"planningId\":2\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1807,153 +2374,260 @@
 					"response": []
 				},
 				{
-					"name": "setPlanningInfo",
+					"name": "updatePlanning",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"planningId\":29,\r\n     \"convoyType\": \"TestResident 343\",\r\n    \"estimatedTimeArrival\": \"2024-03-04 12:46:25\", //Truck and Trailer\r\n    \"relativeTimeArrival\": \"2024-03-04 12:46:25\", //Truck and Trailer\r\n    \"delay\": \"43\", //Truck and Trailer\r\n    \"locationPort\": \"RE\",\r\n    \"zone\": \"34\",\r\n    \"departurePort\": \"TestResident 343\",\r\n    \"arrivalPort\": \"Trailer\", //Truck and Trailer\r\n    \"pilotCompany\": \"DE\",\r\n    \"length\": 60,\r\n    \"width\": 60,\r\n    \"maxDraft\": 60,\r\n    \"arrivalGauge\": 47,\r\n    \"maxCapacity\": 60,\r\n    \"lockType\": \"TESTED\",\r\n    \"shipmentStatus\": \"Closed\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/updatePlanning",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"updatePlanning"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getPlanningConvoy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"planningConvoyId\":58\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/getPlanningConvoy",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"getPlanningConvoy"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updatePlanningConvoy",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"body": {
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "data[attributes][schedulingDate]",
-									"value": "2023-05-23",
+									"key": "planningConvoyId",
+									"value": "58",
 									"type": "text"
 								},
 								{
-									"key": "data[attributes][auto]",
-									"value": "DEWDS34324",
+									"key": "navigationType",
+									"value": "Umar",
 									"type": "text"
 								},
 								{
-									"key": "data[attributes][timeSlot]",
-									"value": "11:00 - 11:30",
+									"key": "ship",
+									"value": "3",
 									"type": "text"
 								},
 								{
-									"key": "data[attributes][customer]",
-									"value": "8",
+									"key": "shipType",
+									"value": "Umar",
 									"type": "text"
 								},
 								{
-									"key": "data[attributes][destination]",
-									"value": "Gugrawala",
+									"key": "pavilion",
+									"value": "2",
 									"type": "text"
 								},
 								{
-									"key": "data[attributes][loadingAddress]",
-									"value": "Near Gugrawala Bus Stop",
+									"key": "enginePower",
+									"value": "2",
 									"type": "text"
 								},
 								{
-									"key": "data[attributes][truckLicensePlateFront]",
-									"value": "BRA 2324343",
+									"key": "lengthOverall",
+									"value": "34",
 									"type": "text"
 								},
 								{
-									"key": "data[attributes][truckLicensePlateBack]",
-									"value": "BRRA 3434343",
+									"key": "width",
+									"value": "2",
 									"type": "text"
 								},
 								{
-									"key": "data[attributes][driverName]",
-									"value": "Farooq Bright Driver Name",
+									"key": "maxDraft",
+									"value": "2",
 									"type": "text"
 								},
 								{
-									"key": "data[attributes][driverId]",
-									"value": "Driver ID",
+									"key": "maxQuantity",
+									"value": "2",
 									"type": "text"
 								},
 								{
-									"key": "data[attributes][driverContactNumber]",
-									"value": "734738180",
-									"type": "text"
-								},
-								{
-									"key": "data[attributes][customFieldTransportData]",
-									"value": "[{\"customField\":5, \"name\":\"last_name\",\"value\":\"Umar1\"},\n{\"customField\":6, \"name\":\"first_name\",\"value\":\"Farooq1\"},\n{\"customField\":17, \"name\":\"order_type_radio_option\",\"value\":\"option1\"},\n{\"customField\":19, \"name\":\"order_type_radio_v_option\",\"value\":\"option3\"},\n{\"customField\":20, \"name\":\"order_type_checkbox_v_option\",\"value\":[\"option4\",\"option2\",\"option3\"]}\n]",
-									"type": "text"
-								},
-								{
-									"key": "data[attributes][products]",
-									"value": "[{\"name\":\"Bere pet\", \"size\":\"80X80X80\",\"brand\":\"Timisoreana\",\"batch\":\"L100\",\"amount\":1000,\"weight\":100},\n{\"name\":\"Bere sticla\", \"size\":\"100X80X80\",\"brand\":\"Ursus\",\"batch\":\"L100\",\"amount\":5000,\"weight\":1000}]",
-									"type": "text"
-								},
-								{
-									"key": "data[attributes][customFieldCargoData]",
-									"value": " [{\"customField\":7, \"name\":\"place_order_date\",\"value\":\"2023-04-01T22:00:48.131Z\"},\n{\"customField\":8, \"name\":\"place_order_time\",\"value\":\"16:34:00\"},{\"customField\":16, \"name\":\"order_type_checkbox_option\",\"value\":[\"option4\",\"option2\",\"option3\"]\n}]",
+									"key": "agent",
+									"value": "Umar",
 									"type": "text",
 									"disabled": true
 								},
 								{
-									"key": "data[attributes][operator]",
-									"value": "new operator",
+									"key": "maneuvering",
+									"value": "Umar",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "shipowner",
+									"value": "Umar",
 									"type": "text"
 								},
 								{
-									"key": "data[attributes][clientInstruction]",
-									"value": "new client instruction",
+									"key": "purpose",
+									"value": "Umar",
 									"type": "text"
 								},
 								{
-									"key": "data[attributes][operatorMention]",
-									"value": "new operator mention",
+									"key": "operator",
+									"value": "Umar",
+									"type": "text"
+								},
+								{
+									"key": "trafficType",
+									"value": "Umar",
+									"type": "text"
+								},
+								{
+									"key": "operatonType",
+									"value": "Umar",
+									"type": "text"
+								},
+								{
+									"key": "cargo",
+									"value": "Umar",
+									"type": "text"
+								},
+								{
+									"key": "quantity",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "unitNo",
+									"value": "Umar",
+									"type": "text"
+								},
+								{
+									"key": "originPort",
+									"value": "Umar",
+									"type": "text"
+								},
+								{
+									"key": "destination",
+									"value": "Umar",
+									"type": "text"
+								},
+								{
+									"key": "observation",
+									"value": "Umar",
+									"type": "text"
+								},
+								{
+									"key": "additionalOperator",
+									"value": "Umar",
+									"type": "text"
+								},
+								{
+									"key": "clientComments",
+									"value": "Umar",
+									"type": "text"
+								},
+								{
+									"key": "operatorComments",
+									"value": "Umar",
 									"type": "text"
 								},
 								{
 									"key": "documents[]",
 									"type": "file",
 									"src": [
-										"/C:/Users/Grace/Downloads/contracts.csv",
-										"/C:/Users/Grace/Downloads/Directory forms.pdf",
-										"/C:/Users/Grace/Downloads/70215628-directory-hub-listing-classified-platform-license.pdf"
+										"/C:/Users/Grace/Desktop/Screenshot_8.png",
+										"/C:/Users/Grace/Desktop/Screenshot_9.png",
+										"/C:/Users/Grace/Desktop/Screenshot_10.png",
+										"/C:/Users/Grace/Desktop/425623485_2272641856265093_5211833009632156424_n.jpg",
+										"/C:/Users/Grace/Desktop/430118863_325097510558025_8907027621629879053_n.jpg",
+										"/C:/Users/Grace/Desktop/431880069_1490558311842949_1585731222518850521_n.jpg"
 									]
 								},
 								{
-									"key": "data[attributes][customFieldAdditionalData]",
-									"value": "[{\"customField\":9, \"name\":\"additional_description\",\"value\":\"additional data will be come here\"},\n{\"customField\":18, \"name\":\"order_type_select_option\",\"value\":\"option3\"}\n]",
+									"key": "oldDocuments",
+									"value": "[10,11]",
 									"type": "text"
-								},
-								{
-									"key": "data[attributes][location]",
-									"value": "1",
-									"type": "text"
-								},
-								{
-									"key": "data[attributes][warehouse]",
-									"value": "1",
-									"type": "text"
-								},
-								{
-									"key": "data[attributes][dock]",
-									"value": "1",
-									"type": "text"
-								},
-								{
-									"key": "data[attributes][operation]",
-									"value": "2",
-									"type": "text"
-								},
-								{
-									"key": "data[attributes][statusListStatus]",
-									"value": "21",
-									"type": "default"
-								},
-								{
-									"key": "data[attributes][goodsStatusListStatus]",
-									"value": "42",
-									"type": "default"
 								}
 							]
 						},
 						"url": {
-							"raw": "{{BASE_URL}}/api/setPlanningInfo",
+							"raw": "{{BASE_URL}}/api/updatePlanningConvoy",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"api",
-								"setPlanningInfo"
+								"updatePlanningConvoy"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deletePlanningConvoy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"planningConvoyId\":54\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/deletePlanningConvoy",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"deletePlanningConvoy"
 							]
 						}
 					},
@@ -1966,7 +2640,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"planningId\":1\r\n}",
+							"raw": "{\r\n    \"planningId\":18\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1993,7 +2667,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"start\": 0,\r\n    \"length\": 0,\r\n    \"filters\": [\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\"],\r\n    \"order\": [{\"dir\": \"DESC\", \"column\": 0}]\r\n}",
+							"raw": "{\r\n    \"start\": 0,\r\n    \"length\": 0,\r\n    \"filters\": [\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\"],// searchByDate=\"2024-03-25\"\r\n    \"order\": [{\"dir\": \"DESC\", \"column\": 0}]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2014,36 +2688,6 @@
 					"response": []
 				},
 				{
-					"name": "Dummy Import Planning From Excel Sheet",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "file",
-									"type": "file",
-									"src": "/D:/wamp64/www/php80/yard_management_system/Planning Sheet.xlsx"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{baseUrl}}/api/admin/plannings/import",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"api",
-								"admin",
-								"plannings",
-								"import"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Get Shipment Logs",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
@@ -2053,31 +2697,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "{{baseUrl}}/api/admin/shipment-logs/157757",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"api",
-								"admin",
-								"shipment-logs",
-								"157757"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Assigning Dock to Planning By Changing DOCK/TIMESLOT/LIST-STATUS",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"data\":{\r\n        \"attributes\":{\r\n                    \"assigningDate\":\"2023-06-01\",\r\n                    \"hour\":\"09:00:00\",\r\n                    \"planning\":50,\r\n                    \"dock\":71,\r\n                    \"statusListStatus\":17\r\n                      }\r\n        }\r\n}",
+							"raw": "{\r\n    \"planningId\":14\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2085,14 +2705,210 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/api/admin/assigning-dock-to-plannings",
+							"raw": "{{BASE_URL}}/api/getShipmentLogs",
 							"host": [
-								"{{baseUrl}}"
+								"{{BASE_URL}}"
 							],
 							"path": [
 								"api",
-								"admin",
-								"assigning-dock-to-plannings"
+								"getShipmentLogs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getUsersByUserRole",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"start\": 0,\r\n    \"length\": 0,\r\n    \"filters\": [\"\",\"\",\"ROLE_USER_CAPTAIN\",\"\",\"\"],//[\"firstname/lastname\", \"status\", \"useRole\", \"phone\", \"email\"]  //'ROLE_USER_AGENT','ROLE_USER_MANEUVERING', 'ROLE_USER_CAPTAIN'\r\n    \"order\": [{\"dir\": \"DESC\", \"column\": 0}]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/getUsersByUserRole",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"getUsersByUserRole"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "assignPlanningToUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"planningId\":1,\r\n    \"userId\":18\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/assignPlanningToUser",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"assignPlanningToUser"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Micro Serivce",
+			"item": [
+				{
+					"name": "getPorts",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n     \"organizationId\":null\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/getPorts",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"getPorts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getBerths",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n     \"portId\":18\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/getBerths",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"getBerths"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getCompanies",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n     \"organizationId\":null\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/getCompanies",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"getCompanies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getPlanningConvoyes Dummy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n     \"portId\":13\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/getPlanningConvoyes",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"getPlanningConvoyes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getMicroPlanningConvoyes",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"start\": 0,\r\n    \"length\": 0,\r\n    \"filters\": [\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\"],// \r\n    \"order\": [{\"dir\": \"DESC\", \"column\": 0}]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/microconvoyes",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"microconvoyes"
 							]
 						}
 					},
