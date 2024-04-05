@@ -13,11 +13,15 @@
     </fa-icon>
   </div>
 
-    <div class="errors-container" [style.visibility]="isTouched && showValidationMessages && errors ? 'visible': 'hidden'" [style.height.px]="21">
-      <div *ngFor="let error of (errors | keyvalue)">
-        <span class="invalid">invalid</span>
-      </div>
+  <div *ngIf="showValidation" class="errors-container" [style.visibility]="isTouched && showValidationMessages && errors ? 'visible': 'hidden'" [style.height.px]="21">
+    <div *ngFor="let error of (errors | keyvalue)" class="tw-text-center">
+      <span *ngIf="$any(error)?.value && $any(error)?.value?.message; else invalidValueTemplate" class="invalid">{{$any(error)?.value?.message}}</span>
+      <ng-template #invalidValueTemplate>
+        <span class="invalid">Invalid value</span>
+      </ng-template>
     </div>
+  </div>
+
 
 </div>
 <ng-content select="[auxiliary]"></ng-content>

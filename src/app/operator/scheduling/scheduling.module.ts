@@ -28,7 +28,6 @@ import { SchedulingViewModalComponent } from './scheduling-view-modal/scheduling
 import { MatIconModule } from '@angular/material/icon';
 import { SchedulingSendMessageComponent } from './scheduling-send-message/scheduling-send-message.component';
 import { SchedulingDeleteModalComponent } from './scheduling-delete-modal/scheduling-delete-modal.component';
-import { VehicleModule } from '../vehicle/vehicle.module';
 import { NoSchedulingComponent } from './no-scheduling/no-scheduling.component';
 import { SchedulingAddProductModalComponent } from './scheduling-add-product-modal/scheduling-add-product-modal.component';
 import { MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule, MatRippleModule, provideNativeDateAdapter } from '@angular/material/core';
@@ -111,7 +110,6 @@ import { RestrictionsComponent } from './restrictions/restrictions.component';
     DragDropModule,
     MatSidenavModule,
     MatIconModule,
-    VehicleModule,
     MatMomentDateModule,
     MatSnackBarModule,
     MatButtonToggleModule,

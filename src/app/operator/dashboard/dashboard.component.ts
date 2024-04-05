@@ -27,7 +27,7 @@ export class DashboardComponent implements OnInit {
         },
         {
             name: "Port",
-            value: 1
+            value: 0
         },
         {
             name: "Berth",
@@ -37,15 +37,15 @@ export class DashboardComponent implements OnInit {
     timeBreakDown: pieData[] = [
         {
             name: "Operation Time",
-            value: 1
+            value: 0
         },
         {
             name: "Berth Time",
-            value: 1
+            value: 0
         },
         {
             name: "Waiting Time",
-            value: 1
+            value: 0
         },
     ];
     // readonly totalVehiclesToday$: Observable<number> = this.statService.getVehiclesToday()
@@ -89,13 +89,13 @@ export class DashboardComponent implements OnInit {
     onResize(event: any) {
         this.innerWidth = window.innerWidth;
         if (this.innerWidth <= 768) {
-            this.view = [this.innerWidth - 100 , 320]
+            this.view = [this.innerWidth - 100, 320]
         }
         else if (this.innerWidth > 768 && this.innerWidth <= 1024) {
-            this.view = [this.innerWidth - 150 , 320]
+            this.view = [this.innerWidth - 150, 320]
         }
-        else{
-            this.view = [(this.innerWidth/2)-150 , 320]
+        else {
+            this.view = [(this.innerWidth / 2) - 150, 320]
         }
     }
 
@@ -107,13 +107,13 @@ export class DashboardComponent implements OnInit {
     ngOnInit(): void {
         this.innerWidth = window.innerWidth;
         if (this.innerWidth <= 768) {
-            this.view = [this.innerWidth - 100 , 320]
+            this.view = [this.innerWidth - 100, 320]
         }
         else if (this.innerWidth > 768 && this.innerWidth <= 1024) {
-            this.view = [this.innerWidth - 150 , 320]
+            this.view = [this.innerWidth - 150, 320]
         }
-        else{
-            this.view = [(this.innerWidth/2)-150 , 320]
+        else {
+            this.view = [(this.innerWidth / 2) - 150, 320]
         }
         this.getDashboardData()
     }
@@ -121,12 +121,12 @@ export class DashboardComponent implements OnInit {
     getDashboardData() {
         this.statService.getDashboardStats().subscribe(response => {
             this.dashboardData = response?.data?.attributes;
-            // this.sidsByStatus[0].value = this.dashboardData.sidsByStatus.onRouteCount
-            this.sidsByStatus[1].value = this.dashboardData.ridsByStatus.onPortQueueCount
-            // this.sidsByStatus[2].value = this.dashboardData.sidsByStatus.onBerthCount
-            this.timeBreakDown[0].value = this.dashboardData.timeBreakDown.operationTime
-            this.timeBreakDown[1].value = this.dashboardData.timeBreakDown.berthTime
-            this.timeBreakDown[2].value = this.dashboardData.timeBreakDown.waitingTime
+            this.sidsByStatus[0].value = this.dashboardData?.sidsByStatus?.onRouteCount || 0
+            this.sidsByStatus[1].value = this.dashboardData?.ridsByStatus?.onPortQueueCount || 0
+            this.sidsByStatus[2].value = this.dashboardData?.sidsByStatus?.onBerthCount || 0
+            this.timeBreakDown[0].value = this.dashboardData?.timeBreakDown?.operationTime || 0
+            this.timeBreakDown[1].value = this.dashboardData?.timeBreakDown?.berthTime || 0
+            this.timeBreakDown[2].value = this.dashboardData?.timeBreakDown?.waitingTime || 0
             this.isLoading$.next(false)
         })
     }

@@ -18,7 +18,7 @@
                         </div>
                         <div class=" flex flex-col" formGroupName="routingDetail">
                             <timepicker matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
-                                [matTooltip]="'Pick ETA time' | translate" [height]="52"
+                                [matTooltip]="'Pick ETA time' | translate" [height]="52" [model]="filterTime"
                                 (modelChange)="OnTimeChange($event)"></timepicker>
                         </div>
                     </div>
@@ -28,7 +28,9 @@
                     <div iconic-select-wrapper leftSvg="assets/images/scheduling_map_location.svg"
                         [rightIcon]="['fas', 'caret-down']" formGroupName="routingDetail">
                         <select inputRef name="zone" id="zone" formControlName="zone">
-                            <option disabled value="">Zone</option>
+                            <option disabled value="">
+                                Zone
+                            </option>
                             <option *ngFor="let zone of zone" [value]="zone.id">
                                 {{ zone.name }}
                             </option>
@@ -112,7 +114,6 @@
             <div
                 class="grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20 gap-y-4 pt-[100px] min-xl:px-[50px]">
                 <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
-                    <!-- <p class="text-columnCell font-bold"></p> -->
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_navigation.svg">
                         <input inputRef type="text" placeholder="Navigation type*" formControlName="navigationType" />
                     </div>
@@ -134,7 +135,7 @@
                         </select>
                     </div>
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_port.svg">
-                        <input inputRef type="number" placeholder="Pavilion*" formControlName="pavilion" />
+                        <input inputRef type="text" maxlength="4" placeholder="Pavilion*" formControlName="pavilion" />
                     </div>
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_engine.svg">
                         <input inputRef type="number" placeholder="Engine power" formControlName="enginePower" />
@@ -154,23 +155,8 @@
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_ship_owner.svg">
                         <input inputRef type="text" placeholder="Ship owner" formControlName="shipowner" />
                     </div>
-                    <!-- <div iconic-select-wrapper leftIcon="user" [rightIcon]="['fas', 'caret-down']">
-                        <select inputRef name="agent" id="agent" formControlName="agent">
-                            <option disabled value="">Agent</option>
-                            <option *ngFor="let agent of agent" [value]="agent.id">
-                                {{ agent.name }}
-                            </option>
-                        </select>
-                    </div>
-                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_manevra.svg">
-                        <input inputRef type="text" placeholder="Manevra" formControlName="maneuvering" />
-                    </div> -->
                 </div>
                 <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
-                    <!-- <p>&nbsp;</p> -->
-                    <!-- <div iconic-input-wrapper leftSvg="assets/images/scheduling_ship_owner.svg">
-                        <input inputRef type="text" placeholder="Ship owner" formControlName="shipowner" />
-                    </div> -->
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_purpose.svg">
                         <input inputRef type="text" placeholder="Purpose" formControlName="purpose" />
                     </div>

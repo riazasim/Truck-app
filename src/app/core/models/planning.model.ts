@@ -14,7 +14,7 @@ export interface convoyModel {
     navigationType: string;
     ship: string;
     shipType: string;
-    pavilion: number;
+    pavilion: string;
     enginePower: number;
     lengthOverall: number;
     width: number;

@@ -19,7 +19,7 @@
                     <h3 class="min-xl:block max-xl:hidden heading-4 mr-5 w-full desktop-view">
                         {{'Planning list' | translate}}</h3>
                     <!-- <app-scheduling-search-bar (emitFilterChange)="setSingleSearchFilter($event)">
-                    </app-scheduling-search-bar> -->
+                            </app-scheduling-search-bar> -->
                     <div class="w-full">
                         <datepicker matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
                             [matTooltip]="'Planning date' | translate" (dateChanged)="handleDateChange($event)"
@@ -31,32 +31,33 @@
                         <label>{{(isComvexReorder$ | async) ? 'Reorder mode' : 'Freezed mode'}}</label>
                     </div>
                     <!-- <div *ngIf="!(isTableView$ | async)" class="w-full">
-                        <select [disabled]="!!(isTimeSlotFilterMode$ | async)" class="rounded w-full" inputRef
-                            name="sortBy" [value]="sortBy$ | async" (change)="sortBy$.next($any($event.target).value)">
-                            <option [value]="null" disabled>{{'generics.sort-by' | translate}}</option>
-                            <option value="0">SID</option>
-                            <option value="1">{{'booking.front-plate-license-number' | translate}}</option>
-                            <option value="2">{{'booking.back-plate-license-number' | translate}}</option>
-                            <option value="3">{{'docks.dock' | translate}}</option>
-                            <option value="4">{{'generics.status' | translate}}</option>
-                            <option value="12">Timeslot</option>
-                        </select>
-                    </div> -->
+                                <select [disabled]="!!(isTimeSlotFilterMode$ | async)" class="rounded w-full" inputRef
+                                    name="sortBy" [value]="sortBy$ | async" (change)="sortBy$.next($any($event.target).value)">
+                                    <option [value]="null" disabled>{{'generics.sort-by' | translate}}</option>
+                                    <option value="0">SID</option>
+                                    <option value="1">{{'booking.front-plate-license-number' | translate}}</option>
+                                    <option value="2">{{'booking.back-plate-license-number' | translate}}</option>
+                                    <option value="3">{{'docks.dock' | translate}}</option>
+                                    <option value="4">{{'generics.status' | translate}}</option>
+                                    <option value="12">Timeslot</option>
+                                </select>
+                            </div> -->
                     <!-- <div *ngIf="!(isTableView$ | async)" matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
-                        [matTooltip]="(sortOrder$ | async) === 'DESC' ? 'Sort ASC' : 'Sort DESC'"
-                        (click)="sortOrder$.next(sortOrder$.value === 'DESC' ? 'ASC' : 'DESC')"
-                        class="flex items-center justify-center w-[37px] h-[37px] bg-white border border-borderColor rounded cursor-pointer px-4 ">
-                        <ng-container [ngSwitch]="sortOrder$ | async">
-                            <fa-icon *ngSwitchCase="'DESC'" [icon]="['fas','arrow-down-short-wide']"></fa-icon>
-                            <fa-icon *ngSwitchCase="'ASC'" [icon]="['fas','arrow-up-short-wide']"></fa-icon>
-                            <fa-icon *ngSwitchDefault [icon]="['fas','arrow-up-short-wide']"></fa-icon>
-                        </ng-container>
-                    </div> -->
+                                [matTooltip]="(sortOrder$ | async) === 'DESC' ? 'Sort ASC' : 'Sort DESC'"
+                                (click)="sortOrder$.next(sortOrder$.value === 'DESC' ? 'ASC' : 'DESC')"
+                                class="flex items-center justify-center w-[37px] h-[37px] bg-white border border-borderColor rounded cursor-pointer px-4 ">
+                                <ng-container [ngSwitch]="sortOrder$ | async">
+                                    <fa-icon *ngSwitchCase="'DESC'" [icon]="['fas','arrow-down-short-wide']"></fa-icon>
+                                    <fa-icon *ngSwitchCase="'ASC'" [icon]="['fas','arrow-up-short-wide']"></fa-icon>
+                                    <fa-icon *ngSwitchDefault [icon]="['fas','arrow-up-short-wide']"></fa-icon>
+                                </ng-container>
+                            </div> -->
                     <div *ngIf="false" class="w-full">
                         <div class="flex gap-4 items-center whitespace-nowrap">
                             <input id="viewed" type="checkbox"
                                 class="border border-textDefault cursor-pointer w-[28px] h-[28px]">
-                            <label for="viewed" class="max-xl:hidden min-xl:block heading-5 cursor-pointer">Exclude past
+                            <label for="viewed" class="max-xl:hidden min-xl:block heading-5 cursor-pointer">Exclude
+                                past
                                 SIDs</label>
                             <label for="viewed" class="max-xl:block min-xl:hidden cursor-pointer">Exclude past
                                 SIDs</label>
@@ -89,17 +90,17 @@
                     <mat-menu #sidType="matMenu" class="!bg-white" xPosition="before">
                         <menu mat-menu-item>
                             <!-- <fa-icon icon="ship" size="1x" class="mx-2 cursor-pointer hover:text-primary">
-                            </fa-icon> -->
+                                    </fa-icon> -->
                             {{'ship' | translate}}
                         </menu>
                         <menu mat-menu-item>
                             <!-- <fa-icon icon="train" size="1x" class="mx-2 cursor-pointer hover:text-primary">
-                            </fa-icon> -->
+                                    </fa-icon> -->
                             {{'train' | translate}}
                         </menu>
                         <menu mat-menu-item>
                             <!-- <fa-icon icon="plane" size="1x" class="mx-2 cursor-pointer hover:text-primary">
-                            </fa-icon> -->
+                                    </fa-icon> -->
                             {{'plane' | translate}}
                         </menu>
                     </mat-menu>
@@ -131,8 +132,8 @@
                                 (triggerCheckIn)="openCheckinModal($event)"
                                 (triggerCheckOut)="openCheckOutModal($event)" (triggerReject)="openRejectModal($event)"
                                 (triggerAccept)="openPlanModal($event)" (triggerDeletion)="openDeleteModal($event)"
-                                [cdkDragData]="item" cdkDrag (cdkDragStarted)="getCardDetails(item)" [planning]="item" [userRole]="userRole"
-                                (triggerOpenLogs)="toggleSidenav($event)">
+                                [cdkDragData]="item" cdkDrag (cdkDragStarted)="getCardDetails(item)" [planning]="item"
+                                [userRole]="userRole" (triggerOpenLogs)="toggleSidenav($event)">
                                 <div *cdkDragPreview class="square" [ngStyle]="{backgroundColor: 'blue' }">
                                 </div>
                             </scheduling-card>
@@ -146,25 +147,25 @@
                     </div>
                 </ng-scrollbar>
                 <!-- <div *ngIf="(isMobileCardList$ | async)" class="flex flex-col gap-4 card-container">
-                    <div dropListScroller cdkDropList [cdkDropListData]="plannings" (cdkDropListDropped)="drop($event)">
-                        <app-loader [isContainer]="true" *ngIf="(isLoading$ | async)" [fullScreen]="false"></app-loader>
-                        <ng-container *ngIf="!(isLoading$ | async)">
-                            <scheduling-card *ngFor="let item of plannings" (triggerSideNav)="toggleSidenav($event)"
-                                [statuses]="statuses" (triggerCancellation)="openCancellationModal($event)"
-                                [isUmexOrganization]="(isUmexOrganization$ | async)" [isMaxWidth]="true"
-                                (triggerCheckIn)="openCheckinModal($event)"
-                                (triggerCheckOut)="openCheckOutModal($event)" (triggerReject)="openRejectModal($event)"
-                                (triggerAccept)="openPlanModal($event)" (triggerDeletion)="openDeleteModal($event)"
-                                [cdkDragData]="item" cdkDrag [planning]="item">
-                                <div *cdkDragPreview class="square" [ngStyle]="{backgroundColor: 'blue' }">
-                                </div>
-                            </scheduling-card>
-                            <app-loader [isContainer]="false" *ngIf="(cardLoading$ | async)"
-                                [fullScreen]="false"></app-loader>
-                        </ng-container>
-                        <no-scheduling *ngIf="!(isLoading$ | async) && !plannings.length"></no-scheduling>
-                    </div>
-                </div> -->
+                            <div dropListScroller cdkDropList [cdkDropListData]="plannings" (cdkDropListDropped)="drop($event)">
+                                <app-loader [isContainer]="true" *ngIf="(isLoading$ | async)" [fullScreen]="false"></app-loader>
+                                <ng-container *ngIf="!(isLoading$ | async)">
+                                    <scheduling-card *ngFor="let item of plannings" (triggerSideNav)="toggleSidenav($event)"
+                                        [statuses]="statuses" (triggerCancellation)="openCancellationModal($event)"
+                                        [isUmexOrganization]="(isUmexOrganization$ | async)" [isMaxWidth]="true"
+                                        (triggerCheckIn)="openCheckinModal($event)"
+                                        (triggerCheckOut)="openCheckOutModal($event)" (triggerReject)="openRejectModal($event)"
+                                        (triggerAccept)="openPlanModal($event)" (triggerDeletion)="openDeleteModal($event)"
+                                        [cdkDragData]="item" cdkDrag [planning]="item">
+                                        <div *cdkDragPreview class="square" [ngStyle]="{backgroundColor: 'blue' }">
+                                        </div>
+                                    </scheduling-card>
+                                    <app-loader [isContainer]="false" *ngIf="(cardLoading$ | async)"
+                                        [fullScreen]="false"></app-loader>
+                                </ng-container>
+                                <no-scheduling *ngIf="!(isLoading$ | async) && !plannings.length"></no-scheduling>
+                            </div>
+                        </div> -->
                 <div class="col-span-2">
                     <div
                         class="bg-white w-full min-h-[550px] items-center justify-center {{!(isCardDetailsLoading$ | async) ? '' : 'flex'}}">
@@ -173,7 +174,9 @@
                         <div *ngIf="!(isCardDetailsLoading$ | async) && plannings.length" class="p-12">
                             <div class="flex justify-between min-lg:items-center max-lg:flex-col">
                                 <div>
-                                    <h2 class="heading-2 font-bold text-primary">Shipment SID - {{planning.rId || '-'}}
+                                    <h2 class="heading-2 font-bold text-primary">Shipment SID - {{planning.rId
+                                        ||
+                                        '-'}}
                                     </h2>
                                 </div>
                             </div>
@@ -183,21 +186,45 @@
                                         <h3 class="heading-2 text-primary">Route Details : </h3>
                                     </div>
                                 </div>
-                                <div  class="grid min-lg:grid-cols-2 max-md:grid-cols-1 py-2 gap-y-4">
-                                    <div class="font-bold text-xl"><span class="font-bold heading-5">Convoy Type : </span>- {{planning.convoyType}}</div>
-                                    <div class="font-bold text-xl"><span class="font-bold heading-5">Arrival Gauge : </span>- {{planning.arrivalGauge}}</div>
-                                    <div class="font-bold text-xl"><span class="font-bold heading-5">Arrival Port : </span>- {{planning.arrivalPort}}</div>
-                                    <div class="font-bold text-xl"><span class="font-bold heading-5">Departure Port : </span>- {{planning.departurePort}}</div>
-                                    <div class="font-bold text-xl"><span class="font-bold heading-5">Location Port : </span>- {{planning.locationPort}}</div>
-                                    <div class="font-bold text-xl"><span class="font-bold heading-5">Pilot Company : </span>- {{planning.pilotCompany}}</div>
-                                    <div class="font-bold text-xl"><span class="font-bold heading-5">Max Capacity : </span>- {{planning.maxCapacity}}</div>
-                                    <div class="font-bold text-xl"><span class="font-bold heading-5">Max Draft : </span>- {{planning.maxDraft}}</div>
-                                    <div class="font-bold text-xl"><span class="font-bold heading-5">Length : </span>- {{planning.length}}</div>
-                                    <div class="font-bold text-xl"><span class="font-bold heading-5">Width : </span>- {{planning.width}}</div>
-                                    <div class="font-bold text-xl"><span class="font-bold heading-5">Zone : </span>- {{planning.zone}}</div>
-                                    <div class="font-bold text-xl"><span class="font-bold heading-5">Lock Type : </span>- {{planning.lockType}}</div>
-                                    <div class="font-bold text-xl"><span class="font-bold heading-5">ETA : </span>- {{planning.estimatedTimeArrival}}</div>
-                                    <div class="font-bold text-xl"><span class="font-bold heading-5">RTA : </span>- {{planning.relativeTimeArrival}}</div>
+                                <div class="grid min-lg:grid-cols-2 max-md:grid-cols-1 py-2 gap-y-4">
+                                    <div class="font-bold text-xl"><span class="font-bold heading-5">Convoy Type
+                                            :
+                                        </span>- {{planning.convoyType}}</div>
+                                    <div class="font-bold text-xl"><span class="font-bold heading-5">Arrival
+                                            Gauge :
+                                        </span>- {{planning.arrivalGauge}}</div>
+                                    <div class="font-bold text-xl"><span class="font-bold heading-5">Arrival
+                                            Port :
+                                        </span>- {{planning.arrivalPort}}</div>
+                                    <div class="font-bold text-xl"><span class="font-bold heading-5">Departure
+                                            Port
+                                            : </span>- {{planning.departurePort}}</div>
+                                    <div class="font-bold text-xl"><span class="font-bold heading-5">Location
+                                            Port :
+                                        </span>- {{planning.locationPort}}</div>
+                                    <div class="font-bold text-xl"><span class="font-bold heading-5">Pilot
+                                            Company :
+                                        </span>- {{planning.pilotCompany}}</div>
+                                    <div class="font-bold text-xl"><span class="font-bold heading-5">Max
+                                            Capacity :
+                                        </span>- {{planning.maxCapacity}}</div>
+                                    <div class="font-bold text-xl"><span class="font-bold heading-5">Max Draft :
+                                        </span>- {{planning.maxDraft}}</div>
+                                    <div class="font-bold text-xl"><span class="font-bold heading-5">Length :
+                                        </span>- {{planning.length}}</div>
+                                    <div class="font-bold text-xl"><span class="font-bold heading-5">Width :
+                                        </span>- {{planning.width}}</div>
+                                    <div class="font-bold text-xl"><span class="font-bold heading-5">Zone :
+                                        </span>-
+                                        {{planning.zone}}</div>
+                                    <div class="font-bold text-xl"><span class="font-bold heading-5">Lock Type :
+                                        </span>- {{planning.lockType}}</div>
+                                    <div class="font-bold text-xl"><span class="font-bold heading-5">ETA :
+                                        </span>-
+                                        {{planning.estimatedTimeArrival}}</div>
+                                    <div class="font-bold text-xl"><span class="font-bold heading-5">RTA :
+                                        </span>-
+                                        {{planning.relativeTimeArrival}}</div>
                                 </div>
                             </div>
                         </div>
@@ -209,7 +236,7 @@
             <div class="grid mt-4" *ngIf="(isTableView$ | async)">
                 <app-loader *ngIf="isLoading$ | async" [isContainer]="true" [fullScreen]="false"></app-loader>
                 <app-planning-list *ngIf="!(isLoading$ | async)" (triggerOpenLogs)="toggleSidenav($event)"
-                    [userRole]="userRole" [filterDate]="formatDate(filterDate)"></app-planning-list>
+                    [userRole]="userRole" [filterDate]="formatDate(filterDate)" [plannings]="plannings"></app-planning-list>
             </div>
         </div>
     </mat-sidenav-content>

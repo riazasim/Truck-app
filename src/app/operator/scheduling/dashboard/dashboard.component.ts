@@ -21,9 +21,6 @@ import { OrganizationService } from 'src/app/core/services/organization.service'
 import { SchedulingRejectModalComponent } from '../scheduling-reject-modal/scheduling-reject-modal.component';
 import { SchedulingCheckinCheckoutModalComponent } from '../scheduling-checkin-checkout-modal/scheduling-checkin-checkout-modal.component';
 import { FilterModel, FilterTypeENum } from '../scheduling-search-bar/scheduling-search-bar.component';
-import { VehicleListComponent } from '../../vehicle/vehicle-list/vehicle-list.component';
-import { ComvexListComponent } from '../../vehicle/comvex-list/comvex-list.component';
-import { ComvexListReorderComponent } from '../../vehicle/comvex-list-reorder/comvex-list-reorder.component';
 import { PageSettingsModel } from 'src/app/core/models/page.model';
 import defaultPageSettings from '../../../core/constants/page.constant';
 import { AuthService } from 'src/app/core/services/auth.service';
@@ -36,9 +33,6 @@ import { AuthService } from 'src/app/core/services/auth.service';
 })
 export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     @ViewChild('sidenav') sidenav: MatSidenav;
-    @ViewChild(VehicleListComponent) vehicleListComponent: VehicleListComponent;
-    @ViewChild(ComvexListComponent) comvexListComponent: ComvexListComponent;
-    @ViewChild(ComvexListReorderComponent) comvexListReorderComponent: ComvexListReorderComponent;
     readonly isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     readonly isCardDetailsLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     readonly cardLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
@@ -355,15 +349,15 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         this.planningService.updatePlanningToDock(data).subscribe({
             next: () => {
                 if (this.isTableView$.getValue() && this.isComvexOrganization$.getValue()) {
-                    if (this.isComvexReorder$.getValue()) {
-                        this.comvexListReorderComponent.retrievePlannings();
-                    }
-                    if (!this.isComvexReorder$.getValue()) {
-                        this.comvexListComponent.retrievePlannings();
-                    }
+                    // if (this.isComvexReorder$.getValue()) {
+                    //     this.comvexListReorderComponent.retrievePlannings();
+                    // }
+                    // if (!this.isComvexReorder$.getValue()) {
+                    //     this.comvexListComponent.retrievePlannings();
+                    // }
                     this.isLoading$.next(false);
                 } else if (this.isTableView$.getValue() && !this.isComvexOrganization$.getValue()) {
-                    this.vehicleListComponent.retrievePlannings();
+                    // this.vehicleListComponent.retrievePlannings();
                     this.isLoading$.next(false);
                 } else {
                     this.retrievePlanningList();
