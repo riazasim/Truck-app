@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { StatusListService } from '../../../core/services/status-list.service';
 import { StatusListModel, StatusTypeEnum } from '../../../core/models/status-list.model';
 import { BehaviorSubject } from 'rxjs';
+import { createRequiredValidators } from 'src/app/shared/validators/generic-validators';
 
 @Component({
   selector: 'app-status-add-edit',
@@ -57,9 +58,9 @@ export class StatusAddEditComponent implements OnInit {
     const color = this.id && data?.color.startsWith('#') ? data.color :
                   this.id && !data.color.startsWith('#') ? this.transformHex(data.color) : '';
     this.statusForm = this.fb.group({
-      name: this.fb.control(data?.name || '', [Validators.required]),
-      color: this.fb.control(color, [Validators.required]),
-      description: this.fb.control(data?.description || '', [Validators.required]),
+      name: this.fb.control(data?.name || '', [...createRequiredValidators()]),
+      color: this.fb.control(color, [...createRequiredValidators()]),
+      description: this.fb.control(data?.description || '', [...createRequiredValidators()]),
     });
   }
 

@@ -9,7 +9,7 @@ import { Location } from '@angular/common';
 import { translateFactory } from './core/factories/translate.factory';
 
 import { CredentialsGuard } from "./core/guards/credentials.guard";
-import { USER_TYPE_ADMIN } from "./core/constants/roles.constant";
+import { USER_TYPE_ADMIN, USER_TYPE_OPERATOR } from "./core/constants/roles.constant";
 
 const routes: Routes = [
     {
@@ -38,15 +38,15 @@ const routes: Routes = [
         // canLoad: [CredentialsGuard],
         // canDeactivate: [CredentialsGuard],
         // data: {
-        //   roleGuardData: {
-        //     requiredRoles: [USER_TYPE_OPERATOR, USER_TYPE_ADMIN],
-        //     fallbackRoute: '/sign-in',
-        //   },
-        //   credentialsGuardData: {
-        //     canDeactivate: {
-        //       inverse: false
+        //     roleGuardData: {
+        //         requiredRoles: [],
+        //         fallbackRoute: '/sign-in',
+        //     },
+        //     credentialsGuardData: {
+        //         canDeactivate: {
+        //             inverse: false
+        //         }
         //     }
-        //   }
         // }
     }
 ];

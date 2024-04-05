@@ -5,22 +5,26 @@ import { GenericWrapperComponent } from '../generic-wrapper/generic-wrapper.comp
 
 
 @Component({
-  selector: '[iconic-input-wrapper]',
-  templateUrl: './iconic-input-wrapper.component.html'
+    selector: '[iconic-input-wrapper]',
+    templateUrl: './iconic-input-wrapper.component.html'
 })
-export class IconicInputWrapperComponent extends GenericWrapperComponent<HTMLInputElement, InputRefDirective>{
+export class IconicInputWrapperComponent extends GenericWrapperComponent<HTMLInputElement, InputRefDirective> {
 
-  @Input()
-  public rightIcon: IconProp | undefined;
+    @Input()
+    public rightIcon: IconProp | undefined;
 
-  @Input()
-  public leftSvg: string | undefined;
+    @Input()
+    public leftSvg: string | undefined;
 
-  @Input() inputContainerClass: string;
+    @Input() inputContainerClass: string;
 
-  @ContentChild(InputRefDirective)
-  override set inputRef(ref: InputRefDirective) {
-    this._inputRef = ref;
-  }
+    @Input()
+    public isInvalid: boolean;
+
+
+    @ContentChild(InputRefDirective)
+    override set inputRef(ref: InputRefDirective) {
+        this._inputRef = ref;
+    }
 
 }
