@@ -129,11 +129,11 @@
                         </select>
                     </div>
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_observation.svg">
-                        <input inputRef type="text" placeholder="observation" formControlName="observation" />
+                        <input inputRef type="text" placeholder="Observation" formControlName="observation" />
                     </div>
                 </div>
             </div>
-            <div class="min-xl:px-[50px] grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20">
+            <div class="min-xl:px-[50px] grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20 mt-4">
                 <div class="gap-y-4 mb-5 min-xl:px-[50px]">
                     <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]"
                         [routerLink]="['../']">
@@ -217,7 +217,7 @@
                     </div>
                 </form>
             </div>
-            <div class="min-xl:px-[50px] grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20 mt-12">
+            <div class="min-xl:px-[50px] grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20 mt-10">
                 <div class="gap-y-4 mb-5 min-xl:px-[50px]">
                     <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]" matStepperPrevious>
                         {{ "button.back" | translate }}
@@ -226,7 +226,7 @@
                 <div class="gap-y-4 mb-5 min-xl:px-[50px]">
                     <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]"
                         [disabled]="!convoyForm.valid" (click)="updateConvoys()">
-                        {{ "update" | translate }}
+                        {{ "Update" | translate }}
                     </button>
                 </div>
             </div>

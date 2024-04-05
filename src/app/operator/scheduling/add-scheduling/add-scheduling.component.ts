@@ -538,7 +538,7 @@ export class AddSchedulingComponent implements OnInit, OnDestroy {
         this.convoyForm = this.fb.group({
             navigationType: this.fb.control(data?.navigationType,[Validators.required]),
             // ship: this.fb.control(data?.ship || ''),
-            ship: this.fb.control(data?.ship,[Validators.required]),
+            ship: this.fb.control(data?.ship || '',[Validators.required]),
             shipType: this.fb.control(data?.shipType || '',[Validators.required]),
             pavilion: this.fb.control(data?.pavilion || '',[Validators.required]),
             enginePower: this.fb.control(data?.enginePower || null,[Validators.required]),
@@ -572,7 +572,7 @@ export class AddSchedulingComponent implements OnInit, OnDestroy {
                 // convoyType: this.fb.control(data?.routingDetail?.convoyType || ''),
                 estimatedTimeArrival: this.fb.control(data?.routingDetail?.estimatedTimeArrival || '',[Validators.required]),
                 locationPort: this.fb.control(data?.routingDetail?.locationPort || '',[Validators.required]),
-                zone: this.fb.control(data?.routingDetail?.zone || null,[Validators.required]),
+                zone: this.fb.control(data?.routingDetail?.zone || '',[Validators.required]),
                 departurePort: this.fb.control(data?.routingDetail?.departurePort || '',[Validators.required]),
                 arrivalPort: this.fb.control(data?.routingDetail?.arrivalPort || '',[Validators.required]),
                 pilotCompany: this.fb.control(data?.routingDetail?.pilotCompany || '',[Validators.required]),

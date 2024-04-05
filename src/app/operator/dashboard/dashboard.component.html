@@ -9,10 +9,10 @@
     </div>
     <div class="flex flex-wrap gap-8">
         <div statistic-card-v2 dashSvg="assets/images/dashboard_routes.svg" class="flex-grow slide-in-bottom"
-            label="No. of routes" [numericValue]="dashboardData?.noOfPlanningRoutesCount" textColor="orange"
+            label="No. of Routes" [numericValue]="dashboardData?.noOfPlanningRoutesCount" textColor="orange"
             colorStyle="orange"></div>
         <div statistic-card-v2 dashSvg="assets/images/dashboard_tp.svg" class="flex-grow slide-in-bottom"
-            label="No. of touchpoints" [numericValue]="dashboardData?.noOfTouchPointsCount" textColor="#A32314"
+            label="No. of Touchpoints" [numericValue]="dashboardData?.noOfTouchPointsCount" textColor="#A32314"
             colorStyle="#A32314"></div>
         <div statistic-card-v2 dashSvg="assets/images/dashboard_sid.svg" class="flex-grow slide-in-bottom"
             label="No. of SID" [numericValue]="dashboardData?.noOfPlanningConvoySidsCount" textColor="#17A0B5"
@@ -39,12 +39,12 @@
         <div class="flex-1 flex-grow flex flex-col p-4 bg-white shadow-md">
             <ngx-charts-pie-chart [view]="view" [scheme]="colorScheme" [results]="sidsByStatus" [legend]="true"
                 [legendPosition]="legendPosition" [doughnut]="false"
-                [legendTitle]="'sidsByStatus'"></ngx-charts-pie-chart>
+                [legendTitle]="'Sids By Status'"></ngx-charts-pie-chart>
         </div>
         <div class="flex-1 flex-grow flex flex-col p-4 bg-white shadow-md">
             <ngx-charts-pie-chart [view]="view" [scheme]="colorScheme" [results]="timeBreakDown" [legend]="true"
                 [legendPosition]="legendPosition" [doughnut]="false"
-                [legendTitle]="'timeBreakDown'"></ngx-charts-pie-chart>
+                [legendTitle]="'Time Break Down'"></ngx-charts-pie-chart>
         </div>
     </div>
     <!-- </div> -->
