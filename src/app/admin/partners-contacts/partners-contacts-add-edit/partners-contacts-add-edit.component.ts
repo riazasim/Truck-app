@@ -6,6 +6,7 @@ import { PartnerContactModel } from 'src/app/core/models/partner-contact.model';
 import { PartnerModel } from 'src/app/core/models/partner.model';
 import { PartnerContactService } from 'src/app/core/services/partner-contact.service';
 import { PartnerService } from 'src/app/core/services/partner.service';
+import { createRequiredValidators } from 'src/app/shared/validators/generic-validators';
 
 @Component({
   selector: 'app-partners-contacts-add-edit',
@@ -60,11 +61,11 @@ export class PartnersContactsAddEditComponent implements OnInit {
   initForm(data: PartnerContactModel = <PartnerContactModel>{}): void {
     this.partnerContactForm = this.fb.group({
       id: this.fb.control(data?.id),
-      fullName: this.fb.control(data?.fullName || '', [Validators.required]),
-      email: this.fb.control(data?.email || '', [Validators.required]),
-      contactNumber: this.fb.control(data?.contactNumber || '', [Validators.required]),
-      address: this.fb.control(data?.address || '', [Validators.required]),
-      partnerId: this.fb.control(data?.partnerId || '', [Validators.required]),
+      fullName: this.fb.control(data?.fullName || '', [...createRequiredValidators()]),
+      email: this.fb.control(data?.email || '', [...createRequiredValidators()]),
+      contactNumber: this.fb.control(data?.contactNumber || '', [...createRequiredValidators()]),
+      address: this.fb.control(data?.address || '', [...createRequiredValidators()]),
+      partnerId: this.fb.control(data?.partnerId || '', [...createRequiredValidators()]),
     });
   }
 

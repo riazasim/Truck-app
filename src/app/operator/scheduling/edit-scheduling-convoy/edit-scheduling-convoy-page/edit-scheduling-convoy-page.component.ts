@@ -33,6 +33,7 @@ import * as moment from 'moment';
 import { extractPhoneNumber } from 'src/app/shared/validators/phone-numbers';
 import { PlanningModel, convoyModel } from 'src/app/core/models/planning.model';
 import { convertJsonToFormData } from 'src/app/shared/utils/api.functions';
+import { createRequiredValidators } from 'src/app/shared/validators/generic-validators';
 
 
 @Component({
@@ -151,33 +152,33 @@ export class EditSchedulingConvoyPageComponent {
 
     initConvoyForm(data?: convoyModel): void {
         this.convoyForm = this.fb.group({
-            navigationType: this.fb.control(data?.navigationType || '',[Validators.required]),
-            ship: this.fb.control(data?.ship || '',[Validators.required]),
-            shipType: this.fb.control(data?.shipType || '',[Validators.required]),
-            pavilion: this.fb.control(data?.pavilion || '',[Validators.required]),
-            enginePower: this.fb.control(data?.enginePower || null,[Validators.required]),
-            lengthOverall: this.fb.control(data?.lengthOverall || null,[Validators.required]),
-            width: this.fb.control(data?.width || null,[Validators.required]),
-            maxDraft: this.fb.control(data?.maxDraft || null,[Validators.required]),
-            maxQuantity: this.fb.control(data?.maxQuantity || null,[Validators.required]),
-            agent: this.fb.control(data?.agent || '',[Validators.required]),
-            maneuvering: this.fb.control(data?.maneuvering || '',[Validators.required]),
-            shipowner: this.fb.control(data?.shipowner || '',[Validators.required]),
-            purpose: this.fb.control(data?.purpose || '',[Validators.required]),
-            operator: this.fb.control(data?.operator || '',[Validators.required]),
-            trafficType: this.fb.control(data?.trafficType || '',[Validators.required]),
-            operatonType: this.fb.control(data?.operatonType || '',[Validators.required]),
-            cargo: this.fb.control(data?.cargo || '',[Validators.required]),
-            quantity: this.fb.control(data?.quantity || '',[Validators.required]),
-            unitNo: this.fb.control(data?.unitNo || '',[Validators.required]),
-            originPort: this.fb.control(data?.originPort || '',[Validators.required]),
-            destination: this.fb.control(data?.destination || '',[Validators.required]),
-            observation: this.fb.control(data?.observation || '',[Validators.required]),
-            additionalOperator: this.fb.control(data?.additionalOperator || '',[Validators.required]),
-            clientComments: this.fb.control(data?.clientComments || '',[Validators.required]),
-            operatorComments: this.fb.control(data?.operatorComments || '',[Validators.required]),
-            oldDocuments: this.fb.control(data?.oldDocuments || '',[Validators.required]),
-            documents: this.fb.control(data?.documents || [],[Validators.required]),
+            navigationType: this.fb.control(data?.navigationType || '',[...createRequiredValidators()]),
+            ship: this.fb.control(data?.ship || '',[...createRequiredValidators()]),
+            shipType: this.fb.control(data?.shipType || '',[...createRequiredValidators()]),
+            pavilion: this.fb.control(data?.pavilion || '',[...createRequiredValidators()]),
+            enginePower: this.fb.control(data?.enginePower || null,[...createRequiredValidators()]),
+            lengthOverall: this.fb.control(data?.lengthOverall || null,[...createRequiredValidators()]),
+            width: this.fb.control(data?.width || null,[...createRequiredValidators()]),
+            maxDraft: this.fb.control(data?.maxDraft || null,[...createRequiredValidators()]),
+            maxQuantity: this.fb.control(data?.maxQuantity || null,[...createRequiredValidators()]),
+            agent: this.fb.control(data?.agent || '',[...createRequiredValidators()]),
+            maneuvering: this.fb.control(data?.maneuvering || '',[...createRequiredValidators()]),
+            shipowner: this.fb.control(data?.shipowner || '',[...createRequiredValidators()]),
+            purpose: this.fb.control(data?.purpose || '',[...createRequiredValidators()]),
+            operator: this.fb.control(data?.operator || '',[...createRequiredValidators()]),
+            trafficType: this.fb.control(data?.trafficType || '',[...createRequiredValidators()]),
+            operatonType: this.fb.control(data?.operatonType || '',[...createRequiredValidators()]),
+            cargo: this.fb.control(data?.cargo || '',[...createRequiredValidators()]),
+            quantity: this.fb.control(data?.quantity || '',[...createRequiredValidators()]),
+            unitNo: this.fb.control(data?.unitNo || '',[...createRequiredValidators()]),
+            originPort: this.fb.control(data?.originPort || '',[...createRequiredValidators()]),
+            destination: this.fb.control(data?.destination || '',[...createRequiredValidators()]),
+            observation: this.fb.control(data?.observation || '',[...createRequiredValidators()]),
+            additionalOperator: this.fb.control(data?.additionalOperator || '',[...createRequiredValidators()]),
+            clientComments: this.fb.control(data?.clientComments || '',[...createRequiredValidators()]),
+            operatorComments: this.fb.control(data?.operatorComments || '',[...createRequiredValidators()]),
+            oldDocuments: this.fb.control(data?.oldDocuments || '',[...createRequiredValidators()]),
+            documents: this.fb.control(data?.documents || [],[...createRequiredValidators()]),
         })
     }
 

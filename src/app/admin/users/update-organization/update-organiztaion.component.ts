@@ -5,6 +5,7 @@ import { BehaviorSubject} from 'rxjs';
 import { animate, transition, trigger, style } from '@angular/animations';
 import { UserService } from 'src/app/core/services/user.service';
 import { UpdateOrganizationModel } from 'src/app/core/models/user.model';
+import { createRequiredValidators } from 'src/app/shared/validators/generic-validators';
 @Component({
   selector: 'app-updateOrganization',
   templateUrl: './update-organization.component.html',
@@ -37,8 +38,8 @@ export class UpdateOrganizationComponent {
      }
       initForm(data: UpdateOrganizationModel = <UpdateOrganizationModel>{}): void {
         this.updateOrganizationForm = this.fb.group({
-          imgLogo: this.fb.control(data?.imgLogo || '', [Validators.required]),
-          imgCover: this.fb.control(data?.imgCover || '', [Validators.required]),
+          imgLogo: this.fb.control(data?.imgLogo || '', [...createRequiredValidators()]),
+          imgCover: this.fb.control(data?.imgCover || '', [...createRequiredValidators()]),
         });
       }
 
