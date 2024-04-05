@@ -1,7 +1,7 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { ChangeDetectionStrategy, Component, OnInit, HostListener } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, HostListener} from '@angular/core';
 import { Color, LegendPosition, ScaleType } from '@swimlane/ngx-charts';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject} from 'rxjs';
 import { StatsService } from 'src/app/core/services/stats.service';
 
 
@@ -100,7 +100,7 @@ export class DashboardComponent implements OnInit {
     }
 
     constructor(private readonly bpo: BreakpointObserver,
-        private readonly statService: StatsService
+        private readonly statService: StatsService,
     ) {
     }
 

@@ -1,5 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MapInfoWindow, MapMarker } from '@angular/google-maps';
+import { BehaviorSubject } from 'rxjs';
+import { MapSerachService } from 'src/app/core/services/map-search.service';
 
 declare var google: any;
 @Component({
@@ -12,29 +14,71 @@ export class MapComponent implements OnInit {
     markerPositions: google.maps.LatLngLiteral[] = [];
     display: any;
     searchQuery: string = '';
-
+    isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+    dataSource: any[] = [];
+  
     center: google.maps.LatLngLiteral = {
-        lat: 44.136797039769284,
-        lng: 28.646488129424217,
+      lat: 44.136797039769284,
+      lng: 28.646488129424217,
     };
     zoom = 13;
     imageUrl = 'https://angular.io/assets/images/logos/angular/angular.svg';
     searchCard: google.maps.LatLngBoundsLiteral = {
-        east: 10,
-        north: 10,
-        south: -10,
-        west: -10,
+      east: 10,
+      north: 10,
+      south: -10,
+      west: -10,
     };
-
-    constructor() {}
+  
+    constructor(
+      private readonly mapSearchService: MapSerachService,
+      private readonly cd: ChangeDetectorRef
+    ) {}
+  
     ngOnInit(): void {
-        const map = new google.maps.Map(document.getElementById('map'), {
-           center: { lat: 44.138896, lng: 28.821234 },
-           zoom: 12
-         });
-         const overlayDiv = document.getElementById('overlay');
-         map.controls[google.maps.ControlPosition.TOP_LEFT].push(overlayDiv);
-     }
+      const map = new google.maps.Map(document.getElementById('map'), {
+        center: { lat: 44.138896, lng: 28.821234 },
+        zoom: 12
+      });
+  
+      // Call the function to retrieve map data
+      this.retrieveMapData(map);
+    }
+  
+    retrieveMapData(map: any): void {
+      this.isLoading$.next(true);
+      let data = {
+        "start": 0,
+        "length": 0,
+        "filters": ["", "", "", "", "", "", "", ""],
+        "order": [{ "dir": "DESC", "column": 0 }]
+      };
+  
+      this.mapSearchService.getMicroPlanningConvoyes(data).subscribe({
+        next: response => {
+          this.dataSource = response.items;
+  
+          this.markerPositions = this.dataSource.map(item => {
+            const coordinates = item.attributes.sidCoordinates.split(',');
+            return {
+              lat: parseFloat(coordinates[0]),
+              lng: parseFloat(coordinates[1])
+            };
+          });
+  
+          this.markerPositions.forEach(position => {
+            new google.maps.Marker({
+              position,
+              map,
+              title: 'Marker Title'
+            });
+          });
+  
+          this.cd.detectChanges();
+          this.isLoading$.next(false);
+        }
+      });
+    }
         
         // const overlayDiv = document.getElementById('overlay');
     // map.controls[google.maps.ControlPosition.TOP_LEFT].push(overlayDiv);
