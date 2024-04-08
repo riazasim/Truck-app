@@ -4,7 +4,7 @@
 </div>
 
 
-<!-- <section>
+<section>
     <header
         class="flex min-md:flex-row flex-col justify-between pb-2"
     >
@@ -12,24 +12,18 @@
     </header>
 </section>
 <google-map
-    height="470px"
+    height="750px"
     width="100%"
     [center]="center"
     [zoom]="zoom"
-    (mapClick)="addMarker($event)"
-    (mapMousemove)="move($event)"
 >
+<!-- <app-search id="search"></app-search> -->
     <map-marker
         #marker="mapMarker"
         *ngFor="let markerPosition of markerPositions"
         [position]="markerPosition"
-        (mapClick)="openInfoWindow(marker)"
     ></map-marker>
-    <map-info-window *ngFor="let markerPosition of markerPositions">
-        {{ markerPosition.lat }}
-        {{ markerPosition.lng }}
-    </map-info-window>
-</google-map> -->
+</google-map> 
 
 <!-- <div>Latitude: {{ display?.lat }}</div>
 <div>Longitude: {{ display?.lng }}</div> -->
