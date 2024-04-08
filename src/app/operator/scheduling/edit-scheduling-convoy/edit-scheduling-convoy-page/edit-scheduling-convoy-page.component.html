@@ -9,7 +9,7 @@
                         <input inputRef type="text" placeholder="Navigation type*" formControlName="navigationType" />
                     </div>
                     <div iconic-select-wrapper leftIcon="grid-2" [rightIcon]="['fas', 'caret-down']">
-                        <select inputRef name="ship" id="ship" formControlName="ship">
+                        <select spAccessInputRef name="ship" id="ship" formControlName="ship">
                             <option disabled selected>Ship</option>
                             <option *ngFor="let ship of ship" [value]="ship.id">
                                 {{ ship.name }}
@@ -18,7 +18,7 @@
                     </div>
                     <div iconic-select-wrapper leftSvg="assets/images/scheduling_ship_type.svg"
                         [rightIcon]="['fas', 'caret-down']">
-                        <select inputRef name="shipType" id="shipType" formControlName="shipType">
+                        <select spAccessInputRef name="shipType" id="shipType" formControlName="shipType">
                             <option disabled selected>Ship type*</option>
                             <option *ngFor="let shipType of shipType" [value]="shipType.id">
                                 {{ shipType.name }}
@@ -46,29 +46,14 @@
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_ship_owner.svg">
                         <input inputRef type="text" placeholder="Ship owner" formControlName="shipowner" />
                     </div>
-                    <!-- <div iconic-select-wrapper leftIcon="user" [rightIcon]="['fas', 'caret-down']">
-                        <select inputRef name="agent" id="agent" formControlName="agent">
-                            <option disabled selected>Agent</option>
-                            <option *ngFor="let agent of agent" [value]="agent.id">
-                                {{ agent.name }}
-                            </option>
-                        </select>
-                    </div>
-                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_manevra.svg">
-                        <input inputRef type="text" placeholder="maneuvering" formControlName="maneuvering" />
-                    </div> -->
                 </div>
                 <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
-                    <!-- <p>&nbsp;</p> -->
-                    <!-- <div iconic-input-wrapper leftSvg="assets/images/scheduling_ship_owner.svg">
-                        <input inputRef type="text" placeholder="Ship owner" formControlName="shipowner" />
-                    </div> -->
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_purpose.svg">
                         <input inputRef type="text" placeholder="Purpose" formControlName="purpose" />
                     </div>
                     <div iconic-select-wrapper leftSvg="assets/images/scheduling_operator.svg"
                         [rightIcon]="['fas', 'caret-down']">
-                        <select inputRef name="operator" id="operator" formControlName="operator">
+                        <select spAccessInputRef name="operator" id="operator" formControlName="operator">
                             <option disabled selected>Operator*</option>
                             <option *ngFor="let operator of operator" [value]="operator.id">
                                 {{ operator.name }}
@@ -77,7 +62,7 @@
                     </div>
                     <div iconic-select-wrapper leftSvg="assets/images/scheduling_trafic_type.svg"
                         [rightIcon]="['fas', 'caret-down']">
-                        <select inputRef name="trafficType" id="trafficType" formControlName="trafficType">
+                        <select spAccessInputRef name="trafficType" id="trafficType" formControlName="trafficType">
                             <option disabled selected>Traffic type*</option>
                             <option *ngFor="let trafficType of trafficType" [value]="trafficType.id">
                                 {{ trafficType.name }}
@@ -86,7 +71,7 @@
                     </div>
                     <div iconic-select-wrapper leftSvg="assets/images/scheduling_operation_type.svg"
                         [rightIcon]="['fas', 'caret-down']">
-                        <select inputRef name="operationType" id="operationType" formControlName="operatonType">
+                        <select spAccessInputRef name="operationType" id="operationType" formControlName="operatonType">
                             <option disabled selected>Operaton type</option>
                             <option *ngFor="let operationType of operationType" [value]="operationType.id">
                                 {{ operationType.name }}
@@ -95,7 +80,7 @@
                     </div>
                     <div iconic-select-wrapper leftSvg="assets/images/scheduling_cargo.svg"
                         [rightIcon]="['fas', 'caret-down']">
-                        <select inputRef name="cargo" id="cargo" formControlName="cargo">
+                        <select spAccessInputRef name="cargo" id="cargo" formControlName="cargo">
                             <option disabled selected>Cargo*</option>
                             <option *ngFor="let cargo of cargo" [value]="cargo.id">
                                 {{ cargo.name }}
@@ -110,7 +95,7 @@
                     </div>
                     <div iconic-select-wrapper leftSvg="assets/images/scheduling_port.svg"
                         [rightIcon]="['fas', 'caret-down']">
-                        <select inputRef name="portOfOrigin" id="portOfOrigin" formControlName="originPort">
+                        <select spAccessInputRef name="portOfOrigin" id="portOfOrigin" formControlName="originPort">
                             <option disabled selected>
                                 Port of origin
                             </option>
@@ -121,7 +106,7 @@
                     </div>
                     <div iconic-select-wrapper leftSvg="assets/images/scheduling_destination.svg"
                         [rightIcon]="['fas', 'caret-down']">
-                        <select inputRef name="destination" id="destination" formControlName="destination">
+                        <select spAccessInputRef name="destination" id="destination" formControlName="destination">
                             <option disabled selected>Destination</option>
                             <option *ngFor="let destination of destination" [value]="destination.id">
                                 {{ destination.name }}
@@ -230,16 +215,6 @@
                     </button>
                 </div>
             </div>
-            <!-- <div class="flex justify-center min-md:gap-20 gap-3 py-3">
-                <button type="button" class="btn btn-primary min-md:min-w-[436px] min-h-[50px] !text-[18px]"
-                    matStepperPrevious>
-                    {{ "button.back" | translate }}
-                </button>
-                <button type="button" class="btn btn-primary min-md:min-w-[436px] min-h-[50px] !text-[18px]"
-                (click)="updateConvoys()">
-                    {{ "update" | translate }}
-                </button>
-            </div> -->
         </div>
     </mat-step>
 </mat-stepper>
