@@ -2894,7 +2894,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"start\": 0,\r\n    \"length\": 0,\r\n    \"filters\": [\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\"],// \r\n    \"order\": [{\"dir\": \"DESC\", \"column\": 0}]\r\n}",
+							"raw": "{\r\n    \"start\": 0,\r\n    \"length\": 0,\r\n    \"filters\": [\"\",\"\",[\"Port Queue\", \"Exit\", \"Berth\"],\"2024-03-02\",\"1\",\"2\"],// portId, orgnaizationId, sidStatus, estimatedTimeArrival, departurePort, arrivalPort\r\n    \"order\": [{\"dir\": \"DESC\", \"column\": 0}]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

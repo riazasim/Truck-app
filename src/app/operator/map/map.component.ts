@@ -54,17 +54,29 @@ export class MapComponent implements OnInit {
         "order": [{ "dir": "DESC", "column": 0 }]
       };
   
+      // debugger
       this.mapSearchService.getMicroPlanningConvoyes(data).subscribe({
         next: response => {
           this.dataSource = response.items;
+          console.log('map',this.dataSource)
+
+          // this.markerPositions = this.dataSource
+  // .filter(item => item.attributes && item.attributes.sidCoordinates)
+  // .map(item => {
+  //   const coordinates = item.attributes.sidCoordinates.split(',');
+  //   return {
+  //     lat: parseFloat(coordinates[0]),
+  //     lng: parseFloat(coordinates[1])
+  //   };
+  // });
   
-          this.markerPositions = this.dataSource.map(item => {
-            const coordinates = item.attributes.sidCoordinates.split(',');
-            return {
-              lat: parseFloat(coordinates[0]),
-              lng: parseFloat(coordinates[1])
-            };
-          });
+          // this.markerPositions = this.dataSource.map(item => {
+          //   const coordinates = item.attributes.sidCoordinates.split(',');
+          //   return {
+          //     lat: parseFloat(coordinates[0]),
+          //     lng: parseFloat(coordinates[1])
+          //   };
+          // });
   
           this.markerPositions.forEach(position => {
             new google.maps.Marker({
