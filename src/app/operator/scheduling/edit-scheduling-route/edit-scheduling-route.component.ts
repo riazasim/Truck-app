@@ -1,12 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { PlanningService } from 'src/app/core/services/planning.service';
 import { StatusListService } from 'src/app/core/services/status-list.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { handleError } from 'src/app/shared/utils/error-handling.function';
-import { getFormatHourSlot } from '../scheduling-box.helper';
 import { PlanningDetailModel } from 'src/app/core/models/planning.model';
 import { createRequiredValidators } from 'src/app/shared/validators/generic-validators';
 
@@ -20,8 +19,7 @@ export class EditSchedulingRouteComponent implements OnInit {
     planningForm: FormGroup;
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     id: number;
-    filterDate: Date = new Date();
-
+    dateModal: Date;
     customer = [
         { id: 1, name: 'customer1' },
         { id: 2, name: 'customer2' },
@@ -49,6 +47,10 @@ export class EditSchedulingRouteComponent implements OnInit {
         this.id = this.route.snapshot.params['id'];
         this.planningService.get(this.id).subscribe(response => {
             console.log(response)
+            const dateTimeVal = response.estimatedTimeArrival.split(" ");
+            this.dateModal = new Date(dateTimeVal[0]);
+            this.dateVal = dateTimeVal[0];
+            this.timeVal = dateTimeVal[1];
             this.initForm(response);
             this.isLoading$.next(false);
         });

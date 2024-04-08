@@ -77,19 +77,19 @@ export class UsersAddEditComponent {
 
         this.userForm = this.fb.group({
             user: this.fb.group({
-                email: this.fb.control(data?.user?.email || '', { nonNullable: false }),
-                userRole: this.fb.control(data?.user?.userRole || '', { nonNullable: false }),
-                status: this.fb.control(data?.user?.status || true),
+                email: this.fb.control(data?.user?.email || '', [...createRequiredValidators()]),
+                userRole: this.fb.control(data?.user?.userRole || '', [...createRequiredValidators()]),
+                status: this.fb.control(data?.user?.status || true , [...createRequiredValidators()]),
             }),
             userSetting: this.fb.group({
-                timezone: this.fb.control(data?.userSetting?.timezone || '', { nonNullable: false }),
-                firstName: this.fb.control(data?.userSetting?.firstName || '', { nonNullable: false }),
-                lastName: this.fb.control(data?.userSetting?.lastName || '', { nonNullable: false }),
-                language: this.fb.control(data?.userSetting?.language || '', { nonNullable: false }),
-                phone: this.fb.control(data?.userSetting?.phone || '', [...createRequiredValidators() , Validators.pattern("[- +()0-9]+") , ...createMinLengthValidator(7) , ...createMaxLengthValidator(15)]),
+                timezone: this.fb.control(data?.userSetting?.timezone || '', [...createRequiredValidators()]),
+                firstName: this.fb.control(data?.userSetting?.firstName || '', [...createRequiredValidators()]),
+                lastName: this.fb.control(data?.userSetting?.lastName || '', [...createRequiredValidators()]),
+                language: this.fb.control(data?.userSetting?.language || '', [...createRequiredValidators()]),
+                phone: this.fb.control(data?.userSetting?.phone || '', [...createRequiredValidators() , Validators.pattern("[- +()0-9]+") , ...createMinLengthValidator(7) , ...createMaxLengthValidator(17)]),
                 phoneRegionCode: this.fb.control(data?.userSetting?.phoneRegionCode || '', [...createRequiredValidators(), ...createMaxLengthValidator(4) , Validators.pattern("[- +()0-9]+")]),
-                identityDocumentType: this.fb.control(data?.userSetting?.identityDocumentType || '', { nonNullable: false }),
-                idNumber: this.fb.control(data?.userSetting?.idNumber || '', { nonNullable: false })
+                // identityDocumentType: this.fb.control(data?.userSetting?.identityDocumentType || '', [...createRequiredValidators()]),
+                // idNumber: this.fb.control(data?.userSetting?.idNumber || '', [...createRequiredValidators()])
             })
         });
     }

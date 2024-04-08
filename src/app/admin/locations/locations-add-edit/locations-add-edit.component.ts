@@ -6,7 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 import { LocationModel } from 'src/app/core/models/location.model';
 import { LocationService } from 'src/app/core/services/location.service';
 import { handleError } from 'src/app/shared/utils/error-handling.function';
-import { createMaxLengthValidator, createMinLengthValidator, createRequiredValidators } from 'src/app/shared/validators/generic-validators';
+import { createMaxLengthValidator, createMinLengthValidator, createPatternValidators, createRequiredValidators } from 'src/app/shared/validators/generic-validators';
 
 @Component({
     selector: 'app-locations-add-edit',
@@ -17,6 +17,7 @@ export class LocationsAddEditComponent implements OnInit {
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     location$: BehaviorSubject<LocationModel | null> = new BehaviorSubject<LocationModel | null>(null);
     id: number;
+    phoneRegionCode : string;
     constructor(private fb: UntypedFormBuilder,
         private locationService: LocationService,
         private router: Router,
@@ -27,6 +28,12 @@ export class LocationsAddEditComponent implements OnInit {
     ngOnInit(): void {
         this.subscribeForQueryParams();
     }
+
+    // onPhoneInputChange(ev : any){
+    //     const temp = String(String(String(ev.target.value).split(" " , 1)).split("(",1));
+    //     this.phoneRegionCode = String(temp.slice(0,4))
+    //     console.log(this.phoneRegionCode)
+    // }
 
     subscribeForQueryParams(): void {
         this.id = this.route.snapshot.params['id'];
@@ -64,8 +71,8 @@ export class LocationsAddEditComponent implements OnInit {
             addrTimezone: this.fb.control(data?.addrTimezone || '', [...createRequiredValidators()]),
             contactFirstName: this.fb.control(data?.contactFirstName || '', [...createRequiredValidators()]),
             contactLastName: this.fb.control(data?.contactLastName || '', [...createRequiredValidators()]),
-            contactPhone: this.fb.control(data?.contactPhone || '', [...createRequiredValidators() , Validators.pattern("[- +()0-9]+") , ...createMinLengthValidator(7) , ...createMaxLengthValidator(15)]),
-            contactPhoneRegionCode: this.fb.control(data?.contactPhoneRegionCode || '', [...createRequiredValidators(), ...createMaxLengthValidator(4) , Validators.pattern("[- +()0-9]+")]),
+            contactPhone: this.fb.control(data?.contactPhone || '', [...createRequiredValidators() , ...createPatternValidators(RegExp("[-+()0-9 ]")) , ...createMinLengthValidator(7) , ...createMaxLengthValidator(17)]),
+            contactPhoneRegionCode: this.fb.control(data?.contactPhoneRegionCode || '', [...createRequiredValidators(), ...createMaxLengthValidator(4) , ...createPatternValidators(RegExp("[-+0-9 ]"))]),
             contactEmail: this.fb.control(data?.contactEmail || '', [...createRequiredValidators(), Validators.email]),
             comments: this.fb.control(data?.comments || '', []),
             imgPreview: this.fb.control(data?.imgPreview, []),
