@@ -8,9 +8,9 @@ declare var google: any;
     selector: 'app-map',
     templateUrl: 'map.component.html',
     styleUrl:'./map.component.scss'
-})
-export class MapComponent implements OnInit {
-    @ViewChild(MapInfoWindow) infoWindow: MapInfoWindow | undefined;
+  })
+    export class MapComponent implements OnInit {
+      @ViewChild(MapInfoWindow) infoWindow: MapInfoWindow | undefined;
     markerPositions: google.maps.LatLngLiteral[] = [];
     display: any;
     searchQuery: string = '';
@@ -18,10 +18,10 @@ export class MapComponent implements OnInit {
     dataSource: any[] = [];
   
     center: google.maps.LatLngLiteral = {
-      lat: 44.136797039769284,
-      lng: 28.646488129424217,
+      lat: 44.138896,
+      lng: 28.821234,
     };
-    zoom = 13;
+    zoom = 12;
     imageUrl = 'https://angular.io/assets/images/logos/angular/angular.svg';
     searchCard: google.maps.LatLngBoundsLiteral = {
       east: 10,
@@ -29,16 +29,19 @@ export class MapComponent implements OnInit {
       south: -10,
       west: -10,
     };
+    
   
     constructor(
       private readonly mapSearchService: MapSerachService,
       private readonly cd: ChangeDetectorRef
     ) {}
-  
+
+
     ngOnInit(): void {
       const map = new google.maps.Map(document.getElementById('map'), {
         center: { lat: 44.138896, lng: 28.821234 },
-        zoom: 12
+        zoom: 12,
+        // mapId:,
       });
   
       // Call the function to retrieve map data
@@ -53,34 +56,26 @@ export class MapComponent implements OnInit {
         "filters": ["", "", "", "", "", "", "", ""],
         "order": [{ "dir": "DESC", "column": 0 }]
       };
-  
-      // debugger
       this.mapSearchService.getMicroPlanningConvoyes(data).subscribe({
         next: response => {
           this.dataSource = response.items;
           console.log('map',this.dataSource)
-
-          // this.markerPositions = this.dataSource
-  // .filter(item => item.attributes && item.attributes.sidCoordinates)
-  // .map(item => {
-  //   const coordinates = item.attributes.sidCoordinates.split(',');
-  //   return {
-  //     lat: parseFloat(coordinates[0]),
-  //     lng: parseFloat(coordinates[1])
-  //   };
-  // });
-  
-          // this.markerPositions = this.dataSource.map(item => {
-          //   const coordinates = item.attributes.sidCoordinates.split(',');
-          //   return {
-          //     lat: parseFloat(coordinates[0]),
-          //     lng: parseFloat(coordinates[1])
-          //   };
-          // });
+          this.markerPositions = []
+          this.dataSource.forEach(item => {
+            if (item && item.sidCoordinates) {
+              const coordinates = item.sidCoordinates.split(',');
+              const markerPosition = {
+                lat: parseFloat(coordinates[0]),
+                lng: parseFloat(coordinates[1])
+              };
+              this.markerPositions.push(markerPosition);
+            }
+          });
   
           this.markerPositions.forEach(position => {
-            new google.maps.Marker({
-              position,
+            
+           new google.maps.Marker({
+            position: position,
               map,
               title: 'Marker Title'
             });
