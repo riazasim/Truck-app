@@ -101,7 +101,7 @@
                 </div>
                 <div class="gap-y-4 mb-5 min-xl:px-[50px]">
                     <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]"
-                        [disabled]="!schedulingForm.valid" (click)="next(stepOne$, schedulingForm , 1)">
+                        [disabled]="schedulingForm.invalid" (click)="next(1)">
                         {{ "button.next" | translate }}
                     </button>
                 </div>
@@ -235,7 +235,7 @@
                 </div>
                 <div class="gap-y-4 mb-5 min-xl:px-[50px]">
                     <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]"
-                        (click)="next(stepTwo$, convoyForm , 2)">
+                        (click)="next(2)">
                         {{ "button.next" | translate }}
                     </button>
                 </div>
@@ -319,7 +319,7 @@
                 </div>
                 <div class="gap-y-4 mb-5 min-xl:px-[50px]">
                     <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]"
-                        (click)="next(stepThree$, convoyForm , 3)">
+                        (click)="next(3)">
                         {{ "button.next" | translate }}
                     </button>
                 </div>

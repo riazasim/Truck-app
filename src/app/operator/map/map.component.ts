@@ -7,87 +7,84 @@ declare var google: any;
 @Component({
     selector: 'app-map',
     templateUrl: 'map.component.html',
-    styleUrl:'./map.component.scss'
-  })
-    export class MapComponent implements OnInit {
-      @ViewChild(MapInfoWindow) infoWindow: MapInfoWindow | undefined;
+    styleUrl: './map.component.scss'
+})
+export class MapComponent implements OnInit {
+    @ViewChild(MapInfoWindow) infoWindow: MapInfoWindow | undefined;
     markerPositions: google.maps.LatLngLiteral[] = [];
     display: any;
     searchQuery: string = '';
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     dataSource: any[] = [];
-  
+
     center: google.maps.LatLngLiteral = {
-      lat: 44.138896,
-      lng: 28.821234,
+        lat: 44.138896,
+        lng: 28.821234,
     };
     zoom = 12;
     imageUrl = 'https://angular.io/assets/images/logos/angular/angular.svg';
     searchCard: google.maps.LatLngBoundsLiteral = {
-      east: 10,
-      north: 10,
-      south: -10,
-      west: -10,
+        east: 10,
+        north: 10,
+        south: -10,
+        west: -10,
     };
-    
-  
+
+
     constructor(
-      private readonly mapSearchService: MapSerachService,
-      private readonly cd: ChangeDetectorRef
-    ) {}
+        private readonly mapSearchService: MapSerachService,
+        private readonly cd: ChangeDetectorRef
+    ) { }
 
 
     ngOnInit(): void {
-      const map = new google.maps.Map(document.getElementById('map'), {
-        center: { lat: 44.138896, lng: 28.821234 },
-        zoom: 12,
-        // mapId:,
-      });
-  
-      // Call the function to retrieve map data
-      this.retrieveMapData(map);
+        const map = new google.maps.Map(document.getElementById('map'), {
+            center: { lat: 44.138896, lng: 28.821234 },
+            zoom: 12,
+            // mapId:,
+        });
+        // Call the function to retrieve map data
+        this.retrieveMapData(map);
     }
-  
+
     retrieveMapData(map: any): void {
-      this.isLoading$.next(true);
-      let data = {
-        "start": 0,
-        "length": 0,
-        "filters": ["", "", "", "", "", "", "", ""],
-        "order": [{ "dir": "DESC", "column": 0 }]
-      };
-      this.mapSearchService.getMicroPlanningConvoyes(data).subscribe({
-        next: response => {
-          this.dataSource = response.items;
-          console.log('map',this.dataSource)
-          this.markerPositions = []
-          this.dataSource.forEach(item => {
-            if (item && item.sidCoordinates) {
-              const coordinates = item.sidCoordinates.split(',');
-              const markerPosition = {
-                lat: parseFloat(coordinates[0]),
-                lng: parseFloat(coordinates[1])
-              };
-              this.markerPositions.push(markerPosition);
+        this.isLoading$.next(true);
+        let data = {
+            "start": 0,
+            "length": 0,
+            "filters": ["", "", "", "", "", "", "", ""],
+            "order": [{ "dir": "DESC", "column": 0 }]
+        };
+        this.mapSearchService.getMicroPlanningConvoyes(data).subscribe({
+            next: response => {
+                this.dataSource = response.items;
+                console.log('map', this.dataSource)
+                this.markerPositions = []
+                this.dataSource.forEach(item => {
+                    if (item && item.sidCoordinates !== '') {
+                        const coordinates = item.sidCoordinates.split(',');
+                        const markerPosition = {
+                            lat: parseFloat(coordinates[0]),
+                            lng: parseFloat(coordinates[1])
+                        };
+                        console.log('markedPosition:', markerPosition)
+                        this.markerPositions.push(markerPosition);
+                    }
+                });
+                this.markerPositions.forEach(position => {
+                    new google.maps.Marker({
+                        position: position,
+                        map,
+                        title: 'Marker Title'
+                    });
+                });
+                this.cd.detectChanges();
+                this.isLoading$.next(false);
             }
-          });
-  
-          this.markerPositions.forEach(position => {
-            
-           new google.maps.Marker({
-            position: position,
-              map,
-              title: 'Marker Title'
-            });
-          });
-  
-          this.cd.detectChanges();
-          this.isLoading$.next(false);
-        }
-      });
+        });
     }
-        
-        // const overlayDiv = document.getElementById('overlay');
+
+    // const overlayDiv = document.getElementById('overlay');
     // map.controls[google.maps.ControlPosition.TOP_LEFT].push(overlayDiv);
     // }
 
@@ -109,7 +106,7 @@ declare var google: any;
     //     if (event.latLng != null) this.display = event.latLng.toJSON();
     // }
 
-     // Method to handle user's search input
+    // Method to handle user's search input
     //  searchLocation() {
     //     const geocoder = new google.maps.Geocoder();
     //     geocoder.geocode({ address: this.searchQuery }, (results, status) => {
@@ -126,7 +123,7 @@ declare var google: any;
     //     });
     // }
 
-    
+
 
     // Method to open info window when marker is clicked
     // openInfoWindow(marker: MapMarker) {
@@ -138,4 +135,4 @@ declare var google: any;
     //     if (event.latLng != null) this.display = event.latLng.toJSON();
     // }
 }
-    
+
