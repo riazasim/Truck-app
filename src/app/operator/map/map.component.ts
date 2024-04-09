@@ -83,7 +83,6 @@ export class MapComponent implements OnInit {
         // const d2 = new google.maps.LatLng(parseFloat('37.4239163'), parseFloat('-122.0947209'));
         // this.markerPositions.push(d2);
         this.markerPositions.forEach(position => {
-          debugger;
           const marker = new google.maps.Marker({
             map: this.map,
             position: position,
