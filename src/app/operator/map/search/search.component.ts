@@ -8,6 +8,7 @@ import { ChangeDetectorRef, Component } from '@angular/core';
     styleUrl: './search.component.scss'
 })
 export class SearchComponent {
+    // @Input() searchData: any[] = [];
     displayedColumns = ['name'];
     isActive: number = 1;
     // companies: CompanyModel[] = [];
