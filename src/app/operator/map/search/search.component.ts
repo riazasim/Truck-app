@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 // import { CompanyModel } from 'src/app/core/models/company.model';
 // import { CompanyService } from 'src/app/core/services/company.service';
 
@@ -8,19 +9,24 @@ import { ChangeDetectorRef, Component } from '@angular/core';
     styleUrl: './search.component.scss'
 })
 export class SearchComponent {
+    isLoading$ : BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true)
     displayedColumns = ['name'];
     isActive: number = 1;
-    // companies: CompanyModel[] = [];
+    dateModal: Date = new Date();
+    dateVal: string;
+    companies: any[] = [];
 
     constructor(
         // private readonly companyService: CompanyService,
         private readonly cd: ChangeDetectorRef) {
             this.retrieveCompanies();
-        } 
+        }
     onImgClick(number: number) {
         this.isActive = number
     }
-
+    OnDateChange(value: any) {
+        this.dateVal = `${value._i.year}-${value._i.month}-${value._i.date}`
+    }
     retrieveCompanies(): void {
 
         let data={

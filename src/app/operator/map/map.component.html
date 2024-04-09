@@ -1,29 +1,11 @@
 <div class="relative">
-    <div id="map" style="height: 750px; width: 100%;"></div>
+    <google-map height="750px" width="100%" [center]="center" [zoom]="zoom">
+        <!-- <app-search id="search"></app-search> -->
+        <map-marker #marker="mapMarker" *ngFor="let markerPosition of markerPositions"
+            [position]="markerPosition"></map-marker>
+    </google-map>
     <app-search id="search"></app-search>
 </div>
-
-
-<section>
-    <header
-        class="flex min-md:flex-row flex-col justify-between pb-2"
-    >
-        <h3 class="heading-3 font-bold">Map</h3>
-    </header>
-</section>
-<google-map
-    height="750px"
-    width="100%"
-    [center]="center"
-    [zoom]="zoom"
->
-<!-- <app-search id="search"></app-search> -->
-    <map-marker
-        #marker="mapMarker"
-        *ngFor="let markerPosition of markerPositions"
-        [position]="markerPosition"
-    ></map-marker>
-</google-map> 
 
 <!-- <div>Latitude: {{ display?.lat }}</div>
 <div>Longitude: {{ display?.lng }}</div> -->

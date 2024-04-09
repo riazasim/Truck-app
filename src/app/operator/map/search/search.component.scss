@@ -22,8 +22,9 @@
         background-color: #FFFFFF;
         display: flex;
         flex-direction: column;
+
         // gap: 2px;
-        .top{
+        .top {
             flex-basis: 100px;
             padding: 4px;
             display: flex;
@@ -32,10 +33,12 @@
             overflow: auto;
             scrollbar-width: none;
         }
-        .bottom{
+
+        .bottom {
             display: flex;
             justify-content: space-evenly;
             flex-basis: 27px;
+
             div .vertical {
                 border-left: 1px solid #CCCCCC;
                 height: 24px;
@@ -43,21 +46,25 @@
         }
     }
 }
-::ng-deep .input-container{
+
+::ng-deep .input-container {
     min-height: 0px !important;
 }
+
 ::ng-deep .mat-mdc-form-field-flex {
     width: 198px !important;
     align-items: center !important;
 }
-::ng-deep .mdc-text-field{
+
+::ng-deep .mdc-text-field {
     padding: 0px !important;
     overflow: visible !important;
 }
+
 // ::ng-deep .errors-container{
 //     height: 0px !important;
 // }
-::ng-deep.iconic-layout-wrapper > .input-container {
+::ng-deep.iconic-layout-wrapper>.input-container {
     background-color: white;
     position: relative;
     display: flex;
@@ -67,14 +74,34 @@
     padding: 0.1rem;
     min-height: var(--control-height, 50px);
 }
-.vl{
-        border-left: 2px solid #CCCCCC;
-        height: 27px;
+
+.vl {
+    border-left: 2px solid #CCCCCC;
+    height: 27px;
 }
-[type='text']:focus, input:where(:not([type])):focus, [type='email']:focus, [type='url']:focus, [type='password']:focus, [type='number']:focus, [type='date']:focus, [type='datetime-local']:focus, [type='month']:focus, [type='search']:focus, [type='tel']:focus, [type='time']:focus, [type='week']:focus, [multiple]:focus, textarea:focus, select:focus {
+
+[type='text']:focus,
+input:where(:not([type])):focus,
+[type='email']:focus,
+[type='url']:focus,
+[type='password']:focus,
+[type='number']:focus,
+[type='date']:focus,
+[type='datetime-local']:focus,
+[type='month']:focus,
+[type='search']:focus,
+[type='tel']:focus,
+[type='time']:focus,
+[type='week']:focus,
+[multiple]:focus,
+textarea:focus,
+select:focus {
     outline: 2px solid transparent;
     outline-offset: 2px;
-    --ring-inset: var(--empty, /*!*/ /*!*/);
+    --ring-inset: var(--empty,
+            /*!*/
+            /*!*/
+        );
     --ring-offset-width: 0px;
     --ring-offset-color: 0;
     --ring-color: #25ebab;
@@ -83,6 +110,7 @@
     box-shadow: var(--ring-offset-shadow), var(--ring-shadow), var(--shadow);
     border-color: 0;
 }
+
 ::ng-deep.mat-mdc-form-field-bottom-align::before {
     content: white !important;
     display: block !important;
@@ -98,15 +126,20 @@ table {
 .result-container {
     // width: 25%;
     width: 300px;
-    max-height: 300px;
+    height: 300px;
     overflow: auto;
     border-radius: 12px;
+    background-color: #FFFFFF;
     scrollbar-width: none;
-  }
- .mat-mdc-table thead,.mat-mdc-header-row,.mat-mdc-header-cell {
+}
+
+.mat-mdc-table thead,
+.mat-mdc-header-row,
+.mat-mdc-header-cell {
     background: #1B9FE8;
 }
-  .mat-mdc-header-cell {
+
+.mat-mdc-header-cell {
     border-bottom-color: var(--mat-table-row-item-outline-color, rgba(0, 0, 0, 0.12));
     border-bottom-width: var(--mat-table-row-item-outline-width, 1px);
     border-bottom-style: solid;
@@ -115,12 +148,13 @@ table {
     line-height: inherit;
     color: white;
 }
- .mat-mdc-row{
+
+.mat-mdc-row {
     background: white;
 }
 
-.mat-row{
-background: white;
+.mat-row {
+    background: white;
 }
 
 .overlay-content {
@@ -130,42 +164,48 @@ background: white;
     background-color: transparent;
     padding: 10px;
     // border: 1px solid black;
-  }
+}
 
 //  {
 //     visibility: hidden;
 //     height: 21px;
 // }
 
-  @media screen and (min-width: 769px) and (max-width: 1589px) {
+@media screen and (min-width: 769px) and (max-width: 1589px) {
     .overlay-content {
-      top: 18%; /* Adjust the top position for medium screens */
-      left: 75%; /* Adjust the left position for medium screens */
+        top: 18%;
+        /* Adjust the top position for medium screens */
+        left: 75%;
+        /* Adjust the left position for medium screens */
     }
-  @media screen and (min-width: 1171px) and (max-width: 1400px) {
-    .overlay-content {
-      top: 18%;
-      left: 70%;
+
+    @media screen and (min-width: 1171px) and (max-width: 1400px) {
+        .overlay-content {
+            top: 18%;
+            left: 70%;
+        }
     }
-  }
-  @media screen and (min-width: 1000px) and (max-width: 1170px) {
-    .overlay-content {
-      top: 18%;
-      left: 65%;
+
+    @media screen and (min-width: 1000px) and (max-width: 1170px) {
+        .overlay-content {
+            top: 18%;
+            left: 65%;
+        }
     }
-  }
-  @media screen and (min-width: 870px) and (max-width: 999px) {
-    .overlay-content {
-      top: 18%;
-      left: 60%;
+
+    @media screen and (min-width: 870px) and (max-width: 999px) {
+        .overlay-content {
+            top: 18%;
+            left: 60%;
+        }
     }
-  }
-  @media screen and (min-width: 773px) and (max-width: 869px) {
-    .overlay-content {
-      top: 18%;
-      left: 55%;
+
+    @media screen and (min-width: 773px) and (max-width: 869px) {
+        .overlay-content {
+            top: 18%;
+            left: 55%;
+        }
     }
-  }
 
 
-  }
+}
