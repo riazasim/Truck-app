@@ -10,13 +10,13 @@
                 <div class="grid grid-cols-2 gap-x-8 gap-y-4 mb-5">
                     <div class=" flex flex-col">
                         <datepicker matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
-                            [matTooltip]="'Pick ETA date' | translate" [model]="filterDate"
-                            [isHeaderPosition]="true" [height]="52" (dateChanged)="OnDateChange($event)">
+                            [matTooltip]="'Pick ETA date' | translate" [model]="dateModal" [isHeaderPosition]="true"
+                            [height]="52" (dateChanged)="OnDateChange($event)">
                         </datepicker>
                     </div>
                     <div class=" flex flex-col">
                         <timepicker matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
-                            [matTooltip]="'Pick ETA time' | translate" [height]="52"
+                            [matTooltip]="'Pick ETA time' | translate" [model]="timeVal" [height]="52"
                             (modelChange)="OnTimeChange($event)"></timepicker>
                     </div>
                 </div>
@@ -25,7 +25,7 @@
                 </div>
                 <div iconic-select-wrapper leftSvg="assets/images/scheduling_map_location.svg"
                     [rightIcon]="['fas', 'caret-down']">
-                    <select inputRef name="zone" id="zone" formControlName="zone">
+                    <select spAccessInputRef name="zone" id="zone" formControlName="zone">
                         <option disabled selected>Zone</option>
                         <option *ngFor="let customer of customer" [value]="customer.id">
                             {{ customer.name }}
@@ -34,7 +34,7 @@
                 </div>
                 <div iconic-select-wrapper leftSvg="assets/images/scheduling_ship_type.svg"
                     [rightIcon]="['fas', 'caret-down']">
-                    <select inputRef name="departurePort" id="departurePort" formControlName="departurePort">
+                    <select spAccessInputRef name="departurePort" id="departurePort" formControlName="departurePort">
                         <option disabled selected>
                             Departure Port
                         </option>
@@ -45,7 +45,7 @@
                 </div>
                 <div iconic-select-wrapper leftSvg="assets/images/scheduling_arrival_port.svg"
                     [rightIcon]="['fas', 'caret-down']">
-                    <select inputRef name="arrivalPort" id="arrivalPort" formControlName="arrivalPort">
+                    <select spAccessInputRef name="arrivalPort" id="arrivalPort" formControlName="arrivalPort">
                         <option disabled selected>Arival Port</option>
                         <option *ngFor="let customer of customer" [value]="customer.id">
                             {{ customer.name }}
@@ -75,7 +75,7 @@
                 </div>
                 <div iconic-select-wrapper leftSvg="assets/images/scheduling_lock.svg"
                     [rightIcon]="['fas', 'caret-down']">
-                    <select inputRef name="typeOfLock" id="typeOfLock" formControlName="lockType">
+                    <select spAccessInputRef name="typeOfLock" id="typeOfLock" formControlName="lockType">
                         <option disabled selected>Type of lock</option>
                         <option *ngFor="let customer of customer" [value]="customer.id">
                             {{ customer.name }}
@@ -86,7 +86,8 @@
         </div>
         <div class="min-xl:px-[50px] grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20 mt-4">
             <div class="gap-y-4 mb-5 min-xl:px-[50px]">
-                <button type="button" class="btn btn-outline-primary w-full min-h-[50px] !text-[18px]" routerLink="../../">
+                <button type="button" class="btn btn-outline-primary w-full min-h-[50px] !text-[18px]"
+                    routerLink="../../">
                     {{ "Cancel" | translate }}
                 </button>
             </div>

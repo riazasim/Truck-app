@@ -1,4 +1,4 @@
-<div [class.valid]="isValid === true && isTouched" [class.invalid]="isInvalid || !isValid && isTouched"
+<div [class.valid]="isValid === true && (isTouched || withoutTouched)" [class.invalid]="isInvalid || !isValid && (isTouched || withoutTouched)"
     [class.disabled]="isDisabled" class="iconic-layout-wrapper">
     <div class="input-container {{inputContainerClass}}">
         <img *ngIf="leftSvg" [src]="leftSvg" alt="icon" class="mx-[10px] max-h-5 max-w-5">
@@ -8,11 +8,11 @@
         <ng-container *ngIf="appendedTemplate" [ngTemplateOutlet]="appendedTemplate"></ng-container>
         <fa-icon [class.invalid]="isInvalid || !isValid && isTouched" *ngIf="rightIcon" [icon]="rightIcon" size="lg"
             class="icon"></fa-icon>
-        <fa-icon *ngIf="isValid && withCheckmark && isTouched" [icon]="checkmark" size="lg"
+        <fa-icon *ngIf="isValid && withCheckmark && (isTouched || withoutTouched)" [icon]="checkmark" size="lg"
             class="icon valid"></fa-icon>
     </div>
     <div *ngIf="showValidation" class="errors-container"
-        [style.visibility]="isTouched && showValidationMessages && errors ? 'visible': 'hidden'" [style.height.px]="21">
+        [style.visibility]="(isTouched || withoutTouched) && showValidationMessages && errors ? 'visible': 'hidden'" [style.height.px]="21">
         <div *ngFor="let error of (errors | keyvalue)" class="text-center">
             <span *ngIf="$any(error)?.value && $any(error)?.value?.message;"
                 class="invalid">{{$any(error)?.value?.message}}</span>

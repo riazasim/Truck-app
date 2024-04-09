@@ -70,6 +70,4 @@ export class GenericWrapperComponent<T1, T2 extends GenericRef<T1>> {
     get isInvalidControl(): boolean | undefined {
         return this._inputRef?.control?.invalid;
     }
-
-
 }

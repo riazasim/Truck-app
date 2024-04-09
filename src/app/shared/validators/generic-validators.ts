@@ -127,6 +127,15 @@ export function createRequiredValidators(): ValidatorFn[] {
     ];
 }
 
+export function createPatternValidators(pattern : RegExp): ValidatorFn[] {
+    return [
+        RxwebValidators.pattern({
+            expression: {pattern},
+            message: "Invalid Entry. Only use [0-9,+,-,(),' ']"
+        })
+    ];
+}
+
 /**
  * Creates the validators for a letters only control
  */

@@ -147,5 +147,6 @@ export class MapComponent implements OnInit {
   // move(event: google.maps.MapMouseEvent) {
   //     if (event.latLng != null) this.display = event.latLng.toJSON();
   // }
+
 }
 

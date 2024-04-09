@@ -10,7 +10,7 @@
             </div>
             <div>
                 <div iconic-select-wrapper leftIcon="user" [rightIcon]="['fas', 'caret-down']">
-                    <select inputRef name="type" id="type" formControlName="type">
+                    <select spAccessInputRef name="type" id="type" formControlName="type">
                         <option value="" disabled>Select Type</option>
                         <option *ngFor="let type of VehicleTypeEnum" value="{{type}}">{{type}}</option>
                     </select>
@@ -18,7 +18,7 @@
             </div>
             <div>
                 <div iconic-select-wrapper leftIcon="eye" [rightIcon]="['fas', 'caret-down']">
-                    <select inputRef name="status" id="status" formControlName="status">
+                    <select spAccessInputRef name="status" id="status" formControlName="status">
                         <option value="" disabled>Select status</option>
                         <option value="true">Active</option>
                         <option value="false">Inactive</option>
@@ -36,7 +36,7 @@
             <div class="flex gap-4">
                 <button [routerLink]="id ? '../../list' : '../list'" class="btn btn-outline-primary"
                     type="button">Cancel</button>
-                <button [disabled]="vehicleForm.invalid ||(isLoading$ | async)" class="btn btn-primary" type="button"
+                <button [disabled]="vehicleForm.invalid || (isLoading$ | async)" class="btn btn-primary" type="button"
                     (click)="saveVehicle()">Save</button>
             </div>
         </div>

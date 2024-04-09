@@ -52,7 +52,7 @@
     }
 
     > input[inputref],
-    select[inputref],
+    select[spaccessinputref],
     textarea[inputRef] {
       border: unset;
       outline: 0;
@@ -77,7 +77,7 @@
 
     }
 
-    select[inputref] {
+    select[spaccessinputref] {
       z-index: 2;
       background: unset;
 
