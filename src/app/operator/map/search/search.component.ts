@@ -9,6 +9,9 @@ import { BehaviorSubject } from 'rxjs';
     styleUrl: './search.component.scss'
 })
 export class SearchComponent {
+
+    // @Input() searchData: any[] = [];
+
     isLoading$ : BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true)
     displayedColumns = ['name'];
     isActive: number = 1;
