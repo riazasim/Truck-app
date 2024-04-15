@@ -22,6 +22,7 @@ export class PlanningListComponent implements OnChanges {
     @Input() filterDate: string;
     @Input() plannings: PlanningModel[] = [];
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+    isTableLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     displayedColumns: string[] = ['id', 'manevre', 'vesselId', 'berth', 'products', 'estimatedTimeArrival', 'relativeTimeArrival', 'delay', 'coordinates', 'shipmentStatus', 'actions'];
     dataSource: PlanningModel[] = [];
     originalSource: PlanningModel[] = [];
@@ -42,12 +43,10 @@ export class PlanningListComponent implements OnChanges {
         // this.retrievePlanningList('');
     }
     ngOnChanges(changes: SimpleChanges): void {
-        if (changes['filterDate']) {
             this.dataSource = this.plannings;
             this.originalSource = this.plannings;
             this.isLoading$.next(false)
             // this.retrievePlanningList(this.filterDate)
-        }
     }
 
     retrievePlanningList(filterDate: string): void {
@@ -72,7 +71,7 @@ export class PlanningListComponent implements OnChanges {
     }
 
     onPaginateChange(event: PageEvent) {
-        this.isLoading$.next(true);
+        this.isTableLoading$.next(true);
         let data = {
             "start": event.pageIndex ? event.pageIndex * event.pageSize : event.pageIndex,
             "length": event.pageSize,

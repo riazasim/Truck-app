@@ -6,7 +6,7 @@
             <div table class="w-full overflow-hidden">
                 <ng-scrollbar track="horizontal" [autoHeightDisabled]="false" style="scrollbar-width: none;">
                     <table class="material-table no-wrap overflow-hidden" matSort (matSortChange)="sortData($event)"
-                        [class.loading]="isLoading$ | async" aria-label="Usage Table" cdk-table
+                        [class.loading]="isTableLoading$ | async" aria-label="Usage Table" cdk-table
                         [dataSource]="dataSource">
 
                         <ng-container cdkColumnDef="id">
