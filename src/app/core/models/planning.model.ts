@@ -11,8 +11,10 @@ export interface UpdatePlanningDock {
 export interface convoyModel {
     planningConvoyId? :number;
     id?: number;
+    company : string;
     navigationType: string;
     ship: string;
+    status: string;
     shipType: string;
     pavilion: string;
     enginePower: number;
@@ -74,6 +76,7 @@ export interface PlanningDetailModel {
     id?: number;
     planningId?: number;
     sId?: number;
+    rId? : string;
     relativeTimeArrival?: string;
     shipmentStatus?: string;
     convoyType: string;

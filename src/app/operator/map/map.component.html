@@ -1,67 +1,13 @@
 <div class="relative">
-    <div id="map" style="height: 750px; width: 100%;"></div>
-    <app-search id="search"></app-search>
+    <app-loader *ngIf="isLoading$ | async" [isContainer]="true"></app-loader>
+    <google-map *ngIf="!(isLoading$ | async)" [center]="center" [zoom]="zoom" height="750px" width="100%">
+        <map-marker
+            *ngFor="let marker of markerPositions"
+            [position]="marker.position"
+            [title]="marker.title"
+            >
+        </map-marker>
+    </google-map>
+    <app-search id="search" (results)="onStatusChange($event)"></app-search>
 </div>
 
-
-<!-- <section>
-    <header
-        class="flex min-md:flex-row flex-col justify-between pb-2"
-    >
-        <h3 class="heading-3 font-bold">Map</h3>
-    </header>
-</section>
-<google-map
-    height="750px"
-    width="100%"
-    [center]="center"
-    [zoom]="zoom"
-> -->
-<!-- <app-search id="search"></app-search> -->
-    <!-- <map-marker
-        #marker="mapMarker"
-        *ngFor="let markerPosition of markerPositions"
-        [position]="markerPosition"
-    ></map-marker>
-</google-map>  -->
-
-<!-- <div>Latitude: {{ display?.lat }}</div>
-<div>Longitude: {{ display?.lng }}</div> -->
-
-<!-- <section>
-    <header class="flex min-md:flex-row flex-col justify-between pb-2">
-        <h3 class="heading-3 font-bold">Map</h3>
-    </header> -->
-<!-- Search Input -->
-<!-- <input type="text" [(ngModel)]="searchQuery" placeholder="Search location" />
-    <button (click)="searchLocation()">Search</button> -->
-<!-- </section>
-<google-map
-    height="470px"
-    width="100%"
-    [center]="center"
-    [zoom]="zoom"
-    (mapClick)="addMarker($event)"
-    (mapMousemove)="move($event)"
->
-<div class="search bg-white">Hi -->
-<!-- <app-search></app-search> -->
-<!-- </div>
-<div class="overlay-content"> -->
-<!-- Content to overlay on the map -->
-<!-- <h1>This is an overlay</h1>
-  </div> -->
-<!-- <map-ground-overlay [url]="imageUrl" [bounds]="searchCard"></map-ground-overlay> -->
-
-<!-- Map Markers -->
-<!-- <map-marker
-        #marker="mapMarker"
-        *ngFor="let markerPosition of markerPositions"
-        [position]="markerPosition"
-        (mapClick)="openInfoWindow(marker)"
-    ></map-marker>
-    <map-info-window *ngFor="let markerPosition of markerPositions">
-        {{ markerPosition.lat }}
-        {{ markerPosition.lng }}
-    </map-info-window>
-</google-map> -->

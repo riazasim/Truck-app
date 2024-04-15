@@ -12,6 +12,10 @@ ul li {
 }
 
 :host {
+    ::ng-deep .mat-horizontal-stepper-header{
+        pointer-events: none !important;
+    }
+
     ::ng-deep .mat-menu-panel {
         max-width: none !important;
         overflow: unset !important;
@@ -98,11 +102,11 @@ ul li {
     height: 24px;
     width: 24px;
   }
-  
+
   :host ::ng-deep .mat-form-field-infix {
     display: flex;
   }
-  
+
 //   .mat-form-field {
 //     width: 100%;
 //   }

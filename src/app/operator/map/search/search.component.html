@@ -7,8 +7,8 @@
         </div>
         <div class="right">
             <div class="top">
-                <div *ngIf="isActive === 1" class="w-[198px] flex flex-col gap-2">
-                    <h2 class="mb-2 text-[#000000] text-sm font-normal heading-5">
+                <div *ngIf="isActive === 1" class="w-[198px] flex flex-col gap-1">
+                    <h2 class="text-[#000000] text-sm font-normal heading-6">
                         Filter by company
                     </h2>
                     <div iconic-select-wrapper [showValidation]="false" [rightIcon]="['fas', 'caret-down']">
@@ -35,32 +35,32 @@
                     </div>
                 </div>
                 <div *ngIf="isActive === 2" class="w-[198px]">
-                    <h2 class="mb-2 text-[#000000] text-sm font-normal heading-5">
+                    <h2 class="text-[#000000] text-sm font-normal mb-1 heading-6">
                         Filter by Status
                     </h2>
-                    <div class="grid grid-cols-2 mt-4">
+                    <div class="grid grid-cols-2">
                         <div class="flex gap-1 items-center w-[100px] px-5">
-                            <input type="checkbox" id="On route" name="On route" class="h-4 w-4" />
+                            <input type="checkbox" id="On route" name="On route" class="h-4 w-4" (click)="OnStatusCahnge('On Route')"/>
                             <label for="On route" class="text-[#354050] text-sm font-normal">On route</label>
                         </div>
                         <div class="flex gap-1 items-center w-[100px] px-5">
-                            <input type="checkbox" id="Port" name="Port" class="h-4 w-4" />
+                            <input type="checkbox" id="Port" name="Port" class="h-4 w-4" (click)="OnStatusCahnge('Port Queue')"/>
                             <label for="Port" class="text-[#354050] text-sm font-normal">Port</label>
                         </div>
                     </div>
                     <div class="flex flex-row mt-3">
                         <div class="flex items-center w-[100px] px-5">
-                            <input type="checkbox" id="Berth" name="Berth" class="h-4 w-4" />&nbsp;
+                            <input type="checkbox" id="Berth" name="Berth" class="h-4 w-4" (click)="OnStatusCahnge('Berth')"/>&nbsp;
                             <label for="Berth" class="text-[#354050] text-sm font-normal">Berth</label>
                         </div>
                         <div class="flex items-center w-[100px] px-5">
-                            <input type="checkbox" id="Exit" name="Exit" class="h-4 w-4" />&nbsp;
+                            <input type="checkbox" id="Exit" name="Exit" class="h-4 w-4" (click)="OnStatusCahnge('Exit')"/>&nbsp;
                             <label for="Exit" class="text-[#354050] text-sm font-normal">Exit</label>
                         </div>
                     </div>
                 </div>
                 <div *ngIf="isActive === 3" class="w-[198px]">
-                    <h2 class="mb-4 text-[#000000] text-sm font-normal heading-5">
+                    <h2 class="text-[#000000] text-sm font-normal mb-1 heading-6">
                         Filter by Time
                     </h2>
                     <div iconic-select-wrapper [showValidation]="false" [rightIcon]="['fas', 'caret-down']">
@@ -106,7 +106,7 @@
                     </div>
                 </div>
                 <div class="flex flex-col gap-1" *ngIf="isActive === 4" class="w-[198px]">
-                    <h2 class="text-[#000000] text-sm font-normal heading-5 mb-4">
+                    <h2 class="text-[#000000] text-sm font-normal mb-1 heading-6">
                         Filter by SID
                     </h2>
                     <div class="mb-1">
@@ -190,11 +190,31 @@
 
     <div class="mt-5">
         <section class="result-container mat-elevation-z8" tabindex="0">
-            <!-- <app-loader *ngIf="(isLoading$ | async)"></app-loader> -->
-            <table mat-table [class.cardLoading]="isLoading$ | async">
+            <table mat-table [class.cardLoading]="isLoading$ | async" [dataSource]="companies">
                 <ng-container matColumnDef="name">
                     <th mat-header-cell *matHeaderCellDef class=" tbl-header"> Results </th>
-                    <td class="bg-white" mat-cell *matCellDef="let element of companies"> {{element.name}} </td>
+                    <td class="bg-white" mat-cell *matCellDef="let element">
+                        <div class="flex justify-between px-2">
+                            <div class="flex flex-col gap-1">
+                                <div class="">
+                                    <span class="text-lg font-normal">
+                                        {{element?.ship?.name}}
+                                    </span>
+                                </div>
+                                <div class="flex gap-1 items-baseline">
+                                    <div class="rounded-full h-2 w-2 {{ element?.sidStatus === 'Port Queue' ? 'bg-[#1C3F47]' : 'bg-[#FE3333]'}}"></div>
+                                    <span class="text-[#8C8C8C] text-sm font-normal">
+                                        {{element?.sidStatus}}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="">
+                                <a class="text-[#1B9FE8] text-xs font-semibold cursor-pointer">
+                                    details
+                                </a>
+                            </div>
+                        </div>
+                    </td>
                 </ng-container>
                 <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

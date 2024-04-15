@@ -90,10 +90,10 @@
                             </tr>
                         </table>
                     </ng-scrollbar>
-                    <!-- <mat-paginator [class.!hidden]="dataSource.data.length === 0" class="paginator rounded-b-[10px]"
-                           hidePageSize
-                           aria-label="Select page" pageSize="10">
-            </mat-paginator> -->
+                    <mat-paginator [class.!hidden]="dataSource.length === 0" [pageSizeOptions]="pageSizeOptions"
+                        [length]="length" [pageIndex]="pageIndex" (page)="onPaginateChange($event)"
+                        [pageSize]="pageSize" showFirstLastButtons>
+                    </mat-paginator>
                 </div>
             </material-panel-table>
         </section>

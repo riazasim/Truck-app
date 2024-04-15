@@ -21,7 +21,8 @@ export class EditSchedulingConvoyComponent {
     dataSource: convoyModel[] = [];
     originalSource: convoyModel[] = [];
     appliedFilters: any = {};
-    id : number
+    id : number;
+    headerTitle : string;
 
     constructor(private readonly dialogService: MatDialog,
         private readonly planningService: PlanningService,
@@ -35,6 +36,7 @@ export class EditSchedulingConvoyComponent {
     retrievePlanningList(): void {
         this.id = this.route.snapshot.params['id'];
         this.planningService.get(this.id).subscribe(response => {
+            this.headerTitle = String(response?.rId)
             this.dataSource = response.planningConvoys;
             this.originalSource = response.planningConvoys;
             this.isLoading$.next(false);

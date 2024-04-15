@@ -1,5 +1,5 @@
 <mat-stepper labelPosition="bottom" [linear]="isLinear" #stepper>
-    <mat-step label="Route Details">
+    <mat-step label="Route Details" [stepControl]="schedulingForm">
         <app-loader *ngIf="isLoading$ | async" [isContainer]="true" [fullScreen]="false"></app-loader>
         <form [formGroup]="schedulingForm" *ngIf="!(isLoading$ | async)">
             <div
@@ -38,7 +38,8 @@
                     </div>
                     <div iconic-select-wrapper leftSvg="assets/images/scheduling_ship_type.svg"
                         [rightIcon]="['fas', 'caret-down']" formGroupName="routingDetail">
-                        <select spAccessInputRef name="departurePort" id="departurePort" formControlName="departurePort">
+                        <select spAccessInputRef name="departurePort" id="departurePort"
+                            formControlName="departurePort">
                             <option disabled value="">
                                 Departure Port
                             </option>
@@ -114,11 +115,20 @@
             <div
                 class="grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20 gap-y-4 pt-[100px] min-xl:px-[50px]">
                 <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
+                    <div iconic-select-wrapper leftIcon="grid-2" [rightIcon]="['fas', 'caret-down']">
+                        <select spAccessInputRef name="company" id="company" formControlName="company">
+                            <option disabled value="">Company</option>
+                            <option *ngFor="let company of companies" [value]="company.id">
+                                {{ company.name }}
+                            </option>
+                        </select>
+                    </div>
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_navigation.svg">
                         <input inputRef type="text" placeholder="Navigation type*" formControlName="navigationType" />
                     </div>
                     <div iconic-select-wrapper leftIcon="grid-2" [rightIcon]="['fas', 'caret-down']">
-                        <select spAccessInputRef name="ship" id="ship" (change)="onShipSelected($event)" formControlName="ship">
+                        <select spAccessInputRef name="ship" id="ship" (change)="onShipSelected($event)"
+                            formControlName="ship">
                             <option disabled value="">Ship</option>
                             <option *ngFor="let ship of shipsList" [value]="ship.id">
                                 {{ ship.name }}
@@ -159,6 +169,15 @@
                 <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_purpose.svg">
                         <input inputRef type="text" placeholder="Purpose" formControlName="purpose" />
+                    </div>
+                    <div iconic-select-wrapper leftSvg="assets/images/scheduling_operator.svg"
+                        [rightIcon]="['fas', 'caret-down']">
+                        <select spAccessInputRef name="status" id="status" formControlName="status">
+                            <option disabled value="">Status</option>
+                            <option *ngFor="let status of statuses" [value]="status.id">
+                                {{ status.name }}
+                            </option>
+                        </select>
                     </div>
                     <div iconic-select-wrapper leftSvg="assets/images/scheduling_operator.svg"
                         [rightIcon]="['fas', 'caret-down']">
@@ -234,8 +253,7 @@
                     </button>
                 </div>
                 <div class="gap-y-4 mb-5 min-xl:px-[50px]">
-                    <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]"
-                        (click)="next(2)">
+                    <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]" (click)="next(2)">
                         {{ "button.next" | translate }}
                     </button>
                 </div>
@@ -318,8 +336,7 @@
                     </button>
                 </div>
                 <div class="gap-y-4 mb-5 min-xl:px-[50px]">
-                    <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]"
-                        (click)="next(3)">
+                    <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]" (click)="next(3)">
                         {{ "button.next" | translate }}
                     </button>
                 </div>

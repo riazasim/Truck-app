@@ -2,9 +2,19 @@
     <mat-step label="Convoi">
         <app-loader *ngIf="isLoading$ | async" [isContainer]="true" [fullScreen]="false"></app-loader>
         <form [formGroup]="convoyForm" *ngIf="!(isLoading$ | async)">
-            <div class="grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20 gap-y-4 pt-[100px] min-xl:px-[50px]">
+            <div
+                class="grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20 gap-y-4 pt-[100px] min-xl:px-[50px]">
                 <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
                     <!-- <p class="text-columnCell font-bold"></p> -->
+                    <div iconic-select-wrapper leftSvg="assets/images/scheduling_ship_type.svg"
+                        [rightIcon]="['fas', 'caret-down']">
+                        <select spAccessInputRef name="company" id="company" formControlName="company">
+                            <option disabled selected>Ship type*</option>
+                            <option *ngFor="let company of companies" [value]="company.id">
+                                {{ company.name }}
+                            </option>
+                        </select>
+                    </div>
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_navigation.svg">
                         <input inputRef type="text" placeholder="Navigation type*" formControlName="navigationType" />
                     </div>
@@ -50,6 +60,15 @@
                 <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_purpose.svg">
                         <input inputRef type="text" placeholder="Purpose" formControlName="purpose" />
+                    </div>
+                    <div iconic-select-wrapper leftSvg="assets/images/scheduling_operator.svg"
+                        [rightIcon]="['fas', 'caret-down']">
+                        <select spAccessInputRef name="status" id="status" formControlName="status">
+                            <option disabled selected>status</option>
+                            <option *ngFor="let status of statuses" [value]="status.id">
+                                {{ status.name }}
+                            </option>
+                        </select>
                     </div>
                     <div iconic-select-wrapper leftSvg="assets/images/scheduling_operator.svg"
                         [rightIcon]="['fas', 'caret-down']">
@@ -138,7 +157,8 @@
         <app-loader *ngIf="isLoading$ | async" [isContainer]="true" [fullScreen]="false"></app-loader>
         <div *ngIf="!(isLoading$ | async)">
             <div class="pt-[100px] min-xl:px-[50px]">
-                <form class="grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20 gap-y-4" [formGroup]="convoyForm">
+                <form class="grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20 gap-y-4"
+                    [formGroup]="convoyForm">
                     <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
                         <div iconic-input-wrapper leftIcon="user">
                             <input inputRef type="text" placeholder="Operator" formControlName="additionalOperator"

@@ -103,6 +103,16 @@ export class AddSchedulingComponent implements OnInit, OnDestroy {
         { id: 2, name: 'zone2' },
         { id: 3, name: 'zone3' },
     ];
+    companies = [
+        { id: 1, name: 'company1' },
+        { id: 2, name: 'company2' },
+        { id: 3, name: 'company3' },
+    ];
+    statuses = [
+        { id: 1, name: 'status1' },
+        { id: 2, name: 'status2' },
+        { id: 3, name: 'status3' },
+    ];
     departurePort = [
         { id: 1, name: 'departure port1' },
         { id: 2, name: 'departure port2' },
@@ -242,6 +252,8 @@ export class AddSchedulingComponent implements OnInit, OnDestroy {
     initConvoyForm(data?: convoyModel): void {
         this.convoyForm = this.fb.group({
             navigationType: this.fb.control(data?.navigationType, [...createRequiredValidators()]),
+            company: this.fb.control(data?.company || '', [...createRequiredValidators()]),
+            status: this.fb.control(data?.status || '', [...createRequiredValidators()]),
             // ship: this.fb.control(data?.ship || ''),
             ship: this.fb.control(data?.ship || '', [...createRequiredValidators()]),
             shipType: this.fb.control(data?.shipType || '', [...createRequiredValidators()]),

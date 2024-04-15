@@ -43,6 +43,16 @@ export class EditSchedulingConvoyPageComponent {
         { id: 2, name: 'ship2' },
         { id: 3, name: 'ship3' },
     ];
+    companies = [
+        { id: 1, name: 'company1' },
+        { id: 2, name: 'company2' },
+        { id: 3, name: 'company3' },
+    ];
+    statuses = [
+        { id: 1, name: 'status1' },
+        { id: 2, name: 'status2' },
+        { id: 3, name: 'status3' },
+    ];
     shipType = [
         { id: 1, name: 'ship type1' },
         { id: 2, name: 'ship type2' },
@@ -128,6 +138,8 @@ export class EditSchedulingConvoyPageComponent {
         this.convoyForm = this.fb.group({
             navigationType: this.fb.control(data?.navigationType || '',[...createRequiredValidators()]),
             ship: this.fb.control(data?.ship || '',[...createRequiredValidators()]),
+            company: this.fb.control(data?.company || '',[...createRequiredValidators()]),
+            status: this.fb.control(data?.status || '',[...createRequiredValidators()]),
             shipType: this.fb.control(data?.shipType || '',[...createRequiredValidators()]),
             pavilion: this.fb.control(data?.pavilion || '',[...createRequiredValidators()]),
             enginePower: this.fb.control(data?.enginePower || null,[...createRequiredValidators()]),
