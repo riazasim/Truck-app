@@ -58,7 +58,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     toggleRef: MatSnackBarRef<TextOnlySnackBar>;
     statuses: StatusListModel[] = [];
     operations: OperationModel[] = [];
-
+    length : number;
     pageSettings: PageSettingsModel = { start: 0, length: 5 };
     appliedFilters: any = {};
 
@@ -555,6 +555,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
         this.planningService.pagination(data).subscribe((response: any) => {
             this.plannings = response.items;
+            this.length = response.noTotal;
             this.isLoading$.next(false);
             this.newCardsLoading$.next(false);
             this.cd.detectChanges();

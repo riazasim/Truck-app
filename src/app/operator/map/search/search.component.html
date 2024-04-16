@@ -7,11 +7,12 @@
         </div>
         <div class="right">
             <div class="top">
-                <div *ngIf="isActive === 1" class="w-[198px] flex flex-col gap-1">
+                <div *ngIf="isActive === 1" class="w-[198px] flex flex-col gap-2">
                     <h2 class="text-[#000000] text-sm font-normal heading-6">
                         Filter by company
                     </h2>
-                    <div iconic-select-wrapper [showValidation]="false" [rightIcon]="['fas', 'caret-down']" class="mt-1">
+                    <div iconic-select-wrapper [dashboardInp]="true" [showValidation]="false"
+                        [rightIcon]="['fas', 'caret-down']">
                         <select spAccessInputRef name="port" id="port">
                             <option value="" disabled selected>Port</option>
                             <!-- <option
@@ -22,7 +23,8 @@
                             </option> -->
                         </select>
                     </div>
-                    <div iconic-select-wrapper [showValidation]="false" [rightIcon]="['fas', 'caret-down']" class="mt-1">
+                    <div iconic-select-wrapper [dashboardInp]="true" [showValidation]="false"
+                        [rightIcon]="['fas', 'caret-down']">
                         <select spAccessInputRef name="company" id="company">
                             <option value="" disabled selected>Company</option>
                             <!-- <option
@@ -40,30 +42,35 @@
                     </h2>
                     <div class="grid grid-cols-2">
                         <div class="flex gap-1 items-center w-[100px] px-5">
-                            <input type="checkbox" id="On route" name="On route" class="h-4 w-4" (click)="OnStatusCahnge('On Route')"/>
+                            <input type="checkbox" id="On route" name="On route" class="h-4 w-4 border-[#CCCCCC]"
+                                (click)="OnStatusCahnge('On Route')" />
                             <label for="On route" class="text-[#354050] text-sm font-normal">On route</label>
                         </div>
                         <div class="flex gap-1 items-center w-[100px] px-5">
-                            <input type="checkbox" id="Port" name="Port" class="h-4 w-4" (click)="OnStatusCahnge('Port Queue')"/>
+                            <input type="checkbox" id="Port" name="Port" class="h-4 w-4 border-[#CCCCCC]"
+                                (click)="OnStatusCahnge('Port Queue')" />
                             <label for="Port" class="text-[#354050] text-sm font-normal">Port</label>
                         </div>
                     </div>
                     <div class="flex flex-row mt-4">
                         <div class="flex items-center w-[100px] px-5">
-                            <input type="checkbox" id="Berth" name="Berth" class="h-4 w-4" (click)="OnStatusCahnge('Berth')"/>&nbsp;
+                            <input type="checkbox" id="Berth" name="Berth" class="h-4 w-4 border-[#CCCCCC]"
+                                (click)="OnStatusCahnge('Berth')" />&nbsp;
                             <label for="Berth" class="text-[#354050] text-sm font-normal">Berth</label>
                         </div>
                         <div class="flex items-center w-[100px] px-5">
-                            <input type="checkbox" id="Exit" name="Exit" class="h-4 w-4" (click)="OnStatusCahnge('Exit')"/>&nbsp;
+                            <input type="checkbox" id="Exit" name="Exit" class="h-4 w-4 border-[#CCCCCC]"
+                                (click)="OnStatusCahnge('Exit')" />&nbsp;
                             <label for="Exit" class="text-[#354050] text-sm font-normal">Exit</label>
                         </div>
                     </div>
                 </div>
-                <div *ngIf="isActive === 3" class="w-[198px]">
+                <div *ngIf="isActive === 3" class="w-[198px] flex flex-col gap-1">
                     <h2 class="text-[#000000] text-sm font-normal mb-1 heading-6">
                         Filter by Time
                     </h2>
-                    <div iconic-select-wrapper [showValidation]="false" [rightIcon]="['fas', 'caret-down']" class="mt-1">
+                    <div iconic-select-wrapper [dashboardInp]="true" [showValidation]="false"
+                        [rightIcon]="['fas', 'caret-down']">
                         <select spAccessInputRef name="companyId" id="companyId">
                             <option value="" disabled selected>Total Time</option>
                             <!-- <option
@@ -74,29 +81,32 @@
                             </option> -->
                         </select>
                     </div>
-                    <div class="flex justify-between items-center w-[195px]" >
+                    <div class="flex justify-between items-center w-[195px]">
                         <div class="flex gap-1 items-center">
-                            <input type="radio" id="Between" name="Time" value="Between" checked class="h-3 w-3" />
+                            <input type="radio" id="Between" name="Time" value="Between" checked
+                                class="h-3 w-3 border-[#CCCCCC]" />
                             <label for="Between" class="text-xs mt-1 text-[#354050]">Between</label>
                         </div>
                         <div class="flex gap-1 items-center">
-                            <input type="radio" id="More than" name="Time" value="More than" class="h-3 w-3" />
+                            <input type="radio" id="More than" name="Time" value="More than"
+                                class="h-3 w-3 border-[#CCCCCC]" />
                             <label for="More than" class="text-xs mt-1 text-[#354050]">More than</label>
                         </div>
                         <div class="flex gap-1 items-center">
-                            <input type="radio" id="Less than" name="Time" value="Less than" class="h-3 w-3" />
+                            <input type="radio" id="Less than" name="Time" value="Less than"
+                                class="h-3 w-3 border-[#CCCCCC]" />
                             <label for="Less than" class="text-xs mt-1 text-[#354050]">Less than</label>
                         </div>
                     </div>
                     <div class="flex gap-2 w-full">
-                        <div iconic-input-wrapper [showValidation]="false" class="w-[25%]">
+                        <div iconic-input-wrapper [dashboardInp]="true" [showValidation]="false" class="w-[25%]">
                             <input inputRef type="number" placeholder="Value" />
                         </div>
-                        <div iconic-input-wrapper [showValidation]="false" class="w-[25%]">
+                        <div iconic-input-wrapper [dashboardInp]="true" [showValidation]="false" class="w-[25%]">
                             <input inputRef type="number" placeholder="Value" />
                         </div>
-                        <div iconic-select-wrapper [showValidation]="false" [rightIcon]="['fas', 'caret-down']"
-                            class="w-[50%]">
+                        <div iconic-select-wrapper [dashboardInp]="true" [showValidation]="false"
+                            [rightIcon]="['fas', 'caret-down']" class="w-[50%]">
                             <select spAccessInputRef name="companyId" id="companyId">
                                 <option value="mm" selected>Minutes</option>
                                 <option value="hh">Hours</option>
@@ -105,17 +115,17 @@
                         </div>
                     </div>
                 </div>
-                <div class="flex flex-col gap-1" *ngIf="isActive === 4" class="w-[198px]">
+                <div class="flex flex-col gap-2 w-[198px]" *ngIf="isActive === 4">
                     <h2 class="text-[#000000] text-sm font-normal mb-1 heading-6">
                         Filter by SID
                     </h2>
-                    <div class="mb-1">
+                    <div>
                         <datepicker matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
                             [matTooltip]="'Pick ETA date' | translate" [model]="dateModal" [isHeaderPosition]="true"
-                            [height]="38" (dateChanged)="OnDateChange($event)">
+                            [height]="26" (dateChanged)="OnDateChange($event)">
                         </datepicker>
                     </div>
-                    <div iconic-select-wrapper [showValidation]="false" class="mb-1"
+                    <div iconic-select-wrapper [dashboardInp]="true" [showValidation]="false"
                         [rightIcon]="['fas', 'caret-down']">
                         <select spAccessInputRef name="companyId" id="companyId">
                             <option value="" disabled selected>
@@ -129,7 +139,7 @@
                             </option> -->
                         </select>
                     </div>
-                    <div iconic-select-wrapper [showValidation]="false" class="mb-1"
+                    <div iconic-select-wrapper [dashboardInp]="true" [showValidation]="false"
                         [rightIcon]="['fas', 'caret-down']">
                         <select spAccessInputRef name="companyId" id="companyId">
                             <option value="" disabled selected>Arival port</option>
@@ -141,10 +151,10 @@
                             </option> -->
                         </select>
                     </div>
-                    <div iconic-input-wrapper [showValidation]="false" class="mb-1">
+                    <div iconic-input-wrapper [dashboardInp]="true" [showValidation]="false">
                         <input placeholder="Agent Company" inputRef type="text" />
                     </div>
-                    <!-- <div iconic-input-wrapper [showValidation]="false" class="mb-1">
+                    <!-- <div iconic-input-wrapper [dashboardInp]="true" [showValidation]="false">
                         <input placeholder="Pilot Company" inputRef type="text" />
                     </div> -->
                 </div>
@@ -192,7 +202,13 @@
         <section class="result-container mat-elevation-z8" tabindex="0">
             <table mat-table [class.cardLoading]="isLoading$ | async" [dataSource]="companies">
                 <ng-container matColumnDef="name">
-                    <th mat-header-cell *matHeaderCellDef class=" tbl-header"> Results </th>
+                    <th mat-header-cell *matHeaderCellDef class="tbl-header flex justify-between items-center h-[58px]">
+                        <span *ngIf="companies.length === 0 && !(isLoading$ | async)">No results found</span>
+                        <span *ngIf="companies.length !== 0 && !(isLoading$ | async)">Results ({{length}})</span>
+                        <mat-paginator class="{{length <= 5 ? '!hidden' : ''}}" [hidePageSize]="true" [length]="length"
+                            (page)="onPaginateChange($event)" [pageSize]="5" showFirstLastButtons>
+                        </mat-paginator>
+                    </th>
                     <td class="bg-white" mat-cell *matCellDef="let element">
                         <div class="flex justify-between px-2">
                             <div class="flex flex-col gap-1">
@@ -202,7 +218,9 @@
                                     </span>
                                 </div>
                                 <div class="flex gap-1 items-baseline">
-                                    <div class="rounded-full h-2 w-2 {{ element?.sidStatus === 'Port Queue' ? 'bg-[#1C3F47]' : 'bg-[#FE3333]'}}"></div>
+                                    <div
+                                        class="rounded-full h-2 w-2 {{ element?.sidStatus === 'Port Queue' ? 'bg-[#1C3F47]' : 'bg-[#FE3333]'}}">
+                                    </div>
                                     <span class="text-[#8C8C8C] text-sm font-normal">
                                         {{element?.sidStatus}}
                                     </span>

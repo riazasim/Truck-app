@@ -21,6 +21,7 @@ export class PlanningListComponent implements OnChanges {
     @Input() userRole: string;
     @Input() filterDate: string;
     @Input() plannings: PlanningModel[] = [];
+    @Input() length: number;
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     isTableLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     displayedColumns: string[] = ['id', 'manevre', 'vesselId', 'berth', 'products', 'estimatedTimeArrival', 'relativeTimeArrival', 'delay', 'coordinates', 'shipmentStatus', 'actions'];
@@ -30,7 +31,6 @@ export class PlanningListComponent implements OnChanges {
     pageSizeOptions: number[] = [5, 10, 12, 15];
     pageIndex: number;
     pageSize: number;
-    length: number;
 
     constructor(private readonly dialogService: MatDialog,
         private readonly planningService: PlanningService,
@@ -40,6 +40,7 @@ export class PlanningListComponent implements OnChanges {
         this.dataSource = this.plannings;
         this.originalSource = this.plannings;
         this.isLoading$.next(false)
+        this.isTableLoading$.next(false);
         // this.retrievePlanningList('');
     }
     ngOnChanges(changes: SimpleChanges): void {

@@ -107,7 +107,9 @@ export const MY_FORMATS = {
         ReactiveFormsModule,
         MatMenuModule,
         MatRadioModule,
-        CommonModule
+        CommonModule,
+        MatFormFieldModule,
+        MatInputModule
     ],
     exports: [
         IconicInputWrapperComponent,
@@ -156,7 +158,9 @@ export const MY_FORMATS = {
         MatTableModule,
         MatTooltipModule,
         InputRefDirective,
-        SelectRefDirective
+        SelectRefDirective,
+        MatFormFieldModule,
+        MatInputModule
     ],
     providers: [
         { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },

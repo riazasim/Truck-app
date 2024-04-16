@@ -119,15 +119,26 @@ export class DashboardComponent implements OnInit {
     }
 
     getDashboardData() {
-        this.statService.getDashboardStats().subscribe(response => {
-            this.dashboardData = response?.data?.attributes;
-            this.sidsByStatus[0].value = this.dashboardData?.sidsByStatus?.onRouteCount || 0
-            this.sidsByStatus[1].value = this.dashboardData?.ridsByStatus?.onPortQueueCount || 0
-            this.sidsByStatus[2].value = this.dashboardData?.sidsByStatus?.onBerthCount || 0
-            this.timeBreakDown[0].value = this.dashboardData?.timeBreakDown?.operationTime || 0
-            this.timeBreakDown[1].value = this.dashboardData?.timeBreakDown?.berthTime || 0
-            this.timeBreakDown[2].value = this.dashboardData?.timeBreakDown?.waitingTime || 0
-            this.isLoading$.next(false)
+        this.statService.getDashboardStats().subscribe({
+            next : response => {
+                this.dashboardData = response?.data?.attributes;
+                this.sidsByStatus[0].value = this.dashboardData?.sidsByStatus?.onRouteCount || 0
+                this.sidsByStatus[1].value = this.dashboardData?.ridsByStatus?.onPortQueueCount || 0
+                this.sidsByStatus[2].value = this.dashboardData?.sidsByStatus?.onBerthCount || 0
+                this.timeBreakDown[0].value = this.dashboardData?.timeBreakDown?.operationTime || 0
+                this.timeBreakDown[1].value = this.dashboardData?.timeBreakDown?.berthTime || 0
+                this.timeBreakDown[2].value = this.dashboardData?.timeBreakDown?.waitingTime || 0
+                this.isLoading$.next(false)
+            },
+            error : ()=>{
+                this.sidsByStatus[0].value = 0
+                this.sidsByStatus[1].value = 0
+                this.sidsByStatus[2].value = 0
+                this.timeBreakDown[0].value = 0
+                this.timeBreakDown[1].value = 0
+                this.timeBreakDown[2].value = 0
+                this.isLoading$.next(false)
+            }
         })
     }
 }
