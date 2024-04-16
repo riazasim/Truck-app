@@ -14,10 +14,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({
     selector: 'app-edit-scheduling-convoy',
     templateUrl: './edit-scheduling-convoy.component.html',
+    styleUrl: './edit-scheduling-convoy.component.scss',
 })
 export class EditSchedulingConvoyComponent {
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
-    displayedColumns: string[] = ['id', 'manevure', 'ship', 'operator', 'destination', 'navigationType', 'actions'];
+    displayedColumns: string[] = ['id', 'manevure', 'ship', 'operator', 'destination', 'navigationType', 'sidStatus', 'actions'];
     dataSource: convoyModel[] = [];
     originalSource: convoyModel[] = [];
     appliedFilters: any = {};

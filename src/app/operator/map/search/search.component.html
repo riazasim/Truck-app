@@ -11,9 +11,9 @@
                     <h2 class="text-[#000000] text-sm font-normal heading-6">
                         Filter by company
                     </h2>
-                    <div iconic-select-wrapper [showValidation]="false" [rightIcon]="['fas', 'caret-down']">
+                    <div iconic-select-wrapper [showValidation]="false" [rightIcon]="['fas', 'caret-down']" class="mt-1">
                         <select spAccessInputRef name="port" id="port">
-                            <option value="" disabled selected>port</option>
+                            <option value="" disabled selected>Port</option>
                             <!-- <option
                                 *ngFor="let company of companies"
                                 [value]="company.companyId"
@@ -22,7 +22,7 @@
                             </option> -->
                         </select>
                     </div>
-                    <div iconic-select-wrapper [showValidation]="false" [rightIcon]="['fas', 'caret-down']">
+                    <div iconic-select-wrapper [showValidation]="false" [rightIcon]="['fas', 'caret-down']" class="mt-1">
                         <select spAccessInputRef name="company" id="company">
                             <option value="" disabled selected>Company</option>
                             <!-- <option
@@ -35,7 +35,7 @@
                     </div>
                 </div>
                 <div *ngIf="isActive === 2" class="w-[198px]">
-                    <h2 class="text-[#000000] text-sm font-normal mb-1 heading-6">
+                    <h2 class="text-[#000000] text-sm font-normal mb-4 heading-6">
                         Filter by Status
                     </h2>
                     <div class="grid grid-cols-2">
@@ -48,7 +48,7 @@
                             <label for="Port" class="text-[#354050] text-sm font-normal">Port</label>
                         </div>
                     </div>
-                    <div class="flex flex-row mt-3">
+                    <div class="flex flex-row mt-4">
                         <div class="flex items-center w-[100px] px-5">
                             <input type="checkbox" id="Berth" name="Berth" class="h-4 w-4" (click)="OnStatusCahnge('Berth')"/>&nbsp;
                             <label for="Berth" class="text-[#354050] text-sm font-normal">Berth</label>
@@ -63,7 +63,7 @@
                     <h2 class="text-[#000000] text-sm font-normal mb-1 heading-6">
                         Filter by Time
                     </h2>
-                    <div iconic-select-wrapper [showValidation]="false" [rightIcon]="['fas', 'caret-down']">
+                    <div iconic-select-wrapper [showValidation]="false" [rightIcon]="['fas', 'caret-down']" class="mt-1">
                         <select spAccessInputRef name="companyId" id="companyId">
                             <option value="" disabled selected>Total Time</option>
                             <!-- <option
@@ -74,7 +74,7 @@
                             </option> -->
                         </select>
                     </div>
-                    <div class="flex justify-between items-center w-[195px]">
+                    <div class="flex justify-between items-center w-[195px]" >
                         <div class="flex gap-1 items-center">
                             <input type="radio" id="Between" name="Time" value="Between" checked class="h-3 w-3" />
                             <label for="Between" class="text-xs mt-1 text-[#354050]">Between</label>

@@ -16,7 +16,7 @@
                                 </section>
                             </th>
                             <td cdk-cell *cdkCellDef="let row">
-                                {{row.planning.rId || '-'}}
+                                {{row?.planning?.rId || '-'}}
                                 <!-- <a class="text-primary" href="javascript:void(0)"
                                     (click)="triggerOpenLogs.emit({ view: 'view', id: row.id, planning: row , modal : 'shipment' })">{{row.id
                                     || '-'}}</a> -->
@@ -33,7 +33,7 @@
                                 </section>
                             </th>
                             <td cdk-cell *cdkCellDef="let row">
-                                {{ row.planning.manevre || "-" }}
+                                {{ row?.planning?.manevre || "-" }}
                             </td>
                         </ng-container>
 
@@ -44,7 +44,7 @@
                                 </section>
                             </th>
                             <td cdk-cell *cdkCellDef="let row">
-                                {{ row.planning.vesselId || "-" }}
+                                {{ row?.planning?.vesselId || "-" }}
                             </td>
                         </ng-container>
 
@@ -57,7 +57,7 @@
                                 </section>
                             </th>
                             <td cdk-cell *cdkCellDef="let row">
-                                {{ row.planning.berth || "-" }}
+                                {{ row?.planning?.berth || "-" }}
                             </td>
                         </ng-container>
                         <ng-container cdkColumnDef="products">
@@ -69,7 +69,7 @@
                                 </section>
                             </th>
                             <td cdk-cell *cdkCellDef="let row">
-                                {{ row.planning.products || "-" }}
+                                {{ row?.planning?.products || "-" }}
                             </td>
                         </ng-container>
                         <ng-container cdkColumnDef="estimatedTimeArrival">
@@ -81,7 +81,7 @@
                                 </section>
                             </th>
                             <td cdk-cell *cdkCellDef="let row">
-                                {{ row.planning.estimatedTimeArrival || "-" }}
+                                {{ row?.planning?.estimatedTimeArrival || "-" }}
                             </td>
                         </ng-container>
                         <ng-container cdkColumnDef="relativeTimeArrival">
@@ -93,7 +93,7 @@
                                 </section>
                             </th>
                             <td cdk-cell *cdkCellDef="let row">
-                                {{ row.planning.relativeTimeArrival || "-" }}
+                                {{ row?.planning?.relativeTimeArrival || "-" }}
                             </td>
                         </ng-container>
                         <ng-container cdkColumnDef="delay">
@@ -105,7 +105,7 @@
                                 </section>
                             </th>
                             <td cdk-cell *cdkCellDef="let row">
-                                {{ row.planning.delay || "-" }}
+                                {{ row?.planning?.delay || "-" }}
                             </td>
                         </ng-container>
                         <ng-container cdkColumnDef="coordinates">
@@ -117,7 +117,7 @@
                                 </section>
                             </th>
                             <td cdk-cell *cdkCellDef="let row">
-                                {{ row.planning.coordinates || "-" }}
+                                {{ row?.planning?.coordinates || "-" }}
                             </td>
                         </ng-container>
                         <ng-container cdkColumnDef="shipmentStatus">
@@ -131,9 +131,9 @@
                             <td cdk-cell *cdkCellDef="let row">
                                 <!-- {{ row.shipmentStatus }} -->
                                 <mat-chip
-                                    [ngStyle]="{'background-color': row.planning.shipmentStatus === 'Port Queue' ? '#3386FE' : '#1C3F47'}">
-                                    {{ row.planning.shipmentStatus === 'Port Queue' ? 'Port Queue' :
-                                    row.planning.shipmentStatus === 'Service'
+                                    [ngStyle]="{'background-color': row?.planning?.shipmentStatus === 'Port Queue' ? '#3386FE' : '#1C3F47'}">
+                                    {{ row?.planning?.shipmentStatus === 'Port Queue' ? 'Port Queue' :
+                                    row?.planning?.shipmentStatus === 'Service'
                                     ? 'Service' : 'Closed' }}
                                 </mat-chip>
                                 <!-- <mat-chip
@@ -168,10 +168,10 @@
                                 <div class="flex gap-4">
                                     <fa-icon icon="eye" class="text-[#17A0B5] cursor-pointer" size="lg"
                                         *ngIf="userRole === 'ROLE_USER_TRANSPORT'"
-                                        [routerLink]="['../edit', row.planning.id]"></fa-icon>
+                                        [routerLink]="['../edit', row?.planning?.id]"></fa-icon>
                                     <img src="assets/images/boat.svg" alt="icon" class="cursor-pointer max-w-5 max-h-5"
                                         *ngIf="userRole === 'ROLE_USER_TRANSPORT'"
-                                        [routerLink]="['../route',row.planning.id ,'convoy-list']">
+                                        [routerLink]="['../route',row?.planning?.id ,'convoy-list']">
                                     <a class="text-primary" href="javascript:void(0)"
                                         (click)="OnEmit(row , 'shipment')"><img
                                             src="assets/images/rotate-left-list-icon.svg" alt="icon"

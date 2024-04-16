@@ -76,6 +76,23 @@
                             {{ row?.navigationType || "-" }}
                         </td>
                     </ng-container>
+                    <ng-container cdkColumnDef="sidStatus">
+                        <th cdk-header-cell *cdkHeaderCellDef scope="col" class="max-w-20">
+                            <section class="flex flex-col gap-4">
+                                <div mat-header="Status">
+                                    Status
+                                </div>
+                            </section>
+                        </th>
+                        <td cdk-cell *cdkCellDef="let row">
+                            <mat-chip
+                                [ngStyle]="{'background-color': row?.sidStatus === 'Port Queue' ? '#3386FE' : '#1C3F47'}">
+                                {{ row?.sidStatus === 'Port Queue' ? 'Port Queue' :
+                                row?.sidStatus === 'Service'
+                                ? 'Service' : 'Closed' || "-"  }}
+                            </mat-chip>
+                        </td>
+                    </ng-container>
 
                     <ng-container cdkColumnDef="actions">
                         <th cdk-header-cell *cdkHeaderCellDef scope="col" class="min-w-40">
