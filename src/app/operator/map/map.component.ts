@@ -17,9 +17,8 @@ export class MapComponent implements OnInit {
     searchQuery: string = '';
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     dataSource: any[] = [];
-    statusFilters : string[] = ["Port Queue", "Exit", "Berth" , "On Route"];
     marker : any;
-
+    filters : any = {statusFilters : [] , timeFilter : {}};
 
     center: google.maps.LatLngLiteral = {
         lat: 44.138896,
@@ -42,7 +41,7 @@ export class MapComponent implements OnInit {
 
 
     ngOnInit(): void {
-        this.retrieveMapData(this.statusFilters);
+        this.retrieveMapData(this.filters);
     }
 
     onStatusChange(filter : any){
@@ -54,7 +53,7 @@ export class MapComponent implements OnInit {
         let data = {
             "start": 0,
             "length": 0,
-            "filters": ["","","",filters,"","",""],
+            "filters": ["","","",filters.statusFilters,"","","",filters.timeFilter],
             "order": [{"dir": "DESC", "column": 0}]
         }
         this.mapSearchService.getMicroPlanningConvoyes(data).subscribe({
@@ -91,7 +90,7 @@ export class MapComponent implements OnInit {
         });
     }
 
-    
+
     // openInfoWindow(marker: MapMarker) {
     //     if (this.infoWindow != undefined) this.infoWindow.open(marker);
     // }

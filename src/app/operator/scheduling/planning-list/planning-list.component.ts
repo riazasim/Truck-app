@@ -18,12 +18,13 @@ import { AuthService } from 'src/app/core/services/auth.service';
 })
 export class PlanningListComponent implements OnChanges {
     @Output() triggerOpenLogs: EventEmitter<{ view: string, id: number, planning: PlanningModel, modal: string }> = new EventEmitter();
+    @Output() onPaginate: EventEmitter<any> = new EventEmitter();
+    @Input() isTableLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     @Input() userRole: string;
     @Input() filterDate: string;
     @Input() plannings: PlanningModel[] = [];
     @Input() length: number;
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
-    isTableLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     displayedColumns: string[] = ['id', 'manevre', 'vesselId', 'berth', 'products', 'estimatedTimeArrival', 'relativeTimeArrival', 'delay', 'coordinates', 'shipmentStatus', 'actions'];
     dataSource: PlanningModel[] = [];
     originalSource: PlanningModel[] = [];
@@ -70,21 +71,20 @@ export class PlanningListComponent implements OnChanges {
     }
 
     onPaginateChange(event: PageEvent) {
-        this.isTableLoading$.next(true);
-        let data = {
-            "start": event.pageIndex ? event.pageIndex * event.pageSize : event.pageIndex,
-            "length": event.pageSize,
-            "filters": ["", "", "", "", "", ""],
-            "order": [{ "dir": "DESC", "column": 0 }]
-        }
-        this.planningService.pagination(data).subscribe({
-            next: response => {
-                this.dataSource = response.items;
-                this.originalSource = response.items;
-                this.cd.detectChanges();
-                this.isLoading$.next(false);
-            }
-        })
+        this.onPaginate.emit({start : event.pageIndex ? event.pageIndex * event.pageSize : event.pageIndex , length : event.pageSize })
+        // let data = {
+        //     "start": event.pageIndex ? event.pageIndex * event.pageSize : event.pageIndex,
+        //     "length": event.pageSize,
+        //     "filters": ["", "", "", "", "", ""],
+        //     "order": [{ "dir": "DESC", "column": 0 }]
+        // }
+        // this.planningService.pagination(data).subscribe({
+        //     next: response => {
+        //         this.dataSource = response.items;
+        //         this.originalSource = response.items;
+        //         this.cd.detectChanges();
+        //     }
+        // })
     }
 
     OnEmit(row: any, modal: string) {

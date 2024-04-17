@@ -26,7 +26,7 @@ import { createRequiredValidators } from 'src/app/shared/validators/generic-vali
     styleUrls: ['./add-scheduling.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AddSchedulingComponent implements OnInit, OnDestroy {
+export class AddSchedulingComponent implements OnInit {
     file1Text$: BehaviorSubject<string> = new BehaviorSubject<string>('');
     file2Text$: BehaviorSubject<string> = new BehaviorSubject<string>('');
     file3Text$: BehaviorSubject<string> = new BehaviorSubject<string>('');
@@ -308,10 +308,6 @@ export class AddSchedulingComponent implements OnInit, OnDestroy {
         this.tempImg[index] = file
         console.log(this.tempImg)
         this.images[this.imageLen] = this.tempImg;
-    }
-
-    ngOnDestroy(): void {
-
     }
 
 }

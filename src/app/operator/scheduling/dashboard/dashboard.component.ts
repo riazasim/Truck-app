@@ -47,7 +47,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     readonly sortBy$: BehaviorSubject<number> = new BehaviorSubject<number>(12);
     readonly sortOrder$: BehaviorSubject<string> = new BehaviorSubject('DESC');
     readonly isComvexReorder$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-
+    isTableLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     plannings: PlanningModel[] = []
     filterDate: Date = new Date();
     filterTypeEnum = FilterTypeENum;
@@ -58,7 +58,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     toggleRef: MatSnackBarRef<TextOnlySnackBar>;
     statuses: StatusListModel[] = [];
     operations: OperationModel[] = [];
-    length : number;
+    length: number;
     pageSettings: PageSettingsModel = { start: 0, length: 5 };
     appliedFilters: any = {};
 
@@ -303,30 +303,22 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         this.getCardDetails()
     }
 
-    retrievePlannings(fetchMore: boolean = false): void {
-        if (fetchMore && this.hasReachedEndPage$.getValue() || this.isTableView$.getValue()) {
-            return;
+    onPaginateChange(ev : any) {
+        this.isTableLoading$.next(true);
+        let data = {
+            "start": ev.start,
+            "length": ev.length,
+            "filters": [this.formatDate(this.filterDate), "", "", "", "", ""],
+            "order": [{ "dir": "DESC", "column": 0 }]
         }
-
-        if (!fetchMore) this.pageSettings = { ...defaultPageSettings };
-        if (fetchMore) this.cardLoading$.next(true);
-        this.planningService.list({ schedulingDate: getFormattedDate(this.filterDate), ...this.appliedFilters, ...this.pageSettings })
-            .subscribe((response: any) => {
-                if (fetchMore) {
-                    if (!response.length) {
-                        this.hasReachedEndPage$.next(true);
-                        this.cardLoading$.next(false);
-                        return;
-                    }
-                    this.plannings.push(...<any[]>response);
-                    this.cardLoading$.next(false);
-                } else {
-                    this.plannings = <any[]>response;
-                    this.hasReachedEndPage$.next(false);
-                }
-
+        this.planningService.pagination(data).subscribe({
+            next: response => {
+                this.plannings = response.items;
+                this.isTableLoading$.next(false);
+                this.cd.detectChanges();
                 this.isLoading$.next(false);
-            });
+            }
+        })
     }
 
     handleOpenPlanUpgradeWarning(): void {
@@ -523,8 +515,9 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
         this.planningService.pagination(data).subscribe((response: any) => {
             this.plannings = response.items;
-            this.length = response.noTotal;
+            this.length = response.noFiltered;
             this.isLoading$.next(false);
+            this.isTableLoading$.next(false);
             this.newCardsLoading$.next(false);
             this.cd.detectChanges();
         });

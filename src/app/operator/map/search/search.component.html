@@ -31,72 +31,82 @@
                     <div class="grid grid-cols-2">
                         <div class="flex gap-1 items-center w-[100px] px-5">
                             <input type="checkbox" id="On route" name="On route" class="h-4 w-4 border-[#CCCCCC]"
-                                (click)="OnStatusCahnge('On Route')" />
+                                (click)="OnStatusCahnge('On Route')" [checked]="statusFilters.includes('On Route')"/>
                             <label for="On route" class="text-[#354050] text-sm font-normal">On route</label>
                         </div>
                         <div class="flex gap-1 items-center w-[100px] px-5">
                             <input type="checkbox" id="Port" name="Port" class="h-4 w-4 border-[#CCCCCC]"
-                                (click)="OnStatusCahnge('Port Queue')" />
+                                (click)="OnStatusCahnge('Port Queue')" [checked]="statusFilters.includes('Port Queue')"/>
                             <label for="Port" class="text-[#354050] text-sm font-normal">Port</label>
                         </div>
                     </div>
                     <div class="flex flex-row mt-4">
                         <div class="flex items-center w-[100px] px-5">
                             <input type="checkbox" id="Berth" name="Berth" class="h-4 w-4 border-[#CCCCCC]"
-                                (click)="OnStatusCahnge('Berth')" />&nbsp;
+                                (click)="OnStatusCahnge('Berth')" [checked]="statusFilters.includes('Berth')"/>&nbsp;
                             <label for="Berth" class="text-[#354050] text-sm font-normal">Berth</label>
                         </div>
                         <div class="flex items-center w-[100px] px-5">
                             <input type="checkbox" id="Exit" name="Exit" class="h-4 w-4 border-[#CCCCCC]"
-                                (click)="OnStatusCahnge('Exit')" />&nbsp;
+                                (click)="OnStatusCahnge('Exit')" [checked]="statusFilters.includes('Exit')"/>&nbsp;
                             <label for="Exit" class="text-[#354050] text-sm font-normal">Exit</label>
                         </div>
                     </div>
                 </div>
-                <div *ngIf="isActive === 3" class="w-[198px] flex flex-col gap-1">
-                    <h2 class="text-[#000000] text-sm font-normal mb-1 heading-6">
-                        Filter by Time
-                    </h2>
+                <form [formGroup]="timeFilterForm" *ngIf="isActive === 3" class="w-[198px] flex flex-col gap-1">
+                    <div class="flex justify-between">
+                        <h2 class="text-[#000000] text-sm font-normal mb-1 heading-6">
+                            Filter by Time
+                        </h2>
+                        <fa-icon icon="xmark" class="text-[#17A0B5] cursor-pointer" size="lg"
+                            *ngIf="timeFilterForm.valid" (click)="OnTimeChange('delete')"></fa-icon>
+                    </div>
                     <div iconic-select-wrapper [dashboardInp]="true" [showValidation]="false"
                         [rightIcon]="['fas', 'caret-down']">
-                        <select spAccessInputRef name="companyId" id="companyId">
+                        <select spAccessInputRef name="companyId" id="companyId" formControlName="filterByTime"
+                            (change)="OnTimeChange()">
                             <option value="" disabled selected>Total Time</option>
+                            <option *ngFor="let item of timeOptions" value="{{item.value}}">{{item.name}}</option>
                         </select>
                     </div>
                     <div class="flex justify-between items-center w-[195px]">
                         <div class="flex gap-1 items-center">
-                            <input type="radio" id="Between" name="Time" value="Between" checked
-                                class="h-3 w-3 border-[#CCCCCC]" />
-                            <label for="Between" class="text-xs mt-1 text-[#354050]">Between</label>
+                            <input type="radio" id="between" name="clauseBy" value="between" checked
+                                class="h-3 w-3 border-[#CCCCCC]" formControlName="clauseBy" (change)="OnTimeChange()" />
+                            <label for="between" class="text-xs mt-1 text-[#354050]">Between</label>
                         </div>
                         <div class="flex gap-1 items-center">
-                            <input type="radio" id="More than" name="Time" value="More than"
-                                class="h-3 w-3 border-[#CCCCCC]" />
-                            <label for="More than" class="text-xs mt-1 text-[#354050]">More than</label>
+                            <input type="radio" id="greaterThan" name="clauseBy" value="greaterThan"
+                                class="h-3 w-3 border-[#CCCCCC]" formControlName="clauseBy" (change)="OnTimeChange()" />
+                            <label for="greaterThan" class="text-xs mt-1 text-[#354050]">More than</label>
                         </div>
                         <div class="flex gap-1 items-center">
-                            <input type="radio" id="Less than" name="Time" value="Less than"
-                                class="h-3 w-3 border-[#CCCCCC]" />
-                            <label for="Less than" class="text-xs mt-1 text-[#354050]">Less than</label>
+                            <input type="radio" id="lessThan" name="clauseBy" value="lessThan"
+                                class="h-3 w-3 border-[#CCCCCC]" formControlName="clauseBy" (change)="OnTimeChange()" />
+                            <label for="lessThan" class="text-xs mt-1 text-[#354050]">Less than</label>
                         </div>
                     </div>
                     <div class="flex gap-2 w-full">
-                        <div iconic-input-wrapper [dashboardInp]="true" [showValidation]="false" class="w-[25%]">
-                            <input inputRef type="number" placeholder="Value" />
+                        <div iconic-input-wrapper [dashboardInp]="true" [showValidation]="false" class="w-[25%]" *ngIf="timeFilterForm.controls['clauseBy'].value !== 'greaterThan'">
+                            <input inputRef type="number" placeholder="Value" formControlName="lessThanVal"
+                                (change)="OnTimeChange()"/>
                         </div>
-                        <div iconic-input-wrapper [dashboardInp]="true" [showValidation]="false" class="w-[25%]">
-                            <input inputRef type="number" placeholder="Value" />
+                        <div iconic-input-wrapper [dashboardInp]="true" [showValidation]="false" class="w-[25%]" *ngIf="timeFilterForm.controls['clauseBy'].value !== 'lessThan'">
+                            <input inputRef type="number" placeholder="Value" formControlName="greaterThanVal"
+                                (change)="OnTimeChange()"/>
                         </div>
                         <div iconic-select-wrapper [dashboardInp]="true" [showValidation]="false"
                             [rightIcon]="['fas', 'caret-down']" class="w-[50%]">
-                            <select spAccessInputRef name="companyId" id="companyId">
-                                <option value="mm" selected>Minutes</option>
+                            <select spAccessInputRef formControlName="searchBy"
+                                (change)="OnTimeChange()">
+                                <option value="" disabled>Search By</option>
+                                <option value="mm">Minutes</option>
                                 <option value="hh">Hours</option>
                                 <option value="dd">Days</option>
                             </select>
                         </div>
                     </div>
-                </div>
+                </form>
                 <div class="flex flex-col gap-2 w-[198px]" *ngIf="isActive === 4">
                     <h2 class="text-[#000000] text-sm font-normal mb-1 heading-6">
                         Filter by SID
@@ -170,8 +180,8 @@
             <table mat-table [class.cardLoading]="isLoading$ | async" [dataSource]="companies">
                 <ng-container matColumnDef="name">
                     <th mat-header-cell *matHeaderCellDef class="tbl-header flex justify-between items-center h-[58px]">
-                        <span *ngIf="companies.length === 0 && !(isLoading$ | async)">No results found</span>
-                        <span *ngIf="companies.length !== 0 && !(isLoading$ | async)">Results ({{length}})</span>
+                        <span *ngIf="companies.length === 0">No results found</span>
+                        <span *ngIf="companies.length !== 0">Results ({{length}})</span>
                         <mat-paginator class="{{length <= 5 ? '!hidden' : ''}}" [hidePageSize]="true" [length]="length"
                             (page)="onPaginateChange($event)" [pageSize]="5" showFirstLastButtons>
                         </mat-paginator>
