@@ -17,13 +17,8 @@ import {LocationsImportModalComponent} from "../locations-import-modal/locations
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LocationsListComponent {
- // isLoading: boolean = true;
   isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     displayedColumns: string[] = ['name', 'addrStreet', 'addrNumber', 'addrCounty', 'addrCity', 'addrCountry', 'addrZipCode', 'contact', 'actions'];
-  // originalColumns: string[] = ['id', 'name', 'addrStreet', 'addrNumber', 'addrCounty', 'addrCity', 'addrCountry', 'addrZipCode', 'contact', 'actions'];
-  //displayedColumns: string[] = [];
-  // dataSource: any = []
-  // originalSource: any = [];
     dataSource: LocationModel[] = [];
     originalSource: LocationModel[] = [];
     appliedFilters: any = {};
@@ -41,18 +36,6 @@ export class LocationsListComponent {
                 this.retrieveLocations();
                }
 
-  // retrieveLocations(): void {
-  //   this.locationService.listTable({}).subscribe((response: any[]) => {
-  //     const existColumns = this.initializeColumns(response);
-  //     if (existColumns) {
-  //       this.dataSource = response;
-  //       this.originalSource = response;
-  //     }
-  //     this.isLoading = false;
-  //     this.cd.detectChanges();
-  //   });
-  // }
-
 
     retrieveLocations(): void {
 
@@ -62,12 +45,10 @@ export class LocationsListComponent {
         let data={
             "start": this.pageIndex,
             "length": this.pageSize,
-            "filters": ["","","","","",""],//["firstname/lastname", "status", "role", "phone", "email"]
+            "filters": ["","","","","",""],
             "order": [{"dir": "DESC", "column": 0}]
         }
         this.locationService.pagination(data).subscribe(response => {
-            //console.log(response)
-            // let result =(<any>response.items).map(((c: CustomFieldData) => c.attributes));
             this.dataSource = response.items;
             this.originalSource = response.items;
             this.length=response.noTotal;
@@ -78,56 +59,20 @@ export class LocationsListComponent {
 
     onPaginateChange(event: PageEvent) {
         this.isLoading$.next(true);
-        //  console.log("API call");
         let data={
           "start": event.pageIndex ? event.pageIndex * event.pageSize : event.pageIndex,
 
             "length": event.pageSize,
-            "filters": ["","","","","",""],//["firstname/lastname", "status", "role", "phone", "email"]
+            "filters": ["","","","","",""],
             "order": [{"dir": "DESC", "column": 0}]
         }
         this.locationService.pagination(data).subscribe(response => {
-            // let result =(<any>response.items).map(((c: CustomFieldData) => c.attributes));
-            // console.log('Api call')
             this.dataSource = response.items;
             this.originalSource = response.items;
             this.isLoading$.next(false);
             this.cd.detectChanges();
         })
     }
-
-
-
-
-  // retrieveLocations(): void {
-  //   this.locationService.pagination({}).subscribe((response) => {
-  //     const existColumns = this.initializeColumns(response);
-  //     if (existColumns) {
-  //       this.dataSource = response;
-  //       this.originalSource = response;
-  //     }
-  //     this.isLoading = false;
-  //     this.cd.detectChanges();
-  //   });
-  // }
-
-  // initializeColumns(response: LocationModel[]) {
-  //   if (!response.length || !Object.keys(response[0]).length) {
-  //     return false;
-  //   }
-  //
-  //   let contactAdded = false;
-  //   this.displayedColumns = [...Object.keys(response[0]), 'actions'].map(x => {
-  //     if (!contactAdded && ['firstName', 'lastName', 'mobile', 'email'].includes(x)) {
-  //       contactAdded = true;
-  //       return 'contact';
-  //     }
-  //
-  //     return x;
-  //   }).filter(x => this.originalColumns.includes(x))
-  //
-  //   return true;
-  // }
 
   openDeleteModal(id: number) {
     this.dialogService.open(LocationsDeleteModalComponent, {

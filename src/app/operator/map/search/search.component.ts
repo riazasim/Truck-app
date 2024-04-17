@@ -10,7 +10,6 @@ import { MapSerachService } from 'src/app/core/services/map-search.service';
 })
 export class SearchComponent {
 
-    // @Input() searchData: any[] = [];
     @Output() results: EventEmitter<any> = new EventEmitter<any>()
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true)
     displayedColumns = ['name'];
@@ -51,7 +50,7 @@ export class SearchComponent {
         let data = {
             "start": 0,
             "length": 5,
-            "filters": ["", "", "", filters, "", "", ""],// portId, orgnaizationId, comapnyId, sidStatus, estimatedTimeArrival, departurePort, arrivalPort
+            "filters": ["", "", "", filters, "", "", ""],
             "order": [{ "dir": "DESC", "column": 0 }]
         }
         this.results.emit(filters)
@@ -72,7 +71,7 @@ export class SearchComponent {
         let data = {
             "start": event.pageIndex ? event.pageIndex * event.pageSize : event.pageIndex,
             "length": event.pageSize,
-            "filters": ["", "", "", "", "", ""],//["firstname/lastname", "status", "role", "phone", "email"]
+            "filters": ["", "", "", "", "", ""],
             "order": [{ "dir": "DESC", "column": 0 }]
         }
         this.mapSearchService.getMicroPlanningConvoyes(data).subscribe({

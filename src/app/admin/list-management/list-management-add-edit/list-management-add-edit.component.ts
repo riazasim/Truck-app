@@ -1,5 +1,5 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
-import { FormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
+import { FormGroup, UntypedFormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { PartnerModel } from '../../../core/models/partner.model';
@@ -27,14 +27,7 @@ export class ListManagementAddEditComponent {
 
   subscribeForQueryParams(): void {
     this.route.params.subscribe((params: any) => {
-      if (params.id) {
-        // this.listService.get(params.id).subscribe(response => {
-        //   this.id = params.id;
-        //   this.initForm(response);
-        //   this.isLoading = false;
-        //   this.cd.detectChanges();
-        // });
-      } else {
+      if (params.id) {} else {
         this.initForm();
         this.isLoading = false;
         this.cd.detectChanges();
@@ -59,16 +52,7 @@ export class ListManagementAddEditComponent {
   saveList(): void {
     this.isLoading = true;
     if (this.listForm.get('id')?.getRawValue()) {
-      // this.listService.edit(this.parseData(this.listForm.value)).subscribe(() => {
-      //   this.isLoading = false;
-      //   this.router.navigate(['../../success'], { relativeTo: this.route });
-      // });
-    } else {
-      // this.listService.create(this.parseData(this.listForm.value)).subscribe(() => {
-      //   this.isLoading = false;
-      //   this.router.navigate(['../success'], { relativeTo: this.route });
-      // });
-    }
+    } else { }
   }
 
   private parseData(data: PartnerModel): PartnerModel {

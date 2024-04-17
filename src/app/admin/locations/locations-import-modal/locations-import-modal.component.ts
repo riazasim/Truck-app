@@ -4,7 +4,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
 import { Row } from 'read-excel-file';
 import { BehaviorSubject, combineLatest, map, switchMap } from 'rxjs';
-//import { BookingModel } from 'src/app/core/models/booking.model';
 import { LocationService } from 'src/app/core/services/location.service';
 import { OrganizationService } from 'src/app/core/services/organization.service';
 

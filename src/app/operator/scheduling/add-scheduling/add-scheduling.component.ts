@@ -1,36 +1,20 @@
-import { StepperSelectionEvent } from '@angular/cdk/stepper';
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild, OnDestroy, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject, Observable, combineLatest, take, delay } from 'rxjs';
-import { CustomFieldData, CustomFieldList, ResponseCustomFieldList } from 'src/app/core/models/custom-field.model';
-import { CustomFieldModel, ResponseCustomField } from 'src/app/core/models/custom-field.model';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { CustomFieldModel } from 'src/app/core/models/custom-field.model';
 import { OperationModel } from 'src/app/core/models/operation.model';
 import { PartnerModel } from 'src/app/core/models/partner.model';
 import { ProductModel } from 'src/app/core/models/product.model';
 import { SchedulingCustomField } from 'src/app/core/models/scheduling.model';
-import { SchedulingModel } from 'src/app/core/models/scheduling.model';
-import { CustomFieldService } from 'src/app/core/services/custom-field.service';
-import { OperationService } from 'src/app/core/services/operation.service';
-import { PartnerService } from 'src/app/core/services/partner.service';
 import { PlanningService } from 'src/app/core/services/planning.service';
-import { SchedulingAddProductModalComponent } from '../scheduling-add-product-modal/scheduling-add-product-modal.component';
-import { ProductService } from 'src/app/core/services/product.service';
 import { MatStepper } from '@angular/material/stepper';
-import { getFormattedDate } from 'src/app/shared/utils/date.functions';
 import { DockModel } from 'src/app/core/models/dock.model';
-import { DockService } from 'src/app/core/services/dock.service';
 import { BuildingModel } from 'src/app/core/models/building.model';
-import { BuildingService } from 'src/app/core/services/building.service';
 import { StatusListService } from 'src/app/core/services/status-list.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { OrganizationService } from 'src/app/core/services/organization.service';
-import { WorkingHoursModel } from 'src/app/core/models/working-hours.model';
 import { handleError } from 'src/app/shared/utils/error-handling.function';
 import { getFormatHourSlot } from '../scheduling-box.helper';
-import * as moment from 'moment';
-import { extractPhoneNumber } from 'src/app/shared/validators/phone-numbers';
 import { PlanningModel, convoyModel } from 'src/app/core/models/planning.model';
 import { ShipsService } from 'src/app/core/services/ships.service';
 import { ShipModel } from 'src/app/core/models/ship.model';
@@ -43,8 +27,6 @@ import { createRequiredValidators } from 'src/app/shared/validators/generic-vali
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AddSchedulingComponent implements OnInit, OnDestroy {
-    // @Output() OnDateChange: EventEmitter<{ value : any }> = new EventEmitter();
-    // @Output() OnTimeChange: EventEmitter<{ value : any }> = new EventEmitter();
     file1Text$: BehaviorSubject<string> = new BehaviorSubject<string>('');
     file2Text$: BehaviorSubject<string> = new BehaviorSubject<string>('');
     file3Text$: BehaviorSubject<string> = new BehaviorSubject<string>('');

@@ -15,24 +15,12 @@
                         [rightIcon]="['fas', 'caret-down']">
                         <select spAccessInputRef name="port" id="port">
                             <option value="" disabled selected>Port</option>
-                            <!-- <option
-                                *ngFor="let company of companies"
-                                [value]="company.companyId"
-                            >
-                                {{ company.name }}
-                            </option> -->
                         </select>
                     </div>
                     <div iconic-select-wrapper [dashboardInp]="true" [showValidation]="false"
                         [rightIcon]="['fas', 'caret-down']">
                         <select spAccessInputRef name="company" id="company">
                             <option value="" disabled selected>Company</option>
-                            <!-- <option
-                                *ngFor="let company of companies"
-                                [value]="company.companyId"
-                            >
-                                {{ company.name }}
-                            </option> -->
                         </select>
                     </div>
                 </div>
@@ -73,12 +61,6 @@
                         [rightIcon]="['fas', 'caret-down']">
                         <select spAccessInputRef name="companyId" id="companyId">
                             <option value="" disabled selected>Total Time</option>
-                            <!-- <option
-                                *ngFor="let company of companies"
-                                [value]="company.companyId"
-                            >
-                                {{ company.name }}
-                            </option> -->
                         </select>
                     </div>
                     <div class="flex justify-between items-center w-[195px]">
@@ -131,32 +113,17 @@
                             <option value="" disabled selected>
                                 Departure port
                             </option>
-                            <!-- <option
-                                *ngFor="let company of companies"
-                                [value]="company.companyId"
-                            >
-                                {{ company.name }}
-                            </option> -->
                         </select>
                     </div>
                     <div iconic-select-wrapper [dashboardInp]="true" [showValidation]="false"
                         [rightIcon]="['fas', 'caret-down']">
                         <select spAccessInputRef name="companyId" id="companyId">
                             <option value="" disabled selected>Arival port</option>
-                            <!-- <option
-                                *ngFor="let company of companies"
-                                [value]="company.companyId"
-                            >
-                                {{ company.name }}
-                            </option> -->
                         </select>
                     </div>
                     <div iconic-input-wrapper [dashboardInp]="true" [showValidation]="false">
                         <input placeholder="Agent Company" inputRef type="text" />
                     </div>
-                    <!-- <div iconic-input-wrapper [dashboardInp]="true" [showValidation]="false">
-                        <input placeholder="Pilot Company" inputRef type="text" />
-                    </div> -->
                 </div>
             </div>
             <div class="flex justify-center">

@@ -30,28 +30,6 @@
                             [model]="!!(isComvexReorder$ | async)" class="h-[30px]"></app-toggle>
                         <label>{{(isComvexReorder$ | async) ? 'Reorder mode' : 'Freezed mode'}}</label>
                     </div>
-                    <!-- <div *ngIf="!(isTableView$ | async)" class="w-full">
-                                <select [disabled]="!!(isTimeSlotFilterMode$ | async)" class="rounded w-full" inputRef
-                                    name="sortBy" [value]="sortBy$ | async" (change)="sortBy$.next($any($event.target).value)">
-                                    <option [value]="null" disabled>{{'generics.sort-by' | translate}}</option>
-                                    <option value="0">SID</option>
-                                    <option value="1">{{'booking.front-plate-license-number' | translate}}</option>
-                                    <option value="2">{{'booking.back-plate-license-number' | translate}}</option>
-                                    <option value="3">{{'docks.dock' | translate}}</option>
-                                    <option value="4">{{'generics.status' | translate}}</option>
-                                    <option value="12">Timeslot</option>
-                                </select>
-                            </div> -->
-                    <!-- <div *ngIf="!(isTableView$ | async)" matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
-                                [matTooltip]="(sortOrder$ | async) === 'DESC' ? 'Sort ASC' : 'Sort DESC'"
-                                (click)="sortOrder$.next(sortOrder$.value === 'DESC' ? 'ASC' : 'DESC')"
-                                class="flex items-center justify-center w-[37px] h-[37px] bg-white border border-borderColor rounded cursor-pointer px-4 ">
-                                <ng-container [ngSwitch]="sortOrder$ | async">
-                                    <fa-icon *ngSwitchCase="'DESC'" [icon]="['fas','arrow-down-short-wide']"></fa-icon>
-                                    <fa-icon *ngSwitchCase="'ASC'" [icon]="['fas','arrow-up-short-wide']"></fa-icon>
-                                    <fa-icon *ngSwitchDefault [icon]="['fas','arrow-up-short-wide']"></fa-icon>
-                                </ng-container>
-                            </div> -->
                     <div *ngIf="false" class="w-full">
                         <div class="flex gap-4 items-center whitespace-nowrap">
                             <input id="viewed" type="checkbox"
@@ -89,13 +67,9 @@
                     </fa-icon>
                     <mat-menu #sidType="matMenu" class="!bg-white" xPosition="before">
                         <menu mat-menu-item>
-                            <!-- <fa-icon icon="ship" size="1x" class="mx-2 cursor-pointer hover:text-primary">
-                                    </fa-icon> -->
                             {{'ship' | translate}}
                         </menu>
                         <menu mat-menu-item>
-                            <!-- <fa-icon icon="train" size="1x" class="mx-2 cursor-pointer hover:text-primary">
-                                    </fa-icon> -->
                             {{'train' | translate}}
                         </menu>
                         <menu mat-menu-item>

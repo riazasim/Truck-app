@@ -1,6 +1,4 @@
-<!--<section *ngIf="false && isLoading$ && originalSource.length; else empty">-->
-  <section *ngIf="(isLoading$ | async) || originalSource.length; else empty">
-    <!--    buttonLabel="Add Location" tableTitle="Locations" (buttonClicked)="redirectAddLocation()"-->
+<section *ngIf="(isLoading$ | async) || originalSource.length; else empty">
     <material-panel-table [showSearchbar]="false" [showHeader]="true"
         Class="!rounded-xl shadow-lg border border-transparent">
         <div table class="w-full overflow-hidden">
@@ -19,7 +17,7 @@
                             <!-- <a class="text-primary" href="javascript:void(0)" (click)="triggerOpenLogs.emit({ view: 'view', id: row.id, planning: row })">{{row.id || '-'}}</a> -->
                           </td>
                           <td cdk-footer-cell *cdkFooterCellDef [colSpan]="displayedColumns.length" class="py-4 font-bold text-center">
-                            <!-- {{'messages.there-no-more-items' | translate}} -->dfgs
+                            <!-- {{'messages.there-no-more-items' | translate}} -->
                           </td>
                     </ng-container>
                     <ng-container cdkColumnDef="manevre">
@@ -125,45 +123,14 @@
                             </section>
                         </th>
                         <td cdk-cell *cdkCellDef="let row">
-                            <!-- {{ row.shipmentStatus }} -->
                             <mat-chip
                                 [ngStyle]="{'background-color': row.planning.shipmentStatus === 'Port Queue' ? '#3386FE' : '#1C3F47'}"
                                 >
                                 {{ row.planning.shipmentStatus === 'Port Queue' ? 'Port Queue' : row.planning.shipmentStatus === 'Service'
                                 ? 'Service' : 'Closed' }}
                             </mat-chip>
-                            <!-- <mat-chip
-                                [ngClass]="{
-                                    'active': row.shipmentStatus === 'Port Queue',
-                                    'service': row.shipmentStatus === 'Service',
-                                    'inactive': row.shipmentStatus === 'Closed',
-                                }"
-                                >
-                                {{ row.shipmentStatus === 'Port Queue' ? 'Port Queue' : row.shipmentStatus === 'Service' ? 'Service' : 'Closed' }}
-                            </mat-chip> -->
                         </td>
                     </ng-container>
-
-                    <!-- <ng-container cdkColumnDef="actions">
-                        <th cdk-header-cell *cdkHeaderCellDef scope="col" class="min-w-40">
-                            <section class="flex flex-col gap-4">
-                                <div mat-sort-header="actions">Actions</div>
-                            </section>
-                        </th>
-                        <td cdk-cell *cdkCellDef="let row" class="flex justify-center gap-4 w-max-content">
-                            <div class="flex gap-4">
-                                <img src="assets/images/left-right-list-icon.png" alt="icon" class="cursor-pointer">
-                                <fa-icon icon="xmark" class="text-[#17A0B5] cursor-pointer" size="lg"
-                                    (click)="openDeleteModal(row.id)"></fa-icon>
-                            </div>
-                            <div class="flex gap-4">
-                                <fa-icon icon="eye" class="text-[#17A0B5] cursor-pointer" size="lg"
-                                    [routerLink]="['../edit', row.id]"></fa-icon>
-                                <img src="assets/images/boat.svg" alt="icon" class="cursor-pointer max-w-5 max-h-5" [routerLink]="['../route',row.id ,'convoy-list']" >
-                                <a class="text-primary" href="javascript:void(0)" (click)="triggerOpenLogs.emit({ view: 'view', id: row.id, planning: row })"><img src="assets/images/rotate-left-list-icon.svg" alt="icon" class="cursor-pointer"></a>
-                            </div>
-                        </td>
-                    </ng-container> -->
 
                     <!-- Header and Row Declarations -->
                     <tr cdk-header-row *cdkHeaderRowDef="displayedColumns"></tr>
@@ -197,117 +164,3 @@
 <ng-template #empty>
   <no-list-management></no-list-management>
 </ng-template>
-<!-- <ng-template #empty>
-    <no-scheduling></no-scheduling>
-</ng-template> -->
-
-
-<!-- <section *ngIf="(isLoading$ | async) || originalSource.length; else empty">
-  <material-panel-table [showSearchbar]="false" [showHeader]="true" buttonLabel="Add status"
-                        [tableTitle]="listTitle" (buttonClicked)="redirectAddList()">
-    <div table class="w-full shadow-lg">
-      <ng-scrollbar track="horizontal" [autoHeightDisabled]="false">
-        <table class="material-table no-wrap overflow-hidden"
-               [class.loading]="(isLoading$ | async)" aria-label="Usage Table"
-               cdk-table [dataSource]="dataSource" cdkDropList (cdkDropListDropped)="drop($event)">
-
-          <ng-container cdkColumnDef="name">
-            <th cdk-header-cell *cdkHeaderCellDef scope="col">
-              <section class="flex flex-col">
-                <div>List Name</div>
-                <searchbar>
-                  <fa-icon icon="search"></fa-icon>
-                  <input #searchName input type="text" (keyup)="applyFilter($event.target, 'name')">
-                  <div *ngIf="searchName.value" close (click)="searchName.value=''; applyFilter({ value: '' }, 'name')">
-                    <fa-icon icon="close"></fa-icon>
-                  </div>
-                </searchbar>
-              </section>
-            </th>
-            <td cdk-cell *cdkCellDef="let row">{{row.name}}</td>
-          </ng-container>
-
-          <ng-container cdkColumnDef="type" >
-            <th cdk-header-cell *cdkHeaderCellDef scope="col">
-              <section class="flex flex-col">
-                <div>Type of List</div>
-                <searchbar>
-                  <fa-icon icon="search"></fa-icon>
-                  <input #searchType input type="text" (keyup)="applyFilter($event.target, 'type')">
-                  <div *ngIf="searchType.value" close (click)="searchType.value=''; applyFilter({ value: '' }, 'type')">
-                    <fa-icon icon="close"></fa-icon>
-                  </div>
-                </searchbar>
-              </section>
-            </th>
-            <td cdk-cell *cdkCellDef="let row;let i = index;" class="flex justify-center">
-              <app-loader *ngIf="isLoadingColor$.value[i]" size="lg"></app-loader>
-              <ng-container *ngIf="!isLoadingColor$.value[i]">
-                <input #colorTrigger [style.visibility]="'hidden'" type="color" [value]="transformHex(row.color)" (change)="handleUpdateColor($event, row.id, i)">
-                <div (click)="colorTrigger.click()" [ngStyle]="{'background-color': row.color}" class="w-5 h-5 rounded-full mx-4 cursor-pointer"></div>
-                <div>{{row.type}}</div>
-              </ng-container>
-            </td>
-          </ng-container>
-
-          <ng-container cdkColumnDef="description">
-            <th cdk-header-cell *cdkHeaderCellDef scope="col">
-              <section class="flex flex-col">
-                <div>Description</div>
-                <searchbar>
-                  <fa-icon icon="search"></fa-icon>
-                  <input #searchDescription input type="text" (keyup)="applyFilter($event.target, 'description')">
-                  <div *ngIf="searchDescription.value" close (click)="searchDescription.value=''; applyFilter({ value: '' }, 'description')">
-                    <fa-icon icon="close"></fa-icon>
-                  </div>
-                </searchbar>
-              </section>
-            </th>
-            <td cdk-cell *cdkCellDef="let row">{{row.description}}</td>
-          </ng-container>
-
-          <ng-container cdkColumnDef="actions">
-            <th cdk-header-cell *cdkHeaderCellDef scope="col">
-              <section class="flex flex-col"></section>
-            </th>
-            <td cdk-cell *cdkCellDef="let row" class="flex gap-4">
-              <fa-icon *ngIf="statusType !== statusTypeEnum.TIMESLOT" icon="grip-lines" class="text-primary cursor-pointer" size="lg"></fa-icon>
-              <fa-icon *ngIf="statusType !== statusTypeEnum.TIMESLOT" icon="eye" class="text-primary cursor-pointer" size="lg" [routerLink]="['../edit', row.id]"
-              [queryParams]="{type: statusType === statusTypeEnum.SID ? 'sid' :
-              statusType === statusTypeEnum.GOODS ? 'goods' : 0 }"></fa-icon>
-              <fa-icon *ngIf="statusType !== statusTypeEnum.TIMESLOT" icon="trash-can" class="text-primary cursor-pointer" size="lg" (click)="openDeleteModal(row)"></fa-icon>
-            </td>
-          </ng-container> -->
-
-          <!-- Header and Row Declarations -->
-          <!-- <tr cdk-header-row *cdkHeaderRowDef="displayedColumns"></tr>
-          <tr cdkDrag [cdkDragDisabled]="statusType === statusTypeEnum.TIMESLOT" [cdkDragData]="{index: i, position: row.position, id: row.id }" cdk-row *cdkRowDef="let row; let i = index; columns: displayedColumns"></tr>
-          <tr *cdkDragPreview class="bg-white flex">
-            <td *cdkCellDef="let row" class="bg-white">{{row.name}}</td>
-            <td *cdkCellDef="let row" class="bg-white">{{row.type}}</td>
-            <td *cdkCellDef="let row" class="bg-white">{{row.description}}</td>
-            <td *cdkCellDef="let row;" class="bg-white">
-              <fa-icon *ngIf="statusType !== statusTypeEnum.TIMESLOT" icon="grip-lines" class="text-primary cursor-pointer" size="lg"></fa-icon>
-              <fa-icon *ngIf="statusType !== statusTypeEnum.TIMESLOT" icon="eye" class="text-primary cursor-pointer" size="lg" [routerLink]="['../edit', row.id]"
-              [queryParams]="{type: statusType === statusTypeEnum.SID ? 'sid' :
-                                    statusType === statusTypeEnum.GOODS ? 'goods' : 0 }"></fa-icon>
-              <fa-icon *ngIf="statusType !== statusTypeEnum.TIMESLOT" icon="trash-can" class="text-primary cursor-pointer" size="lg" (click)="openDeleteModal(row)"></fa-icon>
-            </td>
-          </tr>
-          <tr *cdkNoDataRow>
-            <td [colSpan]="displayedColumns.length">
-              <app-loader *ngIf="(isLoading$ | async)" [isContainer]="true" [fullScreen]="false"></app-loader>
-              <span
-                *ngIf="dataSource.length === 0 && !(isLoading$ | async)">No results found</span>
-              <span
-                *ngIf="dataSource.length > 0  && !(isLoading$ | async)">Nicio înregistrare nu corespunde criteriilor de căutare</span>
-            </td>
-          </tr>
-        </table>
-      </ng-scrollbar>
-    </div>
-  </material-panel-table>
-</section>
-<ng-template #empty>
-  <no-list-management></no-list-management>
-</ng-template> -->

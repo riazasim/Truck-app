@@ -29,12 +29,6 @@ export class LocationsAddEditComponent implements OnInit {
         this.subscribeForQueryParams();
     }
 
-    // onPhoneInputChange(ev : any){
-    //     const temp = String(String(String(ev.target.value).split(" " , 1)).split("(",1));
-    //     this.phoneRegionCode = String(temp.slice(0,4))
-    //     console.log(this.phoneRegionCode)
-    // }
-
     subscribeForQueryParams(): void {
         this.id = this.route.snapshot.params['id'];
         if (this.id) {
@@ -59,7 +53,6 @@ export class LocationsAddEditComponent implements OnInit {
 
     initForm(data: LocationModel = <LocationModel>{}): void {
         this.locationForm = this.fb.group({
-            //locationId: this.fb.control(data?.id),
             name: this.fb.control(data?.name || '', [...createRequiredValidators()]),
             addrCoordinates: this.fb.control(data?.addrCoordinates || '', [...createRequiredValidators()]),
             addrStreet: this.fb.control(data?.addrStreet || '', [...createRequiredValidators()]),
@@ -76,7 +69,6 @@ export class LocationsAddEditComponent implements OnInit {
             contactEmail: this.fb.control(data?.contactEmail || '', [...createRequiredValidators(), Validators.email]),
             comments: this.fb.control(data?.comments || '', []),
             imgPreview: this.fb.control(data?.imgPreview, []),
-            // customFields: this.fb.control(data?.customFields, []),
         });
     }
 

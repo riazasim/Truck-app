@@ -4,7 +4,7 @@ import { SchedulingImportModalComponent } from '../scheduling-import-modal/sched
 import { SchedulingPlanModalComponent } from '../scheduling-plan-modal/scheduling-plan-modal.component';
 import { PlanningService } from 'src/app/core/services/planning.service';
 import { PlanningModel, UpdatePlanningDock } from 'src/app/core/models/planning.model';
-import { BehaviorSubject, Observable, Subscription, map } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { SchedulingDeleteModalComponent } from '../scheduling-delete-modal/scheduling-delete-modal.component';
 import { MatSidenav } from '@angular/material/sidenav';
 import { ComvexPlanningList } from 'src/app/core/models/scheduling.model';
@@ -127,7 +127,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
             let data = {
                 "start": this.pageSettings.start,
                 "length": this.pageSettings.length,
-                "filters": [this.formatDate(this.filterDate), "", "", "", "", ""], // Assuming these are for other filters
+                "filters": [this.formatDate(this.filterDate), "", "", "", "", ""],
                 "order": [{ "dir": "DESC", "column": 0 }],
             };
             this.planningService.pagination(data).subscribe({
@@ -207,15 +207,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
             case FilterTypeENum.status: key = 'status'; break;
             case FilterTypeENum.timeSlot: key = 'timeSlot'; break;
         }
-        /**
-          * key
-          * 0 = SID filter
-          * 1 = truckLicensePlateFront filter
-          * 2 = truckLicensePlateBack filter
-          * 3 = dockName filter
-          * 4 = status name filter
-          * 5 = schedulingDate filter
-        */
         this.appliedFilters[key] = event.value;
         this.retrievePlanningList();
     }
@@ -349,15 +340,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         this.planningService.updatePlanningToDock(data).subscribe({
             next: () => {
                 if (this.isTableView$.getValue() && this.isComvexOrganization$.getValue()) {
-                    // if (this.isComvexReorder$.getValue()) {
-                    //     this.comvexListReorderComponent.retrievePlannings();
-                    // }
-                    // if (!this.isComvexReorder$.getValue()) {
-                    //     this.comvexListComponent.retrievePlannings();
-                    // }
                     this.isLoading$.next(false);
                 } else if (this.isTableView$.getValue() && !this.isComvexOrganization$.getValue()) {
-                    // this.vehicleListComponent.retrievePlannings();
                     this.isLoading$.next(false);
                 } else {
                     this.retrievePlanningList();
@@ -528,28 +512,12 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         });
     }
 
-    // retrievePlanningList(): void {
-    //     let data = {
-    //         "start": this.pageSettings.start,
-    //         "length": this.pageSettings.length,
-    //         "filters": ["", "", "", "", "", ""],//["firstname/lastname", "status", "role", "phone", "email"]
-    //         "order": [{ "dir": "DESC", "column": 0 }]
-    //     }
-    //     this.planningService.pagination(data).subscribe((response: any) => {
-    //         this.plannings = response.items;
-    //         this.isLoading$.next(false);
-    //         this.newCardsLoading$.next(false);
-    //         this.cd.detectChanges();
-    //     })
-    // }
-
     retrievePlanningList(): void {
-        // Ensure filterDate is not null or undefined before proceeding
 
         let data = {
             "start": this.pageSettings.start,
             "length": this.pageSettings.length,
-            "filters": [this.formatDate(this.filterDate), "", "", "", "", ""], // Assuming these are for other filters
+            "filters": [this.formatDate(this.filterDate), "", "", "", "", ""],
             "order": [{ "dir": "DESC", "column": 0 }],
         };
 
@@ -566,7 +534,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         let formattedDate = '';
 
         if (typeof date === 'string') {
-            // Convert the string to a Date object
             const tempDate = new Date(date);
             formattedDate = this.formatDateObject(tempDate);
         } else {
@@ -578,23 +545,12 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
     private formatDateObject(date: Date): string {
         const year = date.getFullYear();
-        const month = date.getMonth() + 1; // Months are 0-indexed
+        const month = date.getMonth() + 1;
         const day = date.getDate();
 
         const formattedDate = `${year}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`;
         return formattedDate;
     }
-
-    // Helper function to format date as required by your API
-    // formatDate(date: Date): string {
-    //     // Assuming your API requires date in 'YYYY-MM-DD' format
-    //     const year = date.getFullYear();
-    //     const month = date.getMonth() + 1; // Months are 0-indexed
-    //     const day = date.getDate();
-
-    //     const formattedDate = `${year}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`;
-    //     return formattedDate;
-    // }
 
     openPlanEditModal(event: any): void {
         const planning = this.editPlanning$.getValue();

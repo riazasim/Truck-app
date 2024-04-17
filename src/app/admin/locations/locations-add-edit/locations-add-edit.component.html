@@ -1,5 +1,4 @@
-﻿<!--<edit-container headerTitle="Add location">-->
-<edit-container [headerTitle]="id ?  'Edit location details':'Add location details'">
+﻿<edit-container [headerTitle]="id ?  'Edit location details':'Add location details'">
     <app-loader *ngIf="(isLoading$ | async)" [isContainer]="true" [fullScreen]="false"></app-loader>
     <form *ngIf="!(isLoading$ | async)" [formGroup]="locationForm">
         <div>

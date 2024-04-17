@@ -48,40 +48,16 @@ export class DashboardComponent implements OnInit {
             value: 0
         },
     ];
-    // readonly totalVehiclesToday$: Observable<number> = this.statService.getVehiclesToday()
-    // readonly totalVehiclesInside$: Observable<number> = this.statService.getVehiclesInside()
-    // readonly totalVehiclesPlanned$: Observable<number> = this.statService.getVehiclesPlanned()
-    // readonly lineChartData$: Observable<any> = this.statService.getHourlyVehiclesToday();
-    // readonly currentVehicles$: Observable<any> = this.statService.getVehiclesInsideByOperation();
-    // readonly futureVehicles$: Observable<any> = this.statService.getVehiclesPlannedByOperation();
-
-    // Charts
-
     public readonly showLabels = true;
     public readonly animations = true;
-    //   public readonly xAxis = true;
-    //   public readonly yAxis = true;
-    //   public readonly showYAxisLabel = true;
-    //   public readonly showXAxisLabel = true;
-    //   public readonly xAxisLabel = 'Hour';
-    //   public readonly yAxisLabel = 'Vehicles today';
     public readonly timeline = true;
 
     readonly colorScheme: string | Color | any = {
         domain: ['#FF922E', '#3386FE', '#1C3F47']
     };
 
-    //   readonly lineChartDataColorScheme: Color = {
-    //     name: 'Line Chart Color Scheme',
-    //     selectable: true,
-    //     group: ScaleType.Linear,
-    //     domain: ['#ffa500', '#BFEAF8', '#7AA3E5', '#A27EA8']
-    //   }
-
     readonly showLegend$: BehaviorSubject<boolean> = new BehaviorSubject(true);
     public readonly legendPosition: LegendPosition = LegendPosition.Right;
-
-    //   public readonly lineChartData: { name: string, series: { name: string, value: number }[] }[] = [];
     public readonly pieChardData: { name: string, value: number }[] = [];
     public view: [number, number];
 

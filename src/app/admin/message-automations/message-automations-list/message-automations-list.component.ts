@@ -16,7 +16,6 @@ export class MessageAutomationsListComponent {
     scheduling: '00:00',
     status: 'Assign'
   }]
-  // dataSource = []
   constructor(private readonly dialogService: MatDialog,
     private readonly router: Router,
               private readonly route: ActivatedRoute) { }

@@ -18,23 +18,6 @@
             label="No. of SID" [numericValue]="dashboardData?.noOfPlanningConvoySidsCount" textColor="#17A0B5"
             colorStyle="#17A0B5"></div>
     </div>
-
-    <!-- <div card class="h-max-content flex gap-8"> -->
-    <!-- <div class="flex-grow h-[250px] min-md:h-[250px]">
-        <ngx-charts-line-chart
-          [scheme]="lineChartDataColorScheme"
-          [legend]=true
-          [legendPosition]="legendPosition"
-          [showXAxisLabel]="showXAxisLabel"
-          [showYAxisLabel]="showYAxisLabel"
-          [xAxis]="xAxis"
-          [yAxis]="yAxis"
-          [xAxisLabel]="xAxisLabel"
-          [yAxisLabel]="yAxisLabel"
-          [results]="lineChartData$ | async"
-          [trimYAxisTicks]="true"
-        ></ngx-charts-line-chart>
-      </div> -->
     <div class="flex w-full max-lg:flex-col gap-12">
         <div class="flex-1 flex-grow flex flex-col p-4 bg-white shadow-md">
             <ngx-charts-pie-chart [view]="view" [scheme]="colorScheme" [results]="sidsByStatus" [legend]="true"
@@ -47,6 +30,5 @@
                 [legendTitle]="'Time Break Down'"></ngx-charts-pie-chart>
         </div>
     </div>
-    <!-- </div> -->
     <app-map Title="SIDs by Port"></app-map>
 </div>

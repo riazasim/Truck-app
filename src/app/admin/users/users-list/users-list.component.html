@@ -50,14 +50,9 @@
                                     <option value="" selected>Select</option>
                                     <option value="ROLE_USER_OPERATOR">OPERATOR</option>
                                     <option value="ROLE_USER_CAPTAIN">CAPTAIN</option>
-                                    <!-- <option value="PARTNER">PARTNER</option> -->
-                                    <!--                    <option *ngFor="let role of roles" [value]="role.id">{{role.name}}</option>-->
                                 </select>
                             </section>
                         </th>
-                        <!--              <td cdk-cell *cdkCellDef="let row">-->
-                        <!--                {{row?.user?.attributes?.roles[0] || '-'}}-->
-                        <!--              </td>-->
                         <td cdk-cell *cdkCellDef="let row">{{row.user.userRole === 'ROLE_USER_OPERATOR' ? 'OPERATOR' :
                             'CAPTAIN'}}</td>
 
@@ -104,16 +99,7 @@
                                 <button type="button" class="btn btn-outline-primary">Mass update</button>
                             </section>
                         </th>
-                        <td cdk-cell *cdkCellDef="let row" class="flex gap-4">
-
-                            <!--                  <span class="hover:hidden" (mouseleave)="icon2.classList.add('hidden');icon1.classList.remove('hidden')" #icon2>-->
-                            <!--                  <fa-icon icon="user-lock" class="text-primary cursor-pointer" size="lg"></fa-icon>-->
-                            <!--                </span>-->
-                            <!--                <span #icon1 (mouseenter)="icon1.classList.add('hidden');icon2.classList.remove('hidden')">-->
-                            <!--                  <fa-icon icon="user-unlock" class="text-primary cursor-pointer" size="lg"></fa-icon>-->
-                            <!--                </span>-->
-
-                            <fa-icon icon="eye" class="text-primary cursor-pointer" size="lg"
+                        <td cdk-cell *cdkCellDef="let row" class="flex gap-4"><fa-icon icon="eye" class="text-primary cursor-pointer" size="lg"
                                 [routerLink]="['../edit', row.user.id]"></fa-icon>
                             <fa-icon icon="trash-can" class="text-primary cursor-pointer" size="lg"
                                 (click)="openDeleteModal(row.user.id)"
@@ -142,28 +128,6 @@
                 [length]="length" [pageIndex]="pageIndex" (page)="onPaginateChange($event)" [pageSize]="pageSize"
                 showFirstLastButtons>
             </mat-paginator>
-
-            <!--                <mat-paginator [class.!hidden]="dataSource.length === 0"   class="paginator rounded-b-[10px]"-->
-            <!--                               hidePageSize-->
-            <!--                               aria-label="Select page" pageSize="10">-->
-            <!--                </mat-paginator>-->
-
-            <!--        <mat-paginator pageSizeOptions="[5]"-->
-            <!--                       length="10"-->
-            <!--                       pageSize=4-->
-            <!--                       showFirstLastButtons>-->
-            <!--            -->
-            <!--        </mat-paginator>-->
-
-            <!--        <mat-paginator [class.!hidden]="dataSource.length === 0"   class="paginator rounded-b-[10px]"-->
-            <!--                       hidePageSize-->
-            <!--                       aria-label="Select page" pageSize="10">-->
-            <!--        </mat-paginator>-->
-
-            <!--        <mat-paginator #paginator-->
-            <!--                       [pageSize]="10"-->
-            <!--                       [pageSizeOptions]="[5, 10, 20]">-->
-            <!--        </mat-paginator>-->
         </div>
     </material-panel-table>
 </section>

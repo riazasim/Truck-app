@@ -1,17 +1,10 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FormControl, FormGroup, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
-import { LocationModel } from 'src/app/core/models/location.model';
-import { NativeResponseWrapper } from 'src/app/core/models/response-wrappers.types';
-import { UserRoleModel } from 'src/app/core/models/user-role.model';
+import { BehaviorSubject } from 'rxjs';
 import { UserModel } from 'src/app/core/models/user.model';
-import { LocationService } from 'src/app/core/services/location.service';
-import { UserRoleService } from 'src/app/core/services/user-role.service';
 import { UserService } from 'src/app/core/services/user.service';
-import { SignupModel } from "../../../core/models/signup.model";
-import { handleSuccess } from "../../../shared/utils/success-handling.function";
 import { handleError } from "../../../shared/utils/error-handling.function";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { createMaxLengthValidator, createMinLengthValidator, createRequiredValidators } from 'src/app/shared/validators/generic-validators';
@@ -88,8 +81,6 @@ export class UsersAddEditComponent {
                 language: this.fb.control(data?.userSetting?.language || '', [...createRequiredValidators()]),
                 phone: this.fb.control(data?.userSetting?.phone || '', [...createRequiredValidators() , Validators.pattern("[- +()0-9]+") , ...createMinLengthValidator(7) , ...createMaxLengthValidator(17)]),
                 phoneRegionCode: this.fb.control(data?.userSetting?.phoneRegionCode || '', [...createRequiredValidators(), ...createMaxLengthValidator(4) , Validators.pattern("[- +()0-9]+")]),
-                // identityDocumentType: this.fb.control(data?.userSetting?.identityDocumentType || '', [...createRequiredValidators()]),
-                // idNumber: this.fb.control(data?.userSetting?.idNumber || '', [...createRequiredValidators()])
             })
         });
     }

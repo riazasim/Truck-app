@@ -56,14 +56,7 @@ export class PartnersAddEditComponent {
         this.initForm(partner);
         this.isLoading$.next(false);
       });
-    } else {
-      /*this.dockService.list({}).subscribe((response: DockModel[]) => {
-        this.originalSource = response;
-        this.docks$.next(response);
-        this.initForm();
-        this.isLoading$.next(false);
-      });*/
-    }
+    } else { }
   }
 
   applyFilter(target: any, column: string): void {

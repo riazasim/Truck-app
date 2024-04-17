@@ -48,7 +48,7 @@ export class ListStatusComponent {
       let data = {
           "start": this.pageIndex,
           "length": this.pageSize,
-          "filters": ["", "", "", "", "", ""],//["firstname/lastname", "status", "role", "phone", "email"]
+          "filters": ["", "", "", "", "", ""],
           "order": [{ "dir": "DESC", "column": 0 }]
       }
       this.planningService.pagination(data).subscribe((response: any) => {
@@ -66,7 +66,7 @@ export class ListStatusComponent {
           "start": event.pageIndex ? event.pageIndex * event.pageSize : event.pageIndex,
 
           "length": event.pageSize,
-          "filters": ["", "", "", "", "", ""],//["firstname/lastname", "status", "role", "phone", "email"]
+          "filters": ["", "", "", "", "", ""],
           "order": [{ "dir": "DESC", "column": 0 }]
       }
       this.planningService.pagination(data).subscribe(response => {
@@ -150,23 +150,6 @@ export class ListStatusComponent {
           this.dataSource = data;
           return;
       }
-
-      // this.dataSource = data.sort((a: any, b: any) => {
-      //     const isAsc = sort.direction === 'asc';
-      //     switch (sort.active) {
-      //         case 'id': return compare(a.id, b.id, isAsc);
-      //         case 'manevre': return compare(a.manevre, b.manevre, isAsc);
-      //         case 'vesselId': return compare(a.vesselId, b.vesselId, isAsc);
-      //         case 'berth': return compare(a.berth, b.berth, isAsc);
-      //         case 'products': return compare(a.products, b.products, isAsc);
-      //         case 'estimatedTimeArrival': return compare(a.estimatedTimeArrival, b.estimatedTimeArrival, isAsc);
-      //         case 'relativeTimeArrival': return compare(a.relativeTimeArrival, b.relativeTimeArrival, isAsc);
-      //         case 'delay': return compare(a.delay, b.delay, isAsc);
-      //         case 'coordinates': return compare(a.coordinates, b.coordinates, isAsc);
-      //         case 'shipmentStatus': return compare(a.shipmentStatus, b.shipmentStatus, isAsc);
-      //         default: return 0;
-      //     }
-      // });
   }
   openImportModal(): void {
       this.isLoading$.next(true);

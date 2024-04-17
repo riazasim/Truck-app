@@ -98,7 +98,7 @@ export class OperationsListComponent {
         let data = {
             "start": this.pageIndex,
             "length": this.pageSize,
-            "filters": ["", "", "", ""],//["firstname/lastname", "status", "role", "phone", "email"]
+            "filters": ["", "", "", ""],
             "order": [{ "dir": "DESC", "column": 0 }]
         }
         this.operationService.pagination(data).subscribe(response => {
@@ -115,7 +115,7 @@ export class OperationsListComponent {
           "start": event.pageIndex ? event.pageIndex * event.pageSize : event.pageIndex,
 
             "length": event.pageSize,
-            "filters": ["","","","","",""],//["firstname/lastname", "status", "role", "phone", "email"]
+            "filters": ["","","","","",""],
             "order": [{"dir": "DESC", "column": 0}]
         }
         this.operationService.pagination(data).subscribe(response => {
