@@ -77,7 +77,6 @@ export class MapComponent implements OnInit {
         this.mapSearchService.getMicroPlanningConvoyes(data).subscribe({
             next: response => {
                 this.dataSource = response.items;
-                console.log('map', this.dataSource)
                 this.markerPositions = [];
                 this.dataSource.forEach(item => {
                     if (item && item.sidCoordinates) {
@@ -101,6 +100,9 @@ export class MapComponent implements OnInit {
                 //     console.log('marker:', this.marker)
                 // }
                 this.cd.detectChanges();
+                this.isLoading$.next(false);
+            },
+            error: ()=>{
                 this.isLoading$.next(false);
             }
         });

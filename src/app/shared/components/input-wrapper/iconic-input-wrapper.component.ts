@@ -20,6 +20,10 @@ export class IconicInputWrapperComponent extends GenericWrapperComponent<HTMLInp
 
     @Input()
     public isInvalid: boolean;
+
+    @Input()
+    public dashboardInp: boolean;
+
     @Input()
     public withoutTouched: boolean;
 

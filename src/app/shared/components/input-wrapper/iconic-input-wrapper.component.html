@@ -1,5 +1,5 @@
 <div [class.valid]="isValid === true && (isTouched || withoutTouched)" [class.invalid]="isInvalid || !isValid && (isTouched || withoutTouched)"
-    [class.disabled]="isDisabled" class="iconic-layout-wrapper">
+    [class.disabled]="isDisabled" [class.dashboard]="dashboardInp" class="iconic-layout-wrapper">
     <div class="input-container {{inputContainerClass}}">
         <img *ngIf="leftSvg" [src]="leftSvg" alt="icon" class="mx-[10px] max-h-5 max-w-5">
         <fa-icon [class.invalid]="isInvalid || !isValid && isTouched" *ngIf="leftIcon" [icon]="leftIcon" size="lg"
