@@ -41,13 +41,11 @@ export class PlanningListComponent implements OnChanges {
         this.originalSource = this.plannings;
         this.isLoading$.next(false)
         this.isTableLoading$.next(false);
-        // this.retrievePlanningList('');
     }
     ngOnChanges(changes: SimpleChanges): void {
             this.dataSource = this.plannings;
             this.originalSource = this.plannings;
             this.isLoading$.next(false)
-            // this.retrievePlanningList(this.filterDate)
     }
 
     retrievePlanningList(filterDate: string): void {
@@ -57,7 +55,7 @@ export class PlanningListComponent implements OnChanges {
         let data = {
             "start": this.pageIndex,
             "length": this.pageSize,
-            "filters": [filterDate, "", "", "", "", ""],//["firstname/lastname", "status", "role", "phone", "email"]
+            "filters": [filterDate, "", "", "", "", ""],
             "order": [{ "dir": "DESC", "column": 0 }]
         }
         this.planningService.pagination(data).subscribe({
@@ -76,7 +74,7 @@ export class PlanningListComponent implements OnChanges {
         let data = {
             "start": event.pageIndex ? event.pageIndex * event.pageSize : event.pageIndex,
             "length": event.pageSize,
-            "filters": ["", "", "", "", "", ""],//["firstname/lastname", "status", "role", "phone", "email"]
+            "filters": ["", "", "", "", "", ""],
             "order": [{ "dir": "DESC", "column": 0 }]
         }
         this.planningService.pagination(data).subscribe({
@@ -90,9 +88,7 @@ export class PlanningListComponent implements OnChanges {
     }
 
     OnEmit(row: any, modal: string) {
-        // if (row.assigningStatus === false) {
         this.triggerOpenLogs.emit({ view: 'view', id: row.planning.id, planning: row, modal: modal })
-        // }
     }
 
     openDeleteModal(id: number) {
@@ -112,24 +108,6 @@ export class PlanningListComponent implements OnChanges {
                 }
             });
     }
-    // openTransferModal() {
-    //     this.dialogService.open(SchedulingTransferComponent, {
-    // data: image
-    // data: { "id": id, "title": "planning" }
-    // })
-    // .afterClosed()
-    // .subscribe({
-    //     next: (isDelete: boolean) => {
-    //         if (isDelete) {
-    //             this.isLoading$.next(true);
-    //             this.planningService.delete(id).subscribe(() => {
-    //                 this.retrievePlanningList();
-    //                 this.cd.detectChanges();
-    //             })
-    //         }
-    //     }
-    // });
-    // }
 
     applyFilter(target: any, column: string, isMultipleSearch = false): void {
         if (target.value) {

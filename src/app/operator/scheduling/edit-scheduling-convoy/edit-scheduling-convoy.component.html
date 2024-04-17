@@ -1,6 +1,4 @@
-<!--<section *ngIf="false && isLoading$ && originalSource.length; else empty">-->
 <section *ngIf="(isLoading$ | async) || originalSource.length; else empty">
-    <!--    buttonLabel="Add Location" tableTitle="Locations" (buttonClicked)="redirectAddLocation()"-->
     <material-panel-table [showSearchbar]="false" [showHeader]="true" tableTitle="RID-{{headerTitle}}"
         Class="!rounded-xl shadow-lg border border-transparent">
         <div table class="w-full overflow-hidden">

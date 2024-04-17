@@ -17,9 +17,6 @@
                             </th>
                             <td cdk-cell *cdkCellDef="let row">
                                 {{row?.planning?.rId || '-'}}
-                                <!-- <a class="text-primary" href="javascript:void(0)"
-                                    (click)="triggerOpenLogs.emit({ view: 'view', id: row.id, planning: row , modal : 'shipment' })">{{row.id
-                                    || '-'}}</a> -->
                             </td>
                             <td cdk-footer-cell *cdkFooterCellDef [colSpan]="displayedColumns.length"
                                 class="py-4 font-bold text-center">
@@ -129,22 +126,12 @@
                                 </section>
                             </th>
                             <td cdk-cell *cdkCellDef="let row">
-                                <!-- {{ row.shipmentStatus }} -->
                                 <mat-chip
                                     [ngStyle]="{'background-color': row?.planning?.shipmentStatus === 'Port Queue' ? '#3386FE' : '#1C3F47'}">
                                     {{ row?.planning?.shipmentStatus === 'Port Queue' ? 'Port Queue' :
                                     row?.planning?.shipmentStatus === 'Service'
                                     ? 'Service' : 'Closed' }}
                                 </mat-chip>
-                                <!-- <mat-chip
-                                    [ngClass]="{
-                                        'active': row.shipmentStatus === 'Port Queue',
-                                        'service': row.shipmentStatus === 'Service',
-                                        'inactive': row.shipmentStatus === 'Closed',
-                                    }"
-                                    >
-                                    {{ row.shipmentStatus === 'Port Queue' ? 'Port Queue' : row.shipmentStatus === 'Service' ? 'Service' : 'Closed' }}
-                                </mat-chip> -->
                             </td>
                         </ng-container>
 
@@ -160,7 +147,6 @@
                                         (click)="OnEmit(row , 'transfer')"><img
                                             src="assets/images/left-right-list-icon.png" alt="icon"
                                             class="cursor-pointer"></a>
-                                    <!-- <img src="assets/images/left-right-list-icon.png" alt="icon" class="cursor-pointer"> -->
                                     <fa-icon icon="xmark" class="text-[#17A0B5] cursor-pointer" size="lg"
                                         *ngIf="userRole === 'ROLE_USER_TRANSPORT'"
                                         (click)="openDeleteModal(row.id)"></fa-icon>

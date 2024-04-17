@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { PlanningService } from 'src/app/core/services/planning.service';
@@ -119,14 +119,11 @@ export class EditSchedulingConvoyPageComponent {
 
     next(step$: BehaviorSubject<boolean>, formGroup: FormGroup, index: any): void {
         if (formGroup.valid) {
-            // Update the step status accordingly
             if (this.matStepper.selectedIndex === 0) {
                 this.stepOne$.next(true);
             }
-            // Move to the next step
             this.matStepper.selectedIndex = index;
         } else {
-            // If the form is not valid, mark all fields as touched to display validation messages
             Object.values(formGroup.controls).forEach(control => {
                 control.markAsTouched();
             });

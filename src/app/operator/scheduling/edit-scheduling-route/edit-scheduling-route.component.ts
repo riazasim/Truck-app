@@ -37,7 +37,6 @@ export class EditSchedulingRouteComponent implements OnInit {
         private readonly snackBar: MatSnackBar) { }
 
     ngOnInit(): void {
-        // this.initializeSlots();
         this.getRoute()
         this.initForm();
     }

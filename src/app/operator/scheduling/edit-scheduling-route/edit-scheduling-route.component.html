@@ -3,7 +3,6 @@
     <form [formGroup]="planningForm" *ngIf="!(isLoading$ | async)">
         <div class="grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20 gap-y-4 pt-[100px] min-xl:px-[50px]">
             <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
-                <!-- <p class="text-columnCell font-bold"></p> -->
                 <div iconic-input-wrapper leftIcon="user">
                     <input inputRef type="text" placeholder="Convoy Type" formControlName="convoyType" />
                 </div>
@@ -57,7 +56,6 @@
                 </div>
             </div>
             <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
-                <!-- <p>&nbsp;</p> -->
                 <div iconic-input-wrapper leftSvg="assets/images/scheduling_length.svg">
                     <input inputRef type="number" placeholder="Length (m)*" formControlName="length" />
                 </div>

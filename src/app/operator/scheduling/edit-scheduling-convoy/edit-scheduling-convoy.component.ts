@@ -1,13 +1,9 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Sort } from '@angular/material/sort';
-import { compare } from 'src/app/shared/utils/sort.function';
-import { PageEvent } from "@angular/material/paginator";
 import { BehaviorSubject } from "rxjs";
 import { PlanningService } from 'src/app/core/services/planning.service';
 import { convoyModel } from 'src/app/core/models/planning.model';
 import { SchedulingDeleteModalComponent } from '../scheduling-delete-modal/scheduling-delete-modal.component';
-import { SchedulingImportModalComponent } from '../scheduling-import-modal/scheduling-import-modal.component';
 import { ActivatedRoute, Router } from '@angular/router';
 
 
@@ -61,6 +57,4 @@ export class EditSchedulingConvoyComponent {
                 }
             });
     }
-
-
 }
