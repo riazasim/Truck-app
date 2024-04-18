@@ -16,8 +16,9 @@ export class SearchComponent {
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject(true)
 
     timeOptions: any[] = [
-        { value: 'sidTime', name: 'SID Time' },
-        { value: 'operationTime', name: 'Operation Time' },
+        { value: 'ridTime', name: 'RID Time' },
+        { value: 'operationsTime', name: 'Operations Time' },
+        { value: 'berthTime', name: 'Berth Time' },
         { value: 'WaitingTime', name: 'Waiting Time' },
         { value: 'exitTime', name: 'Exit Time' }
     ];
@@ -52,7 +53,7 @@ export class SearchComponent {
         this.dateVal = `${value._i.year}-${value._i.month}-${value._i.date}`
     }
 
-    OnStatusCahnge(value: string) {
+    OnStatusChange(value: string) {
         if (this.statusFilters.includes(value)) {
             const index = this.statusFilters.indexOf(value);
             this.statusFilters.splice(index, 1);

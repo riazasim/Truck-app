@@ -52,7 +52,7 @@ export class MapComponent implements OnInit {
         this.isLoading$.next(true);
         let data = {
             "start": 0,
-            "length": 0,
+            "length": 5,
             "filters": ["","","",filters.statusFilters,"","","",filters.timeFilter],
             "order": [{"dir": "DESC", "column": 0}]
         }
