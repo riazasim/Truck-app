@@ -13,6 +13,7 @@ import { createRequiredValidators } from 'src/app/shared/validators/generic-vali
 export class SearchComponent {
 
     @Output() results: EventEmitter<any> = new EventEmitter()
+    @Output() mapLoading: EventEmitter<boolean> = new EventEmitter(true)
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject(true)
 
     timeOptions: any[] = [
@@ -85,6 +86,7 @@ export class SearchComponent {
     }
 
     retrieveCompanies(): void {
+        this.mapLoading.emit(true);
         this.isLoading$.next(true)
         let data = {
             "start": 0,
@@ -92,21 +94,27 @@ export class SearchComponent {
             "filters": ["", "", "", this.statusFilters, "", "", "", this.timeFilter],
             "order": [{ "dir": "DESC", "column": 0 }]
         }
-        this.results.emit({ statusFilters: this.statusFilters, timeFilter: this.timeFilter })
         this.mapSearchService.getMicroPlanningConvoyes(data).subscribe({
             next: response => {
                 this.companies = response.items;
                 this.length = response.noFiltered;
+                this.mapLoading.emit(false);
+                this.results.emit(response.items);
                 this.isLoading$.next(false);
                 this.cd.detectChanges();
             },
             error: () => {
+                this.results.emit([]);
+                this.mapLoading.emit(false);
+                this.companies = [];
+                this.length = 0;
                 this.isLoading$.next(false);
             }
         })
     }
 
     onPaginateChange(event: PageEvent) {
+        this.mapLoading.emit(true);
         this.isLoading$.next(true);
         let data = {
             "start": event.pageIndex ? event.pageIndex * event.pageSize : event.pageIndex,
@@ -118,10 +126,16 @@ export class SearchComponent {
             next: response => {
                 this.companies = response.items;
                 this.length = response.noFiltered;
+                this.results.emit(response.items);
+                this.mapLoading.emit(false);
                 this.isLoading$.next(false);
                 this.cd.detectChanges();
             },
             error: () => {
+                this.results.emit([]);
+                this.mapLoading.emit(false);
+                this.companies = [];
+                this.length = 0;
                 this.isLoading$.next(false);
             }
         })

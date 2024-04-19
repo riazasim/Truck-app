@@ -8,6 +8,6 @@
             >
         </map-marker>
     </google-map>
-    <app-search id="search" (results)="onStatusChange($event)"></app-search>
+    <app-search id="search" (results)="retrieveMapData($event)" (mapLoading)="mapLoading($event)"></app-search>
 </div>
 
