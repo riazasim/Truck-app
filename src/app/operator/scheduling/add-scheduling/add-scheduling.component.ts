@@ -91,9 +91,15 @@ export class AddSchedulingComponent implements OnInit {
         { id: 3, name: 'company3' },
     ];
     statuses = [
-        { id: 1, name: 'status1' },
-        { id: 2, name: 'status2' },
-        { id: 3, name: 'status3' },
+        { id: 1, name: 'Port Queue' },
+        { id: 2, name: 'Checked In' },
+        { id: 3, name: 'Waiting' },
+        { id: 4, name: 'In Berth Operation' },
+        { id: 5, name: 'Berth' },
+        { id: 6, name: 'In Exit Queue Operation' },
+        { id: 7, name: 'Exit Queue' },
+        { id: 8, name: 'In New RID Operation' },
+        { id: 9, name: 'Checked Out' },
     ];
     departurePort = [
         { id: 1, name: 'departure port1' },

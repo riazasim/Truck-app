@@ -30,25 +30,25 @@
                     </h2>
                     <div class="grid grid-cols-2">
                         <div class="flex gap-1 items-center w-[100px] px-5">
-                            <input type="checkbox" id="On route" name="On route" class="h-4 w-4 border-[#CCCCCC]"
-                                (click)="OnStatusChange('On Route')" [checked]="statusFilters.includes('On Route')"/>
-                            <label for="On route" class="text-[#354050] text-sm font-normal">On route</label>
+                            <input type="checkbox" id="2" value="id" name="Checked-In" class="h-4 w-4 border-[#CCCCCC]"
+                                (click)="OnStatusChange(2)" [checked]="statusFilters.includes('Checked-In')"/>
+                            <label for="Checked-In" class="text-[#354050] text-sm font-normal">Checked-In</label>
                         </div>
                         <div class="flex gap-1 items-center w-[100px] px-5">
-                            <input type="checkbox" id="Port" name="Port" class="h-4 w-4 border-[#CCCCCC]"
-                                (click)="OnStatusChange('Port Queue')" [checked]="statusFilters.includes('Port Queue')"/>
+                            <input type="checkbox" id="1" value="id" name="Port" class="h-4 w-4 border-[#CCCCCC]"
+                                (click)="OnStatusChange(1)" [checked]="statusFilters.includes('Port Queue')"/>
                             <label for="Port" class="text-[#354050] text-sm font-normal">Port</label>
                         </div>
                     </div>
                     <div class="flex flex-row mt-4">
                         <div class="flex items-center w-[100px] px-5">
-                            <input type="checkbox" id="Berth" name="Berth" class="h-4 w-4 border-[#CCCCCC]"
-                                (click)="OnStatusChange('Berth')" [checked]="statusFilters.includes('Berth')"/>&nbsp;
+                            <input type="checkbox" id="5" value="id" name="Berth" class="h-4 w-4 border-[#CCCCCC]"
+                                (click)="OnStatusChange(5)" [checked]="statusFilters.includes('Berth')"/>&nbsp;
                             <label for="Berth" class="text-[#354050] text-sm font-normal">Berth</label>
                         </div>
                         <div class="flex items-center w-[100px] px-5">
-                            <input type="checkbox" id="Exit" name="Exit" class="h-4 w-4 border-[#CCCCCC]"
-                                (click)="OnStatusChange('Exit')" [checked]="statusFilters.includes('Exit')"/>&nbsp;
+                            <input type="checkbox" id="7" value="id" name="Exit" class="h-4 w-4 border-[#CCCCCC]"
+                                (click)="OnStatusChange(7)" [checked]="statusFilters.includes('Exit')"/>&nbsp;
                             <label for="Exit" class="text-[#354050] text-sm font-normal">Exit</label>
                         </div>
                     </div>

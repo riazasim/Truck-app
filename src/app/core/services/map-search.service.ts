@@ -1,9 +1,9 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { map, Observable } from "rxjs";
-import { ResponseArrayPaginationWrapper } from "../models/response-wrappers.types";
+import { ResponseArrayPaginationWrapper, ResponseItemWrapper } from "../models/response-wrappers.types";
 import { environment } from "src/environments/environment";
-import { pluckArrayPaginationWrapperData, wrapJsonForRequest } from "src/app/shared/utils/api.functions";
+import { pluckArrayPaginationWrapperData, pluckItemWrapperData, wrapJsonForRequest } from "src/app/shared/utils/api.functions";
 import { CustomFieldData } from "../models/custom-field.model";
 
 @Injectable({
@@ -19,5 +19,21 @@ export class MapSerachService {
                     return u;
                 })
             );
+    }
+    getPorts(id: number): Observable<any> {
+        return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getPorts`, { "organizationId": id })
+            .pipe(pluckItemWrapperData<any, ResponseItemWrapper<any>>(),
+                map((p: any) => {
+                    return p;
+                })
+            )
+    }
+    getCompanies(id: number): Observable<any> {
+        return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getCompanies`, { "portId": id })
+            .pipe(pluckItemWrapperData<any, ResponseItemWrapper<any>>(),
+                map((p: any) => {
+                    return p;
+                })
+            )
     }
 }

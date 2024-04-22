@@ -1,7 +1,6 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MapInfoWindow } from '@angular/google-maps';
 import { BehaviorSubject } from 'rxjs';
-import { MapSerachService } from 'src/app/core/services/map-search.service';
 
 declare var google: any;
 @Component({
@@ -34,10 +33,7 @@ export class MapComponent {
     };
 
 
-    constructor(
-        private readonly mapSearchService: MapSerachService,
-        private readonly cd: ChangeDetectorRef
-    ) { }
+    constructor() { }
 
     retrieveMapData(results: any): void {
         if (results.length <= 0) {

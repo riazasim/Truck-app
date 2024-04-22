@@ -54,7 +54,8 @@ export class SearchComponent {
         this.dateVal = `${value._i.year}-${value._i.month}-${value._i.date}`
     }
 
-    OnStatusChange(value: string) {
+    OnStatusChange(value: any) {
+        debugger
         if (this.statusFilters.includes(value)) {
             const index = this.statusFilters.indexOf(value);
             this.statusFilters.splice(index, 1);
