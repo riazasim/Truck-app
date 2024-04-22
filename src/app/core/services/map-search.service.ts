@@ -20,7 +20,7 @@ export class MapSerachService {
                 })
             );
     }
-    getPorts(id: number): Observable<any> {
+    getPorts(id: any = {}): Observable<any> {
         return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getPorts`, { "organizationId": id })
             .pipe(pluckItemWrapperData<any, ResponseItemWrapper<any>>(),
                 map((p: any) => {

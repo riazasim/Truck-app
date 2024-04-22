@@ -1,6 +1,6 @@
 <div class="relative">
-    <app-loader *ngIf="isLoading$ | async" [isContainer]="true"></app-loader>
-    <google-map *ngIf="!(isLoading$ | async)" [center]="center" [zoom]="zoom" height="750px" width="100%">
+    <app-loader *ngIf="isLoading$ | async" [isOverlay]="true" message="Wait map is loading."></app-loader>
+    <google-map [center]="center" [zoom]="zoom" height="750px" width="100%">
         <map-marker
             *ngFor="let marker of markerPositions"
             [position]="marker.position"
@@ -8,6 +8,6 @@
             >
         </map-marker>
     </google-map>
-    <app-search id="search" (results)="retrieveMapData($event)" (mapLoading)="mapLoading($event)"></app-search>
+    <app-search id="search" (results)="retrieveMapData($event)" (mapLoading$)="mapLoading($event)"></app-search>
 </div>
 
