@@ -27,6 +27,9 @@ export class IconicInputWrapperComponent extends GenericWrapperComponent<HTMLInp
     @Input()
     public withoutTouched: boolean;
 
+    @Input()
+    public loading: boolean | any;
+
 
     @ContentChild(InputRefDirective)
     override set inputRef(ref: InputRefDirective) {

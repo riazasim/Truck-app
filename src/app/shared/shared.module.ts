@@ -104,7 +104,6 @@ export const MY_FORMATS = {
         MatProgressSpinnerModule,
         MatDatepickerModule,
         TranslateModule,
-        ReactiveFormsModule,
         MatMenuModule,
         MatRadioModule,
         CommonModule,
@@ -159,8 +158,11 @@ export const MY_FORMATS = {
         MatTooltipModule,
         InputRefDirective,
         SelectRefDirective,
-        MatFormFieldModule,
-        MatInputModule
+        MatInputModule,
+        FontAwesomeModule,
+        FormsModule,
+        ReactiveFormsModule,
+        TranslateModule
     ],
     providers: [
         { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },

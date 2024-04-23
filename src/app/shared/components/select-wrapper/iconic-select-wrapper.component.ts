@@ -15,12 +15,12 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
         position: relative;
         flex-grow: 1;
         display: flex;
-      }
+    }
     .select-decoration {
         position: absolute;
         right: 10px;
         color: black;
-      }
+    }
     `
     ]
 })
@@ -35,6 +35,9 @@ export class IconicSelectWrapperComponent extends GenericWrapperComponent<HTMLSe
 
     @Input()
     public dashboardInp: boolean;
+
+    @Input()
+    public loading: boolean | any;
 
     @ContentChild(SelectRefDirective)
     override set inputRef(ref: SelectRefDirective) {

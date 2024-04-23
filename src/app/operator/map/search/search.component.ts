@@ -16,7 +16,7 @@ export class SearchComponent {
     @Output() mapLoading$: EventEmitter<boolean> = new EventEmitter(true)
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject(true)
     isPortsLoading$: BehaviorSubject<boolean> = new BehaviorSubject(true)
-    showCompanies$: BehaviorSubject<boolean> = new BehaviorSubject(false)
+    isCompaniesLoading$: BehaviorSubject<boolean> = new BehaviorSubject(true)
 
     timeOptions: any[] = [
         { value: 'ridTime', name: 'RID Time' },
@@ -35,7 +35,7 @@ export class SearchComponent {
     dateVal: string;
     resultsArray: any[] = [];
     companies: any[] = [];
-    statusFilters: string[] = []
+    statusFilters: number[] = [];
     pageIndex: number;
     pageSize: number;
     length: number = 0;
@@ -46,6 +46,15 @@ export class SearchComponent {
     arrivalPortId: number = 0;
     departurePortId: number = 0;
 
+    private formatDateObject(date: Date): string {
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1;
+        const day = date.getDate();
+
+        const formattedDate = `${year}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`;
+        return formattedDate;
+    }
+
 
     constructor(
         private readonly mapSearchService: MapSerachService,
@@ -55,6 +64,7 @@ export class SearchComponent {
         this.getResults();
         this.retrivePorts();
         this.initForms();
+        this.OnDateChange(this.dateModal);
     }
 
     initForms() {
@@ -84,7 +94,7 @@ export class SearchComponent {
                 res?.forEach((item: any) => {
                     this.companies.push(item?.attributes);
                 });
-                this.showCompanies$.next(true);
+                this.isCompaniesLoading$.next(false);
             },
             error: err => {
                 throw err
@@ -100,6 +110,7 @@ export class SearchComponent {
             this.companyId = 0;
             this.portId = 0;
             this.initCompanyFiterForm();
+            this.isCompaniesLoading$.next(true);
         }
         this.getResults();
     }
@@ -117,33 +128,54 @@ export class SearchComponent {
         if (action === "delete") {
             this.arrivalPortId = 0;
             this.departurePortId = 0;
-            this.initSIDFilterForm();
             this.getResults();
+            this.initSIDFilterForm();
+            this.dateModal = new Date();
         }
     }
 
     onImgClick(number: number) {
-        this.isActive = number
+        this.isActive = number;
     }
 
     OnDateChange(value: any) {
-        // console.log(value)
-        this.dateVal = `${value._i.year}-${value._i.month}-${value._i.date}`;
-        // console.log(this.dateVal)
-        // if(this.sidFilterForm.valid){
-        //     this.getResults(this.dateVal);
-        // }
+        let filterDate = value instanceof Date ? value : new Date(value);
+        this.dateVal = this.formatDate(filterDate);
+        this.sidFilterForm.patchValue({ estimatedTimeArrival : this.dateVal})
+        if(this.sidFilterForm.valid){
+            this.getResults(this.dateVal);
+        }
     }
 
-    OnStatusChange(value: any) {
-        if (this.statusFilters.includes(value)) {
-            const index = this.statusFilters.indexOf(value);
-            this.statusFilters.splice(index, 1);
-            this.getResults()
+    formatDate(date: Date | string): string {
+        let formattedDate = '';
+
+        if (typeof date === 'string') {
+            const tempDate = new Date(date);
+            formattedDate = this.formatDateObject(tempDate);
+        } else {
+            formattedDate = this.formatDateObject(date);
         }
-        else {
-            this.statusFilters.push(value);
-            this.getResults()
+
+        return formattedDate;
+    }
+
+
+    OnStatusChange(value: any , action: string = 'search') {
+        if(action === 'search'){
+            if (this.statusFilters.includes(value)) {
+                const index = this.statusFilters.indexOf(value);
+                this.statusFilters.splice(index, 1);
+                this.getResults();
+            }
+            else {
+                this.statusFilters.push(value);
+                this.getResults();
+            }
+        }
+        if(action === 'delete'){
+            this.statusFilters = [];
+            this.getResults();
         }
     }
 
@@ -155,7 +187,6 @@ export class SearchComponent {
             this.timeFilterForm.patchValue({ greaterThanVal: 0 });
         }
         if (this.timeFilterForm.valid && action === 'search') {
-            console.log(this.timeFilterForm.value)
             this.timeFilter = this.timeFilterForm.value;
             this.getResults()
         }
@@ -236,6 +267,7 @@ export class SearchComponent {
     }
     initSIDFilterForm() {
         this.sidFilterForm = this.fb.group({
+            estimatedTimeArrival: this.fb.control('', [...createRequiredValidators()]),
             departurePort: this.fb.control('', [...createRequiredValidators()]),
             arrivalPort: this.fb.control('', [...createRequiredValidators()]),
         });

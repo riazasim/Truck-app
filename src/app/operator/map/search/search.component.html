@@ -16,9 +16,9 @@
                         <fa-icon icon="xmark" class="text-[#17A0B5] cursor-pointer" size="lg"
                             *ngIf="companiesFilterForm.valid" (click)="onCompaniesChange($event, 'delete')"></fa-icon>
                     </div>
-                    <app-loader *ngIf="isPortsLoading$ | async"></app-loader>
+                    <!-- <app-loader *ngIf="isPortsLoading$ | async"></app-loader> -->
                     <div iconic-select-wrapper [dashboardInp]="true" [showValidation]="false"
-                        *ngIf="!(isPortsLoading$ | async)" [rightIcon]="['fas', 'caret-down']">
+                        [loading]="(isPortsLoading$ | async)" [rightIcon]="['fas', 'caret-down']">
                         <select spAccessInputRef name="port" id="port" (change)="retriveCompanines($event)"
                             formControlName="portId">
                             <option value="" disabled selected>Port</option>
@@ -26,7 +26,7 @@
                         </select>
                     </div>
                     <div iconic-select-wrapper [dashboardInp]="true" [showValidation]="false"
-                        *ngIf="showCompanies$ | async" [rightIcon]="['fas', 'caret-down']">
+                        [loading]="isCompaniesLoading$ | async" [rightIcon]="['fas', 'caret-down']">
                         <select spAccessInputRef name="company" id="company" (change)="onCompaniesChange($event)"
                             formControlName="companyId">
                             <option value="" disabled selected>Company</option>
@@ -35,32 +35,34 @@
                     </div>
                 </form>
                 <div *ngIf="isActive === 2" class="w-[198px]">
-                    <h2 class="text-[#000000] text-sm font-normal mb-4 heading-6">
-                        Filter by Status
-                        <!-- <fa-icon icon="xmark" class="text-[#17A0B5] cursor-pointer" size="lg"
-                            *ngIf="timeFilterForm.valid" (click)="OnTimeChange('delete')"></fa-icon> -->
-                    </h2>
+                    <div class="flex justify-between">
+                        <h2 class="text-[#000000] text-sm font-normal mb-4 heading-6">
+                            Filter by Status
+                        </h2>
+                        <fa-icon icon="xmark" class="text-[#17A0B5] cursor-pointer mb-4" size="lg"
+                            *ngIf="statusFilters.length > 0" (click)="OnStatusChange(null, 'delete')"></fa-icon>
+                    </div>
                     <div class="grid grid-cols-2">
                         <div class="flex gap-1 items-center w-[100px] px-5">
                             <input type="checkbox" id="1" value="id" name="Port" class="h-4 w-4 border-[#CCCCCC]"
-                                (click)="OnStatusChange(1)" [checked]="statusFilters.includes('Port Queue')" />
+                                (click)="OnStatusChange(1)" [checked]="statusFilters.includes(1)" />
                             <label for="Port" class="text-[#354050] text-sm font-normal">Port</label>
                         </div>
                         <div class="flex gap-1 items-center w-[100px] pl-5">
                             <input type="checkbox" id="2" value="id" name="Checked-In" class="h-4 w-4 border-[#CCCCCC]"
-                                (click)="OnStatusChange(2)" [checked]="statusFilters.includes('Checked-In')" />
+                                (click)="OnStatusChange(2)" [checked]="statusFilters.includes(2)" />
                             <label for="Checked-In" class="text-[#354050] text-sm font-normal">Checked-In</label>
                         </div>
                     </div>
                     <div class="flex flex-row mt-4">
                         <div class="flex items-center w-[100px] px-5">
                             <input type="checkbox" id="5" value="id" name="Berth" class="h-4 w-4 border-[#CCCCCC]"
-                                (click)="OnStatusChange(5)" [checked]="statusFilters.includes('Berth')" />&nbsp;
+                                (click)="OnStatusChange(5)" [checked]="statusFilters.includes(5)" />&nbsp;
                             <label for="Berth" class="text-[#354050] text-sm font-normal">Berth</label>
                         </div>
                         <div class="flex items-center w-[100px] px-5">
                             <input type="checkbox" id="7" value="id" name="Exit" class="h-4 w-4 border-[#CCCCCC]"
-                                (click)="OnStatusChange(7)" [checked]="statusFilters.includes('Exit')" />&nbsp;
+                                (click)="OnStatusChange(7)" [checked]="statusFilters.includes(7)" />&nbsp;
                             <label for="Exit" class="text-[#354050] text-sm font-normal">Exit</label>
                         </div>
                     </div>
@@ -70,8 +72,8 @@
                         <h2 class="text-[#000000] text-sm font-normal mb-1 heading-6">
                             Filter by Time
                         </h2>
-                        <!-- <fa-icon icon="xmark" class="text-[#17A0B5] cursor-pointer" size="lg"
-                            *ngIf="timeFilterForm.valid" (click)="OnTimeChange('delete')"></fa-icon> -->
+                        <fa-icon icon="xmark" class="text-[#17A0B5] cursor-pointer" size="lg"
+                            *ngIf="timeFilterForm.valid" (click)="OnTimeChange('delete')"></fa-icon>
                     </div>
                     <div iconic-select-wrapper [dashboardInp]="true" [showValidation]="false"
                         [rightIcon]="['fas', 'caret-down']">
@@ -134,8 +136,8 @@
                             [height]="26" (dateChanged)="OnDateChange($event)">
                         </datepicker>
                     </div>
-                    <div iconic-select-wrapper [dashboardInp]="true" [showValidation]="false"
-                        [rightIcon]="['fas', 'caret-down']">
+                    <div [loading]="(isPortsLoading$ | async)" iconic-select-wrapper [dashboardInp]="true"
+                        [showValidation]="false" [rightIcon]="['fas', 'caret-down']">
                         <select spAccessInputRef formControlName="departurePort" (change)="onSIDChange($event , 'dp')">
                             <option value="" disabled selected>
                                 Departure port
@@ -143,8 +145,8 @@
                             <option [value]="port?.id" *ngFor="let port of ports">{{port?.name}}</option>
                         </select>
                     </div>
-                    <div iconic-select-wrapper [dashboardInp]="true" [showValidation]="false"
-                        [rightIcon]="['fas', 'caret-down']">
+                    <div [loading]="(isPortsLoading$ | async)" iconic-select-wrapper [dashboardInp]="true"
+                        [showValidation]="false" [rightIcon]="['fas', 'caret-down']">
                         <select spAccessInputRef formControlName="arrivalPort" (change)="onSIDChange($event, 'ap')">
                             <option value="" disabled selected>Arival port</option>
                             <option [value]="port?.id" *ngFor="let port of ports">{{port?.name}}</option>
