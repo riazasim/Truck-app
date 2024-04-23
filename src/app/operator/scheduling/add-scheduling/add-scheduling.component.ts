@@ -19,6 +19,7 @@ import { PlanningModel, convoyModel } from 'src/app/core/models/planning.model';
 import { ShipsService } from 'src/app/core/services/ships.service';
 import { ShipModel } from 'src/app/core/models/ship.model';
 import { createRequiredValidators } from 'src/app/shared/validators/generic-validators';
+import { MapSerachService } from 'src/app/core/services/map-search.service';
 
 @Component({
     selector: 'app-add-scheduling',
@@ -39,6 +40,7 @@ export class AddSchedulingComponent implements OnInit {
     convoyForm: FormGroup;
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     showFileThree$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    isPortsLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
 
     isLinear = true;
     customers: PartnerModel[] = [];
@@ -73,7 +75,7 @@ export class AddSchedulingComponent implements OnInit {
     tomorrow: Date;
     selectedSlot$: BehaviorSubject<number | null> = new BehaviorSubject<number | null>(null);
     selectedCustomer$: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
-
+    ports: any[] = [];
     getFormatHourSlot: Function;
 
     id: number;
@@ -100,16 +102,6 @@ export class AddSchedulingComponent implements OnInit {
         { id: 7, name: 'Exit Queue' },
         { id: 8, name: 'In New RID Operation' },
         { id: 9, name: 'Checked Out' },
-    ];
-    departurePort = [
-        { id: 1, name: 'departure port1' },
-        { id: 2, name: 'departure port2' },
-        { id: 3, name: 'departure port3' },
-    ];
-    arivalPort = [
-        { id: 1, name: 'arival port1' },
-        { id: 2, name: 'arival port2' },
-        { id: 3, name: 'arival port3' },
     ];
     typeOfLock = [
         { id: 1, name: 'type of lock1' },
@@ -162,13 +154,16 @@ export class AddSchedulingComponent implements OnInit {
         { id: 3, name: 'destination3' },
     ];
 
-    constructor(private readonly fb: FormBuilder,
+    constructor(
+        private readonly fb: FormBuilder,
         private readonly planningService: PlanningService,
         private readonly route: ActivatedRoute,
         private readonly router: Router,
         private readonly statusListStatus: StatusListService,
         private readonly snackBar: MatSnackBar,
-        private readonly shipsService: ShipsService,) {
+        private readonly shipsService: ShipsService,
+        private readonly microService: MapSerachService,
+    ) {
         this.getFormatHourSlot = getFormatHourSlot.bind(this);
     }
 
@@ -177,7 +172,8 @@ export class AddSchedulingComponent implements OnInit {
         this.id = this.route.snapshot.params['id'];
         this.initForm();
         this.initConvoyForm();
-        this.isLoading$.next(false)
+        this.isLoading$.next(false);
+        this.retrivePorts();
     }
 
 
@@ -189,17 +185,32 @@ export class AddSchedulingComponent implements OnInit {
         this.matStepper.selectedIndex = index;
     }
 
+    retrivePorts() {
+        this.microService.getPorts().subscribe({
+            next: res => {
+                res?.forEach((item: any) => {
+                    this.ports.push(item?.attributes);
+                });
+                this.isPortsLoading$.next(false)
+            },
+            error: err => {
+                throw err;
+            }
+        })
+    }
+
 
     next(index: any): void {
-            // Update the step status accordingly
-            if (this.matStepper.selectedIndex === 0) {
-                this.retrieveShips();
-            }
-            // Move to the next step
-            this.matStepper.selectedIndex = index;
+        // Update the step status accordingly
+        if (this.matStepper.selectedIndex === 0) {
+            this.retrieveShips();
+        }
+        // Move to the next step
+        this.matStepper.selectedIndex = index;
     }
 
     OnDateChange(value: any) {
+        console.log(value)
         this.dateVal = `${value._i.year}-${value._i.month}-${value._i.date}`
     }
     OnTimeChange(value: any) {

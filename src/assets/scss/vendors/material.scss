@@ -1,45 +1,42 @@
 @use '@angular/material' as mat;
 
 $primary-palette: (
-  100: var(--primary-light-color),
-  500: var(--primary-color),
-  700: var(--primary-dark-color),
-  A100: white,
-  A500: white,
-  A700: white,
-  contrast: (
-    100: white,
-    500: white,
-    700: white,
-  )
+    100: var(--primary-light-color),
+    500: var(--primary-color),
+    700: var(--primary-dark-color),
+    A100: white,
+    A500: white,
+    A700: white,
+    contrast: (100: white,
+        500: white,
+        700: white,
+    )
 );
 
 $accent-palette: (
-  100: var(--secondary-light-color),
-  500: var(--secondary-color),
-  700: var(--secondary-dark-color),
-  A100: white,
-  A500: white,
-  A700: white,
-  contrast: (
-    100: white,
-    500: white,
-    700: white,
-  )
+    100: var(--secondary-light-color),
+    500: var(--secondary-color),
+    700: var(--secondary-dark-color),
+    A100: white,
+    A500: white,
+    A700: white,
+    contrast: (100: white,
+        500: white,
+        700: white,
+    )
 );
 
 $warn-palette: (
-  100: var(--danger-light-color),
-  500: var(--danger-color),
-  700: var(--danger-dark-color),
-  A100: white,
-  A500: white,
-  A700: white,
-  contrast: (
-    100: white,
-    500: white,
-    700: white,
-  )
+    100: var(--danger-light-color),
+    500: var(--danger-color),
+    700: var(--danger-dark-color),
+    A100: white,
+    A500: white,
+    A700: white,
+    contrast: (100: white,
+        500: white,
+        700: white,
+    )
 );
 
 
@@ -47,15 +44,13 @@ $primary-palette: mat.define-palette($primary-palette, 500, 100, 700);
 $secondary-palette: mat.define-palette($accent-palette, 500, 100, 700);
 $danger-palette: mat.define-palette($warn-palette, 500, 100, 700);
 
-$theme: mat.define-light-theme((
- color: (
-   primary: $primary-palette,
-   accent: $secondary-palette,
-   warn: $danger-palette,
- ),
- typography: mat.define-typography-config(),
- density: 0,
-));
+$theme: mat.define-light-theme((color: (primary: $primary-palette,
+                accent: $secondary-palette,
+                warn: $danger-palette,
+            ),
+            typography: mat.define-typography-config(),
+            density: 0,
+        ));
 
 
 @include mat.core();

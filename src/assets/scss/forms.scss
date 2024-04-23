@@ -1,7 +1,9 @@
 .iconic-layout-wrapper {
     --form-control-font-size: 1rem;
-
     --disabled-bg-color: var(--muted-light-color);
+    border-radius: var(--app-border-radius);
+    border: 1px solid transparent;
+
 
     &.disabled {
         .input-container {
@@ -39,13 +41,34 @@
         >.input-container {
             border-color: #CCCCCC;
 
-            input::placeholder{
+            input::placeholder {
                 color: #C6C6C6;
             }
 
             select[spaccessinputref] {
                 color: #C6C6C6;
             }
+        }
+    }
+
+    &.loading:not(.dashboard) {
+        min-height: var(--control-height, 50px);
+        margin-bottom: 27px;
+
+        .loader {
+            display: block;
+            border: 1px solid transparent;
+            border-radius: var(--app-border-radius);
+        }
+    }
+
+    &.loading.dashboard {
+        min-height: 26px;
+
+        .loader {
+            border: 1px solid transparent;
+            border-radius: var(--app-border-radius);
+            display: block;
         }
     }
 
