@@ -10,6 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { handleSuccess } from 'src/app/shared/utils/success-handling.function';
 import { handleError } from 'src/app/shared/utils/error-handling.function';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { RolesService } from 'src/app/core/services/roles.service';
 
 @Component({
     selector: 'scheduling-view-modal',
@@ -51,7 +52,7 @@ export class SchedulingViewModalComponent implements OnChanges {
         private readonly planningService: PlanningService,
         private readonly dialog: MatDialog,
         private readonly snackBar: MatSnackBar,
-        private readonly authService : AuthService
+        private readonly roleService : RolesService
     ) {
         this.getUser()
     }
@@ -61,13 +62,7 @@ export class SchedulingViewModalComponent implements OnChanges {
     }
 
     getUser(){
-        this.isLoading$.next(true)
-        this.authService.checkCredentials().subscribe(
-            res =>{
-                this.userRole = res?.data?.attributes?.userRole
-                this.isLoading$.next(false)
-            }
-        )
+        this.userRole = this.roleService.getUserRoles();
     }
 
     openImageModal(image: string): void {

@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { NgModule, OnInit } from '@angular/core';
+import { ActivatedRoute, Router, RouterModule, Routes } from '@angular/router';
 
 import { environment } from '../environments/environment';
 import { LocalizeRouterModule, LocalizeParser, LocalizeRouterSettings, CacheMechanism } from '@gilsdav/ngx-translate-router';
@@ -10,6 +10,7 @@ import { translateFactory } from './core/factories/translate.factory';
 
 import { CredentialsGuard } from "./core/guards/credentials.guard";
 import { USER_TYPE_ADMIN, USER_TYPE_OPERATOR } from "./core/constants/roles.constant";
+import { AuthService } from './core/services/auth.service';
 
 const routes: Routes = [
     {
@@ -22,7 +23,7 @@ const routes: Routes = [
         // canLoad: [CredentialsGuard],
         // data: {
         //     roleGuardData: {
-        //         requiredRoles: [USER_TYPE_ADMIN],
+        //         requiredRoles: [USER_TYPE_ADMIN || USER_TYPE_ADMIN],
         //         fallbackRoute: '/sign-in',
         //     },
         //     credentialsGuardData: {
@@ -39,7 +40,7 @@ const routes: Routes = [
         // canDeactivate: [CredentialsGuard],
         // data: {
         //     roleGuardData: {
-        //         requiredRoles: [],
+        //         requiredRoles: [USER_TYPE_OPERATOR || USER_TYPE_ADMIN],
         //         fallbackRoute: '/sign-in',
         //     },
         //     credentialsGuardData: {
@@ -48,7 +49,11 @@ const routes: Routes = [
         //         }
         //     }
         // }
-    }
+    },
+    {
+        path: 'onboarding',
+        loadChildren: () => import('./onboarding/onboarding.module').then(m => m.OnboardingModule)
+    },
 ];
 
 // @NgModule({
@@ -77,4 +82,6 @@ const routes: Routes = [
     ],
     exports: [RouterModule, LocalizeRouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule{
+
+}

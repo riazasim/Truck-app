@@ -10,30 +10,30 @@ import { TranslateLoader, TranslateModule, TranslatePipe } from '@ngx-translate/
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpLoaderFactory } from './core/factories/http-loader.factory';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import {Location} from "@angular/common";
+import { Location } from "@angular/common";
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    AppRoutingModule,
-    CoreModule,
-    HttpClientModule,
-    SharedModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      }
-    }),
-    FontAwesomeModule,
+    declarations: [
+        AppComponent
+    ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        AppRoutingModule,
+        CoreModule,
+        HttpClientModule,
+        SharedModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient]
+            }
+        }),
+        FontAwesomeModule,
 
-  ],
-  providers: [TranslatePipe, Location],
-  bootstrap: [AppComponent]
+    ],
+    providers: [TranslatePipe, Location],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

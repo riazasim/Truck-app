@@ -16,7 +16,7 @@ export class LocationSettingsComponent {
         this.getUser()
     }
     getUser() {
-        this.userRole = this.roleService.getUserRoles();
+        this.userRole = this.roleService.getAuthRoles();
         console.log(this.userRole);
     }
     search: string;

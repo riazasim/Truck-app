@@ -40,11 +40,11 @@ export class LoginComponent {
     preCompleteSignIn(): void {
         const user = this.auth.getAuth();
 
-        // if (user) {
-        //     console.log(user)
-        //     this.router.navigate(['operator/dashboard'], { relativeTo: this.route.parent });
-        //     return;
-        // }
+        if (user) {
+            console.log(user)
+            this.router.navigate(['../operator/dashboard'], { relativeTo: this.route });
+            return;
+        }
 
         if (!environment.production) {
             this.loginForm = new UntypedFormGroup({
@@ -61,7 +61,8 @@ export class LoginComponent {
         this.auth.signin(this.loginForm.getRawValue()).subscribe({
             next: (response) => {
                 this.auth.saveAuth(response);
-                this.rolesService.setUserRoles([response.roles])
+                this.rolesService.setAuthRoles([response.roles]);
+                this.rolesService.setUserRoles([response.roles]);
                 // this.router.navigate(
                 //                                          ////operator/dashboard
                 //     [isTutorialTrue ? '/admin' : '../admin/dashboard'], { relativeTo: this.route }

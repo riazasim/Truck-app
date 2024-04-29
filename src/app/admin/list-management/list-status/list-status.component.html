@@ -1,6 +1,6 @@
 <section *ngIf="(isLoading$ | async) || originalSource.length; else empty">
     <material-panel-table [showSearchbar]="false" [showHeader]="true"
-        Class="!rounded-xl shadow-lg border border-transparent">
+        microService>
         <div table class="w-full overflow-hidden">
             <ng-scrollbar track="horizontal" [autoHeightDisabled]="false" style="scrollbar-width: none;">
                 <table class="material-table no-wrap overflow-hidden" matSort (matSortChange)="sortData($event)"

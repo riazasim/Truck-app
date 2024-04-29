@@ -24,6 +24,7 @@ import { FilterModel, FilterTypeENum } from '../scheduling-search-bar/scheduling
 import { PageSettingsModel } from 'src/app/core/models/page.model';
 import defaultPageSettings from '../../../core/constants/page.constant';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { RolesService } from 'src/app/core/services/roles.service';
 
 @Component({
     selector: 'app-dashboard',
@@ -80,7 +81,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         private readonly statusListService: StatusListService,
         private readonly cd: ChangeDetectorRef,
         private readonly organizationService: OrganizationService,
-        private readonly authService: AuthService
+        private readonly roleService: RolesService
     ) { }
 
     ngOnInit(): void {
@@ -100,13 +101,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     getUserRole() {
-        this.isLoading$.next(true)
-        this.authService.checkCredentials().subscribe(
-            res => {
-                this.userRole = res?.data?.attributes?.userRole
-                this.isLoading$.next(false)
-            }
-        )
+        this.userRole = this.roleService.getUserRoles();
     }
 
     getCardDetails(item: any = 0) {

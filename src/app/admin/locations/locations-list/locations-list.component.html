@@ -18,9 +18,8 @@
             </mat-menu>
         </mat-button-toggle-group>
     </div>
-    <material-panel-table Class="!rounded-xl shadow-lg border border-transparent" [showSearchbar]="false"
-        [showHeader]="true" tableTitle="Locations list"
-        (buttonClicked)="redirectAddLocation()">
+    <material-panel-table microService [showSearchbar]="false"
+        [showHeader]="true" tableTitle="Locations list">
         <div table class="w-full shadow-lg">
             <ng-scrollbar track="horizontal" [autoHeightDisabled]="false">
                 <table class="material-table no-wrap overflow-hidden" matSort (matSortChange)="sortData($event)"

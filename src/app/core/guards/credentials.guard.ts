@@ -1,13 +1,13 @@
 import { Inject, Injectable } from '@angular/core';
 import {
-  ActivatedRouteSnapshot,
-  CanDeactivate,
-  CanLoad,
-  Route,
-  Router,
-  RouterStateSnapshot,
-  UrlSegment,
-  UrlTree
+    ActivatedRouteSnapshot,
+    CanDeactivate,
+    CanLoad,
+    Route,
+    Router,
+    RouterStateSnapshot,
+    UrlSegment,
+    UrlTree
 } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -38,80 +38,81 @@ import { CredentialsGuardModel } from './credentials.model';
  *
  */
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class CredentialsGuard implements CanLoad, CanDeactivate<unknown> {
 
-  private readonly defaultGuardData: CredentialsGuardModel = {
-    canLoad: {
-      inverse: false,
-    },
-    canDeactivate: {
-      inverse: false
-    }
-  };
-
-  private sanitizeGuardData(receivedGuardData: Partial<CredentialsGuardModel> | undefined): CredentialsGuardModel {
-    return {
-      canLoad: {
-        inverse: receivedGuardData?.canLoad?.inverse ?? this.defaultGuardData.canLoad.inverse,
-        redirectTo: receivedGuardData?.canLoad?.redirectTo
-      },
-      canDeactivate: {
-        inverse: receivedGuardData?.canDeactivate?.inverse ?? this.defaultGuardData.canDeactivate.inverse,
-        redirectTo: receivedGuardData?.canDeactivate?.redirectTo
-      }
+    private readonly defaultGuardData: CredentialsGuardModel = {
+        canLoad: {
+            inverse: false,
+        },
+        canDeactivate: {
+            inverse: false
+        }
     };
-  }
 
-  constructor(@Inject(CREDENTIALS_CHECKER) private readonly credentialsChecker: CredentialsChecker,
-              private readonly router: Router) {
-  }
-
-  private tryRedirect(redirectTo: string | undefined): UrlTree {
-    if (typeof redirectTo === 'string') {
-      return this.router.createUrlTree([redirectTo]);
-    }
-    return this.router.createUrlTree([this.router.url]);
-  }
-
-  private checkCredentials(routeData: CredentialsGuardModel, key: keyof CredentialsGuardModel): Observable<boolean | UrlTree> {
-    let inverseResult: boolean | undefined;
-
-    if (routeData) {
-      inverseResult = routeData[key].inverse ?? false;
+    private sanitizeGuardData(receivedGuardData: Partial<CredentialsGuardModel> | undefined): CredentialsGuardModel {
+        return {
+            canLoad: {
+                inverse: receivedGuardData?.canLoad?.inverse ?? this.defaultGuardData.canLoad.inverse,
+                redirectTo: receivedGuardData?.canLoad?.redirectTo
+            },
+            canDeactivate: {
+                inverse: receivedGuardData?.canDeactivate?.inverse ?? this.defaultGuardData.canDeactivate.inverse,
+                redirectTo: receivedGuardData?.canDeactivate?.redirectTo
+            }
+        };
     }
 
-    return this.credentialsChecker.checkCredentials()
-      .pipe(
-        map(checkValue => {
-          return inverseResult ? !checkValue : checkValue}),
-        catchError(err => {
-          console.log(err);
-          return of(false);
-        }),
-        map(x => x === true ? x : this.tryRedirect(routeData[key].redirectTo))
-      )
-      ;
-  }
+    constructor(@Inject(CREDENTIALS_CHECKER) private readonly credentialsChecker: CredentialsChecker,
+        private readonly router: Router) {
+    }
 
-  canDeactivate(
-    component: unknown,
-    currentRoute: ActivatedRouteSnapshot,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    currentState: RouterStateSnapshot,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    nextState?: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    const routeData = this.sanitizeGuardData(currentRoute.data['credentialsGuardData']);
-    return this.checkCredentials(routeData, 'canDeactivate');
-  }
+    private tryRedirect(redirectTo: string | undefined): UrlTree {
+        if (typeof redirectTo === 'string') {
+            return this.router.createUrlTree([redirectTo]);
+        }
+        return this.router.createUrlTree([this.router.url]);
+    }
 
-  canLoad(
-    route: Route,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    segments: UrlSegment[]): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    const routeData = this.sanitizeGuardData(route.data?.['credentialsGuardData']);
-    return this.checkCredentials(routeData, 'canLoad');
-  }
+    private checkCredentials(routeData: CredentialsGuardModel, key: keyof CredentialsGuardModel): Observable<boolean | UrlTree> {
+        let inverseResult: boolean | undefined;
+
+        if (routeData) {
+            inverseResult = routeData[key].inverse ?? false;
+        }
+
+        return this.credentialsChecker.checkCredentials()
+            .pipe(
+                map(checkValue => {
+                    return inverseResult ? !checkValue : checkValue
+                }),
+                catchError(err => {
+                    console.log(err);
+                    return of(false);
+                }),
+                map(x => x === true ? x : this.tryRedirect(routeData[key].redirectTo))
+            )
+            ;
+    }
+
+    canDeactivate(
+        component: unknown,
+        currentRoute: ActivatedRouteSnapshot,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        currentState: RouterStateSnapshot,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        nextState?: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+        const routeData = this.sanitizeGuardData(currentRoute.data['credentialsGuardData']);
+        return this.checkCredentials(routeData, 'canDeactivate');
+    }
+
+    canLoad(
+        route: Route,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        segments: UrlSegment[]): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+        const routeData = this.sanitizeGuardData(route.data?.['credentialsGuardData']);
+        return this.checkCredentials(routeData, 'canLoad');
+    }
 
 }

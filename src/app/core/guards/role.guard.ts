@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import {
-  ActivatedRouteSnapshot,
-  CanActivate,
-  CanLoad,
-  Route,
-  Router,
-  RouterStateSnapshot,
-  UrlSegment,
-  UrlTree
+    ActivatedRouteSnapshot,
+    CanActivate,
+    CanLoad,
+    Route,
+    Router,
+    RouterStateSnapshot,
+    UrlSegment,
+    UrlTree
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import { RolesService } from '../services/roles.service';
@@ -29,46 +29,46 @@ import { RoleGuardDataModel } from '../models/role.model';
 @Injectable()
 export class RoleGuard implements CanLoad, CanActivate {
 
-  constructor(private readonly router: Router,
-              private readonly rolesService: RolesService) {
-  }
-
-  private computeIsAllowed(controlRoles: string | string[]): boolean {
-    if (typeof controlRoles === 'string') {
-      return this.rolesService.isUserInRole(controlRoles);
-    } else if (Array.isArray(controlRoles)) {
-      return this.rolesService.isUserInAnyRole(controlRoles);
-    } else {
-      throw new Error('Invalid roles provided');
+    constructor(private readonly router: Router,
+        private readonly rolesService: RolesService) {
     }
-  }
 
-  private tryFallback(fallbackRoute: string | undefined): UrlTree {
-    if (typeof fallbackRoute === 'string') {
-      return this.router.createUrlTree([fallbackRoute]);
+    private computeIsAllowed(controlRoles: string | string[]): boolean {
+        if (typeof controlRoles === 'string') {
+            return this.rolesService.isUserInRole(controlRoles);
+        } else if (Array.isArray(controlRoles)) {
+            return this.rolesService.isUserInAnyRole(controlRoles);
+        } else {
+            throw new Error('Invalid roles provided');
+        }
     }
-    return this.router.createUrlTree([this.router.url]);
-  }
 
-  canLoad(
-    route: Route,
+    private tryFallback(fallbackRoute: string | undefined): UrlTree {
+        if (typeof fallbackRoute === 'string') {
+            return this.router.createUrlTree([fallbackRoute]);
+        }
+        return this.router.createUrlTree([this.router.url]);
+    }
+
+    canLoad(
+        route: Route,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        segments: UrlSegment[]): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+
+        const guardData = route.data?.['roleGuardData'] as RoleGuardDataModel;
+        const isAllowed = this.computeIsAllowed(guardData?.requiredRoles);
+        return isAllowed || this.tryFallback(guardData.fallbackRoute);
+
+    }
+
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    segments: UrlSegment[]): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):
+        Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-    const guardData = route.data?.['roleGuardData'] as RoleGuardDataModel;
-    const isAllowed = this.computeIsAllowed(guardData?.requiredRoles);
-    return isAllowed || this.tryFallback(guardData.fallbackRoute);
+        const guardData = route.data?.['roleGuardData'] as RoleGuardDataModel;
+        const isAllowed = this.computeIsAllowed(guardData.requiredRoles);
 
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):
-    Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-
-    const guardData = route.data?.['roleGuardData'] as RoleGuardDataModel;
-    const isAllowed = this.computeIsAllowed(guardData.requiredRoles);
-
-    return isAllowed || this.tryFallback(guardData.fallbackRoute);
-  }
+        return isAllowed || this.tryFallback(guardData.fallbackRoute);
+    }
 
 }

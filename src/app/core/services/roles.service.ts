@@ -26,13 +26,25 @@ export class RolesService<T extends string = string> {
         }
     }
 
-    public setUserRoles(roles: any[]): void {
+    public setAuthRoles(roles: any[]): void {
         this.rolesSubject.next(roles);
         if(roles[0].includes('ROLE_ADMIN')){
             localStorage.setItem('role' , 'ROLE_ADMIN');
         }
         if(roles[0].includes('ROLE_USER_OPERATOR')){
             localStorage.setItem('role' , 'ROLE_USER_OPERATOR');
+        }
+    }
+    public setUserRoles(roles: any[]): void {
+        this.rolesSubject.next(roles);
+        if(roles[0].includes('ROLE_USER_TRANSPORT')){
+            localStorage.setItem('userRole' , 'ROLE_USER_TRANSPORT');
+        }
+        if(roles[0].includes('ROLE_USER_AGENT')){
+            localStorage.setItem('userRole' , 'ROLE_USER_AGENT');
+        }
+        if(roles[0].includes('ROLE_USER_MANEUVERING')){
+            localStorage.setItem('userRole' , 'ROLE_USER_MANEUVERING');
         }
     }
 
@@ -45,8 +57,14 @@ export class RolesService<T extends string = string> {
         this.rolesSubject.next([...oldRole, role]);
     }
 
-    public getUserRoles(): any {
+    public getAuthRoles(): any {
         let role = localStorage.getItem('role')
+        if(role) return role
+        else return this.rolesSubject.value;
+    }
+
+    public getUserRoles(): any {
+        let role = localStorage.getItem('userRole')
         if(role) return role
         else return this.rolesSubject.value;
     }
@@ -56,20 +74,22 @@ export class RolesService<T extends string = string> {
     }
 
     public isUserInRole(role: T): boolean {
-        return isUserInRole(this.getUserRoles(), role);
+        return isUserInRole(this.getAuthRoles(), role);
     }
 
     public isUserInAnyRole(roles: T[]): boolean {
-        return isUserInAnyRole(this.getUserRoles(), roles);
+        return isUserInAnyRole(this.getAuthRoles(), roles);
     }
 
     public isUserInEveryRole(roles: T[]): boolean {
-        return isUserInEveryRole(this.getUserRoles(), roles);
+        return isUserInEveryRole(this.getAuthRoles(), roles);
     }
 
     public removeUserRoles(): any {
-        let role = localStorage.getItem('role')
+        let role = localStorage.getItem('role');
         if(role) localStorage.removeItem('role');
+        let userRole = localStorage.getItem('userRole');
+        if(userRole) localStorage.removeItem('userRole');
     }
 
 }

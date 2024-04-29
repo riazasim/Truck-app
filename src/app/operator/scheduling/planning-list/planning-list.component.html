@@ -1,7 +1,6 @@
 ﻿<section>
     <section *ngIf="(isTableLoading$ | async) || originalSource.length; else empty">
-        <material-panel-table [showSearchbar]="false" [showHeader]="false"
-            Class="!rounded-xl shadow-lg border border-transparent">
+        <material-panel-table [showSearchbar]="false" [showHeader]="false" microService>
             <div table class="w-full overflow-hidden">
                 <ng-scrollbar track="horizontal" [autoHeightDisabled]="false" style="scrollbar-width: none;">
                     <table class="material-table no-wrap overflow-hidden" matSort (matSortChange)="sortData($event)"
@@ -167,19 +166,13 @@
                         <tr cdk-row *cdkRowDef="let row; columns: displayedColumns"></tr>
                         <tr *cdkNoDataRow>
                             <td [colSpan]="displayedColumns.length">
-                                <span *ngIf="isLoading$ | async">
-                                    <app-loader *ngIf="isLoading$ | async" [isContainer]="true"
+                                <span *ngIf="(isTableLoading$ | async)">
+                                    <app-loader *ngIf="(isTableLoading$ | async)" [isContainer]="true"
                                         [fullScreen]="false"></app-loader>
                                 </span>
-                                <span *ngIf="
-                                        dataSource.length === 0 &&
-                                        !(isLoading$ | async)
-                                    ">No results found</span>
-                                <span *ngIf="
-                                        dataSource.length > 0 &&
-                                        !(isLoading$ | async)
-                                    ">Nicio înregistrare nu corespunde criteriilor de
-                                    căutare</span>
+                                <span *ngIf="dataSource.length === 0 && !(isTableLoading$ | async)">No results found</span>
+                                <span *ngIf="dataSource.length > 0  && !(isTableLoading$ | async)">Nicio înregistrare nu
+                                    corespunde criteriilor de căutare</span>
                             </td>
                         </tr>
                     </table>

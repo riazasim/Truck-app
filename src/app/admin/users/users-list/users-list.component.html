@@ -1,6 +1,6 @@
 <section *ngIf="(isLoading$ | async) || originalSource.length; else empty">
-    <material-panel-table Class="!rounded-xl shadow-lg border border-transparent" [showSearchbar]="false"
-        [showHeader]="true" buttonLabel="Add User" tableTitle="Users list" (buttonClicked)="redirectAddUser()">
+    <material-panel-table microService [showSearchbar]="false" [showHeader]="true" buttonLabel="Add User"
+        tableTitle="Users list" (buttonClicked)="redirectAddUser()">
         <div table class="w-full shadow-lg mat-elevation-z8">
             <ng-scrollbar track="horizontal" [autoHeightDisabled]="false">
                 <table class="material-table no-wrap overflow-hidden" matSort (matSortChange)="sortData($event)"
@@ -99,7 +99,8 @@
                                 <button type="button" class="btn btn-outline-primary">Mass update</button>
                             </section>
                         </th>
-                        <td cdk-cell *cdkCellDef="let row" class="flex gap-4"><fa-icon icon="eye" class="text-primary cursor-pointer" size="lg"
+                        <td cdk-cell *cdkCellDef="let row" class="flex gap-4"><fa-icon icon="eye"
+                                class="text-primary cursor-pointer" size="lg"
                                 [routerLink]="['../edit', row.user.id]"></fa-icon>
                             <fa-icon icon="trash-can" class="text-primary cursor-pointer" size="lg"
                                 (click)="openDeleteModal(row.user.id)"
