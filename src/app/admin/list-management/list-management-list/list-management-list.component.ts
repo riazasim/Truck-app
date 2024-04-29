@@ -3,22 +3,22 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
-  selector: 'app-list-management-list',
-  templateUrl: './list-management-list.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-list-management-list',
+    templateUrl: './list-management-list.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ListManagementListComponent implements OnInit {
-  isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
-  displayedColumns = ['name', 'type', 'description', 'actions'];
+    isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+    displayedColumns = ['name', 'type', 'description', 'actions'];
 
-  dataSource: any[] = [];
+    dataSource: any[] = [];
 
-  constructor(private readonly router: Router,
-              private readonly route: ActivatedRoute,) {}
+    constructor(private readonly router: Router,
+        private readonly route: ActivatedRoute,) { }
 
-  ngOnInit(): void {}
+    ngOnInit(): void { }
 
-  redirectAddList(): void {
-    this.router.navigate(['../add'], { relativeTo: this.route });
-  }
+    redirectAddList(): void {
+        this.router.navigate(['../add'], { relativeTo: this.route });
+    }
 }

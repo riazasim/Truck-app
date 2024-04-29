@@ -4,6 +4,7 @@ import { OrganizationModel } from '../core/models/organization.model';
 import { AuthService } from '../core/services/auth.service';
 import { OrganizationService } from '../core/services/organization.service';
 import { BehaviorSubject } from 'rxjs';
+import { RolesService } from '../core/services/roles.service';
 
 @Component({
     selector: 'app-operator',
@@ -22,6 +23,7 @@ export class OperatorComponent {
     constructor(public activatedRoute: ActivatedRoute,
         organizationService: OrganizationService,
         private readonly authService: AuthService,
+        private readonly roleService: RolesService,
         private readonly router: Router) {
         // organizationService.get().subscribe((organization: OrganizationModel | null) => {
         //   this.companyName$.next(<string>organization?.name||'');
@@ -33,6 +35,7 @@ export class OperatorComponent {
         this.isLoading$.next(true)
         this.authService.logout().subscribe(() => {
             this.authService.removeAuth();
+            this.roleService.removeUserRoles();
             this.router.navigate(['/']);
             this.isLoading$.next(false)
         });

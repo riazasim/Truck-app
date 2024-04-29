@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { LocationSettingsModel } from 'src/app/core/models/location-settings.model';
-import { AuthService } from 'src/app/core/services/auth.service';
+import { RolesService } from 'src/app/core/services/roles.service';
 
 @Component({
     selector: 'app-location-settings',
@@ -12,21 +12,12 @@ import { AuthService } from 'src/app/core/services/auth.service';
 export class LocationSettingsComponent {
     userRole: string;
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject(false)
-    constructor(private readonly authService: AuthService) {
+    constructor(private readonly roleService: RolesService) {
         this.getUser()
     }
     getUser() {
-        this.isLoading$.next(true)
-        this.authService.checkCredentials().subscribe({
-            next: (res: any) => {
-                this.userRole = res?.data?.attributes?.userRole
-                this.isLoading$.next(false)
-            },
-            error: () => {
-                this.isLoading$.next(false)
-            }
-        }
-        )
+        this.userRole = this.roleService.getUserRoles();
+        console.log(this.userRole);
     }
     search: string;
     general: LocationSettingsModel[] = [{

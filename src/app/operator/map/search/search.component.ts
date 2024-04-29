@@ -31,7 +31,7 @@ export class SearchComponent {
     sidFilterForm: FormGroup;
     displayedColumns = ['name'];
     isActive: number = 1;
-    dateModal: Date = new Date();
+    dateModal: Date = new Date("");
     dateVal: string;
     resultsArray: any[] = [];
     companies: any[] = [];

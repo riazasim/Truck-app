@@ -209,10 +209,10 @@
             </div>
             <div class="grid mt-4" *ngIf="(isTableView$ | async)">
                 <app-loader *ngIf="isLoading$ | async" [isContainer]="true" [fullScreen]="false"></app-loader>
-                <app-planning-list *ngIf="!(isLoading$ | async)" (triggerOpenLogs)="toggleSidenav($event)"
-                    [userRole]="userRole" [filterDate]="formatDate(filterDate)" [plannings]="plannings" [length]="length"
-                    [isTableLoading$]="isTableLoading$" (onPaginate)="onPaginateChange($event)"
-                    ></app-planning-list>
+                <app-planning-list (triggerOpenLogs)="toggleSidenav($event)" [userRole]="userRole"
+                    [plannings]="plannings" [length]="length" [isTableLoading$]="isTableLoading$"
+                    (onPaginate)="onPaginateChange($event)"
+                    (retrievePlannings)="retrievePlanningList()"></app-planning-list>
             </div>
         </div>
     </mat-sidenav-content>

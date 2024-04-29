@@ -82,6 +82,16 @@ export class AddSchedulingComponent implements OnInit {
     shipsList: ShipModel[] = [];
     filterDate: Date = new Date();
     filterTime = '00:00:00'
+
+    private formatDateObject(date: Date): string {
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1;
+        const day = date.getDate();
+
+        const formattedDate = `${year}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`;
+        return formattedDate;
+    }
+
     zone = [
         { id: 1, name: 'zone1' },
         { id: 2, name: 'zone2' },
@@ -176,6 +186,19 @@ export class AddSchedulingComponent implements OnInit {
         this.retrivePorts();
     }
 
+    formatDate(date: Date | string): string {
+        let formattedDate = '';
+
+        if (typeof date === 'string') {
+            const tempDate = new Date(date);
+            formattedDate = this.formatDateObject(tempDate);
+        } else {
+            formattedDate = this.formatDateObject(date);
+        }
+
+        return formattedDate;
+    }
+
 
     navigate(index: number) {
         this.convoys.push(this.convoyForm.value)
@@ -210,8 +233,9 @@ export class AddSchedulingComponent implements OnInit {
     }
 
     OnDateChange(value: any) {
-        console.log(value)
-        this.dateVal = `${value._i.year}-${value._i.month}-${value._i.date}`
+        let filterDate = value instanceof Date ? value : new Date(value);
+        this.dateVal = this.formatDate(filterDate);
+        this.schedulingForm.patchValue({routingDetail: { estimatedTimeArrival: this.dateVal }})
     }
     OnTimeChange(value: any) {
         this.timeVal = value

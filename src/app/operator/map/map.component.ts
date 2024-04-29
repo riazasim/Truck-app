@@ -11,7 +11,8 @@ declare var google: any;
 export class MapComponent {
     map: google.maps.Map;
     @ViewChild(MapInfoWindow) infoWindow: MapInfoWindow | undefined;
-    markerPositions: any[] = [];
+    myMarkerPositions: any[] = [];
+    otherMarkerPositions: any[] = [];
     display: any;
     searchQuery: string = '';
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject(false);
@@ -37,15 +38,18 @@ export class MapComponent {
 
     retrieveMapData(results: any): void {
         if (results.length <= 0) {
-            this.markerPositions = [];
+            this.myMarkerPositions = [];
+            this.otherMarkerPositions = [];
         }
         else {
-            this.markerPositions = [];
+            this.myMarkerPositions = [];
+            this.otherMarkerPositions = [];
             results.forEach((item: any) => {
                 if (item && item.sidCoordinates) {
                     const coordinates = item.sidCoordinates.split(',');
                     const markerPosition = new google.maps.LatLng(parseFloat(coordinates[0]), parseFloat(coordinates[1]));
-                    this.markerPositions.push({ position: markerPosition, title: item?.ship?.name });
+                    if (item.isOrgOwner) this.myMarkerPositions.push({ position: markerPosition, title: item?.ship?.name });
+                    else this.otherMarkerPositions.push({ position: markerPosition, title: item?.ship?.name });
                 }
             });
         }
@@ -90,7 +94,7 @@ export class MapComponent {
         // });
     }
 
-    mapLoading(ev : any){
+    mapLoading(ev: any) {
         this.isLoading$.next(ev)
     }
 

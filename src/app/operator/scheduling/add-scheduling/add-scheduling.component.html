@@ -5,27 +5,26 @@
             <div
                 class="grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20 gap-y-4 pt-[100px] min-xl:px-[50px]">
                 <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
-                    <div iconic-input-wrapper leftIcon="user" formGroupName="routingDetail">
+                    <div [loading]="isPortsLoading$ | async" iconic-input-wrapper leftIcon="user"
+                        formGroupName="routingDetail">
                         <input inputRef type="text" placeholder="Convoy Type" formControlName="convoyType" />
                     </div>
                     <div class="grid grid-cols-2 gap-x-8 gap-y-4 mb-5">
-                        <div class="flex flex-col" formGroupName="routingDetail">
-                            <datepicker matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
-                                [matTooltip]="'Pick ETA date' | translate" [model]="filterDate"
-                                [isHeaderPosition]="true" [height]="52" (dateChanged)="OnDateChange($event)">
-                            </datepicker>
-                        </div>
-                        <div class="flex flex-col" formGroupName="routingDetail">
-                            <timepicker matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
-                                [matTooltip]="'Pick ETA time' | translate" [height]="52" [model]="filterTime"
-                                (modelChange)="OnTimeChange($event)"></timepicker>
-                        </div>
+                        <datepicker [loading]="isPortsLoading$ | async" matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
+                            [matTooltip]="'Pick ETA date' | translate" [model]="filterDate" [isHeaderPosition]="true"
+                            [height]="52" (dateChanged)="OnDateChange($event)">
+                        </datepicker>
+                        <timepicker [loading]="isPortsLoading$ | async" matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
+                            [matTooltip]="'Pick ETA time' | translate" [height]="52" [model]="filterTime"
+                            (modelChange)="OnTimeChange($event)"></timepicker>
                     </div>
-                    <div iconic-input-wrapper leftIcon="location-dot" formGroupName="routingDetail">
+                    <div [loading]="isPortsLoading$ | async" iconic-input-wrapper leftIcon="location-dot"
+                        formGroupName="routingDetail">
                         <input inputRef type="text" placeholder="Location Port" formControlName="locationPort" />
                     </div>
-                    <div iconic-select-wrapper leftSvg="assets/images/scheduling_map_location.svg"
-                        [rightIcon]="['fas', 'caret-down']" formGroupName="routingDetail">
+                    <div [loading]="isPortsLoading$ | async" iconic-select-wrapper
+                        leftSvg="assets/images/scheduling_map_location.svg" [rightIcon]="['fas', 'caret-down']"
+                        formGroupName="routingDetail">
                         <select spAccessInputRef name="zone" id="zone" formControlName="zone">
                             <option disabled value="">
                                 Zone
@@ -35,8 +34,9 @@
                             </option>
                         </select>
                     </div>
-                    <div [loading]="isPortsLoading$ | async" iconic-select-wrapper leftSvg="assets/images/scheduling_ship_type.svg"
-                        [rightIcon]="['fas', 'caret-down']" formGroupName="routingDetail">
+                    <div [loading]="isPortsLoading$ | async" iconic-select-wrapper
+                        leftSvg="assets/images/scheduling_ship_type.svg" [rightIcon]="['fas', 'caret-down']"
+                        formGroupName="routingDetail">
                         <select spAccessInputRef name="departurePort" id="departurePort"
                             formControlName="departurePort">
                             <option disabled value="">
@@ -47,8 +47,9 @@
                             </option>
                         </select>
                     </div>
-                    <div [loading]="isPortsLoading$ | async" iconic-select-wrapper leftSvg="assets/images/scheduling_arrival_port.svg"
-                        [rightIcon]="['fas', 'caret-down']" formGroupName="routingDetail">
+                    <div [loading]="isPortsLoading$ | async" iconic-select-wrapper
+                        leftSvg="assets/images/scheduling_arrival_port.svg" [rightIcon]="['fas', 'caret-down']"
+                        formGroupName="routingDetail">
                         <select spAccessInputRef name="arrivalPort" id="arrivalPort" formControlName="arrivalPort">
                             <option disabled value="">Arival Port</option>
                             <option *ngFor="let arivalPort of ports" [value]="arivalPort.id">
@@ -56,34 +57,36 @@
                             </option>
                         </select>
                     </div>
-                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_port.svg" formGroupName="routingDetail">
+                    <div [loading]="isPortsLoading$ | async" iconic-input-wrapper
+                        leftSvg="assets/images/scheduling_port.svg" formGroupName="routingDetail">
                         <input inputRef type="text" placeholder="Pilot Company" formControlName="pilotCompany" />
                     </div>
                 </div>
                 <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
                     <!-- <p>&nbsp;</p> -->
-                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_length.svg"
-                        formGroupName="routingDetail">
+                    <div [loading]="isPortsLoading$ | async" iconic-input-wrapper
+                        leftSvg="assets/images/scheduling_length.svg" formGroupName="routingDetail">
                         <input inputRef type="number" placeholder="Length (m)*" formControlName="length" />
                     </div>
-                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_width.svg"
-                        formGroupName="routingDetail">
+                    <div [loading]="isPortsLoading$ | async" iconic-input-wrapper
+                        leftSvg="assets/images/scheduling_width.svg" formGroupName="routingDetail">
                         <input inputRef type="number" placeholder="Width (m)*" formControlName="width" />
                     </div>
-                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_depth.svg"
-                        formGroupName="routingDetail">
+                    <div [loading]="isPortsLoading$ | async" iconic-input-wrapper
+                        leftSvg="assets/images/scheduling_depth.svg" formGroupName="routingDetail">
                         <input inputRef type="number" placeholder="Max Draft" formControlName="maxDraft" />
                     </div>
-                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_convoy.svg"
-                        formGroupName="routingDetail">
+                    <div [loading]="isPortsLoading$ | async" iconic-input-wrapper
+                        leftSvg="assets/images/scheduling_convoy.svg" formGroupName="routingDetail">
                         <input inputRef type="number" placeholder="Aerial Guage (M)*" formControlName="arrivalGuage" />
                     </div>
-                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_weight.svg"
-                        formGroupName="routingDetail">
+                    <div [loading]="isPortsLoading$ | async" iconic-input-wrapper
+                        leftSvg="assets/images/scheduling_weight.svg" formGroupName="routingDetail">
                         <input inputRef type="number" placeholder="Capacity max (m)*" formControlName="maxCapacity" />
                     </div>
-                    <div iconic-select-wrapper leftSvg="assets/images/scheduling_lock.svg"
-                        [rightIcon]="['fas', 'caret-down']" formGroupName="routingDetail">
+                    <div [loading]="isPortsLoading$ | async" iconic-select-wrapper
+                        leftSvg="assets/images/scheduling_lock.svg" [rightIcon]="['fas', 'caret-down']"
+                        formGroupName="routingDetail">
                         <select spAccessInputRef name="typeOfLock" id="typeOfLock" formControlName="lockType">
                             <option disabled value="">Type of lock</option>
                             <option *ngFor="let typeOfLock of typeOfLock" [value]="typeOfLock.id">
@@ -345,33 +348,33 @@
     <mat-step label="Save or Extend">
         <app-loader *ngIf="isLoading$ | async" [isContainer]="true" [fullScreen]="false"></app-loader>
         <div class="flex flex-col justify-center" *ngIf="!(isLoading$ | async)">
-            <div class="flex-1 flex justify-center gap-10 w-full max-lg:flex-col">
+            <div class="flex-1 flex justify-center gap-10 w-full max-lg:flex-col cursor-pointer">
                 <div (click)="saveScheduling()"
-                    class="flex min-lg:flex-col gap-5 items-center justify-evenly w-full min-lg:w-[400px] h-[520px] rounded-[10px] border border-transparent shadow-md">
-                    <div class="flex flex-col gap-2 items-center">
+                    class="flex min-lg:flex-col gap-5 items-center justify-evenly w-full min-lg:w-[400px] h-[520px] rounded-[10px] border border-transparent shadow-md cursor-pointer">
+                    <div class="flex flex-col gap-2 items-center cursor-pointer">
                         <div
-                            class="border border-[#B7B7B7] rounded-full flex justify-center items-center w-[155px] h-[155px]">
+                            class="border border-[#B7B7B7] rounded-full flex justify-center items-center w-[155px] h-[155px] cursor-pointer">
                             <img src="assets/images/scheduling_flag.svg" alt="Flag">
                         </div>
-                        <h2 class="text-4xl text-[#696969] font-bold">Convoi ended</h2>
+                        <h2 class="text-4xl text-[#696969] font-bold cursor-pointer">Convoi ended</h2>
                     </div>
-                    <div class="w-[335px] mx-[auto] text-center">
-                        <p class="text-3xl text-[#696969] font-normal">
+                    <div class="w-[335px] mx-[auto] text-center cursor-pointer">
+                        <p class="text-3xl text-[#696969] font-normal cursor-pointer">
                             Click this button if you added all the ships of the convoy.
                         </p>
                     </div>
                 </div>
                 <div (click)="navigate(1)"
-                    class="flex min-lg:flex-col justify-evenly gap-5 items-center w-full min-lg:w-[400px] h-[520px] rounded-[10px] border border-transparent shadow-md">
-                    <div class="flex flex-col gap-2 items-center">
+                    class="flex min-lg:flex-col justify-evenly gap-5 items-center w-full min-lg:w-[400px] h-[520px] rounded-[10px] border border-transparent shadow-md cursor-pointer">
+                    <div class="flex flex-col gap-2 items-center cursor-pointer">
                         <div
-                            class="border border-[#B7B7B7] rounded-full flex justify-center items-center w-[155px] h-[155px]">
+                            class="border border-[#B7B7B7] rounded-full flex justify-center items-center w-[155px] h-[155px] cursor-pointer">
                             <img src="assets/images/scheduling_boat.svg" alt="Flag">
                         </div>
-                        <h2 class="text-4xl text-[#696969] font-bold">Add ship to convoy</h2>
+                        <h2 class="text-4xl text-[#696969] font-bold cursor-pointer">Add ship to convoy</h2>
                     </div>
-                    <div class="w-[335px] mx-[auto] text-center">
-                        <p class="text-3xl text-[#696969] font-normal">
+                    <div class="w-[335px] mx-[auto] text-center cursor-pointer">
+                        <p class="text-3xl text-[#696969] font-normal cursor-pointer">
                             Click this button to add a new ship to the convoy.
                         </p>
                     </div>

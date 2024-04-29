@@ -298,7 +298,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         this.filterDate = event instanceof Date ? event : new Date(event);
         // this.filterDate = <Date>event;
         this.plannings.length = 0;
-        this.isLoading$.next(true);
+        this.isTableLoading$.next(true);
         this.retrievePlanningList();
         this.getCardDetails()
     }
@@ -505,7 +505,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     retrievePlanningList(): void {
-
+        this.isTableLoading$.next(true);
         let data = {
             "start": this.pageSettings.start,
             "length": this.pageSettings.length,
@@ -516,7 +516,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         this.planningService.pagination(data).subscribe((response: any) => {
             this.plannings = response.items;
             this.length = response.noFiltered;
-            this.isLoading$.next(false);
             this.isTableLoading$.next(false);
             this.newCardsLoading$.next(false);
             this.cd.detectChanges();
