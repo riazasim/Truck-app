@@ -9,7 +9,7 @@ import { CustomFieldData } from "../models/custom-field.model";
 @Injectable({
     providedIn: 'root'
 })
-export class MapSerachService {
+export class MicroService {
     constructor(private readonly http: HttpClient) { }
     getMicroPlanningConvoyes(data: any): Observable<any> {
         return this.http.post<ResponseArrayPaginationWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/microconvoyes`, wrapJsonForRequest(data))

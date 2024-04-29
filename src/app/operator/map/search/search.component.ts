@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, EventEmitter, Output, SimpleChanges } fro
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
 import { BehaviorSubject } from 'rxjs';
-import { MapSerachService } from 'src/app/core/services/map-search.service';
+import { MicroService } from 'src/app/core/services/micro.service';
 import { createRequiredValidators } from 'src/app/shared/validators/generic-validators';
 
 @Component({
@@ -57,7 +57,7 @@ export class SearchComponent {
 
 
     constructor(
-        private readonly mapSearchService: MapSerachService,
+        private readonly microService: MicroService,
         private readonly cd: ChangeDetectorRef,
         private fb: FormBuilder,
     ) {
@@ -74,7 +74,7 @@ export class SearchComponent {
     }
 
     retrivePorts() {
-        this.mapSearchService.getPorts().subscribe({
+        this.microService.getPorts().subscribe({
             next: res => {
                 res?.forEach((item: any) => {
                     this.ports.push(item?.attributes);
@@ -89,7 +89,7 @@ export class SearchComponent {
 
     retriveCompanines(ev: any) {
         this.portId = ev?.target?.value;
-        this.mapSearchService.getCompanies(this.portId).subscribe({
+        this.microService.getCompanies(this.portId).subscribe({
             next: res => {
                 res?.forEach((item: any) => {
                     this.companies.push(item?.attributes);
@@ -207,7 +207,7 @@ export class SearchComponent {
             "filters": [this.portId, "", this.companyId, this.statusFilters, date, this.departurePortId, this.arrivalPortId, this.timeFilter],
             "order": [{ "dir": "DESC", "column": 0 }]
         }
-        this.mapSearchService.getMicroPlanningConvoyes(data).subscribe({
+        this.microService.getMicroPlanningConvoyes(data).subscribe({
             next: response => {
                 this.resultsArray = response.items;
                 this.length = response.noFiltered;
@@ -237,7 +237,7 @@ export class SearchComponent {
             "filters": ["", "", "", this.statusFilters, "", "", "", this.timeFilter],
             "order": [{ "dir": "DESC", "column": 0 }]
         }
-        this.mapSearchService.getMicroPlanningConvoyes(data).subscribe({
+        this.microService.getMicroPlanningConvoyes(data).subscribe({
             next: response => {
                 this.resultsArray = response.items;
                 this.length = response.noFiltered;

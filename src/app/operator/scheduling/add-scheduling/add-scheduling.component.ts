@@ -19,7 +19,7 @@ import { PlanningModel, convoyModel } from 'src/app/core/models/planning.model';
 import { ShipsService } from 'src/app/core/services/ships.service';
 import { ShipModel } from 'src/app/core/models/ship.model';
 import { createRequiredValidators } from 'src/app/shared/validators/generic-validators';
-import { MapSerachService } from 'src/app/core/services/map-search.service';
+import { MicroService } from 'src/app/core/services/micro.service';
 
 @Component({
     selector: 'app-add-scheduling',
@@ -162,7 +162,7 @@ export class AddSchedulingComponent implements OnInit {
         private readonly statusListStatus: StatusListService,
         private readonly snackBar: MatSnackBar,
         private readonly shipsService: ShipsService,
-        private readonly microService: MapSerachService,
+        private readonly microService: MicroService,
     ) {
         this.getFormatHourSlot = getFormatHourSlot.bind(this);
     }

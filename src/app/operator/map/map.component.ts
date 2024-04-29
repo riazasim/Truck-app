@@ -56,7 +56,7 @@ export class MapComponent {
         //     "filters": ["","","",filters.statusFilters,"","","",filters.timeFilter],
         //     "order": [{"dir": "DESC", "column": 0}]
         // }
-        // this.mapSearchService.getMicroPlanningConvoyes(data).subscribe({
+        // this.microService.getMicroPlanningConvoyes(data).subscribe({
         // next: response => {
         //     this.dataSource = response.items;
         //     this.markerPositions = [];
