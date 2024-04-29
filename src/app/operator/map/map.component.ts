@@ -53,6 +53,45 @@ export class MapComponent {
                 }
             });
         }
+        // this.isLoading$.next(true);
+        // let data = {
+        //     "start": 0,
+        //     "length": 5,
+        //     "filters": ["","","",filters.statusFilters,"","","",filters.timeFilter],
+        //     "order": [{"dir": "DESC", "column": 0}]
+        // }
+        // this.microService.getMicroPlanningConvoyes(data).subscribe({
+        // next: response => {
+        //     this.dataSource = response.items;
+        //     this.markerPositions = [];
+        //     this.dataSource.forEach(item => {
+        //         if (item && item.sidCoordinates) {
+        //             const coordinates = item.sidCoordinates.split(',');
+        //             const markerPosition = new google.maps.LatLng(parseFloat(coordinates[0]), parseFloat(coordinates[1]));
+        //             this.markerPositions.push({position : markerPosition , title : item?.ship?.name});
+        //         }
+        //     });
+        // const d2 = new google.maps.LatLng(parseFloat('37.4239163'), parseFloat('-122.0947209'));
+        // this.markerPositions.push(d2);
+        // if(this.markerPositions.length > 0){
+        //     this.markerPositions.forEach(position => {
+        //         this.marker = new google.maps.Marker({
+        //             map: this.map,
+        //             position: position,
+        //             title: 'Marker Title'
+        //         });
+        //     });
+        // }
+        // else{
+        //     console.log('marker:', this.marker)
+        // }
+        //         this.cd.detectChanges();
+        //         this.isLoading$.next(false);
+        //     },
+        //     error: ()=>{
+        //         this.isLoading$.next(false);
+        //     }
+        // });
     }
 
     mapLoading(ev: any) {
