@@ -1,6 +1,5 @@
-﻿<app-loader *ngIf="(isLoading$ | async)" [isContainer]="true" [fullScreen]="false"></app-loader>
-<section *ngIf="!(isLoading$ | async)">
-    <section *ngIf="originalSource.length; else empty">
+﻿<section>
+    <section *ngIf="(isTableLoading$ | async) || originalSource.length; else empty">
         <material-panel-table [showSearchbar]="false" [showHeader]="false"
             Class="!rounded-xl shadow-lg border border-transparent">
             <div table class="w-full overflow-hidden">
@@ -126,11 +125,8 @@
                                 </section>
                             </th>
                             <td cdk-cell *cdkCellDef="let row">
-                                <mat-chip
-                                    [ngStyle]="{'background-color': row?.planning?.shipmentStatus === 'Port Queue' ? '#3386FE' : '#1C3F47'}">
-                                    {{ row?.planning?.shipmentStatus === 'Port Queue' ? 'Port Queue' :
-                                    row?.planning?.shipmentStatus === 'Service'
-                                    ? 'Service' : 'Closed' }}
+                                <mat-chip [ngStyle]="{'background-color': row?.planning?.planningStatus?.color}">
+                                    {{ row?.planning?.planningStatus?.name }}
                                 </mat-chip>
                             </td>
                         </ng-container>
@@ -149,7 +145,7 @@
                                             class="cursor-pointer"></a>
                                     <fa-icon icon="xmark" class="text-[#17A0B5] cursor-pointer" size="lg"
                                         *ngIf="userRole === 'ROLE_USER_TRANSPORT'"
-                                        (click)="openDeleteModal(row.id)"></fa-icon>
+                                        (click)="openDeleteModal(row.planning.id)"></fa-icon>
                                 </div>
                                 <div class="flex gap-4">
                                     <fa-icon icon="eye" class="text-[#17A0B5] cursor-pointer" size="lg"

@@ -26,7 +26,7 @@
                         </select>
                     </div>
                     <div iconic-select-wrapper [dashboardInp]="true" [showValidation]="false"
-                        [loading]="isCompaniesLoading$ | async" [rightIcon]="['fas', 'caret-down']">
+                        [class.hidden]="isCompaniesLoading$ | async" [rightIcon]="['fas', 'caret-down']">
                         <select spAccessInputRef name="company" id="company" (change)="onCompaniesChange($event)"
                             formControlName="companyId">
                             <option value="" disabled selected>Company</option>
@@ -201,8 +201,9 @@
             <table mat-table [class.cardLoading]="isLoading$ | async" [dataSource]="resultsArray">
                 <ng-container matColumnDef="name">
                     <th mat-header-cell *matHeaderCellDef class="tbl-header flex justify-between items-center h-[58px]">
-                        <span *ngIf="resultsArray.length === 0">No results found</span>
-                        <span *ngIf="resultsArray.length !== 0">Results ({{length}})</span>
+                        <span *ngIf="length === 0">No results found</span>
+                        <span *ngIf="(length > 0 && length <= 5)">Results ({{length}})</span>
+                        <span *ngIf="(length > 5)">Results</span>
                         <mat-paginator class="{{length <= 5 ? '!hidden' : ''}}" [hidePageSize]="true" [length]="length"
                             [disabled]="isLoading$ | async" (page)="onPaginateChange($event)" [pageSize]="5"
                             showFirstLastButtons>
@@ -217,8 +218,7 @@
                                     </span>
                                 </div>
                                 <div class="flex gap-1 items-baseline">
-                                    <div
-                                        class="rounded-full h-2 w-2 {{ element?.sidStatus === 'Port Queue' ? 'bg-[#1C3F47]' : 'bg-[#FE3333]'}}">
+                                    <div class="rounded-full h-2 w-2" [ngStyle]="{'background-color': element?.planningConvoyStatus?.color}">
                                     </div>
                                     <span class="text-[#8C8C8C] text-sm font-normal">
                                         {{element?.planningConvoyStatus?.name}}

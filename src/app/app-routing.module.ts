@@ -22,7 +22,7 @@ const routes: Routes = [
         // canLoad: [CredentialsGuard],
         // data: {
         //     roleGuardData: {
-        //         requiredRoles: [],
+        //         requiredRoles: [USER_TYPE_ADMIN],
         //         fallbackRoute: '/sign-in',
         //     },
         //     credentialsGuardData: {

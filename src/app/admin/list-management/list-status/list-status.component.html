@@ -13,12 +13,13 @@
                             </section>
                         </th>
                         <td cdk-cell *cdkCellDef="let row">
-                          {{row.planning.rId || '-'}}
+                            {{row.planning.rId || '-'}}
                             <!-- <a class="text-primary" href="javascript:void(0)" (click)="triggerOpenLogs.emit({ view: 'view', id: row.id, planning: row })">{{row.id || '-'}}</a> -->
-                          </td>
-                          <td cdk-footer-cell *cdkFooterCellDef [colSpan]="displayedColumns.length" class="py-4 font-bold text-center">
+                        </td>
+                        <td cdk-footer-cell *cdkFooterCellDef [colSpan]="displayedColumns.length"
+                            class="py-4 font-bold text-center">
                             <!-- {{'messages.there-no-more-items' | translate}} -->
-                          </td>
+                        </td>
                     </ng-container>
                     <ng-container cdkColumnDef="manevre">
                         <th cdk-header-cell *cdkHeaderCellDef scope="col" class="max-w-20">
@@ -123,11 +124,8 @@
                             </section>
                         </th>
                         <td cdk-cell *cdkCellDef="let row">
-                            <mat-chip
-                                [ngStyle]="{'background-color': row.planning.shipmentStatus === 'Port Queue' ? '#3386FE' : '#1C3F47'}"
-                                >
-                                {{ row.planning.shipmentStatus === 'Port Queue' ? 'Port Queue' : row.planning.shipmentStatus === 'Service'
-                                ? 'Service' : 'Closed' }}
+                            <mat-chip [ngStyle]="{'background-color': row?.planning?.planningStatus?.color}">
+                                {{ row?.planning?.planningStatus?.name }}
                             </mat-chip>
                         </td>
                     </ng-container>
@@ -162,5 +160,5 @@
     </material-panel-table>
 </section>
 <ng-template #empty>
-  <no-list-management></no-list-management>
+    <no-list-management></no-list-management>
 </ng-template>

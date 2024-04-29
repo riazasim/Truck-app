@@ -11,6 +11,7 @@ export class DatepickerComponent implements OnInit {
     @Input() field: string;
     @Input() placeholder: string = 'Pick a date';
     @Input() disabled: boolean;
+    @Input() loading: boolean | any;
 
     @Input() height: number;
     @Input() isHeaderPosition: boolean;

@@ -8,8 +8,7 @@
     </div>
     <div class="max-md:grid gap-8 min-lg:columns-4 max-md:columns-1">
         <div
-            class="slide-in-bottom max-w-sm rounded-[20px] overflow-hidden shadow-lg bg-white p-5 min-h-[280px] items-center justify-center {{!(isLoading$ | async) ? '' : 'flex'}} relative">
-            <app-loader *ngIf="(isLoading$ | async)" [isOverlay]="true"></app-loader>
+            class="slide-in-bottom max-w-sm rounded-[20px] overflow-hidden shadow-lg bg-white p-5 min-h-[280px]">
             <ul *ngIf="!(isLoading$ | async)">
                 <li>
                     <h5 class="text-xl font-bold">General</h5>
@@ -25,7 +24,7 @@
         </div>
         <div
             class="slide-in-bottom max-w-sm rounded-[20px] overflow-hidden shadow-lg bg-white p-5 min-h-[280px]">
-            <ul *ngIf="!(isLoading$ | async)">
+            <ul>
                 <li>
                     <h5 class="text-xl font-bold">Advanced</h5>
                 </li>
@@ -37,7 +36,7 @@
         </div>
         <div
             class="slide-in-bottom max-w-sm rounded-[20px] overflow-hidden shadow-lg bg-white p-5 min-h-[280px]">
-            <ul *ngIf="!(isLoading$ | async)">
+            <ul>
                 <li>
                     <h5 class="text-xl font-bold">Developers</h5>
                 </li>

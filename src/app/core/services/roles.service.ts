@@ -5,58 +5,71 @@ import { isUserInAnyRole, isUserInEveryRole, isUserInRole } from '../security/se
 import { AuthService } from './auth.service';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class RolesService<T extends string = string> {
-  private initialized: boolean = false;
-  private readonly rolesSubject = new BehaviorSubject<T[]>([]);
+    private initialized: boolean = false;
+    private readonly rolesSubject = new BehaviorSubject<T[]>([]);
 
-  constructor(private readonly authService: AuthService) {
-    this.init();
-  }
-
-  init(): void {
-    if (!this.initialized) {
-      const data = this.authService.getAuth();
-      if (data) {
-        const oldRole: any = this.rolesSubject.value;
-        this.rolesSubject.next([...oldRole, data.userType]);
-      }
-      this.initialized = true;
+    constructor(private readonly authService: AuthService) {
+        this.init();
     }
-  }
 
-  public setUserRoles(roles: T[]): void {
-    this.rolesSubject.next(roles);
-  }
+    init(): void {
+        if (!this.initialized) {
+            const data = this.authService.getAuth();
+            if (data) {
+                const oldRole: any = this.rolesSubject.value;
+                this.rolesSubject.next([...oldRole, data.userType]);
+            }
+            this.initialized = true;
+        }
+    }
 
-  public addUserRoles(roles: T[]): void {
-    this.rolesSubject.next([...roles]);
-  }
+    public setUserRoles(roles: any[]): void {
+        this.rolesSubject.next(roles);
+        if(roles[0].includes('ROLE_ADMIN')){
+            localStorage.setItem('role' , 'ROLE_ADMIN');
+        }
+        if(roles[0].includes('ROLE_USER_OPERATOR')){
+            localStorage.setItem('role' , 'ROLE_USER_OPERATOR');
+        }
+    }
 
-  public addUserRole(role: T): void {
-    const oldRole = this.rolesSubject.value;
-    this.rolesSubject.next([...oldRole, role]);
-  }
+    public addUserRoles(roles: T[]): void {
+        this.rolesSubject.next([...roles]);
+    }
 
-  public getUserRoles(): T[] {
-    return this.rolesSubject.value;
-  }
+    public addUserRole(role: T): void {
+        const oldRole = this.rolesSubject.value;
+        this.rolesSubject.next([...oldRole, role]);
+    }
 
-  public listenToUserRoles(): Observable<T[]> {
-    return this.rolesSubject.asObservable();
-  }
+    public getUserRoles(): any {
+        let role = localStorage.getItem('role')
+        if(role) return role
+        else return this.rolesSubject.value;
+    }
 
-  public isUserInRole(role: T): boolean {
-    return isUserInRole(this.getUserRoles(), role);
-  }
+    public listenToUserRoles(): Observable<T[]> {
+        return this.rolesSubject.asObservable();
+    }
 
-  public isUserInAnyRole(roles: T[]): boolean {
-    return isUserInAnyRole(this.getUserRoles(), roles);
-  }
+    public isUserInRole(role: T): boolean {
+        return isUserInRole(this.getUserRoles(), role);
+    }
 
-  public isUserInEveryRole(roles: T[]): boolean {
-    return isUserInEveryRole(this.getUserRoles(), roles);
-  }
+    public isUserInAnyRole(roles: T[]): boolean {
+        return isUserInAnyRole(this.getUserRoles(), roles);
+    }
+
+    public isUserInEveryRole(roles: T[]): boolean {
+        return isUserInEveryRole(this.getUserRoles(), roles);
+    }
+
+    public removeUserRoles(): any {
+        let role = localStorage.getItem('role')
+        if(role) localStorage.removeItem('role');
+    }
 
 }

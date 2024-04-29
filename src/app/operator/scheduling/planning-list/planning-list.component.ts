@@ -19,9 +19,9 @@ import { AuthService } from 'src/app/core/services/auth.service';
 export class PlanningListComponent implements OnChanges {
     @Output() triggerOpenLogs: EventEmitter<{ view: string, id: number, planning: PlanningModel, modal: string }> = new EventEmitter();
     @Output() onPaginate: EventEmitter<any> = new EventEmitter();
+    @Output() retrievePlannings: EventEmitter<any> = new EventEmitter();
     @Input() isTableLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     @Input() userRole: string;
-    @Input() filterDate: string;
     @Input() plannings: PlanningModel[] = [];
     @Input() length: number;
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
@@ -44,34 +44,34 @@ export class PlanningListComponent implements OnChanges {
         this.isTableLoading$.next(false);
     }
     ngOnChanges(changes: SimpleChanges): void {
-            this.dataSource = this.plannings;
-            this.originalSource = this.plannings;
-            this.isLoading$.next(false)
+        this.dataSource = this.plannings;
+        this.originalSource = this.plannings;
+        this.isLoading$.next(false)
     }
 
     retrievePlanningList(filterDate: string): void {
-        this.isLoading$.next(true);
-        this.pageIndex = 0;
-        this.pageSize = 5;
-        let data = {
-            "start": this.pageIndex,
-            "length": this.pageSize,
-            "filters": [filterDate, "", "", "", "", ""],
-            "order": [{ "dir": "DESC", "column": 0 }]
-        }
-        this.planningService.pagination(data).subscribe({
-            next: response => {
-                this.dataSource = response.items;
-                this.originalSource = response.items;
-                this.length = response.noTotal;
-                this.cd.detectChanges();
-                this.isLoading$.next(false);
-            }
-        })
+        this.retrievePlannings.emit();
+        // this.pageIndex = 0;
+        // this.pageSize = 5;
+        // let data = {
+        //     "start": this.pageIndex,
+        //     "length": this.pageSize,
+        //     "filters": [filterDate, "", "", "", "", ""],
+        //     "order": [{ "dir": "DESC", "column": 0 }]
+        // }
+        // this.planningService.pagination(data).subscribe({
+        //     next: response => {
+        //         this.dataSource = response.items;
+        //         this.originalSource = response.items;
+        //         this.length = response.noTotal;
+        //         this.cd.detectChanges();
+        //         this.isLoading$.next(false);
+        //     }
+        // })
     }
 
     onPaginateChange(event: PageEvent) {
-        this.onPaginate.emit({start : event.pageIndex ? event.pageIndex * event.pageSize : event.pageIndex , length : event.pageSize })
+        this.onPaginate.emit({ start: event.pageIndex ? event.pageIndex * event.pageSize : event.pageIndex, length: event.pageSize })
         // let data = {
         //     "start": event.pageIndex ? event.pageIndex * event.pageSize : event.pageIndex,
         //     "length": event.pageSize,
@@ -99,7 +99,7 @@ export class PlanningListComponent implements OnChanges {
             .subscribe({
                 next: (isDelete: boolean) => {
                     if (isDelete) {
-                        this.isLoading$.next(true);
+                        this.isTableLoading$.next(true);
                         this.planningService.delete(id).subscribe(() => {
                             this.retrievePlanningList('');
                             this.cd.detectChanges();

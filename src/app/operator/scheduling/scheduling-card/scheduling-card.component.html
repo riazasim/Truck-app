@@ -35,9 +35,8 @@
                         </p>
                     </div>
                     <div>
-                        <mat-chip
-                            [ngStyle]="{'background-color': planning.planning.shipmentStatus === 'Port Queue' ? '#3386FE' : '#1C3F47'}">
-                            {{ planning.planning.shipmentStatus === 'Port Queue' ? 'Port Queue': 'Closed' }}
+                        <mat-chip [ngStyle]="{'background-color': planning?.planning?.planningStatus?.color}">
+                            {{ planning?.planning?.planningStatus?.name }}
                         </mat-chip>
                     </div>
                 </div>

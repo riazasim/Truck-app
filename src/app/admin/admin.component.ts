@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from '../core/services/auth.service';
 import { BehaviorSubject } from 'rxjs';
+import { RolesService } from '../core/services/roles.service';
 
 @Component({
     selector: 'app-admin',
@@ -24,6 +25,7 @@ export class AdminComponent {
     constructor(
         public activatedRoute: ActivatedRoute,
         private readonly authService: AuthService,
+        private readonly roleService: RolesService,
         private router: Router) {
     }
 
@@ -31,6 +33,7 @@ export class AdminComponent {
         this.isLoading$.next(true)
         this.authService.logout().subscribe(() => {
             this.authService.removeAuth();
+            this.roleService.removeUserRoles();
             this.router.navigate(['/']);
             this.isLoading$.next(false)
         });
