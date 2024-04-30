@@ -34,6 +34,7 @@ export class BearerTokenInterceptor implements HttpInterceptor {
         return next.handle(request).pipe(
             catchError((response: any) => {
                 if (response.status === 401) {
+                    localStorage.clear();
                     document.cookie = `${SESSION_TOKEN}=; Max-Age=0;`;
                     this.router.navigate(['/']);
                 }
@@ -41,9 +42,6 @@ export class BearerTokenInterceptor implements HttpInterceptor {
                 return throwError(() => response.error);
             }),
             map(event => {
-                if (event instanceof HttpResponse && ([401].includes(event.status))) {
-                    localStorage.clear();
-                }
                 if (event instanceof HttpResponse && ([100, 101, 200, 400, 500, 401, 403].includes(event.status))) {
 
                     if (!environment.production) {
