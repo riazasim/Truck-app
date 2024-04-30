@@ -20,7 +20,7 @@
                     <div iconic-select-wrapper leftIcon="grid-2" [rightIcon]="['fas', 'caret-down']">
                         <select spAccessInputRef name="ship" id="ship" formControlName="ship">
                             <option disabled selected>Ship</option>
-                            <option *ngFor="let ship of ship" [value]="ship.id">
+                            <option *ngFor="let ship of shipsList" [value]="ship.id">
                                 {{ ship.name }}
                             </option>
                         </select>
@@ -35,7 +35,7 @@
                         </select>
                     </div>
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_port.svg">
-                        <input inputRef type="number" placeholder="Pavilion*" formControlName="pavilion" />
+                        <input inputRef type="text" placeholder="Pavilion*" formControlName="pavilion" />
                     </div>
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_engine.svg">
                         <input inputRef type="number" placeholder="Engine power" formControlName="enginePower" />
@@ -145,7 +145,7 @@
                 </div>
                 <div class="gap-y-4 mb-5 min-xl:px-[50px]">
                     <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]"
-                        (click)="next(stepOne$, convoyForm , 1)">
+                        (click)="next(1)">
                         {{ "button.next" | translate }}
                     </button>
                 </div>
@@ -229,7 +229,7 @@
                 </div>
                 <div class="gap-y-4 mb-5 min-xl:px-[50px]">
                     <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]"
-                        [disabled]="!convoyForm.valid" (click)="updateConvoys()">
+                         (click)="updateConvoys()">
                         {{ "Update" | translate }}
                     </button>
                 </div>

@@ -8,6 +8,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { handleError } from 'src/app/shared/utils/error-handling.function';
 import { convoyModel } from 'src/app/core/models/planning.model';
 import { createRequiredValidators } from 'src/app/shared/validators/generic-validators';
+import { ShipsService } from 'src/app/core/services/ships.service';
 
 
 @Component({
@@ -33,25 +34,28 @@ export class EditSchedulingConvoyPageComponent {
     oldImagesId: any[] = [];
     images: any[] = [];
     tempImg: File[] = [];
+    shipsList: any;
 
     stepOne$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
     id: number;
 
-    ship = [
-        { id: 1, name: 'ship1' },
-        { id: 2, name: 'ship2' },
-        { id: 3, name: 'ship3' },
-    ];
+
     companies = [
         { id: 1, name: 'company1' },
         { id: 2, name: 'company2' },
         { id: 3, name: 'company3' },
     ];
     statuses = [
-        { id: 1, name: 'status1' },
-        { id: 2, name: 'status2' },
-        { id: 3, name: 'status3' },
+        { id: 1, name: 'Port Queue' },
+        { id: 2, name: 'Checked In' },
+        { id: 3, name: 'Waiting' },
+        { id: 4, name: 'In Berth Operation' },
+        { id: 5, name: 'Berth' },
+        { id: 6, name: 'In Exit Queue Operation' },
+        { id: 7, name: 'Exit Queue' },
+        { id: 8, name: 'In New RID Operation' },
+        { id: 9, name: 'Checked Out' },
     ];
     shipType = [
         { id: 1, name: 'ship type1' },
@@ -98,10 +102,12 @@ export class EditSchedulingConvoyPageComponent {
         private readonly planningService: PlanningService,
         private readonly route: ActivatedRoute,
         private readonly router: Router,
+        private readonly shipsService: ShipsService,
         private readonly snackBar: MatSnackBar,) { }
 
     ngOnInit(): void {
-        this.getRoute()
+        this.getRoute();
+        this.retrieveShips();
         this.initConvoyForm();
         this.isLoading$.next(false)
     }
@@ -117,51 +123,56 @@ export class EditSchedulingConvoyPageComponent {
         });
     }
 
-    next(step$: BehaviorSubject<boolean>, formGroup: FormGroup, index: any): void {
-        if (formGroup.valid) {
-            if (this.matStepper.selectedIndex === 0) {
-                this.stepOne$.next(true);
-            }
-            this.matStepper.selectedIndex = index;
-        } else {
-            Object.values(formGroup.controls).forEach(control => {
-                control.markAsTouched();
-            });
+    next(index: any): void {
+        this.matStepper.selectedIndex = index;
+    }
+
+    retrieveShips(): void {
+        let data = {
+            "start": '',
+            "length": '',
+            "filters": ["", "", "", "", ""],
+            "order": [{ "dir": "DESC", "column": 0 }]
         }
+        this.shipsService.pagination(data).subscribe(response => {
+            this.shipsList = response.items;
+
+            this.isLoading$.next(false);
+        })
     }
 
 
     initConvoyForm(data?: convoyModel): void {
         this.convoyForm = this.fb.group({
-            navigationType: this.fb.control(data?.navigationType || '',[...createRequiredValidators()]),
-            ship: this.fb.control(data?.ship || '',[...createRequiredValidators()]),
-            company: this.fb.control(data?.company || '',[...createRequiredValidators()]),
-            status: this.fb.control(data?.status || '',[...createRequiredValidators()]),
-            shipType: this.fb.control(data?.shipType || '',[...createRequiredValidators()]),
-            pavilion: this.fb.control(data?.pavilion || '',[...createRequiredValidators()]),
-            enginePower: this.fb.control(data?.enginePower || null,[...createRequiredValidators()]),
-            lengthOverall: this.fb.control(data?.lengthOverall || null,[...createRequiredValidators()]),
-            width: this.fb.control(data?.width || null,[...createRequiredValidators()]),
-            maxDraft: this.fb.control(data?.maxDraft || null,[...createRequiredValidators()]),
-            maxQuantity: this.fb.control(data?.maxQuantity || null,[...createRequiredValidators()]),
-            agent: this.fb.control(data?.agent || '',[...createRequiredValidators()]),
-            maneuvering: this.fb.control(data?.maneuvering || '',[...createRequiredValidators()]),
-            shipowner: this.fb.control(data?.shipowner || '',[...createRequiredValidators()]),
-            purpose: this.fb.control(data?.purpose || '',[...createRequiredValidators()]),
-            operator: this.fb.control(data?.operator || '',[...createRequiredValidators()]),
-            trafficType: this.fb.control(data?.trafficType || '',[...createRequiredValidators()]),
-            operatonType: this.fb.control(data?.operatonType || '',[...createRequiredValidators()]),
-            cargo: this.fb.control(data?.cargo || '',[...createRequiredValidators()]),
-            quantity: this.fb.control(data?.quantity || '',[...createRequiredValidators()]),
-            unitNo: this.fb.control(data?.unitNo || '',[...createRequiredValidators()]),
-            originPort: this.fb.control(data?.originPort || '',[...createRequiredValidators()]),
-            destination: this.fb.control(data?.destination || '',[...createRequiredValidators()]),
-            observation: this.fb.control(data?.observation || '',[...createRequiredValidators()]),
-            additionalOperator: this.fb.control(data?.additionalOperator || '',[...createRequiredValidators()]),
-            clientComments: this.fb.control(data?.clientComments || '',[...createRequiredValidators()]),
-            operatorComments: this.fb.control(data?.operatorComments || '',[...createRequiredValidators()]),
-            oldDocuments: this.fb.control(data?.oldDocuments || '',[...createRequiredValidators()]),
-            documents: this.fb.control(data?.documents || [],[...createRequiredValidators()]),
+            navigationType: this.fb.control(data?.navigationType || '', [...createRequiredValidators()]),
+            ship: this.fb.control(data?.ship || '', [...createRequiredValidators()]),
+            company: this.fb.control(data?.company || '', [...createRequiredValidators()]),
+            status: this.fb.control(data?.status || '', [...createRequiredValidators()]),
+            shipType: this.fb.control(data?.shipType || '', [...createRequiredValidators()]),
+            pavilion: this.fb.control(data?.pavilion || '', [...createRequiredValidators()]),
+            enginePower: this.fb.control(data?.enginePower || null, [...createRequiredValidators()]),
+            lengthOverall: this.fb.control(data?.lengthOverall || null, [...createRequiredValidators()]),
+            width: this.fb.control(data?.width || null, [...createRequiredValidators()]),
+            maxDraft: this.fb.control(data?.maxDraft || null, [...createRequiredValidators()]),
+            maxQuantity: this.fb.control(data?.maxQuantity || null, [...createRequiredValidators()]),
+            agent: this.fb.control(data?.agent || '', [...createRequiredValidators()]),
+            maneuvering: this.fb.control(data?.maneuvering || '', [...createRequiredValidators()]),
+            shipowner: this.fb.control(data?.shipowner || '', [...createRequiredValidators()]),
+            purpose: this.fb.control(data?.purpose || '', [...createRequiredValidators()]),
+            operator: this.fb.control(data?.operator || '', [...createRequiredValidators()]),
+            trafficType: this.fb.control(data?.trafficType || '', [...createRequiredValidators()]),
+            operatonType: this.fb.control(data?.operatonType || '', [...createRequiredValidators()]),
+            cargo: this.fb.control(data?.cargo || '', [...createRequiredValidators()]),
+            quantity: this.fb.control(data?.quantity || '', [...createRequiredValidators()]),
+            unitNo: this.fb.control(data?.unitNo || '', [...createRequiredValidators()]),
+            originPort: this.fb.control(data?.originPort || '', [...createRequiredValidators()]),
+            destination: this.fb.control(data?.destination || '', [...createRequiredValidators()]),
+            observation: this.fb.control(data?.observation || '', [...createRequiredValidators()]),
+            additionalOperator: this.fb.control(data?.additionalOperator || '', [...createRequiredValidators()]),
+            clientComments: this.fb.control(data?.clientComments || '', [...createRequiredValidators()]),
+            operatorComments: this.fb.control(data?.operatorComments || '', [...createRequiredValidators()]),
+            oldDocuments: this.fb.control(data?.oldDocuments || '', [...createRequiredValidators()]),
+            documents: this.fb.control(data?.documents || [], [...createRequiredValidators()]),
         })
     }
 

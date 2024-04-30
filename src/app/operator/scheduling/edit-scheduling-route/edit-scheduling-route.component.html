@@ -70,7 +70,7 @@
                 </div>
                 <div [loading]="(isPortsLoading$ | async) || (isRoutesLoading$ | async)" iconic-input-wrapper
                     leftSvg="assets/images/scheduling_convoy.svg">
-                    <input inputRef type="text" placeholder="Aerial Guage (M)*" formControlName="arrivalGauge" />
+                    <input inputRef type="number" placeholder="Aerial Guage (M)*" formControlName="arrivalGauge" />
                 </div>
                 <div [loading]="(isPortsLoading$ | async) || (isRoutesLoading$ | async)" iconic-input-wrapper
                     leftSvg="assets/images/scheduling_weight.svg">

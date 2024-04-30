@@ -211,9 +211,11 @@ export class AddSchedulingComponent implements OnInit {
     retrivePorts() {
         this.microService.getPorts().subscribe({
             next: res => {
-                res?.forEach((item: any) => {
-                    this.ports.push(item?.attributes);
-                });
+                if(res.length > 0){
+                    res?.forEach((item: any) => {
+                        this.ports.push(item?.attributes);
+                    });
+                }
                 this.isPortsLoading$.next(false)
             },
             error: err => {

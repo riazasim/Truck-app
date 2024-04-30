@@ -104,13 +104,14 @@ export class EditSchedulingRouteComponent implements OnInit {
     retrivePorts() {
         this.microService.getPorts().subscribe({
             next: res => {
-                res?.forEach((item: any) => {
-                    this.ports.push(item?.attributes);
-                });
-                this.isPortsLoading$.next(false);
+                if(res.length > 0){
+                    res?.forEach((item: any) => {
+                        this.ports.push(item?.attributes);
+                    });
+                }
+                this.isPortsLoading$.next(false)
             },
             error: err => {
-                this.isPortsLoading$.next(false);
                 throw err;
             }
         })
