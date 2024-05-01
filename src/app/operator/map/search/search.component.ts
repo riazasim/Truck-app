@@ -91,6 +91,7 @@ export class SearchComponent {
         this.portId = ev?.target?.value;
         this.microService.getCompanies(this.portId).subscribe({
             next: res => {
+                this.companies = [];
                 res?.forEach((item: any) => {
                     this.companies.push(item?.attributes);
                 });
