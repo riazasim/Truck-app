@@ -131,6 +131,7 @@ export class EditSchedulingRouteComponent implements OnInit {
     }
 
     initForm(data?: PlanningDetailModel): void {
+        debugger
         this.planningForm = this.fb.group({
             convoyType: this.fb.control(data?.convoyType || '', [...createRequiredValidators()]),
             estimatedTimeArrival: this.fb.control(data?.estimatedTimeArrival || '', [...createRequiredValidators()]),
