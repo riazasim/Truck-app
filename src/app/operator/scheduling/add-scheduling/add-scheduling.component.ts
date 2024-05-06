@@ -211,7 +211,7 @@ export class AddSchedulingComponent implements OnInit {
     retrivePorts() {
         this.microService.getPorts().subscribe({
             next: res => {
-                if(res.length > 0){
+                if (res.length > 0) {
                     res?.forEach((item: any) => {
                         this.ports.push(item?.attributes);
                     });
@@ -237,7 +237,7 @@ export class AddSchedulingComponent implements OnInit {
     OnDateChange(value: any) {
         let filterDate = value instanceof Date ? value : new Date(value);
         this.dateVal = this.formatDate(filterDate);
-        this.schedulingForm.patchValue({routingDetail: { estimatedTimeArrival: this.dateVal }})
+        this.schedulingForm.patchValue({ routingDetail: { estimatedTimeArrival: this.dateVal } })
     }
     OnTimeChange(value: any) {
         this.timeVal = value
@@ -255,6 +255,18 @@ export class AddSchedulingComponent implements OnInit {
 
             this.isLoading$.next(false);
         })
+    }
+
+    onPortChange(ev: any) {
+        let port: any;
+        this.ports.filter((item: any) => {
+            if (Number(item.id) === Number(ev.target.value)) port = item;
+            // console.log(item.id)
+        })
+        if (port) {
+            this.schedulingForm.patchValue({ routingDetail: { ridCoordinates: port?.addrCoordinates } })
+        }
+        console.log(port)
     }
 
     onShipSelected(ev: any): void {
@@ -324,6 +336,7 @@ export class AddSchedulingComponent implements OnInit {
                 arrivalGuage: this.fb.control(data?.routingDetail?.arrivalGuage || null, [...createRequiredValidators()]),
                 maxCapacity: this.fb.control(data?.routingDetail?.maxCapacity || null, [...createRequiredValidators()]),
                 lockType: this.fb.control(data?.routingDetail?.lockType || '', [...createRequiredValidators()]),
+                ridCoordinates: this.fb.control(data?.routingDetail?.ridCoordinates || '', [...createRequiredValidators()]),
             }),
             convoyDetail: this.fb.control(data?.convoyDetail || [], [...createRequiredValidators()]),
             documents: this.fb.control(data?.documents || [], [...createRequiredValidators()]),

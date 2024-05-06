@@ -9,9 +9,9 @@ export interface UpdatePlanningDock {
 }
 
 export interface convoyModel {
-    planningConvoyId? :number;
+    planningConvoyId?: number;
     id?: number;
-    company : string;
+    company: string;
     navigationType: string;
     ship: string;
     status: string;
@@ -48,7 +48,7 @@ export interface PlanningModel {
     id?: number | undefined;
     planningId?: number;
     sId?: number;
-    planning : any;
+    planning: any;
     relativeTimeArrival?: string;
     shipmentStatus?: string;
     estimatedTimeArrival: string;
@@ -66,6 +66,7 @@ export interface PlanningModel {
         arrivalGuage: number;
         maxCapacity: number;
         lockType: string;
+        ridCoordinates: string;
     }
     convoyDetail: convoyModel[];
     documents: any[];
@@ -76,7 +77,7 @@ export interface PlanningDetailModel {
     id?: number;
     planningId?: number;
     sId?: number;
-    rId? : string;
+    rId?: string;
     relativeTimeArrival?: string;
     shipmentStatus?: string;
     convoyType: string;
