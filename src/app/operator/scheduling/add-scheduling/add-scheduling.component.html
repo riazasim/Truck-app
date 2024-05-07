@@ -10,13 +10,13 @@
                         <input inputRef type="text" placeholder="Convoy Type" formControlName="convoyType" />
                     </div>
                     <div class="grid grid-cols-2 gap-x-8 gap-y-4 mb-5">
-                        <datepicker [loading]="isPortsLoading$ | async" matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
-                            [matTooltip]="'Pick ETA date' | translate" [model]="filterDate" [isHeaderPosition]="true"
-                            [height]="52" (dateChanged)="OnDateChange($event)">
+                        <datepicker [loading]="isPortsLoading$ | async" matTooltipClass="drop-shadow-lg"
+                            matTooltipPosition="above" [matTooltip]="'Pick ETA date' | translate" [model]="filterDate"
+                            [isHeaderPosition]="true" [height]="52" (dateChanged)="OnDateChange($event)">
                         </datepicker>
-                        <timepicker [loading]="isPortsLoading$ | async" matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
-                            [matTooltip]="'Pick ETA time' | translate" [height]="52" [model]="filterTime"
-                            (modelChange)="OnTimeChange($event)"></timepicker>
+                        <timepicker [loading]="isPortsLoading$ | async" matTooltipClass="drop-shadow-lg"
+                            matTooltipPosition="above" [matTooltip]="'Pick ETA time' | translate" [height]="52"
+                            [model]="filterTime" (modelChange)="OnTimeChange($event)"></timepicker>
                     </div>
                     <div [loading]="isPortsLoading$ | async" iconic-input-wrapper leftIcon="location-dot"
                         formGroupName="routingDetail">
@@ -49,7 +49,7 @@
                     </div>
                     <div [loading]="isPortsLoading$ | async" iconic-select-wrapper
                         leftSvg="assets/images/scheduling_arrival_port.svg" [rightIcon]="['fas', 'caret-down']"
-                        formGroupName="routingDetail">
+                        formGroupName="routingDetail" (change)="onPortChange($event)">
                         <select spAccessInputRef name="arrivalPort" id="arrivalPort" formControlName="arrivalPort">
                             <option disabled value="">Arival Port</option>
                             <option *ngFor="let arivalPort of ports" [value]="arivalPort.id">
@@ -57,7 +57,8 @@
                             </option>
                         </select>
                     </div>
-                    <div iconic-select-wrapper leftIcon="grid-2" [rightIcon]="['fas', 'caret-down']">
+                    <div iconic-select-wrapper leftIcon="grid-2" [rightIcon]="['fas', 'caret-down']"
+                        [formGroup]="convoyForm">
                         <select spAccessInputRef name="company" id="company" formControlName="company">
                             <option disabled value="">Company</option>
                             <option *ngFor="let company of companies" [value]="company.id">
@@ -125,11 +126,20 @@
             <div
                 class="grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20 gap-y-4 pt-[100px] min-xl:px-[50px]">
                 <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
-                    <div iconic-select-wrapper leftIcon="grid-2" [rightIcon]="['fas', 'caret-down']">
+                    <!-- <div iconic-select-wrapper leftIcon="grid-2" [rightIcon]="['fas', 'caret-down']">
                         <select spAccessInputRef name="company" id="company" formControlName="company">
                             <option disabled value="">Company</option>
                             <option *ngFor="let company of companies" [value]="company.id">
                                 {{ company.name }}
+                            </option>
+                        </select>
+                    </div> -->
+                    <div iconic-select-wrapper leftSvg="assets/images/scheduling_operator.svg"
+                        [rightIcon]="['fas', 'caret-down']">
+                        <select spAccessInputRef name="operator" id="operator" formControlName="operator">
+                            <option disabled value="">Operator*</option>
+                            <option *ngFor="let operator of operator" [value]="operator.id">
+                                {{ operator.name }}
                             </option>
                         </select>
                     </div>
@@ -189,7 +199,7 @@
                             </option>
                         </select>
                     </div>
-                    <div iconic-select-wrapper leftSvg="assets/images/scheduling_operator.svg"
+                    <!-- <div iconic-select-wrapper leftSvg="assets/images/scheduling_operator.svg"
                         [rightIcon]="['fas', 'caret-down']">
                         <select spAccessInputRef name="operator" id="operator" formControlName="operator">
                             <option disabled value="">Operator*</option>
@@ -197,7 +207,7 @@
                                 {{ operator.name }}
                             </option>
                         </select>
-                    </div>
+                    </div> -->
                     <div iconic-select-wrapper leftSvg="assets/images/scheduling_trafic_type.svg"
                         [rightIcon]="['fas', 'caret-down']">
                         <select spAccessInputRef name="trafficType" id="trafficType" formControlName="trafficType">
