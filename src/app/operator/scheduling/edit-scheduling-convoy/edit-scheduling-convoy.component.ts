@@ -14,7 +14,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class EditSchedulingConvoyComponent {
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
-    displayedColumns: string[] = ['id', 'manevure', 'ship', 'operator', 'destination', 'navigationType', 'sidStatus', 'actions'];
+    displayedColumns: string[] = ['id', 'manevure', 'ship', 'operator', 'destination', 'navigationType', 'sidCoordinates', 'sidStatus', 'actions'];
     dataSource: convoyModel[] = [];
     originalSource: convoyModel[] = [];
     appliedFilters: any = {};

@@ -20,11 +20,23 @@
                     <div iconic-select-wrapper leftIcon="grid-2" [rightIcon]="['fas', 'caret-down']">
                         <select spAccessInputRef name="ship" id="ship" formControlName="ship">
                             <option disabled selected>Ship</option>
+                            <option *ngFor="let ship of shipsList" [value]="ship.id" [disabled]="ship.disabled">
+                                {{ ship.name }}
+                            </option>
+                        </select>
+                        <!-- Add error message or indicator for disabled state -->
+                        <div *ngIf="convoyForm.get('ship')?.hasError('shipAlreadySelected')" class="text-red-500">
+                            Ship already selected in a previous convoy.
+                        </div>
+                    </div>
+                    <!-- <div iconic-select-wrapper leftIcon="grid-2" [rightIcon]="['fas', 'caret-down']">
+                        <select spAccessInputRef name="ship" id="ship" formControlName="ship">
+                            <option disabled selected>Ship</option>
                             <option *ngFor="let ship of shipsList" [value]="ship.id">
                                 {{ ship.name }}
                             </option>
                         </select>
-                    </div>
+                    </div> -->
                     <div iconic-select-wrapper leftSvg="assets/images/scheduling_ship_type.svg"
                         [rightIcon]="['fas', 'caret-down']">
                         <select spAccessInputRef name="shipType" id="shipType" formControlName="shipType">

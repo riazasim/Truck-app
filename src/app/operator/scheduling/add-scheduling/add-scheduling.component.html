@@ -150,8 +150,8 @@
                         <select spAccessInputRef name="ship" id="ship" (change)="onShipSelected($event)"
                             formControlName="ship">
                             <option disabled value="">Ship</option>
-                            <option *ngFor="let ship of shipsList" [value]="ship.id">
-                                {{ ship.name }}
+                            <option *ngFor="let ship of shipsList" [value]="ship.attributes.id">
+                                {{ ship.attributes.name }}
                             </option>
                         </select>
                     </div>

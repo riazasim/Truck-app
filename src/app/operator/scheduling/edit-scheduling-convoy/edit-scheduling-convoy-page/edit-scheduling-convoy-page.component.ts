@@ -35,7 +35,7 @@ export class EditSchedulingConvoyPageComponent {
     images: any[] = [];
     tempImg: File[] = [];
     shipsList: any;
-
+    selectedShips: Set<number> = new Set<number>();
     stepOne$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
     id: number;
@@ -136,9 +136,18 @@ export class EditSchedulingConvoyPageComponent {
         }
         this.shipsService.pagination(data).subscribe(response => {
             this.shipsList = response.items;
-
+            this.updateSelectedShipsState();
             this.isLoading$.next(false);
         })
+    }
+
+    updateSelectedShipsState(): void {
+        // Loop through ships list and mark selected ships as disabled
+        this.shipsList.forEach((ship:any) => {
+            if (this.selectedShips.has(ship.id)) {
+                ship.disabled = true;
+            }
+        });
     }
 
 
@@ -173,7 +182,26 @@ export class EditSchedulingConvoyPageComponent {
             operatorComments: this.fb.control(data?.operatorComments || '', [...createRequiredValidators()]),
             oldDocuments: this.fb.control(data?.oldDocuments || '', [...createRequiredValidators()]),
             documents: this.fb.control(data?.documents || [], [...createRequiredValidators()]),
-        })
+        });
+
+        this.convoyForm.get('ship')?.valueChanges.subscribe((selectedShipId) => {
+            if (this.selectedShips.has(selectedShipId)) {
+                // Ship is already selected, handle accordingly (show error message, disable selection, etc.)
+                this.convoyForm.get('ship')?.setErrors({ 'shipAlreadySelected': true });
+            }
+        });
+    }
+
+    addShipToConvoy(shipId: number): void {
+        this.selectedShips.add(shipId); // Add ship to selected ships list
+        this.updateSelectedShipsState(); // Update disabled state of selected ships
+        this.convoyForm.patchValue({ ship: shipId }); // Update form control value
+    }
+
+    // Method to remove a ship from convoy
+    removeShipFromConvoy(shipId: number): void {
+        this.selectedShips.delete(shipId); // Remove ship from selected ships list
+        this.updateSelectedShipsState(); // Update disabled state of selected ships
     }
 
     updateConvoys(): void {

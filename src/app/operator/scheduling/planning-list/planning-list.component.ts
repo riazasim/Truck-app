@@ -36,7 +36,6 @@ export class PlanningListComponent implements OnChanges {
     constructor(private readonly dialogService: MatDialog,
         private readonly planningService: PlanningService,
         private readonly cd: ChangeDetectorRef,
-        private readonly authService: AuthService
     ) {
         this.dataSource = this.plannings;
         this.originalSource = this.plannings;

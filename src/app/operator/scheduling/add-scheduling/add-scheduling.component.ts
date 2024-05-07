@@ -79,7 +79,7 @@ export class AddSchedulingComponent implements OnInit {
     getFormatHourSlot: Function;
 
     id: number;
-    shipsList: ShipModel[] = [];
+    shipsList: any;
     filterDate: Date = new Date();
     filterTime = '00:00:00'
 
@@ -250,8 +250,9 @@ export class AddSchedulingComponent implements OnInit {
             "filters": ["", "", "", "", ""],
             "order": [{ "dir": "DESC", "column": 0 }]
         }
-        this.shipsService.pagination(data).subscribe(response => {
-            this.shipsList = response.items;
+        this.shipsService.getShipList(data).subscribe(response => {
+            debugger
+            this.shipsList = response;
 
             this.isLoading$.next(false);
         })
@@ -271,7 +272,7 @@ export class AddSchedulingComponent implements OnInit {
 
     onShipSelected(ev: any): void {
         const selectedShipId = ev.target.value
-        const selectedShip = this.shipsList.find(ship => Number(ship.id) === Number(selectedShipId));
+        const selectedShip = this.shipsList.find((ship:any) => Number(ship.id) === Number(selectedShipId));
 
         if (selectedShip) {
             this.convoyForm.patchValue({
