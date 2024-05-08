@@ -3,17 +3,10 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { convertJsonToFormData, pluckArrayPaginationWrapperData, pluckArrayWrapperData, pluckItemWrapperData, wrapJsonForRequest, wrapJsonListForRequest } from 'src/app/shared/utils/api.functions';
 import { environment } from 'src/environments/environment';
-import { ResponseArrayPaginationWrapper, ResponseArrayWrapper, ResponseDataItem, ResponseItemWrapper } from '../models/response-wrappers.types';
-import { DocumentObject, SchedulingCustomField, SchedulingLogModel, SchedulingModel, SchedulingPreviewModel, SchedulingProduct, ShipmentLogsModel } from '../models/scheduling.model';
+import { ResponseArrayPaginationWrapper, ResponseArrayWrapper, ResponseItemWrapper } from '../models/response-wrappers.types';
+import { SchedulingCustomField, SchedulingLogModel, SchedulingModel, SchedulingPreviewModel, SchedulingProduct } from '../models/scheduling.model';
 import { PlanningDetailModel, PlanningTable, UpdatePlanningDock, convoyModel } from '../models/planning.model';
 import { map } from 'rxjs/operators';
-import { StatusListModel } from '../models/status-list.model';
-import { BuildingModel } from '../models/building.model';
-import { DockModel } from '../models/dock.model';
-import { OperationModel } from '../models/operation.model';
-import { PartnerModel } from '../models/partner.model';
-import { ProductModel } from '../models/product.model';
-import { LocationModel } from '../models/location.model';
 import { BookingModel } from '../models/booking.model';
 import { CustomFieldData } from '../models/custom-field.model';
 
@@ -141,13 +134,7 @@ export class PlanningService {
             );
     }
     getTransferData(data: any): Observable<any> {
-        return this.http.post<ResponseArrayPaginationWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getUsersByUserRole`, wrapJsonForRequest(data))
-            .pipe(pluckArrayPaginationWrapperData<any, ResponseArrayPaginationWrapper<any>>(),
-                map((u: any) => {
-                    u.items = (<any>u.items).map(((c: CustomFieldData) => c.attributes));
-                    return u;
-                })
-            );
+        return this.http.post<ResponseArrayPaginationWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getUsersByUserRoleList`, wrapJsonForRequest(data));
     }
 
     assignTransferData(data: any): Observable<any> {

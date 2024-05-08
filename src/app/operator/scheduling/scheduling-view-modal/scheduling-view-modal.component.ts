@@ -9,7 +9,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { handleSuccess } from 'src/app/shared/utils/success-handling.function';
 import { handleError } from 'src/app/shared/utils/error-handling.function';
-import { AuthService } from 'src/app/core/services/auth.service';
 import { RolesService } from 'src/app/core/services/roles.service';
 
 @Component({
@@ -72,18 +71,16 @@ export class SchedulingViewModalComponent implements OnChanges {
     }
     onRoleSelect(userRole: string): void {
         this.isLoading$.next(true)
-        this.selectedRole = userRole;
-        const userRoleData = {
-            "start": 0,
-            "length": 0,
-            "filters": ["", "", userRole, "", ""],//["firstname/lastname", "status", "useRole", "phone", "email"]  //'ROLE_USER_AGENT','ROLE_USER_MANEUVERING','ROLE_USER_CAPTAIN'
-            "order": [{ "dir": "DESC", "column": 0 }]
+        const data = {
+            "planningId" : this.id,
+            "userRole" : userRole
         }
-        this.planningService.getTransferData(userRoleData).subscribe((response: any) => {
+        this.planningService.getTransferData(data).subscribe((response: any) => {
             this.isLoading$.next(false)
             this.step$.next(2)
-            this.transferData = response.items
+            this.transferData = response.data.attributes;
             this.dataSource = new MatTableDataSource<any>(this.transferData);
+            console.log('transfer',this.dataSource)
             this.selection = this.transferData;
         })
     }
