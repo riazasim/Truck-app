@@ -97,7 +97,7 @@ export class DashboardComponent implements OnInit {
     getDashboardData() {
         this.statService.getDashboardStats().subscribe({
             next : response => {
-                this.dashboardData = response?.data?.attributes;
+                this.dashboardData = response;
                 this.sidsByStatus[0].value = this.dashboardData?.sidsByStatus?.onRouteCount || 0
                 this.sidsByStatus[1].value = this.dashboardData?.ridsByStatus?.onPortQueueCount || 0
                 this.sidsByStatus[2].value = this.dashboardData?.sidsByStatus?.onBerthCount || 0

@@ -251,7 +251,6 @@ export class AddSchedulingComponent implements OnInit {
             "order": [{ "dir": "DESC", "column": 0 }]
         }
         this.shipsService.getShipList(data).subscribe(response => {
-            debugger
             this.shipsList = response;
 
             this.isLoading$.next(false);
