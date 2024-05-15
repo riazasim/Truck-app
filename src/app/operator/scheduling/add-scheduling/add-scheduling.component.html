@@ -36,8 +36,8 @@
                     </div>
                     <div [loading]="isPortsLoading$ | async" iconic-select-wrapper
                         leftSvg="assets/images/scheduling_ship_type.svg" [rightIcon]="['fas', 'caret-down']"
-                        formGroupName="routingDetail">
-                        <select spAccessInputRef name="departurePort" id="departurePort"
+                        formGroupName="routingDetail" (change)="onPortChange($event)">
+                        <select spAccessInputRef name="departurePort" id="departurePort" 
                             formControlName="departurePort">
                             <option disabled value="">
                                 Departure Port
@@ -49,7 +49,7 @@
                     </div>
                     <div [loading]="isPortsLoading$ | async" iconic-select-wrapper
                         leftSvg="assets/images/scheduling_arrival_port.svg" [rightIcon]="['fas', 'caret-down']"
-                        formGroupName="routingDetail" (change)="onPortChange($event)">
+                        formGroupName="routingDetail">
                         <select spAccessInputRef name="arrivalPort" id="arrivalPort" formControlName="arrivalPort">
                             <option disabled value="">Arival Port</option>
                             <option *ngFor="let arivalPort of ports" [value]="arivalPort.id">
