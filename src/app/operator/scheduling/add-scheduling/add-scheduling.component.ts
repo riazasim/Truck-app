@@ -271,16 +271,16 @@ export class AddSchedulingComponent implements OnInit {
 
     onShipSelected(ev: any): void {
         const selectedShipId = ev.target.value
-        const selectedShip = this.shipsList.find((ship:any) => Number(ship.id) === Number(selectedShipId));
-
+        const selectedShip = this.shipsList.find((ship:any) => Number(ship.attributes.id) === Number(selectedShipId));
         if (selectedShip) {
             this.convoyForm.patchValue({
-                width: selectedShip.width || '',
-                maxDraft: selectedShip.maxDraft || '',
-                maxQuantity: selectedShip.maxCapacity || ''
+                width: selectedShip.attributes.width || '',
+                maxDraft: selectedShip.attributes.maxDraft || '',
+                maxQuantity: selectedShip.attributes.maxCapacity || ''
             });
         }
     }
+
 
     retrieveStatuses(): Observable<any> {
         return this.statusListStatus.listSid();
