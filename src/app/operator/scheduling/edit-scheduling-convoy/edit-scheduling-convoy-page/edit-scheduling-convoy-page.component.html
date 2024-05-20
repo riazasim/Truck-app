@@ -5,12 +5,21 @@
             <div
                 class="grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20 gap-y-4 pt-[100px] min-xl:px-[50px]">
                 <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
-                    <div iconic-select-wrapper leftSvg="assets/images/scheduling_ship_type.svg"
+                    <!-- <div iconic-select-wrapper leftSvg="assets/images/scheduling_ship_type.svg"
                         [rightIcon]="['fas', 'caret-down']">
                         <select spAccessInputRef name="company" id="company" formControlName="company">
                             <option disabled selected>Ship type*</option>
                             <option *ngFor="let company of companies" [value]="company.id">
                                 {{ company.name }}
+                            </option>
+                        </select>
+                    </div> -->
+                    <div iconic-select-wrapper leftSvg="assets/images/scheduling_operator.svg"
+                        [rightIcon]="['fas', 'caret-down']">
+                        <select spAccessInputRef name="operator" id="operator" formControlName="operator">
+                            <option disabled selected>Operator*</option>
+                            <option *ngFor="let operator of operator" [value]="operator.id">
+                                {{ operator.name }}
                             </option>
                         </select>
                     </div>
@@ -64,15 +73,16 @@
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_weight.svg">
                         <input inputRef type="number" placeholder="C.max (t)*" formControlName="maxQuantity" />
                     </div>
+                    
+                </div>
+                <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_ship_owner.svg">
                         <input inputRef type="text" placeholder="Ship owner" formControlName="shipowner" />
                     </div>
-                </div>
-                <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_purpose.svg">
                         <input inputRef type="text" placeholder="Purpose" formControlName="purpose" />
                     </div>
-                    <div iconic-select-wrapper leftSvg="assets/images/scheduling_operator.svg"
+                    <!-- <div iconic-select-wrapper leftSvg="assets/images/scheduling_operator.svg"
                         [rightIcon]="['fas', 'caret-down']">
                         <select spAccessInputRef name="status" id="status" formControlName="status">
                             <option disabled selected>status</option>
@@ -80,16 +90,8 @@
                                 {{ status.name }}
                             </option>
                         </select>
-                    </div>
-                    <div iconic-select-wrapper leftSvg="assets/images/scheduling_operator.svg"
-                        [rightIcon]="['fas', 'caret-down']">
-                        <select spAccessInputRef name="operator" id="operator" formControlName="operator">
-                            <option disabled selected>Operator*</option>
-                            <option *ngFor="let operator of operator" [value]="operator.id">
-                                {{ operator.name }}
-                            </option>
-                        </select>
-                    </div>
+                    </div> -->
+                    
                     <div iconic-select-wrapper leftSvg="assets/images/scheduling_trafic_type.svg"
                         [rightIcon]="['fas', 'caret-down']">
                         <select spAccessInputRef name="trafficType" id="trafficType" formControlName="trafficType">

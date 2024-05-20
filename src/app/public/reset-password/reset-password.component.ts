@@ -56,7 +56,7 @@ export class ResetPasswordComponent implements OnInit {
                         ['../../sign-in'], { relativeTo: this.route }
                     )
                         .then(() => {
-                            handleSuccess(this.snackBar, response.attributes, this.isLoading$)
+                            handleSuccess(this.snackBar, response.data.attributes, this.isLoading$)
                             this.loaderService.hideLoader()
                         })
                 }, error: (body) => {

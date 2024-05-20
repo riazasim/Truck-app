@@ -49,13 +49,23 @@
                         </option>
                     </select>
                 </div>
+                <div iconic-select-wrapper leftSvg="assets/images/scheduling_ship_type.svg"
+                        [rightIcon]="['fas', 'caret-down']">
+                        <select spAccessInputRef name="company" id="company" formControlName="company">
+                            <option disabled selected>Ship type*</option>
+                            <option *ngFor="let company of companies" [value]="company.id">
+                                {{ company.name }}
+                            </option>
+                        </select>
+                    </div>
+                
+            </div>
+            <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
+                <!-- <p>&nbsp;</p> -->
                 <div [loading]="(isPortsLoading$ | async) || (isRoutesLoading$ | async)" iconic-input-wrapper
                     leftSvg="assets/images/scheduling_port.svg">
                     <input inputRef type="text" placeholder="Pilot Company" formControlName="pilotCompany" />
                 </div>
-            </div>
-            <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
-                <!-- <p>&nbsp;</p> -->
                 <div [loading]="(isPortsLoading$ | async) || (isRoutesLoading$ | async)" iconic-input-wrapper
                     leftSvg="assets/images/scheduling_length.svg">
                     <input inputRef type="number" placeholder="Length (m)*" formControlName="length" />

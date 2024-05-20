@@ -36,7 +36,7 @@ export class SchedulingViewModalComponent implements OnChanges {
     @Input() modal: string;
     @Input() sidenav: MatSidenav;
     @Input() planning$: BehaviorSubject<any | null>;
-    userId: number = -1;
+    userIds: any[] = [];
     planning: any;
     shipmentLogs: any[];
     step$: BehaviorSubject<number> = new BehaviorSubject<number>(1);
@@ -92,15 +92,24 @@ export class SchedulingViewModalComponent implements OnChanges {
         })
     }
     onUserSelect(id: any): void {
-        this.userId = id;
-        console.log(id)
+        if (!this.userIds) {
+            this.userIds = [];
+        }
+
+        const index = this.userIds.indexOf(id);
+        if (index === -1) {
+            this.userIds.push(id);
+        } else {
+            this.userIds.splice(index, 1);
+        }
     }
 
     onAssign(): void {
         this.isLoading$.next(true)
+        // debugger
         this.planningService.assignTransferData({
             "planningId": this.id,
-            "userId": this.userId
+            "userIds": this.userIds
         }).subscribe({
             next: () => {
                 this.isLoading$.next(false)

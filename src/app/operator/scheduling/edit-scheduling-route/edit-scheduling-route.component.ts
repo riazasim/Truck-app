@@ -37,6 +37,12 @@ export class EditSchedulingRouteComponent implements OnInit {
         return formattedDate;
     }
 
+    companies = [
+        { id: 1, name: 'company1' },
+        { id: 2, name: 'company2' },
+        { id: 3, name: 'company3' },
+    ];
+
     customer = [
         { id: 1, name: 'customer1' },
         { id: 2, name: 'customer2' },

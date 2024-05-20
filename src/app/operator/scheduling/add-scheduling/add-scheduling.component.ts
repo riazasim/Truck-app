@@ -97,11 +97,12 @@ export class AddSchedulingComponent implements OnInit {
         { id: 2, name: 'zone2' },
         { id: 3, name: 'zone3' },
     ];
-    companies = [
-        { id: 1, name: 'company1' },
-        { id: 2, name: 'company2' },
-        { id: 3, name: 'company3' },
-    ];
+    companies: any[];
+    // [
+    //     { id: 1, name: 'company1' },
+    //     { id: 2, name: 'company2' },
+    //     { id: 3, name: 'company3' },
+    // ];
     statuses = [
         { id: 1, name: 'Port Queue' },
         { id: 2, name: 'Checked In' },
@@ -224,6 +225,35 @@ export class AddSchedulingComponent implements OnInit {
         })
     }
 
+    onPortChange(ev: any) {
+        let port: any;
+        this.ports.filter((item: any) => {
+            if (Number(item.id) === Number(ev.target.value)) port = item;
+            // console.log(item.id)
+        })
+        if (port) {
+            this.schedulingForm.patchValue({ routingDetail: { ridCoordinates: port?.addrCoordinates } })
+            this.retriveCompanines(port.id);
+        }
+        console.log(port)
+    }
+
+    retriveCompanines(portId: any) {
+        // const portId = ev?.target?.value;
+        this.microService.getCompanies(portId).subscribe({
+            next: res => {
+                this.companies = [];
+                res?.forEach((item: any) => {
+                    this.companies.push(item?.attributes);
+                });
+            },
+            error: err => {
+                throw err
+            }
+        })
+    }
+
+
 
     next(index: any): void {
         // Update the step status accordingly
@@ -257,21 +287,9 @@ export class AddSchedulingComponent implements OnInit {
         })
     }
 
-    onPortChange(ev: any) {
-        let port: any;
-        this.ports.filter((item: any) => {
-            if (Number(item.id) === Number(ev.target.value)) port = item;
-            // console.log(item.id)
-        })
-        if (port) {
-            this.schedulingForm.patchValue({ routingDetail: { ridCoordinates: port?.addrCoordinates } })
-        }
-        console.log(port)
-    }
-
     onShipSelected(ev: any): void {
         const selectedShipId = ev.target.value
-        const selectedShip = this.shipsList.find((ship:any) => Number(ship.attributes.id) === Number(selectedShipId));
+        const selectedShip = this.shipsList.find((ship: any) => Number(ship.attributes.id) === Number(selectedShipId));
         if (selectedShip) {
             this.convoyForm.patchValue({
                 width: selectedShip.attributes.width || '',

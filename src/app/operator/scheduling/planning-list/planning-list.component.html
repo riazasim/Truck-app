@@ -52,7 +52,7 @@
                                 </section>
                             </th>
                             <td cdk-cell *cdkCellDef="let row">
-                                {{ row?.planning?.berth || "-" }}
+                                {{ row?.planning?.berth?.name || "-" }}
                             </td>
                         </ng-container>
                         <ng-container cdkColumnDef="products">
@@ -126,6 +126,7 @@
                             <td cdk-cell *cdkCellDef="let row">
                                 <mat-chip [ngStyle]="{'background-color': row?.planning?.planningStatus?.color}">
                                     {{ row?.planning?.planningStatus?.name }}
+                                    <!-- {{ row?.planning?.planningStatus?.color }} -->
                                 </mat-chip>
                             </td>
                         </ng-container>
