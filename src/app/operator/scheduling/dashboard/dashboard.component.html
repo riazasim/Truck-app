@@ -148,7 +148,7 @@
                         <div *ngIf="!(isCardDetailsLoading$ | async) && plannings.length" class="p-12">
                             <div class="flex justify-between min-lg:items-center max-lg:flex-col">
                                 <div>
-                                    <h2 class="heading-2 font-bold text-primary">Shipment SID - {{planning.rId
+                                    <h2 class="heading-5 font-bold text-primary">Shipment SID - {{planning.rId
                                         ||
                                         '-'}}
                                     </h2>
@@ -157,46 +157,46 @@
                             <div class="pb-10 pt-4">
                                 <div class="flex min-lg:justify-between min-lg:items-center max-lg:flex-col">
                                     <div>
-                                        <h3 class="heading-2 text-primary">Route Details : </h3>
+                                        <h3 class="heading-5 text-primary">Route Details : </h3>
                                     </div>
                                 </div>
                                 <div class="grid min-lg:grid-cols-2 max-md:grid-cols-1 py-2 gap-y-4">
-                                    <div class="font-bold text-xl"><span class="font-bold heading-5">Convoy Type
+                                    <div class="font-bold"><span class="pl-2">Convoy Type
                                             :
                                         </span>- {{planning.convoyType}}</div>
-                                    <div class="font-bold text-xl"><span class="font-bold heading-5">Arrival
+                                    <div class="font-bold"><span class="pl-2">Arrival
                                             Gauge :
                                         </span>- {{planning.arrivalGauge}}</div>
-                                    <div class="font-bold text-xl"><span class="font-bold heading-5">Arrival
+                                    <div class="font-bold"><span class="pl-2">Arrival
                                             Port :
                                         </span>- {{planning.arrivalPort}}</div>
-                                    <div class="font-bold text-xl"><span class="font-bold heading-5">Departure
+                                    <div class="font-bold"><span class="pl-2">Departure
                                             Port
                                             : </span>- {{planning.departurePort}}</div>
-                                    <div class="font-bold text-xl"><span class="font-bold heading-5">Location
+                                    <div class="font-bold"><span class="pl-2">Location
                                             Port :
                                         </span>- {{planning.locationPort}}</div>
-                                    <div class="font-bold text-xl"><span class="font-bold heading-5">Pilot
+                                    <div class="font-bold"><span class="pl-2">Pilot
                                             Company :
                                         </span>- {{planning.pilotCompany}}</div>
-                                    <div class="font-bold text-xl"><span class="font-bold heading-5">Max
+                                    <div class="font-bold"><span class="pl-2">Max
                                             Capacity :
                                         </span>- {{planning.maxCapacity}}</div>
-                                    <div class="font-bold text-xl"><span class="font-bold heading-5">Max Draft :
+                                    <div class="font-bold"><span class="pl-2">Max Draft :
                                         </span>- {{planning.maxDraft}}</div>
-                                    <div class="font-bold text-xl"><span class="font-bold heading-5">Length :
+                                    <div class="font-bold"><span class="pl-2">Length :
                                         </span>- {{planning.length}}</div>
-                                    <div class="font-bold text-xl"><span class="font-bold heading-5">Width :
+                                    <div class="font-bold"><span class="pl-2">Width :
                                         </span>- {{planning.width}}</div>
-                                    <div class="font-bold text-xl"><span class="font-bold heading-5">Zone :
+                                    <div class="font-bold"><span class="pl-2">Zone :
                                         </span>-
                                         {{planning.zone}}</div>
-                                    <div class="font-bold text-xl"><span class="font-bold heading-5">Lock Type :
+                                    <div class="font-bold"><span class="pl-2">Lock Type :
                                         </span>- {{planning.lockType}}</div>
-                                    <div class="font-bold text-xl"><span class="font-bold heading-5">ETA :
+                                    <div class="font-bold"><span class="pl-2">ETA :
                                         </span>-
                                         {{planning.estimatedTimeArrival}}</div>
-                                    <div class="font-bold text-xl"><span class="font-bold heading-5">RTA :
+                                    <div class="font-bold"><span class="pl-2">RTA :
                                         </span>-
                                         {{planning.relativeTimeArrival}}</div>
                                 </div>

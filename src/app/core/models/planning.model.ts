@@ -63,7 +63,7 @@ export interface PlanningModel {
         length: number;
         width: number;
         maxDraft: number;
-        arrivalGuage: number;
+        arrivalGauge: number;
         maxCapacity: number;
         lockType: string;
         ridCoordinates: string;

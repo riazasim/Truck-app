@@ -351,7 +351,7 @@ export class AddSchedulingComponent implements OnInit {
                 length: this.fb.control(data?.routingDetail?.length || 0, [...createRequiredValidators()]),
                 width: this.fb.control(data?.routingDetail?.width || 0, [...createRequiredValidators()]),
                 maxDraft: this.fb.control(data?.routingDetail?.maxDraft || 0, [...createRequiredValidators()]),
-                arrivalGuage: this.fb.control(data?.routingDetail?.arrivalGuage || 0, [...createRequiredValidators()]),
+                arrivalGauge: this.fb.control(data?.routingDetail?.arrivalGauge || 0, [...createRequiredValidators()]),
                 maxCapacity: this.fb.control(data?.routingDetail?.maxCapacity || 0, [...createRequiredValidators()]),
                 lockType: this.fb.control(data?.routingDetail?.lockType || '', [...createRequiredValidators()]),
                 ridCoordinates: this.fb.control(data?.routingDetail?.ridCoordinates || '', [...createRequiredValidators()]),

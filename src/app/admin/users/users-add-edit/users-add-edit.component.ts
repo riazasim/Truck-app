@@ -92,7 +92,7 @@ export class UsersAddEditComponent {
             this.userService.edit(this.id, this.userForm.getRawValue()).subscribe({
                 next: () => {
                     this.isLoading$.next(false)
-                    this.router.navigate(['../success'], { relativeTo: this.route });
+                    this.router.navigate(['../../success'], { relativeTo: this.route });
                 },
                 error: (body: any) => {
                     this.isLoading$.next(false)
@@ -104,7 +104,7 @@ export class UsersAddEditComponent {
             this.userService.create(this.userForm.getRawValue()).subscribe({
                 next: () => {
                     this.isLoading$.next(false)
-                    this.router.navigate(['../success'], { relativeTo: this.route });
+                    this.router.navigate(['../../success'], { relativeTo: this.route });
                 },
                 error: (body: any) => {
                     this.isLoading$.next(false)
