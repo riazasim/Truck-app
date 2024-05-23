@@ -61,6 +61,8 @@ import { EditSchedulingConvoyPageComponent } from './edit-scheduling-convoy/edit
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NoRestrictionsComponent } from './no-restrictions/no-restrictions.component';
 import { RestrictionsComponent } from './restrictions/restrictions.component';
+import { ProductsComponent } from './products/products.component';
+import { ProductsTabsComponent } from './products/products-tab/products.-tabcomponent';
 
 
 @NgModule({
@@ -91,7 +93,9 @@ import { RestrictionsComponent } from './restrictions/restrictions.component';
         EditSchedulingConvoyComponent,
         EditSchedulingConvoyPageComponent,
         NoRestrictionsComponent,
-        RestrictionsComponent
+        RestrictionsComponent,
+        ProductsComponent,
+        ProductsTabsComponent
     ],
     imports: [
         CommonModule,

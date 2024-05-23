@@ -8,6 +8,7 @@ import { StatsService } from 'src/app/core/services/stats.service';
 interface pieData {
     name: string
     value: number
+    color: string
 }
 
 @Component({
@@ -22,38 +23,24 @@ export class DashboardComponent implements OnInit {
     dashboardData: any;
     sidsByStatus: pieData[] = [
         {
-            name: "On Route",
-            value: 0
-        },
-        {
-            name: "Port",
-            value: 0
-        },
-        {
-            name: "Berth",
-            value: 0
-        },
+            name: "",
+            value: 0,
+            color:""
+        }
     ];
     timeBreakDown: pieData[] = [
         {
-            name: "Operation Time",
-            value: 0
-        },
-        {
-            name: "Berth Time",
-            value: 0
-        },
-        {
-            name: "Waiting Time",
-            value: 0
-        },
+            name: "",
+            value: 0,
+            color: ""
+        }
     ];
     public readonly showLabels = true;
     public readonly animations = true;
     public readonly timeline = true;
 
     readonly colorScheme: string | Color | any = {
-        domain: ['#FF922E', '#3386FE', '#1C3F47']
+        domain: ['#3f87fd', '#bdf4a9', '#6ECE63', '#FF922E', '#00CBB2', '#BA28FF', '#203f44', '#3386fe' ]
     };
 
     readonly showLegend$: BehaviorSubject<boolean> = new BehaviorSubject(true);
@@ -98,21 +85,41 @@ export class DashboardComponent implements OnInit {
         this.statService.getDashboardStats().subscribe({
             next : response => {
                 this.dashboardData = response;
-                this.sidsByStatus[0].value = this.dashboardData?.sidsByStatus?.onRouteCount || 0
-                this.sidsByStatus[1].value = this.dashboardData?.ridsByStatus?.onPortQueueCount || 0
-                this.sidsByStatus[2].value = this.dashboardData?.sidsByStatus?.onBerthCount || 0
-                this.timeBreakDown[0].value = this.dashboardData?.timeBreakDown?.operationTime || 0
-                this.timeBreakDown[1].value = this.dashboardData?.timeBreakDown?.berthTime || 0
-                this.timeBreakDown[2].value = this.dashboardData?.timeBreakDown?.waitingTime || 0
+                this.sidsByStatus = [];
+                
+                this.dashboardData?.sidsByStatus?.forEach((status: any, index: number) => {
+                    if (index < this.sidsByStatus.length) {
+                        this.sidsByStatus[index].name = status.statusName;
+                        this.sidsByStatus[index].color = status.statusColor;
+                        this.sidsByStatus[index].value = status.count || 0;
+                    } else {
+                        this.sidsByStatus.push({
+                            name: status.statusName,
+                            color: status.statusColor,
+                            value: status.count || 0
+                        });
+                    }
+                });
+                this.timeBreakDown = [];
+
+                this.dashboardData?.timeBreakDown?.forEach((status: any, index: number) => {
+                    if (index < this.timeBreakDown.length) {
+                        this.timeBreakDown[index].name = status.name;
+                        this.timeBreakDown[index].color = status.color;
+                        this.timeBreakDown[index].value = status.count || 0;
+                    } else {
+                        this.timeBreakDown.push({
+                            name: status.name,
+                            color: status.color,
+                            value: status.time || 0
+                        });
+                    }
+                });
                 this.isLoading$.next(false)
             },
             error : ()=>{
-                this.sidsByStatus[0].value = 0
-                this.sidsByStatus[1].value = 0
-                this.sidsByStatus[2].value = 0
-                this.timeBreakDown[0].value = 0
-                this.timeBreakDown[1].value = 0
-                this.timeBreakDown[2].value = 0
+                this.sidsByStatus = []
+                this.timeBreakDown = []
                 this.isLoading$.next(false)
             }
         })

@@ -313,11 +313,11 @@ export class AddSchedulingComponent implements OnInit {
             ship: this.fb.control(data?.ship || '', [...createRequiredValidators()]),
             shipType: this.fb.control(data?.shipType || '', [...createRequiredValidators()]),
             pavilion: this.fb.control(data?.pavilion || '', [...createRequiredValidators()]),
-            enginePower: this.fb.control(data?.enginePower || null, [...createRequiredValidators()]),
-            lengthOverall: this.fb.control(data?.lengthOverall || null, [...createRequiredValidators()]),
-            width: this.fb.control(data?.width || null, [...createRequiredValidators()]),
-            maxDraft: this.fb.control(data?.maxDraft || null, [...createRequiredValidators()]),
-            maxQuantity: this.fb.control(data?.maxQuantity || null, [...createRequiredValidators()]),
+            enginePower: this.fb.control(data?.enginePower || 0, [...createRequiredValidators()]),
+            lengthOverall: this.fb.control(data?.lengthOverall || 0, [...createRequiredValidators()]),
+            width: this.fb.control(data?.width || 0, [...createRequiredValidators()]),
+            maxDraft: this.fb.control(data?.maxDraft || 0, [...createRequiredValidators()]),
+            maxQuantity: this.fb.control(data?.maxQuantity || 0, [...createRequiredValidators()]),
             agent: this.fb.control(data?.agent || '', [...createRequiredValidators()]),
             maneuvering: this.fb.control(data?.maneuvering || '', [...createRequiredValidators()]),
             shipowner: this.fb.control(data?.shipowner || '', [...createRequiredValidators()]),
@@ -326,7 +326,7 @@ export class AddSchedulingComponent implements OnInit {
             trafficType: this.fb.control(data?.trafficType || '', [...createRequiredValidators()]),
             operatonType: this.fb.control(data?.operatonType || '', [...createRequiredValidators()]),
             cargo: this.fb.control(data?.cargo || '', [...createRequiredValidators()]),
-            quantity: this.fb.control(data?.quantity || null, [...createRequiredValidators()]),
+            quantity: this.fb.control(data?.quantity || 0, [...createRequiredValidators()]),
             unitNo: this.fb.control(data?.unitNo || '', [...createRequiredValidators()]),
             originPort: this.fb.control(data?.originPort || '', [...createRequiredValidators()]),
             destination: this.fb.control(data?.destination || '', [...createRequiredValidators()]),
@@ -348,11 +348,11 @@ export class AddSchedulingComponent implements OnInit {
                 departurePort: this.fb.control(data?.routingDetail?.departurePort || '', [...createRequiredValidators()]),
                 arrivalPort: this.fb.control(data?.routingDetail?.arrivalPort || '', [...createRequiredValidators()]),
                 pilotCompany: this.fb.control(data?.routingDetail?.pilotCompany || '', [...createRequiredValidators()]),
-                length: this.fb.control(data?.routingDetail?.length || null, [...createRequiredValidators()]),
-                width: this.fb.control(data?.routingDetail?.width || null, [...createRequiredValidators()]),
-                maxDraft: this.fb.control(data?.routingDetail?.maxDraft || null, [...createRequiredValidators()]),
-                arrivalGuage: this.fb.control(data?.routingDetail?.arrivalGuage || null, [...createRequiredValidators()]),
-                maxCapacity: this.fb.control(data?.routingDetail?.maxCapacity || null, [...createRequiredValidators()]),
+                length: this.fb.control(data?.routingDetail?.length || 0, [...createRequiredValidators()]),
+                width: this.fb.control(data?.routingDetail?.width || 0, [...createRequiredValidators()]),
+                maxDraft: this.fb.control(data?.routingDetail?.maxDraft || 0, [...createRequiredValidators()]),
+                arrivalGuage: this.fb.control(data?.routingDetail?.arrivalGuage || 0, [...createRequiredValidators()]),
+                maxCapacity: this.fb.control(data?.routingDetail?.maxCapacity || 0, [...createRequiredValidators()]),
                 lockType: this.fb.control(data?.routingDetail?.lockType || '', [...createRequiredValidators()]),
                 ridCoordinates: this.fb.control(data?.routingDetail?.ridCoordinates || '', [...createRequiredValidators()]),
             }),
@@ -364,7 +364,9 @@ export class AddSchedulingComponent implements OnInit {
     saveScheduling(): void {
         this.isLoading$.next(true);
         this.convoys.push(this.convoyForm.value)
-        this.dateTimeVal = `${this.dateVal} ${this.timeVal}`
+        if(this.dateVal === undefined) this.dateVal = this.formatDate(this.filterDate);
+        if(this.timeVal === undefined) this.timeVal = String(this.filterTime);
+        this.dateTimeVal = `${this.dateVal} ${this.timeVal}`;
         this.schedulingForm.patchValue({ convoyDetail: this.convoys, documents: this.images, routingDetail: { estimatedTimeArrival: this.dateTimeVal } })
         this.planningService.create(this.schedulingForm.value).subscribe({
             next: () => {

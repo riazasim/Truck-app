@@ -53,6 +53,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { InputRefDirective } from './directives/input-ref.directive';
+import {MatTabsModule} from '@angular/material/tabs';
 
 
 export const MY_FORMATS = {
@@ -108,7 +109,8 @@ export const MY_FORMATS = {
         MatRadioModule,
         CommonModule,
         MatFormFieldModule,
-        MatInputModule
+        MatInputModule,
+        MatTabsModule
     ],
     exports: [
         IconicInputWrapperComponent,
@@ -162,7 +164,8 @@ export const MY_FORMATS = {
         FontAwesomeModule,
         FormsModule,
         ReactiveFormsModule,
-        TranslateModule
+        TranslateModule,
+        MatTabsModule
     ],
     providers: [
         { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },

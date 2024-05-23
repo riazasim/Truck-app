@@ -25,6 +25,7 @@ import { MapComponent } from './map/map.component';
 import { SearchComponent } from './map/search/search.component';
 
 
+
 @NgModule({
   declarations: [
     OperatorComponent,
@@ -33,7 +34,7 @@ import { SearchComponent } from './map/search/search.component';
     NavigationMenuComponent,
     OperatorLayoutComponent,
     MapComponent,
-    SearchComponent
+    SearchComponent,
   ],
     imports: [
         CommonModule,
