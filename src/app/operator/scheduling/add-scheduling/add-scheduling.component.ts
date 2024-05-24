@@ -41,6 +41,7 @@ export class AddSchedulingComponent implements OnInit {
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     showFileThree$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     isPortsLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+    isPortChangeLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
     isLinear = true;
     customers: PartnerModel[] = [];
@@ -98,31 +99,10 @@ export class AddSchedulingComponent implements OnInit {
         { id: 3, name: 'zone3' },
     ];
     companies: any[];
-    // [
-    //     { id: 1, name: 'company1' },
-    //     { id: 2, name: 'company2' },
-    //     { id: 3, name: 'company3' },
-    // ];
-    statuses = [
-        { id: 1, name: 'Port Queue' },
-        { id: 2, name: 'Checked In' },
-        { id: 3, name: 'Waiting' },
-        { id: 4, name: 'In Berth Operation' },
-        { id: 5, name: 'Berth' },
-        { id: 6, name: 'In Exit Queue Operation' },
-        { id: 7, name: 'Exit Queue' },
-        { id: 8, name: 'In New RID Operation' },
-        { id: 9, name: 'Checked Out' },
-    ];
     typeOfLock = [
         { id: 1, name: 'type of lock1' },
         { id: 2, name: 'type of lock2' },
         { id: 3, name: 'type of lock3' },
-    ];
-    ship = [
-        { id: 1, name: 'ship1' },
-        { id: 2, name: 'ship2' },
-        { id: 3, name: 'ship3' },
     ];
     shipType = [
         { id: 1, name: 'ship type1' },
@@ -179,7 +159,6 @@ export class AddSchedulingComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        // this.initializeSlots();
         this.id = this.route.snapshot.params['id'];
         this.initForm();
         this.initConvoyForm();
@@ -226,10 +205,10 @@ export class AddSchedulingComponent implements OnInit {
     }
 
     onPortChange(ev: any) {
+        this.isPortChangeLoading$.next(true);
         let port: any;
         this.ports.filter((item: any) => {
             if (Number(item.id) === Number(ev.target.value)) port = item;
-            // console.log(item.id)
         })
         if (port) {
             this.schedulingForm.patchValue({ routingDetail: { ridCoordinates: port?.addrCoordinates } })
@@ -239,15 +218,21 @@ export class AddSchedulingComponent implements OnInit {
     }
 
     retriveCompanines(portId: any) {
-        // const portId = ev?.target?.value;
         this.microService.getCompanies(portId).subscribe({
             next: res => {
                 this.companies = [];
-                res?.forEach((item: any) => {
-                    this.companies.push(item?.attributes);
-                });
+                if (res?.status !== 'error') {
+                    res?.forEach((item: any) => {
+                        this.companies.push(item?.attributes);
+                    });
+                }
+                if (this.companies.length === 0) {
+                    this.schedulingForm.patchValue({ routingDetail: { company : null } })
+                }
+                this.isPortChangeLoading$.next(false);
             },
             error: err => {
+                this.isPortChangeLoading$.next(false);
                 throw err
             }
         })
@@ -256,11 +241,9 @@ export class AddSchedulingComponent implements OnInit {
 
 
     next(index: any): void {
-        // Update the step status accordingly
         if (this.matStepper.selectedIndex === 0) {
             this.retrieveShips();
         }
-        // Move to the next step
         this.matStepper.selectedIndex = index;
     }
 
@@ -347,6 +330,7 @@ export class AddSchedulingComponent implements OnInit {
                 zone: this.fb.control(data?.routingDetail?.zone || '', [...createRequiredValidators()]),
                 departurePort: this.fb.control(data?.routingDetail?.departurePort || '', [...createRequiredValidators()]),
                 arrivalPort: this.fb.control(data?.routingDetail?.arrivalPort || '', [...createRequiredValidators()]),
+                company: this.fb.control(data?.routingDetail?.company || '', [...createRequiredValidators()]),
                 pilotCompany: this.fb.control(data?.routingDetail?.pilotCompany || '', [...createRequiredValidators()]),
                 length: this.fb.control(data?.routingDetail?.length || 0, [...createRequiredValidators()]),
                 width: this.fb.control(data?.routingDetail?.width || 0, [...createRequiredValidators()]),
@@ -364,8 +348,8 @@ export class AddSchedulingComponent implements OnInit {
     saveScheduling(): void {
         this.isLoading$.next(true);
         this.convoys.push(this.convoyForm.value)
-        if(this.dateVal === undefined) this.dateVal = this.formatDate(this.filterDate);
-        if(this.timeVal === undefined) this.timeVal = String(this.filterTime);
+        if (this.dateVal === undefined) this.dateVal = this.formatDate(this.filterDate);
+        if (this.timeVal === undefined) this.timeVal = String(this.filterTime);
         this.dateTimeVal = `${this.dateVal} ${this.timeVal}`;
         this.schedulingForm.patchValue({ convoyDetail: this.convoys, documents: this.images, routingDetail: { estimatedTimeArrival: this.dateTimeVal } })
         this.planningService.create(this.schedulingForm.value).subscribe({
@@ -382,7 +366,6 @@ export class AddSchedulingComponent implements OnInit {
 
     patchFile(file: File, index: number): void {
         this.tempImg[index] = file
-        console.log(this.tempImg)
         this.images[this.imageLen] = this.tempImg;
     }
 

@@ -1,5 +1,6 @@
-<div class="rounded-lg mb-2 overflow-hidden shadow-lg bg-white p-5 min-h-[203px] border-l-[8px] border-indigo-500 cursor-pointer items-center flex justify-center"
-    [ngClass]="{ 'max-w-[400px]': !isMaxWidth, 'w-full': isMaxWidth  }">
+<div class="rounded-lg mb-2 overflow-hidden shadow-lg bg-white p-5 min-h-[203px] border-l-[8px] cursor-pointer items-center flex justify-center"
+    [ngClass]="{ 'max-w-[400px]': !isMaxWidth, 'w-full': isMaxWidth  }"
+    [ngStyle]="{borderColor: planning?.planning?.planningStatus?.color }">
     <app-loader [isContainer]="false" *ngIf="(isloading | async)" [fullScreen]="false"></app-loader>
 
     <div class="grid grid-rows-9 gap-2 h-full w-full" *ngIf="!(isloading | async)">
@@ -15,12 +16,12 @@
                     icon="message-lines" size="lg" (click)="setComponentName('mess')"></fa-icon>
                 <fa-icon matTooltipClass="drop-shadow-lg" matTooltipPosition="above" [matTooltip]="'Edit'" icon="eye"
                     *ngIf="userRole === 'ROLE_USER_TRANSPORT'" size="lg"
-                    [routerLink]="['../', 'edit', planning.id]"></fa-icon>
+                    [routerLink]="['../', 'edit', planning?.planning?.id]"></fa-icon>
                 <fa-icon matTooltipClass="drop-shadow-lg" matTooltipPosition="above" [matTooltip]="'Plan'" icon="notes"
                     size="lg" (click)="setComponentName('copy')"></fa-icon>
                 <fa-icon matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
                     *ngIf="userRole === 'ROLE_USER_TRANSPORT'" [matTooltip]="'button.delete' | translate" icon="trash"
-                    size="lg" (click)="openDeleteModal(planning.id)"></fa-icon>
+                    size="lg" (click)="openDeleteModal(planning?.planning?.id)"></fa-icon>
             </div>
         </div>
         <div class="grid grid-cols-3 gap-2">

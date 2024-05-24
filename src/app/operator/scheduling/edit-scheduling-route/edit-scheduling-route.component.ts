@@ -10,7 +10,6 @@ import { PlanningDetailModel } from 'src/app/core/models/planning.model';
 import { createRequiredValidators } from 'src/app/shared/validators/generic-validators';
 import { MicroService } from 'src/app/core/services/micro.service';
 
-
 @Component({
     selector: 'app-edit-scheduling-route',
     templateUrl: './edit-scheduling-route.component.html',
@@ -19,10 +18,13 @@ export class EditSchedulingRouteComponent implements OnInit {
 
     planningForm: FormGroup;
     isPortsLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+    isPortChangeLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    isCompaniesLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     isRoutesLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     id: number;
     ports: any[] = [];
+    port: PlanningDetailModel;
     dateModal: Date;
     dateVal: string;
     timeVal: string;
@@ -37,11 +39,7 @@ export class EditSchedulingRouteComponent implements OnInit {
         return formattedDate;
     }
 
-    companies = [
-        { id: 1, name: 'company1' },
-        { id: 2, name: 'company2' },
-        { id: 3, name: 'company3' },
-    ];
+    companies: any[] = [];
 
     customer = [
         { id: 1, name: 'customer1' },
@@ -74,6 +72,7 @@ export class EditSchedulingRouteComponent implements OnInit {
         this.initForm();
         this.getRoute();
         this.retrivePorts();
+        this.retriveCompanines(this.port?.departurePort || 0);
     }
 
     formatDate(date: Date | string): string {
@@ -110,7 +109,7 @@ export class EditSchedulingRouteComponent implements OnInit {
     retrivePorts() {
         this.microService.getPorts().subscribe({
             next: res => {
-                if(res.length > 0){
+                if (res.length > 0) {
                     res?.forEach((item: any) => {
                         this.ports.push(item?.attributes);
                     });
@@ -118,7 +117,45 @@ export class EditSchedulingRouteComponent implements OnInit {
                 this.isPortsLoading$.next(false)
             },
             error: err => {
+                this.isPortsLoading$.next(false)
                 throw err;
+            }
+        })
+    }
+
+    onPortChange(ev: any) {
+        this.isPortChangeLoading$.next(true);
+        let port: any;
+        this.ports.filter((item: any) => {
+            if (Number(item.id) === Number(ev.target.value)) port = item;
+        })
+        if (port) {
+            this.planningForm.patchValue({ ridCoordinates: port?.addrCoordinates })
+            this.retriveCompanines(port.id);
+        }
+        console.log(port)
+    }
+
+    retriveCompanines(portId: any) {
+        this.microService.getCompanies(portId).subscribe({
+            next: res => {
+                this.companies = [];
+                if (res?.status !== 'error') {
+                    res?.forEach((item: any) => {
+                        this.companies.push(item?.attributes);
+                    });
+                }
+                if (this.companies.length === 0) {
+                    this.planningForm.patchValue({company : null })
+                }
+                this.isCompaniesLoading$.next(false);
+                this.isPortChangeLoading$.next(false);
+
+            },
+            error: err => {
+                this.isCompaniesLoading$.next(false);
+                this.isPortChangeLoading$.next(false);
+                throw err
             }
         })
     }
@@ -137,7 +174,6 @@ export class EditSchedulingRouteComponent implements OnInit {
     }
 
     initForm(data?: PlanningDetailModel): void {
-        // debugger
         this.planningForm = this.fb.group({
             convoyType: this.fb.control(data?.convoyType || '', [...createRequiredValidators()]),
             estimatedTimeArrival: this.fb.control(data?.estimatedTimeArrival || '', [...createRequiredValidators()]),
@@ -145,6 +181,7 @@ export class EditSchedulingRouteComponent implements OnInit {
             zone: this.fb.control(data?.zone || null, [...createRequiredValidators()]),
             departurePort: this.fb.control(data?.departurePort || '', [...createRequiredValidators()]),
             arrivalPort: this.fb.control(data?.arrivalPort || '', [...createRequiredValidators()]),
+            company: this.fb.control(data?.company || null, [...createRequiredValidators()]),
             pilotCompany: this.fb.control(data?.pilotCompany || '', [...createRequiredValidators()]),
             length: this.fb.control(data?.length || null, [...createRequiredValidators()]),
             width: this.fb.control(data?.width || null, [...createRequiredValidators()]),
@@ -169,6 +206,4 @@ export class EditSchedulingRouteComponent implements OnInit {
             }
         })
     }
-
-
 }

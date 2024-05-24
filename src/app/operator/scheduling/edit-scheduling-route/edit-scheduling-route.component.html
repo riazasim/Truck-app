@@ -3,23 +3,30 @@
     <form [formGroup]="planningForm">
         <div class="grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20 gap-y-4 pt-[100px] min-xl:px-[50px]">
             <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
-                <div [loading]="(isPortsLoading$ | async) || (isRoutesLoading$ | async)" iconic-input-wrapper leftIcon="user">
+                <div [loading]="(isPortsLoading$ | async) || (isRoutesLoading$ | async) || (isCompaniesLoading$ | async)"
+                    iconic-input-wrapper leftIcon="user">
                     <input inputRef type="text" placeholder="Convoy Type" formControlName="convoyType" />
                 </div>
                 <div class="grid grid-cols-2 gap-x-8 gap-y-4 mb-5">
-                    <datepicker [loading]="(isPortsLoading$ | async) || (isRoutesLoading$ | async)" matTooltipClass="drop-shadow-lg"
-                        matTooltipPosition="above" [matTooltip]="'Pick ETA date' | translate" [model]="dateModal"
-                        [isHeaderPosition]="true" [height]="52" (dateChanged)="OnDateChange($event)">
+                    <datepicker
+                        [loading]="(isPortsLoading$ | async) || (isRoutesLoading$ | async) || (isCompaniesLoading$ | async)"
+                        matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
+                        [matTooltip]="'Pick ETA date' | translate" [model]="dateModal" [isHeaderPosition]="true"
+                        [height]="52" (dateChanged)="OnDateChange($event)">
                     </datepicker>
-                    <timepicker [loading]="(isPortsLoading$ | async) || (isRoutesLoading$ | async)" matTooltipClass="drop-shadow-lg"
-                        matTooltipPosition="above" [matTooltip]="'Pick ETA time' | translate" [height]="52"
-                        [model]="timeVal" (modelChange)="OnTimeChange($event)"></timepicker>
+                    <timepicker
+                        [loading]="(isPortsLoading$ | async) || (isRoutesLoading$ | async) || (isCompaniesLoading$ | async)"
+                        matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
+                        [matTooltip]="'Pick ETA time' | translate" [height]="52" [model]="timeVal"
+                        (modelChange)="OnTimeChange($event)"></timepicker>
                 </div>
-                <div [loading]="(isPortsLoading$ | async) || (isRoutesLoading$ | async)" iconic-input-wrapper leftIcon="location-dot">
+                <div [loading]="(isPortsLoading$ | async) || (isRoutesLoading$ | async) || (isCompaniesLoading$ | async)"
+                    iconic-input-wrapper leftIcon="location-dot">
                     <input inputRef type="text" placeholder="Location Port" formControlName="locationPort" />
                 </div>
-                <div [loading]="(isPortsLoading$ | async) || (isRoutesLoading$ | async)" iconic-select-wrapper
-                    leftSvg="assets/images/scheduling_map_location.svg" [rightIcon]="['fas', 'caret-down']">
+                <div [loading]="(isPortsLoading$ | async) || (isRoutesLoading$ | async) || (isCompaniesLoading$ | async)"
+                    iconic-select-wrapper leftSvg="assets/images/scheduling_map_location.svg"
+                    [rightIcon]="['fas', 'caret-down']">
                     <select spAccessInputRef name="zone" id="zone" formControlName="zone">
                         <option disabled value="">
                             Zone
@@ -29,9 +36,11 @@
                         </option>
                     </select>
                 </div>
-                <div [loading]="(isPortsLoading$ | async) || (isRoutesLoading$ | async)" iconic-select-wrapper
-                    leftSvg="assets/images/scheduling_ship_type.svg" [rightIcon]="['fas', 'caret-down']">
-                    <select spAccessInputRef name="departurePort" id="departurePort" formControlName="departurePort">
+                <div [loading]="(isPortsLoading$ | async) || (isRoutesLoading$ | async) || (isCompaniesLoading$ | async)"
+                    iconic-select-wrapper leftSvg="assets/images/scheduling_ship_type.svg"
+                    [rightIcon]="['fas', 'caret-down']">
+                    <select spAccessInputRef name="departurePort" id="departurePort" formControlName="departurePort"
+                        (change)="onPortChange($event)">
                         <option disabled value="">
                             Departure Port
                         </option>
@@ -40,8 +49,9 @@
                         </option>
                     </select>
                 </div>
-                <div [loading]="(isPortsLoading$ | async) || (isRoutesLoading$ | async)" iconic-select-wrapper
-                    leftSvg="assets/images/scheduling_arrival_port.svg" [rightIcon]="['fas', 'caret-down']">
+                <div [loading]="(isPortsLoading$ | async) || (isRoutesLoading$ | async) || (isCompaniesLoading$ | async)"
+                    iconic-select-wrapper leftSvg="assets/images/scheduling_arrival_port.svg"
+                    [rightIcon]="['fas', 'caret-down']">
                     <select spAccessInputRef name="arrivalPort" id="arrivalPort" formControlName="arrivalPort">
                         <option disabled value="">Arival Port</option>
                         <option *ngFor="let arivalPort of ports" [value]="arivalPort.id">
@@ -49,45 +59,46 @@
                         </option>
                     </select>
                 </div>
-                <div iconic-select-wrapper leftSvg="assets/images/scheduling_ship_type.svg"
-                        [rightIcon]="['fas', 'caret-down']">
-                        <select spAccessInputRef name="company" id="company" formControlName="company">
-                            <option disabled selected>Ship type*</option>
-                            <option *ngFor="let company of companies" [value]="company.id">
-                                {{ company.name }}
-                            </option>
-                        </select>
-                    </div>
-                
+                <div [loading]="(isPortsLoading$ | async) || (isPortChangeLoading$ | async) || (isRoutesLoading$ | async) || (isCompaniesLoading$ | async)" iconic-select-wrapper leftSvg="assets/images/scheduling_ship_type.svg"
+                    [rightIcon]="['fas', 'caret-down']">
+                    <select spAccessInputRef name="company" id="company" formControlName="company">
+                        <option disabled selected>Companies</option>
+                        <option *ngFor="let company of companies" [value]="company.id">
+                            {{ company.name }}
+                        </option>
+                    </select>
+                </div>
+
             </div>
             <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
                 <!-- <p>&nbsp;</p> -->
-                <div [loading]="(isPortsLoading$ | async) || (isRoutesLoading$ | async)" iconic-input-wrapper
-                    leftSvg="assets/images/scheduling_port.svg">
+                <div [loading]="(isPortsLoading$ | async) || (isRoutesLoading$ | async) || (isCompaniesLoading$ | async)"
+                    iconic-input-wrapper leftSvg="assets/images/scheduling_port.svg">
                     <input inputRef type="text" placeholder="Pilot Company" formControlName="pilotCompany" />
                 </div>
-                <div [loading]="(isPortsLoading$ | async) || (isRoutesLoading$ | async)" iconic-input-wrapper
-                    leftSvg="assets/images/scheduling_length.svg">
+                <div [loading]="(isPortsLoading$ | async) || (isRoutesLoading$ | async) || (isCompaniesLoading$ | async)"
+                    iconic-input-wrapper leftSvg="assets/images/scheduling_length.svg">
                     <input inputRef type="number" placeholder="Length (m)*" formControlName="length" />
                 </div>
-                <div [loading]="(isPortsLoading$ | async) || (isRoutesLoading$ | async)" iconic-input-wrapper
-                    leftSvg="assets/images/scheduling_width.svg">
+                <div [loading]="(isPortsLoading$ | async) || (isRoutesLoading$ | async) || (isCompaniesLoading$ | async)"
+                    iconic-input-wrapper leftSvg="assets/images/scheduling_width.svg">
                     <input inputRef type="number" placeholder="Width (m)*" formControlName="width" />
                 </div>
-                <div [loading]="(isPortsLoading$ | async) || (isRoutesLoading$ | async)" iconic-input-wrapper
-                    leftSvg="assets/images/scheduling_depth.svg">
+                <div [loading]="(isPortsLoading$ | async) || (isRoutesLoading$ | async) || (isCompaniesLoading$ | async)"
+                    iconic-input-wrapper leftSvg="assets/images/scheduling_depth.svg">
                     <input inputRef type="number" placeholder="Max Draft" formControlName="maxDraft" />
                 </div>
-                <div [loading]="(isPortsLoading$ | async) || (isRoutesLoading$ | async)" iconic-input-wrapper
-                    leftSvg="assets/images/scheduling_convoy.svg">
+                <div [loading]="(isPortsLoading$ | async) || (isRoutesLoading$ | async) || (isCompaniesLoading$ | async)"
+                    iconic-input-wrapper leftSvg="assets/images/scheduling_convoy.svg">
                     <input inputRef type="number" placeholder="Aerial Guage (M)*" formControlName="arrivalGauge" />
                 </div>
-                <div [loading]="(isPortsLoading$ | async) || (isRoutesLoading$ | async)" iconic-input-wrapper
-                    leftSvg="assets/images/scheduling_weight.svg">
+                <div [loading]="(isPortsLoading$ | async) || (isRoutesLoading$ | async) || (isCompaniesLoading$ | async)"
+                    iconic-input-wrapper leftSvg="assets/images/scheduling_weight.svg">
                     <input inputRef type="number" placeholder="Capacity max (m)*" formControlName="maxCapacity" />
                 </div>
-                <div [loading]="(isPortsLoading$ | async) || (isRoutesLoading$ | async)" iconic-select-wrapper
-                    leftSvg="assets/images/scheduling_lock.svg" [rightIcon]="['fas', 'caret-down']">
+                <div [loading]="(isPortsLoading$ | async) || (isRoutesLoading$ | async) || (isCompaniesLoading$ | async)"
+                    iconic-select-wrapper leftSvg="assets/images/scheduling_lock.svg"
+                    [rightIcon]="['fas', 'caret-down']">
                     <select spAccessInputRef name="typeOfLock" id="typeOfLock" formControlName="lockType">
                         <option disabled value="">Type of lock</option>
                         <option *ngFor="let typeOfLock of typeOfLock" [value]="typeOfLock.id">

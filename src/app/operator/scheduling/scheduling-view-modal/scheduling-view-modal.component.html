@@ -11,7 +11,14 @@
                 <fa-icon icon="envelope" class="text-primary text-[35px] cursor-pointer"></fa-icon>
             </div>
         </div>
-        <div class="py-10">
+        <div class="flex h-24 mt-3">
+            <div class="flex flex-col justify-center items-center w-[25%] bg-[#FF922E]">
+                <div class="flex flex-row">In Operation</div>
+                <div class="flex flex-row">2H 48M</div>
+            </div>
+            <div class="flex flex-col justify-center items-center flex-1 bg-[#EFEFEF]">Waiting for updates</div>
+        </div>
+        <div class="py-8">
             <div class="flex min-lg:justify-between min-lg:items-center max-lg:flex-col">
                 <div>
                     <h4 class="heading-4 text-primary">Shipment Details</h4>
@@ -57,12 +64,18 @@
                 <p class="font-bold text-center py-2">There're no documents attached.</p>
             </div> -->
         </div>
+        <div>
+            <h4 class="heading-4 font-bold text-primary mb-3">Shipment Log</h4>      
+            <!-- <activity-log  icon="file-plus" ></activity-log> -->
+            <h3  class="heading-3 font-bold text-center py-2">There're no shipment logs.</h3>
+            <!-- <activity-log icon="user-plus"></activity-log>
+            <activity-log icon="user-plus"></activity-log> -->
+        </div>
+        
         <!-- <div>
-            <h4 class="heading-4 font-bold text-primary mb-3">Shipment Log</h4>
             <activity-log *ngFor="let log of shipmentLogs;let i = index" icon="file-plus" [shipmentLog]="log" [isEnd]="(i + 1) === shipmentLogs.length"></activity-log>
             <h3 *ngIf="!(isLoading$ | async) && !shipmentLogs.length" class="heading-3 font-bold text-center py-2">There're no shipment logs.</h3>
             <activity-log icon="copy"></activity-log>
-            <activity-log icon="user-plus"></activity-log>
             <activity-log icon="file-plus" [isEnd]="true"></activity-log>
         </div> -->
     </div>

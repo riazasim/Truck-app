@@ -59,6 +59,7 @@ export interface PlanningModel {
         zone: string;
         departurePort: string;
         arrivalPort: string;
+        company: string;
         pilotCompany: string;
         length: number;
         width: number;
@@ -85,7 +86,8 @@ export interface PlanningDetailModel {
     locationPort: string;
     zone: number;
     departurePort: string;
-    arrivalPort: string;
+    arrivalPort: number;
+    company: string;
     pilotCompany: string;
     length: number;
     width: number;
@@ -93,6 +95,7 @@ export interface PlanningDetailModel {
     arrivalGauge: number;
     maxCapacity: number;
     lockType: string;
+    ridCoordinates: string;
 }
 
 
