@@ -1,4 +1,4 @@
-﻿import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+﻿import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Sort } from '@angular/material/sort';
 import { compare } from 'src/app/shared/utils/sort.function';
@@ -9,6 +9,7 @@ import { PlanningModel } from 'src/app/core/models/planning.model';
 import { SchedulingDeleteModalComponent } from '../scheduling-delete-modal/scheduling-delete-modal.component';
 import { SchedulingImportModalComponent } from '../scheduling-import-modal/scheduling-import-modal.component';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
     selector: 'app-planning-list',
@@ -17,6 +18,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PlanningListComponent implements OnChanges {
+    
     @Output() triggerOpenLogs: EventEmitter<{ view: string, id: number, planning: PlanningModel, modal: string }> = new EventEmitter();
     @Output() onPaginate: EventEmitter<any> = new EventEmitter();
     @Output() retrievePlannings: EventEmitter<any> = new EventEmitter();
@@ -32,6 +34,8 @@ export class PlanningListComponent implements OnChanges {
     pageSizeOptions: number[] = [5, 10, 12, 15];
     pageIndex: number;
     pageSize: number;
+    logId: number;
+    logModal: string;
 
     constructor(private readonly dialogService: MatDialog,
         private readonly planningService: PlanningService,
@@ -87,8 +91,13 @@ export class PlanningListComponent implements OnChanges {
     }
 
     OnEmit(row: any, modal: string) {
+        // debugger
         this.triggerOpenLogs.emit({ view: 'view', id: row.planning.id, planning: row, modal: modal })
     }
+
+
+
+    
 
     openDeleteModal(id: number) {
         this.dialogService.open(SchedulingDeleteModalComponent, {

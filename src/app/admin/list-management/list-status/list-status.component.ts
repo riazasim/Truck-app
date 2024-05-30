@@ -1,17 +1,11 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
-import { StatusDeleteModalComponent } from '../status-delete-modal/status-delete-modal.component';
-import { StatusListService } from '../../../core/services/status-list.service';
-import { StatusListModel, StatusTypeEnum } from '../../../core/models/status-list.model';
 import { BehaviorSubject } from 'rxjs';
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { PlanningModel } from 'src/app/core/models/planning.model';
 import { PlanningService } from 'src/app/core/services/planning.service';
 import { PageEvent } from '@angular/material/paginator';
 import { SchedulingDeleteModalComponent } from 'src/app/operator/scheduling/scheduling-delete-modal/scheduling-delete-modal.component';
 import { Sort } from '@angular/material/sort';
-import { compare } from '@rxweb/reactive-form-validators';
 import { SchedulingImportModalComponent } from 'src/app/operator/scheduling/scheduling-import-modal/scheduling-import-modal.component';
 
 @Component({

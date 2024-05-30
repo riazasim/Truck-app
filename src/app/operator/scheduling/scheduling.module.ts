@@ -63,6 +63,7 @@ import { NoRestrictionsComponent } from './no-restrictions/no-restrictions.compo
 import { RestrictionsComponent } from './restrictions/restrictions.component';
 import { ProductsComponent } from './products/products.component';
 import { ProductsTabsComponent } from './products/products-tab/products.-tabcomponent';
+import { ConvoyLogsModal } from './convoy-logs-modal/convoy-logs-modal.component';
 
 
 @NgModule({
@@ -95,7 +96,8 @@ import { ProductsTabsComponent } from './products/products-tab/products.-tabcomp
         NoRestrictionsComponent,
         RestrictionsComponent,
         ProductsComponent,
-        ProductsTabsComponent
+        ProductsTabsComponent,
+        ConvoyLogsModal
     ],
     imports: [
         CommonModule,

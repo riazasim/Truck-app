@@ -87,7 +87,7 @@ export class SchedulingViewModalComponent implements OnChanges {
 
     retrieveLogHistory(): void {
         this.planningService.listLogs(this.id).subscribe(response => {
-            this.planning = response
+            this.planning = response[0].attributes
             this.isLoading$.next(false);
         })
     }

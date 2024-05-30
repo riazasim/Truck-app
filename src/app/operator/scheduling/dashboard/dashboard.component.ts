@@ -620,6 +620,11 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     toggleSidenav(data: { view: string, id: number, planning?: PlanningModel, modal: string }) {
+        debugger
+        if (!this.sidenav) {
+            console.error('Sidenav is not initialized');
+            return;
+          }
         this.logModal = data.modal
         switch (data.view) {
             case 'copy':

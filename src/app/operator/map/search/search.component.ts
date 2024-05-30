@@ -62,7 +62,7 @@ export class SearchComponent {
         private fb: FormBuilder,
     ) {
         this.getResults();
-        this.retrivePorts();
+        this.retriveCompanines();
         this.initForms();
         this.OnDateChange(this.dateModal);
     }
@@ -87,11 +87,10 @@ export class SearchComponent {
         })
     }
 
-    retriveCompanines(ev: any) {
-        this.portId = ev?.target?.value;
+    retriveCompanines() {
+        this.portId = 0;
         this.microService.getCompanies(this.portId).subscribe({
             next: res => {
-                this.companies = [];
                 res?.forEach((item: any) => {
                     this.companies.push(item?.attributes);
                 });

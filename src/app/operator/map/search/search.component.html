@@ -18,21 +18,21 @@
                     </div>
                     <!-- <app-loader *ngIf="isPortsLoading$ | async"></app-loader> -->
                     <div iconic-select-wrapper [dashboardInp]="true" [showValidation]="false"
-                        [loading]="(isPortsLoading$ | async)" [rightIcon]="['fas', 'caret-down']">
-                        <select spAccessInputRef name="port" id="port" (change)="retriveCompanines($event)"
-                            formControlName="portId">
-                            <option value="" disabled selected>Port</option>
-                            <option [value]="port?.id" *ngFor="let port of ports">{{port?.name}}</option>
+                        [loading]="(isCompaniesLoading$ | async)" [rightIcon]="['fas', 'caret-down']">
+                        <select spAccessInputRef name="company" id="company" (change)="onCompaniesChange($event)"
+                            formControlName="companyId">
+                            <option value="" disabled selected>company</option>
+                            <option [value]="company?.id" *ngFor="let company of companies">{{company?.name}}</option>
                         </select>
                     </div>
-                    <div iconic-select-wrapper [dashboardInp]="true" [showValidation]="false"
+                    <!-- <div iconic-select-wrapper [dashboardInp]="true" [showValidation]="false"
                         [class.hidden]="isCompaniesLoading$ | async" [rightIcon]="['fas', 'caret-down']">
                         <select spAccessInputRef name="company" id="company" (change)="onCompaniesChange($event)"
                             formControlName="companyId">
                             <option value="" disabled selected>Company</option>
                             <option [value]="company?.id" *ngFor="let company of companies">{{company?.name}}</option>
                         </select>
-                    </div>
+                    </div> -->
                 </form>
                 <div *ngIf="isActive === 2" class="w-[198px]">
                     <div class="flex justify-between">
