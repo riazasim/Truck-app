@@ -24,6 +24,7 @@ export class DatepickerComponent implements OnInit {
     @Input() minDate: Date;
 
     @Output() dateChanged: EventEmitter<string> = new EventEmitter<string>();
+    @Output() dateRemoved: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     styles: any = {};
     constructor() { }

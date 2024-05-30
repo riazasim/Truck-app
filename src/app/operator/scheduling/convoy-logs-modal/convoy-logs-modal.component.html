@@ -13,10 +13,10 @@
         </div>
         <div class="flex h-24 mt-3">
             <div class="flex flex-col justify-center items-center w-[25%] bg-[#FF922E]">
-                <div class="flex flex-row">In Operation</div>
-                <div class="flex flex-row">2H 48M</div>
+                <div class="flex flex-row">{{planning?.planningConvoyStatus?.name}}</div>
+                <div class="flex flex-row">Time</div>
             </div>
-            <div class="flex flex-col justify-center items-center flex-1 bg-[#EFEFEF]">Waiting for updates</div>
+            <div class="flex flex-col justify-center items-center flex-1 bg-[#EFEFEF]">{{planning?.planningConvoyStatus?.description}}</div>
         </div>
         <div class="py-8">
             <div class="flex min-lg:justify-between min-lg:items-center max-lg:flex-col">

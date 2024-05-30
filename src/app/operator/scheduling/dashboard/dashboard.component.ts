@@ -92,7 +92,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         this.subscribeForSortOrderChanges(true);
         this.subscribeForOrganizationChanges();
         this.getUserRole();
-        this.getCardDetails()
     }
 
     ngAfterViewInit(): void {
@@ -111,26 +110,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
                 next: (res) => {
                     this.planning = res
                     this.isCardDetailsLoading$.next(false)
-                },
-                error: (body) => {
-                    this.isCardDetailsLoading$.next(false)
-                    handleError(this.snackBar, body, this.isCardDetailsLoading$)
-                }
-            })
-        }
-        else {
-            let data = {
-                "start": this.pageSettings.start,
-                "length": this.pageSettings.length,
-                "filters": [this.formatDate(this.filterDate), "", "", "", "", ""],
-                "order": [{ "dir": "DESC", "column": 0 }],
-            };
-            this.planningService.pagination(data).subscribe({
-                next: (res) => {
-                    this.planning = res.items[0]?.planning;
-                    this.isCardDetailsLoading$.next(false)
-
-                    console.log(this.planning)
                 },
                 error: (body) => {
                     this.isCardDetailsLoading$.next(false)
@@ -298,7 +277,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         this.getCardDetails()
     }
 
-    onPaginateChange(ev : any) {
+    onPaginateChange(ev: any) {
         this.isTableLoading$.next(true);
         let data = {
             "start": ev.start,
@@ -499,19 +478,31 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         });
     }
 
-    retrievePlanningList(): void {
+    retrievePlanningList(isDateRemoved: boolean = false): void {
         this.isTableLoading$.next(true);
-        let data = {
-            "start": this.pageSettings.start,
-            "length": this.pageSettings.length,
-            "filters": [this.formatDate(this.filterDate), "", "", "", "", ""],
-            "order": [{ "dir": "DESC", "column": 0 }],
-        };
-
+        let data;
+        if (isDateRemoved) {
+            data = {
+                "start": this.pageSettings.start,
+                "length": this.pageSettings.length,
+                "filters": ["", "", "", "", "", ""],
+                "order": [{ "dir": "DESC", "column": 0 }],
+            };
+        }
+        else {
+            data = {
+                "start": this.pageSettings.start,
+                "length": this.pageSettings.length,
+                "filters": [this.formatDate(this.filterDate), "", "", "", "", ""],
+                "order": [{ "dir": "DESC", "column": 0 }],
+            };
+        }
         this.planningService.pagination(data).subscribe((response: any) => {
             this.plannings = response.items;
+            this.planning = this.plannings[0]?.planning;
             this.length = response.noFiltered;
             this.isTableLoading$.next(false);
+            this.isCardDetailsLoading$.next(false)
             this.newCardsLoading$.next(false);
             this.cd.detectChanges();
         });
@@ -620,11 +611,10 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     toggleSidenav(data: { view: string, id: number, planning?: PlanningModel, modal: string }) {
-        debugger
         if (!this.sidenav) {
             console.error('Sidenav is not initialized');
             return;
-          }
+        }
         this.logModal = data.modal
         switch (data.view) {
             case 'copy':

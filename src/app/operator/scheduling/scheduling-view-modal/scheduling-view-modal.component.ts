@@ -106,7 +106,6 @@ export class SchedulingViewModalComponent implements OnChanges {
 
     onAssign(): void {
         this.isLoading$.next(true)
-        // debugger
         this.planningService.assignTransferData({
             "planningId": this.id,
             "userIds": this.userIds
