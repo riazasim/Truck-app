@@ -73,6 +73,7 @@ export class LocationsAddEditComponent implements OnInit {
     }
 
     setImgPreview(target: any, input: any): void {
+        console.log(target , input)
         if (target.files.item(0)) {
             input.value = target.files.item(0).name
             this.locationForm.get('imgPreview')?.patchValue(target.files.item(0));

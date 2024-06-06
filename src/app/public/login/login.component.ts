@@ -48,7 +48,7 @@ export class LoginComponent {
 
         if (!environment.production) {
             this.loginForm = new UntypedFormGroup({
-                username: new UntypedFormControl('transport@gmail.com', [...createRequiredValidators(), ...createEmailValidator()]),
+                username: new UntypedFormControl('transport@lowis.ro', [...createRequiredValidators(), ...createEmailValidator()]),
                 password: new UntypedFormControl('12345678', [...createRequiredValidators(), Validators.pattern('')]),
             })
         }

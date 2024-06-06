@@ -68,6 +68,7 @@ export class OrganizationService {
     formData.append('privacyLink', data.privacyLink);
     formData.append('imgCover', data.imgCoverFile);
     formData.append('imgLogo', data.imgLogoFile);
+    
     return this.http.post<ResponseItemWrapper<OrganizationModel>>(`${environment.apiUrl}${environment.apiVersion}/setOrganizationDetails`, formData)
                     .pipe(pluckItemWrapperData<OrganizationModel, ResponseItemWrapper<OrganizationModel>>());;
   }

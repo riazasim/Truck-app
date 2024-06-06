@@ -62,6 +62,7 @@ export class SearchComponent {
         private fb: FormBuilder,
     ) {
         this.getResults();
+        this.retrivePorts()
         this.retriveCompanines();
         this.initForms();
         this.OnDateChange(this.dateModal);
@@ -111,6 +112,7 @@ export class SearchComponent {
             this.portId = 0;
             this.initCompanyFiterForm();
             this.isCompaniesLoading$.next(true);
+            this.retriveCompanines();
         }
         this.getResults();
     }
@@ -274,7 +276,7 @@ export class SearchComponent {
     }
     initCompanyFiterForm() {
         this.companiesFilterForm = this.fb.group({
-            portId: this.fb.control('', [...createRequiredValidators()]),
+            // portId: this.fb.control('', [...createRequiredValidators()]),
             companyId: this.fb.control('', [...createRequiredValidators()]),
         });
     }

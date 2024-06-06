@@ -1,18 +1,15 @@
 <header class="layout-wrapper">
   <app-loader class="m-auto flex-grow" *ngIf="(isLoading$ | async)" [fullScreen]="false"></app-loader>
-  <!-- <div *ngIf="(companyName$ | async) && !(isLoading$ | async)" class="flex flex-grow justify-center items-center gap-2">
-    <fa-icon (click)="openChangeLocationModal()" icon="location-dot" class="text-primary cursor-pointer"></fa-icon>
-    <span class="text-3xl font-bold">{{(companyName$ | async)}}</span>
-  </div> -->
-  <div class="flex flex-grow justify-center items-center gap-2" *ngIf="!(companyName$ | async)">
-    <span class="text-3xl font-bold">Transport App</span>
+  <div *ngIf="!(isLoading$ | async)" class="flex flex-grow justify-center items-center gap-2">
+    <fa-icon (click)="openChangeLocationModal()" icon="location-dot" class="text-primary cursor-pointer text-3xl font-bold"></fa-icon>
+    <span class="text-3xl font-bold">{{locationName$}}</span>
   </div>
   <div class="logo-container" *ngIf="logoSrc" [routerLink]="logoRedirect" [relativeTo]="activatedRoute.parent">
     <img [src]="logoSrc" alt="logo">
   </div>
   
-  <div class="current-location-container">
-    <h2 class="heading-4 current-location">
+  <!-- <div class="current-location-container">
+     <h2 class="heading-4 current-location">
       <span [matMenuTriggerFor]="menu" #trigger="matMenuTrigger"
       [ngClass]="{'fi-gb': (language$ | async) === 'en', 'fi-ro': (language$ | async) === 'ro'}"
       class="fi cursor-pointer"></span>
@@ -21,7 +18,7 @@
         <menu mat-menu-item (click)="localizeService.changeLanguage('en')"><div class="flex gap-3"><span class="fi fi-gb"></span> English</div></menu>
       </mat-menu>
     </h2>
-  </div>
+   </div> -->
 
   <button class="expand-btn" (click)="isMenuClosed = false">
     <fa-icon [icon]="expandBtnIcon" size="lg"></fa-icon>

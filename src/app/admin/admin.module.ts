@@ -7,7 +7,6 @@ import { AdminLayoutComponent } from "./layout/admin/admin-layout.component";
 import { NavigationMenuComponent } from "./layout/navigation-menu/navigation-menu.component";
 import { BrandingComponent } from "./branding/branding.component";
 import { LocationSettingsComponent } from "./location-settings/location-settings.component";
-import { ChangeLocationModalComponent } from "./layout/change-location-modal/change-location-modal.component";
 import { CdkMenuModule } from "@angular/cdk/menu";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -31,6 +30,7 @@ import { SchedulingModule } from '../operator/scheduling/scheduling.module';
 import { MatTableModule } from '@angular/material/table';
 import { CdkTableModule } from '@angular/cdk/table';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { NoLocationWarningComponent } from './no-location-warning/no-location-warning.component';
 
 
 
@@ -43,8 +43,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
         AdminLayoutComponent,
         BrandingComponent,
         LocationSettingsComponent,
-        ChangeLocationModalComponent,
-        BrandingComponent
+        BrandingComponent,
+        NoLocationWarningComponent
     ],
     providers: [
         AssetsProviderService,

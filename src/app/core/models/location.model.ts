@@ -4,6 +4,7 @@ import {CustomFieldModel} from "./custom-field.model";
 import {VehicleModel} from "./vehicle.model";
 
 export type LocationModel = {
+    id?: number;
     locationId?: number;
     name: string;
     addrCoordinates: string;

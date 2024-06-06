@@ -165,7 +165,8 @@ export const MY_FORMATS = {
         FormsModule,
         ReactiveFormsModule,
         TranslateModule,
-        MatTabsModule
+        MatTabsModule,
+        SearchbarModule,
     ],
     providers: [
         { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
