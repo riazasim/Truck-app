@@ -15,7 +15,7 @@
     </div>
 
     <div class="text-center">
-        <button  [disabled]="isLoading$ | async" type="submit" class="btn btn-primary min-w-xs" (click)="sigIn()">{{!(isLoading$ | async) ? 'Sign In' : '' }}
+        <button  [disabled]="(isLoading$ | async) || loginForm.invalid" type="submit" class="btn btn-primary min-w-xs" (click)="sigIn()">{{!(isLoading$ | async) ? 'Sign In' : '' }}
             <app-loader *ngIf="isLoading$ | async" [isContainer]="false" [fullScreen]="false" size="xl"></app-loader>
         </button>
         <button [disabled]="isLoading$ | async" type="submit" class="btn btn-outline-primary min-w-xs mt-5"
