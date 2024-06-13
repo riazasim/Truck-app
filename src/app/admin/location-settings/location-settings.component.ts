@@ -34,6 +34,10 @@ export class LocationSettingsComponent {
       name: 'Branding',
       link: '../branding'
     },
+     {
+      name: 'Products',
+      link: '../products'
+    },
     //  {
     //   name: 'Partners\' contacts',
     //   link: '../partners-contacts'

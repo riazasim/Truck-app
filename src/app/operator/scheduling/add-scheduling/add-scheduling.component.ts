@@ -20,6 +20,8 @@ import { ShipsService } from 'src/app/core/services/ships.service';
 import { ShipModel } from 'src/app/core/models/ship.model';
 import { createRequiredValidators } from 'src/app/shared/validators/generic-validators';
 import { MicroService } from 'src/app/core/services/micro.service';
+import { PageEvent } from '@angular/material/paginator';
+import { ProductService } from 'src/app/core/services/product.service';
 
 @Component({
     selector: 'app-add-scheduling',
@@ -56,10 +58,10 @@ export class AddSchedulingComponent implements OnInit {
     customFieldAdditionalData: SchedulingCustomField[] = [];
 
     products: ProductModel[] = [];
-    listProducts: ProductModel[] = [];
+    // listProducts: ProductModel[] = [];
     docks: DockModel[] = [];
     buildings: BuildingModel[] = [];
-
+    productsList: any[] = [];
     convoys: convoyModel[] = [];
     images: any[] = [];
     imageLen: number = 0;
@@ -99,11 +101,6 @@ export class AddSchedulingComponent implements OnInit {
         { id: 3, name: 'zone3' },
     ];
     companies: any[];
-    typeOfLock = [
-        { id: 1, name: 'type of lock1' },
-        { id: 2, name: 'type of lock2' },
-        { id: 3, name: 'type of lock3' },
-    ];
     shipType = [
         { id: 1, name: 'ship type1' },
         { id: 2, name: 'ship type2' },
@@ -129,21 +126,6 @@ export class AddSchedulingComponent implements OnInit {
         { id: 2, name: 'operation type2' },
         { id: 3, name: 'operation type3' },
     ];
-    cargo = [
-        { id: 1, name: 'cargo1' },
-        { id: 2, name: 'cargo2' },
-        { id: 3, name: 'cargo3' },
-    ];
-    portOfOrigin = [
-        { id: 1, name: 'port of origin1' },
-        { id: 2, name: 'port of origin2' },
-        { id: 3, name: 'port of origin3' },
-    ];
-    destination = [
-        { id: 1, name: 'destination1' },
-        { id: 2, name: 'destination2' },
-        { id: 3, name: 'destination3' },
-    ];
 
     constructor(
         private readonly fb: FormBuilder,
@@ -153,6 +135,7 @@ export class AddSchedulingComponent implements OnInit {
         private readonly statusListStatus: StatusListService,
         private readonly snackBar: MatSnackBar,
         private readonly shipsService: ShipsService,
+        private readonly productService: ProductService,
         private readonly microService: MicroService,
     ) {
         this.getFormatHourSlot = getFormatHourSlot.bind(this);
@@ -164,6 +147,7 @@ export class AddSchedulingComponent implements OnInit {
         this.initConvoyForm();
         this.isLoading$.next(false);
         this.retrivePorts();
+        this.retriveProducts()
     }
 
     formatDate(date: Date | string): string {
@@ -188,6 +172,21 @@ export class AddSchedulingComponent implements OnInit {
         this.matStepper.selectedIndex = index;
     }
 
+
+    retriveProducts() {
+        this.isLoading$.next(true);
+        let data = {
+            "start": 0,
+            "length": 0,
+            "filters": ["", "", "", ""],
+            "order": [{ "dir": "DESC", "column": 0 }]
+        }
+        this.productService.pagination(data).subscribe(response => {
+            this.products = response.items;
+            this.isLoading$.next(false);
+        })
+    }
+
     retrivePorts() {
         this.microService.getPorts().subscribe({
             next: res => {
@@ -203,6 +202,7 @@ export class AddSchedulingComponent implements OnInit {
             }
         })
     }
+
 
     onPortChange(ev: any) {
         this.isPortChangeLoading$.next(true);
@@ -227,7 +227,7 @@ export class AddSchedulingComponent implements OnInit {
                     });
                 }
                 if (this.companies.length === 0) {
-                    this.schedulingForm.patchValue({ routingDetail: { company : null } })
+                    this.schedulingForm.patchValue({ routingDetail: { company: null } })
                 }
                 this.isPortChangeLoading$.next(false);
             },
@@ -277,9 +277,20 @@ export class AddSchedulingComponent implements OnInit {
             this.convoyForm.patchValue({
                 width: selectedShip.attributes.width || '',
                 maxDraft: selectedShip.attributes.maxDraft || '',
-                maxQuantity: selectedShip.attributes.maxCapacity || ''
+                maxQuantity: selectedShip.attributes.maxCapacity || '',
+                arrivalGauge: selectedShip.attributes.aerialGauge || '',
+                lockType: selectedShip.attributes.lockType || ''
             });
         }
+    }
+
+    onProductChange(ev: any) {
+        if (this.productsList.includes(ev?.source?.value)) {
+            const index = this.productsList.indexOf(ev?.source?.value);
+            this.productsList.splice(index, 1);
+        }
+        else this.productsList.push(ev?.source?.value);
+        this.convoyForm.patchValue({ products: `[${this.productsList}]` })
     }
 
 
@@ -292,7 +303,6 @@ export class AddSchedulingComponent implements OnInit {
             navigationType: this.fb.control(data?.navigationType, [...createRequiredValidators()]),
             company: this.fb.control(data?.company || '', [...createRequiredValidators()]),
             status: this.fb.control(data?.status || '', [...createRequiredValidators()]),
-            // ship: this.fb.control(data?.ship || ''),
             ship: this.fb.control(data?.ship || '', [...createRequiredValidators()]),
             shipType: this.fb.control(data?.shipType || '', [...createRequiredValidators()]),
             pavilion: this.fb.control(data?.pavilion || '', [...createRequiredValidators()]),
@@ -311,12 +321,13 @@ export class AddSchedulingComponent implements OnInit {
             cargo: this.fb.control(data?.cargo || '', [...createRequiredValidators()]),
             quantity: this.fb.control(data?.quantity || 0, [...createRequiredValidators()]),
             unitNo: this.fb.control(data?.unitNo || '', [...createRequiredValidators()]),
-            originPort: this.fb.control(data?.originPort || '', [...createRequiredValidators()]),
-            destination: this.fb.control(data?.destination || '', [...createRequiredValidators()]),
             observation: this.fb.control(data?.observation || '', [...createRequiredValidators()]),
             additionalOperator: this.fb.control(data?.additionalOperator || '', [...createRequiredValidators()]),
             clientComments: this.fb.control(data?.clientComments || '', [...createRequiredValidators()]),
             operatorComments: this.fb.control(data?.operatorComments, [...createRequiredValidators()]),
+            products: this.fb.control(data?.products || "", [...createRequiredValidators()]),
+            lockType: this.fb.control(data?.lockType || '', [...createRequiredValidators()]),
+            arrivalGauge: this.fb.control(data?.arrivalGauge || 0, [...createRequiredValidators()]),
         })
     }
 
@@ -332,12 +343,12 @@ export class AddSchedulingComponent implements OnInit {
                 arrivalPort: this.fb.control(data?.routingDetail?.arrivalPort || '', [...createRequiredValidators()]),
                 company: this.fb.control(data?.routingDetail?.company || '', [...createRequiredValidators()]),
                 pilotCompany: this.fb.control(data?.routingDetail?.pilotCompany || '', [...createRequiredValidators()]),
-                length: this.fb.control(data?.routingDetail?.length || 0, [...createRequiredValidators()]),
-                width: this.fb.control(data?.routingDetail?.width || 0, [...createRequiredValidators()]),
-                maxDraft: this.fb.control(data?.routingDetail?.maxDraft || 0, [...createRequiredValidators()]),
-                arrivalGauge: this.fb.control(data?.routingDetail?.arrivalGauge || 0, [...createRequiredValidators()]),
-                maxCapacity: this.fb.control(data?.routingDetail?.maxCapacity || 0, [...createRequiredValidators()]),
-                lockType: this.fb.control(data?.routingDetail?.lockType || '', [...createRequiredValidators()]),
+                // length: this.fb.control(data?.routingDetail?.length || 0, [...createRequiredValidators()]),
+                // width: this.fb.control(data?.routingDetail?.width || 0, [...createRequiredValidators()]),
+                // maxDraft: this.fb.control(data?.routingDetail?.maxDraft || 0, [...createRequiredValidators()]),
+                // arrivalGauge: this.fb.control(data?.routingDetail?.arrivalGauge || 0, [...createRequiredValidators()]),
+                // maxCapacity: this.fb.control(data?.routingDetail?.maxCapacity || 0, [...createRequiredValidators()]),
+                // lockType: this.fb.control(data?.routingDetail?.lockType || '', [...createRequiredValidators()]),
                 ridCoordinates: this.fb.control(data?.routingDetail?.ridCoordinates || '', [...createRequiredValidators()]),
             }),
             convoyDetail: this.fb.control(data?.convoyDetail || [], [...createRequiredValidators()]),

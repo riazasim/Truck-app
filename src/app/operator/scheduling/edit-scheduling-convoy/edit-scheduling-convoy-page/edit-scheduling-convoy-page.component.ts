@@ -6,9 +6,10 @@ import { PlanningService } from 'src/app/core/services/planning.service';
 import { MatStepper } from '@angular/material/stepper';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { handleError } from 'src/app/shared/utils/error-handling.function';
-import { convoyModel } from 'src/app/core/models/planning.model';
 import { createRequiredValidators } from 'src/app/shared/validators/generic-validators';
 import { ShipsService } from 'src/app/core/services/ships.service';
+import { ProductModel } from 'src/app/core/models/product.model';
+import { ProductService } from 'src/app/core/services/product.service';
 
 
 @Component({
@@ -29,7 +30,8 @@ export class EditSchedulingConvoyPageComponent {
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     showFileThree$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     isLinear = true;
-
+    products: ProductModel[] = [];
+    productsList: any[] = [];
     oldId: any[] = [];
     oldImagesId: any[] = [];
     images: any[] = [];
@@ -40,23 +42,6 @@ export class EditSchedulingConvoyPageComponent {
 
     id: number;
 
-
-    companies = [
-        { id: 1, name: 'company1' },
-        { id: 2, name: 'company2' },
-        { id: 3, name: 'company3' },
-    ];
-    statuses = [
-        { id: 1, name: 'Port Queue' },
-        { id: 2, name: 'Checked In' },
-        { id: 3, name: 'Waiting' },
-        { id: 4, name: 'In Berth Operation' },
-        { id: 5, name: 'Berth' },
-        { id: 6, name: 'In Exit Queue Operation' },
-        { id: 7, name: 'Exit Queue' },
-        { id: 8, name: 'In New RID Operation' },
-        { id: 9, name: 'Checked Out' },
-    ];
     shipType = [
         { id: 1, name: 'ship type1' },
         { id: 2, name: 'ship type2' },
@@ -82,32 +67,19 @@ export class EditSchedulingConvoyPageComponent {
         { id: 2, name: 'operation type2' },
         { id: 3, name: 'operation type3' },
     ];
-    cargo = [
-        { id: 1, name: 'cargo1' },
-        { id: 2, name: 'cargo2' },
-        { id: 3, name: 'cargo3' },
-    ];
-    portOfOrigin = [
-        { id: 1, name: 'port of origin1' },
-        { id: 2, name: 'port of origin2' },
-        { id: 3, name: 'port of origin3' },
-    ];
-    destination = [
-        { id: 1, name: 'destination1' },
-        { id: 2, name: 'destination2' },
-        { id: 3, name: 'destination3' },
-    ];
 
     constructor(private readonly fb: FormBuilder,
         private readonly planningService: PlanningService,
         private readonly route: ActivatedRoute,
         private readonly router: Router,
+        private readonly productService: ProductService,
         private readonly shipsService: ShipsService,
         private readonly snackBar: MatSnackBar,) { }
 
     ngOnInit(): void {
         this.getRoute();
         this.retrieveShips();
+        this.retriveProducts();
         this.initConvoyForm();
         this.isLoading$.next(false)
     }
@@ -127,6 +99,29 @@ export class EditSchedulingConvoyPageComponent {
         this.matStepper.selectedIndex = index;
     }
 
+    retriveProducts() {
+        this.isLoading$.next(true);
+        let data = {
+            "start": 0,
+            "length": 0,
+            "filters": ["", "", "", ""],
+            "order": [{ "dir": "DESC", "column": 0 }]
+        }
+        this.productService.pagination(data).subscribe(response => {
+            this.products = response.items;
+            this.isLoading$.next(false);
+        })
+    }
+
+    onProductChange(ev: any) {
+        if (this.productsList.includes(ev?.source?.value)) {
+            const index = this.productsList.indexOf(ev?.source?.value);
+            this.productsList.splice(index, 1);
+        }
+        else this.productsList.push(ev?.source?.value);
+        this.convoyForm.patchValue({ products: `[${this.productsList}]` })
+    }
+
     retrieveShips(): void {
         let data = {
             "start": '',
@@ -142,7 +137,6 @@ export class EditSchedulingConvoyPageComponent {
     }
 
     updateSelectedShipsState(): void {
-        // Loop through ships list and mark selected ships as disabled
         this.shipsList.forEach((ship:any) => {
             if (this.selectedShips.has(ship.id)) {
                 ship.disabled = true;
@@ -150,20 +144,33 @@ export class EditSchedulingConvoyPageComponent {
         });
     }
 
+    onShipSelected(ev: any): void {
+        const selectedShipId = ev.target.value
+        const selectedShip = this.shipsList.find((ship: any) => Number(ship.id) === Number(selectedShipId));
+        if (selectedShip) {
+            this.convoyForm.patchValue({
+                width: selectedShip.width || '',
+                maxDraft: selectedShip.maxDraft || '',
+                maxQuantity: selectedShip.maxCapacity || '',
+                arrivalGauge: selectedShip.aerialGauge || '',
+                lockType: selectedShip.lockType || ''
+            });
+        }
+    }
 
-    initConvoyForm(data?: convoyModel): void {
+
+    initConvoyForm(data?: any): void {
         this.convoyForm = this.fb.group({
             navigationType: this.fb.control(data?.navigationType || '', [...createRequiredValidators()]),
-            ship: this.fb.control(data?.ship || '', [...createRequiredValidators()]),
+            ship: this.fb.control(data?.ship?.id || '', [...createRequiredValidators()]),
             company: this.fb.control(data?.company || '', [...createRequiredValidators()]),
-            status: this.fb.control(data?.status || '', [...createRequiredValidators()]),
             shipType: this.fb.control(data?.shipType || '', [...createRequiredValidators()]),
             pavilion: this.fb.control(data?.pavilion || '', [...createRequiredValidators()]),
             enginePower: this.fb.control(data?.enginePower || null, [...createRequiredValidators()]),
             lengthOverall: this.fb.control(data?.lengthOverall || null, [...createRequiredValidators()]),
-            width: this.fb.control(data?.width || null, [...createRequiredValidators()]),
-            maxDraft: this.fb.control(data?.maxDraft || null, [...createRequiredValidators()]),
-            maxQuantity: this.fb.control(data?.maxQuantity || null, [...createRequiredValidators()]),
+            width: this.fb.control(data?.ship?.width || null, [...createRequiredValidators()]),
+            maxDraft: this.fb.control(data?.ship?.maxDraft || null, [...createRequiredValidators()]),
+            maxQuantity: this.fb.control(data?.ship?.maxCapacity || null, [...createRequiredValidators()]),
             agent: this.fb.control(data?.agent || '', [...createRequiredValidators()]),
             maneuvering: this.fb.control(data?.maneuvering || '', [...createRequiredValidators()]),
             shipowner: this.fb.control(data?.shipowner || '', [...createRequiredValidators()]),
@@ -171,11 +178,11 @@ export class EditSchedulingConvoyPageComponent {
             operator: this.fb.control(data?.operator || '', [...createRequiredValidators()]),
             trafficType: this.fb.control(data?.trafficType || '', [...createRequiredValidators()]),
             operatonType: this.fb.control(data?.operatonType || '', [...createRequiredValidators()]),
-            cargo: this.fb.control(data?.cargo || '', [...createRequiredValidators()]),
             quantity: this.fb.control(data?.quantity || '', [...createRequiredValidators()]),
             unitNo: this.fb.control(data?.unitNo || '', [...createRequiredValidators()]),
-            originPort: this.fb.control(data?.originPort || '', [...createRequiredValidators()]),
-            destination: this.fb.control(data?.destination || '', [...createRequiredValidators()]),
+            products: this.fb.control(data?.planningConvoyProducts?.id || "", [...createRequiredValidators()]),
+            lockType: this.fb.control(data?.ship?.lockType || '', [...createRequiredValidators()]),
+            arrivalGauge: this.fb.control(data?.ship?.aerialGauge || 0, [...createRequiredValidators()]),
             observation: this.fb.control(data?.observation || '', [...createRequiredValidators()]),
             additionalOperator: this.fb.control(data?.additionalOperator || '', [...createRequiredValidators()]),
             clientComments: this.fb.control(data?.clientComments || '', [...createRequiredValidators()]),
@@ -186,22 +193,20 @@ export class EditSchedulingConvoyPageComponent {
 
         this.convoyForm.get('ship')?.valueChanges.subscribe((selectedShipId) => {
             if (this.selectedShips.has(selectedShipId)) {
-                // Ship is already selected, handle accordingly (show error message, disable selection, etc.)
                 this.convoyForm.get('ship')?.setErrors({ 'shipAlreadySelected': true });
             }
         });
     }
 
     addShipToConvoy(shipId: number): void {
-        this.selectedShips.add(shipId); // Add ship to selected ships list
-        this.updateSelectedShipsState(); // Update disabled state of selected ships
-        this.convoyForm.patchValue({ ship: shipId }); // Update form control value
+        this.selectedShips.add(shipId); 
+        this.updateSelectedShipsState();
+        this.convoyForm.patchValue({ ship: shipId });
     }
 
-    // Method to remove a ship from convoy
     removeShipFromConvoy(shipId: number): void {
-        this.selectedShips.delete(shipId); // Remove ship from selected ships list
-        this.updateSelectedShipsState(); // Update disabled state of selected ships
+        this.selectedShips.delete(shipId);
+        this.updateSelectedShipsState();
     }
 
     updateConvoys(): void {

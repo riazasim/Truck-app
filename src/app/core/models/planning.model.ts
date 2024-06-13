@@ -37,6 +37,9 @@ export interface convoyModel {
     observation: string;
     additionalOperator: string;
     clientComments: string;
+    arrivalGauge: number;
+    lockType: string;
+    products: [];
     operatorComments: string;
     planningConvoyDocuments: File[];
     documents: any[];

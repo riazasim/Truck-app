@@ -1,0 +1,64 @@
+<section *ngIf="!isOptionSelected && !id">
+    <header class="flex min-md:flex-row flex-col justify-between pb-2">
+        <h3 class="heading-3 font-bold">Add product-product details</h3>
+    </header>
+</section>
+<div *ngIf="!isOptionSelected && !id" class="flex justify-center mt-10 max-md:grid gap-8 min-lg:columns-2 max-md:columns-1">
+    <div class="slide-in-bottom max-w-[300px] rounded-lg overflow-hidden shadow-lg bg-white p-20 min-h-[400px] cursor-pointer" (click)="selectOption('Bulk')">
+        <div class="flex justify-center p-10 border border-gray rounded-full h-[150px] w-[150px] items-center m-auto">
+            <img src="assets/images/bulk.svg" alt="Flag">
+        </div>
+        <div class="flex justify-center pt-5 pb-10">
+            <h4 class="heading-4 text-gray">Bulk</h4>
+        </div>
+        <p class="heading-6 text-center text-gray">
+            Add products such as liquids, grains or minerals.<br>
+        </p>
+    </div>
+
+    <div class="slide-in-bottom max-w-[300px] rounded-lg overflow-hidden shadow-lg bg-white p-20 min-h-[400px] cursor-pointer" (click)="selectOption('Unit')">
+        <div class="flex justify-center p-10 border border-gray rounded-full h-[150px] w-[150px] items-center m-auto">
+            <img src="assets/images/unit.svg" alt="Flag">
+        </div>
+        <div class="flex justify-center pt-5 pb-10">
+            <h4 class="heading-4 text-gray">Unit</h4>
+        </div>
+        <p class="heading-6 text-center text-gray">
+            Add products such as containers, pallets or bonds.<br>
+        </p>
+    </div> 
+</div>
+
+<edit-container *ngIf="isOptionSelected || id" [headerTitle]="id ? 'Edit product' : 'Add product'">
+    <app-loader *ngIf="isLoading$ | async" [isContainer]="true" [fullScreen]="false"></app-loader>
+    <form [formGroup]="productForm" class="p-7" *ngIf="!(isLoading$ | async)">
+        <div class="flex flex-col mx-auto max-w-[440px] gap-5">
+            <div iconic-input-wrapper leftIcon="location-dot">
+                <input inputRef type="text" formControlName="productCode" placeholder="Product code"/>
+            </div>
+            <div iconic-select-wrapper leftSvg="assets/images/scheduling_ship_type.svg" [rightIcon]="['fas', 'caret-down']" (change)="onCategoryChange($event)">
+                <select spAccessInputRef name="category" id="category" formControlName="categoryId">
+                    <option selected disabled value="">Category</option>
+                    <option *ngFor="let category of category" [value]="category.attributes.id">{{ category.attributes.name }}</option>
+                </select>
+            </div>
+            <div iconic-select-wrapper leftSvg="assets/images/scheduling_ship_type.svg" [rightIcon]="['fas', 'caret-down']">
+                <select spAccessInputRef name="subCategory" id="subCategory" formControlName="subCategoryId">
+                    <option selected disabled value="">Sub Category</option>
+                    <option *ngFor="let subCategory of subCategory" [value]="subCategory.id">{{ subCategory.name }}</option>
+                </select>
+            </div>
+            <div iconic-input-wrapper leftIcon="location-dot">
+                <input inputRef type="text" formControlName="name" placeholder="Product name"/>
+            </div>
+        </div>
+        <div class="min-xl:px-[50px] grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20 mt-7">
+            <div class="gap-y-4 mb-5 min-xl:px-[50px]">
+                <button type="button" class="btn btn-outline-primary w-full min-h-[50px] !text-[18px]" [routerLink]="id ? '../../list' : '../list'">Cancel</button>
+            </div>
+            <div class="gap-y-4 mb-5 min-xl:px-[50px]">
+                <button type="button" (click)="saveProduct()" class="btn btn-primary w-full min-h-[50px] !text-[18px]">Save</button>
+            </div>
+        </div>
+    </form>
+</edit-container>

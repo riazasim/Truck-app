@@ -21,10 +21,10 @@ export class MapComponent {
     filters: any = { statusFilters: [], timeFilter: {} };
 
     center: google.maps.LatLngLiteral = {
-        lat: 44.138896,
-        lng: 28.821234,
+        lat: 45.9432,
+        lng: 24.9668,
     };
-    zoom = 12;
+    zoom = 7;
     imageUrl = 'https://angular.io/assets/images/logos/angular/angular.svg';
     searchCard: google.maps.LatLngBoundsLiteral = {
         east: 10,

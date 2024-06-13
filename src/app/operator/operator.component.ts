@@ -26,7 +26,7 @@ export class OperatorComponent {
     logoImgSrc: string = '';
     logoRedirect: string = '';
     currentLocation: string = '';
-    companyName$: BehaviorSubject<string> = new BehaviorSubject<string>('iTruck');
+    companyName$: BehaviorSubject<string> = new BehaviorSubject<string>('');
     locationName$: BehaviorSubject<string> = new BehaviorSubject<string>('');
     constructor(public activatedRoute: ActivatedRoute,
         private readonly authService: AuthService,
@@ -47,7 +47,7 @@ export class OperatorComponent {
        checkLocation(): void {
         this.organizationService.get().subscribe({
           next: (organization: any | null) => {
-            this.locationName$.next(organization?.location?.name || 'No location set');
+            this.companyName$.next(organization?.name || 'Transport');
             const temp: any = organization?.imgLogo;
             this.logoImgSrc = temp?.fullpath;
             if (!organization?.id || !organization.name) {

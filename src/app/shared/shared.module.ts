@@ -110,7 +110,8 @@ export const MY_FORMATS = {
         CommonModule,
         MatFormFieldModule,
         MatInputModule,
-        MatTabsModule
+        MatTabsModule,
+        
     ],
     exports: [
         IconicInputWrapperComponent,

@@ -1,7 +1,7 @@
 <app-loader [isContainer]="false" *ngIf="(isLoading$ | async)" [fullScreen]="true" message="Logining Out"></app-loader>
 <div admin-layout version="latest">
     <!--    [companyName$]="companyName$"-->
-    <admin-header header optionsTitle="Menu" [locationName$]="(locationName$ | async)!">
+    <admin-header header optionsTitle="Menu" [companyName$]="(companyName$ | async)!">
         <ul menu class="header-menu-list">
             <li class="header-menu-list-item">
                 <fa-icon icon="bell" size="lg" class="menu-icon" tabindex="0" role="button">

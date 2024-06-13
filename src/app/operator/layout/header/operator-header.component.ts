@@ -34,7 +34,7 @@ export class OperatorHeaderComponent {
   @Input()
   public locationName$: string;
   @Input()
-  public companyName$: BehaviorSubject<string>;
+  public companyName$: string;
 
   public readonly expandBtnIcon: IconProp = faBars as any;
   public readonly closeBtnIcon = faTimes as any;
@@ -68,7 +68,7 @@ export class OperatorHeaderComponent {
                 this.isLoading$.next(true);
                 this.locationService.changeLocation(id).subscribe({
                   next: (location: any) => {
-                    this.locationName$ = location?.location?.name;
+                    this.companyName$ = location?.name;
                     this.organizationService.organization.next({
                       ...<any>this.organizationService.organization.getValue(),
                       locationName: location?.location?.name,

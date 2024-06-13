@@ -1,8 +1,8 @@
 <header class="layout-wrapper">
   <app-loader class="m-auto flex-grow" *ngIf="(isLoading$ | async)" [fullScreen]="false"></app-loader>
   <div *ngIf="!(isLoading$ | async)" class="flex flex-grow justify-center items-center gap-2">
-    <fa-icon (click)="openChangeLocationModal()" icon="location-dot" class="text-primary cursor-pointer text-3xl font-bold"></fa-icon>
-    <span class="text-3xl font-bold">{{locationName$}}</span>
+    <!-- <fa-icon (click)="openChangeLocationModal()" icon="location-dot" class="text-primary cursor-pointer text-3xl font-bold"></fa-icon> -->
+    <span class="text-3xl font-bold">{{companyName$}}</span>
   </div>
   <div class="logo-container" *ngIf="logoSrc" [routerLink]="logoRedirect" [relativeTo]="activatedRoute.parent">
     <img [src]="logoSrc" alt="logo">

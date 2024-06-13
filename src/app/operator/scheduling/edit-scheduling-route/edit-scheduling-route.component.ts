@@ -29,6 +29,8 @@ export class EditSchedulingRouteComponent implements OnInit {
     dateVal: string;
     timeVal: string;
     dateTimeVal: string;
+    filterDate: Date = new Date();
+    filterTime = '00:00:00'
 
     private formatDateObject(date: Date): string {
         const year = date.getFullYear();
@@ -41,22 +43,10 @@ export class EditSchedulingRouteComponent implements OnInit {
 
     companies: any[] = [];
 
-    customer = [
-        { id: 1, name: 'customer1' },
-        { id: 2, name: 'customer2' },
-        { id: 3, name: 'customer3' },
-    ]
-
     zone = [
         { id: 1, name: 'zone1' },
         { id: 2, name: 'zone2' },
         { id: 3, name: 'zone3' },
-    ];
-
-    typeOfLock = [
-        { id: 1, name: 'type of lock1' },
-        { id: 2, name: 'type of lock2' },
-        { id: 3, name: 'type of lock3' },
     ];
 
     constructor(private readonly fb: FormBuilder,
@@ -72,7 +62,6 @@ export class EditSchedulingRouteComponent implements OnInit {
         this.initForm();
         this.getRoute();
         this.retrivePorts();
-        this.retriveCompanines(this.port?.departurePort || 0);
     }
 
     formatDate(date: Date | string): string {
@@ -96,6 +85,7 @@ export class EditSchedulingRouteComponent implements OnInit {
                 this.dateModal = new Date(dateTimeVal[0]);
                 this.dateVal = dateTimeVal[0];
                 this.timeVal = dateTimeVal[1];
+                this.retriveCompanines(res?.departurePort || 0);
                 this.initForm(res);
                 this.isRoutesLoading$.next(false);
             },
@@ -137,6 +127,7 @@ export class EditSchedulingRouteComponent implements OnInit {
     }
 
     retriveCompanines(portId: any) {
+
         this.microService.getCompanies(portId).subscribe({
             next: res => {
                 this.companies = [];
@@ -146,7 +137,7 @@ export class EditSchedulingRouteComponent implements OnInit {
                     });
                 }
                 if (this.companies.length === 0) {
-                    this.planningForm.patchValue({company : null })
+                    this.planningForm.patchValue({ company: null })
                 }
                 this.isCompaniesLoading$.next(false);
                 this.isPortChangeLoading$.next(false);
@@ -183,12 +174,12 @@ export class EditSchedulingRouteComponent implements OnInit {
             arrivalPort: this.fb.control(data?.arrivalPort || '', [...createRequiredValidators()]),
             company: this.fb.control(data?.company || null, [...createRequiredValidators()]),
             pilotCompany: this.fb.control(data?.pilotCompany || '', [...createRequiredValidators()]),
-            length: this.fb.control(data?.length || null, [...createRequiredValidators()]),
-            width: this.fb.control(data?.width || null, [...createRequiredValidators()]),
-            maxDraft: this.fb.control(data?.maxDraft || null, [...createRequiredValidators()]),
-            arrivalGauge: this.fb.control(data?.arrivalGauge || null, [...createRequiredValidators()]),
-            maxCapacity: this.fb.control(data?.maxCapacity || null, [...createRequiredValidators()]),
-            lockType: this.fb.control(data?.lockType || '', [...createRequiredValidators()]),
+            // length: this.fb.control(data?.length || null, [...createRequiredValidators()]),
+            // width: this.fb.control(data?.width || null, [...createRequiredValidators()]),
+            // maxDraft: this.fb.control(data?.maxDraft || null, [...createRequiredValidators()]),
+            // arrivalGauge: this.fb.control(data?.arrivalGauge || null, [...createRequiredValidators()]),
+            // maxCapacity: this.fb.control(data?.maxCapacity || null, [...createRequiredValidators()]),
+            // lockType: this.fb.control(data?.lockType || '', [...createRequiredValidators()]),
         })
     }
 

@@ -42,7 +42,12 @@
                             </button>
                         </div>
                         <div class="flex flex-col pt-10">
-                            &nbsp;
+                            <div class="flex justify-center pt-10">
+                                <button [disabled]="isLoading$ | async" class="btn min-lg:min-w-[200px] btn-lg btn-primary" (click)="submit()">
+                                    <span class="text-lg">{{ 'button.save' | translate }}</span>
+    
+                                </button>
+                            </div>
                             <!-- <div class="flex items-center gap-4">
                                 <input id="check" type="checkbox" name="publicBookingForm" [formControl]="bookingFormActivation" class="h-[28px] w-[28px] border-[3px] border-black cursor-pointer">
                                 <label for="check" class="text-textDefault heading-5">{{'branding.activate-public-booking-form' | translate }}</label>
@@ -52,10 +57,10 @@
                             </div> -->
                         </div>
                     </div>
-                    <div>
-                        <div class="flex justify-center">
+                    <!-- <div> -->
+                        <!-- <div class="flex justify-center"> -->
 <!--                            leftIcon="arrow-trend-up"-->
-                            <div iconic-input-wrapper>
+                            <!-- <div iconic-input-wrapper>
                                 <input inputRef type="text" autocomplete="off" [formControl]="privacyLink" [placeholder]="'branding.insert-privacy-link' | translate" class="min-xl:min-w-[339px]">
                             </div>
                         </div>
@@ -67,15 +72,15 @@
                                 <span *ngIf="!isChangedImgCover" class="text-lg">{{ 'branding.upload-cover' | translate }}</span>
                                 <input #coverFileElement hidden type="file" (change)="loadImage($event.target, 'imgCover')" accept="image/*">
                             </button>
-                        </div>
+                        </div> -->
 
-                        <div class="flex justify-center pt-10">
+                        <!-- <div class="flex justify-center pt-10">
                             <button [disabled]="isLoading$ | async" class="btn min-lg:min-w-[200px] btn-lg btn-primary" (click)="submit()">
                                 <span class="text-lg">{{ 'button.save' | translate }}</span>
 
                             </button>
-                        </div>
-                    </div>
+                        </div> -->
+                    <!-- </div> -->
                 </div>
                 <!-- <div class="flex justify-center min-xl:gap-36 max-xl:gap-10 max-md:flex-col pt-5 max-xl:p-10">
                     <div class="flex justify-center grow[3]">

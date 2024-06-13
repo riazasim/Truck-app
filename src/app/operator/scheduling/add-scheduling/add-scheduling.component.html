@@ -34,39 +34,7 @@
                             </option>
                         </select>
                     </div>
-                    <div [loading]="(isPortsLoading$ | async)" iconic-select-wrapper
-                        leftSvg="assets/images/scheduling_ship_type.svg" [rightIcon]="['fas', 'caret-down']"
-                        formGroupName="routingDetail" (change)="onPortChange($event)">
-                        <select spAccessInputRef name="departurePort" id="departurePort" 
-                            formControlName="departurePort">
-                            <option disabled value="">
-                                Departure Port
-                            </option>
-                            <option *ngFor="let departurePort of ports" [value]="departurePort.id">
-                                {{ departurePort.name }}
-                            </option>
-                        </select>
-                    </div>
-                    <div [loading]="(isPortsLoading$ | async)" iconic-select-wrapper
-                        leftSvg="assets/images/scheduling_arrival_port.svg" [rightIcon]="['fas', 'caret-down']"
-                        formGroupName="routingDetail">
-                        <select spAccessInputRef name="arrivalPort" id="arrivalPort" formControlName="arrivalPort">
-                            <option disabled value="">Arival Port</option>
-                            <option *ngFor="let arivalPort of ports" [value]="arivalPort.id">
-                                {{ arivalPort.name }}
-                            </option>
-                        </select>
-                    </div>
-                    <div [loading]="(isPortsLoading$ | async) || (isPortChangeLoading$ | async)" iconic-select-wrapper
-                    leftIcon="grid-2" [rightIcon]="['fas', 'caret-down']"
-                        formGroupName="routingDetail">
-                        <select spAccessInputRef name="company" id="company" formControlName="company">
-                            <option disabled value="">Company</option>
-                            <option *ngFor="let company of companies" [value]="company.id">
-                                {{ company.name }}
-                            </option>
-                        </select>
-                    </div>
+                   
                     <!-- <div iconic-select-wrapper leftIcon="grid-2" [rightIcon]="['fas', 'caret-down']"
                         [formGroup]="routingDetail">
                         <select spAccessInputRef name="company" id="company" formControlName="company">
@@ -79,31 +47,64 @@
                 </div>
                 <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
                     <!-- <p>&nbsp;</p> -->
+                    <div [loading]="(isPortsLoading$ | async)" iconic-select-wrapper
+                    leftSvg="assets/images/scheduling_ship_type.svg" [rightIcon]="['fas', 'caret-down']"
+                    formGroupName="routingDetail" (change)="onPortChange($event)">
+                    <select spAccessInputRef name="departurePort" id="departurePort" 
+                        formControlName="departurePort">
+                        <option disabled value="">
+                            Departure Port
+                        </option>
+                        <option *ngFor="let departurePort of ports" [value]="departurePort.id">
+                            {{ departurePort.name }}
+                        </option>
+                    </select>
+                </div>
+                <div [loading]="(isPortsLoading$ | async)" iconic-select-wrapper
+                    leftSvg="assets/images/scheduling_arrival_port.svg" [rightIcon]="['fas', 'caret-down']"
+                    formGroupName="routingDetail">
+                    <select spAccessInputRef name="arrivalPort" id="arrivalPort" formControlName="arrivalPort">
+                        <option disabled value="">Arival Port</option>
+                        <option *ngFor="let arivalPort of ports" [value]="arivalPort.id">
+                            {{ arivalPort.name }}
+                        </option>
+                    </select>
+                </div>
+                <div [loading]="(isPortsLoading$ | async) || (isPortChangeLoading$ | async)" iconic-select-wrapper
+                leftIcon="grid-2" [rightIcon]="['fas', 'caret-down']"
+                    formGroupName="routingDetail">
+                    <select spAccessInputRef name="company" id="company" formControlName="company">
+                        <option disabled value="">Company</option>
+                        <option *ngFor="let company of companies" [value]="company.id">
+                            {{ company.name }}
+                        </option>
+                    </select>
+                </div>
                     <div [loading]="(isPortsLoading$ | async)" iconic-input-wrapper
                         leftSvg="assets/images/scheduling_port.svg" formGroupName="routingDetail">
                         <input inputRef type="text" placeholder="Pilot Company" formControlName="pilotCompany" />
                     </div>
-                    <div [loading]="(isPortsLoading$ | async)" iconic-input-wrapper
+                    <!-- <div [loading]="(isPortsLoading$ | async)" iconic-input-wrapper
                         leftSvg="assets/images/scheduling_length.svg" formGroupName="routingDetail">
                         <input inputRef type="number" placeholder="Length (m)*" formControlName="length" />
-                    </div>
-                    <div [loading]="(isPortsLoading$ | async)" iconic-input-wrapper
+                    </div> -->
+                    <!-- <div [loading]="(isPortsLoading$ | async)" iconic-input-wrapper
                         leftSvg="assets/images/scheduling_width.svg" formGroupName="routingDetail">
                         <input inputRef type="number" placeholder="Width (m)*" formControlName="width" />
-                    </div>
-                    <div [loading]="(isPortsLoading$ | async)" iconic-input-wrapper
+                    </div> -->
+                    <!-- <div [loading]="(isPortsLoading$ | async)" iconic-input-wrapper
                         leftSvg="assets/images/scheduling_depth.svg" formGroupName="routingDetail">
                         <input inputRef type="number" placeholder="Max Draft" formControlName="maxDraft" />
-                    </div>
-                    <div [loading]="(isPortsLoading$ | async)" iconic-input-wrapper
+                    </div> -->
+                    <!-- <div [loading]="(isPortsLoading$ | async)" iconic-input-wrapper
                         leftSvg="assets/images/scheduling_convoy.svg" formGroupName="routingDetail">
                         <input inputRef type="number" placeholder="Aerial Guage (M)*" formControlName="arrivalGauge" />
-                    </div>
-                    <div [loading]="(isPortsLoading$ | async)" iconic-input-wrapper
+                    </div> -->
+                    <!-- <div [loading]="(isPortsLoading$ | async)" iconic-input-wrapper
                         leftSvg="assets/images/scheduling_weight.svg" formGroupName="routingDetail">
                         <input inputRef type="number" placeholder="Capacity max (m)*" formControlName="maxCapacity" />
-                    </div>
-                    <div [loading]="(isPortsLoading$ | async)" iconic-select-wrapper
+                    </div> -->
+                    <!-- <div [loading]="(isPortsLoading$ | async)" iconic-select-wrapper
                         leftSvg="assets/images/scheduling_lock.svg" [rightIcon]="['fas', 'caret-down']"
                         formGroupName="routingDetail">
                         <select spAccessInputRef name="typeOfLock" id="typeOfLock" formControlName="lockType">
@@ -112,7 +113,7 @@
                                 {{ typeOfLock.name }}
                             </option>
                         </select>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div class="min-xl:px-[50px] grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20 mt-4">
@@ -156,71 +157,18 @@
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_navigation.svg">
                         <input inputRef type="text" placeholder="Navigation type*" formControlName="navigationType" />
                     </div>
-                    <div iconic-select-wrapper leftIcon="grid-2" [rightIcon]="['fas', 'caret-down']">
-                        <select spAccessInputRef name="ship" id="ship" (change)="onShipSelected($event)"
-                            formControlName="ship">
-                            <option disabled value="">Ship</option>
-                            <option *ngFor="let ship of shipsList" [value]="ship.attributes.id">
-                                {{ ship.attributes.name }}
-                            </option>
-                        </select>
-                    </div>
-                    <div iconic-select-wrapper leftSvg="assets/images/scheduling_ship_type.svg"
-                        [rightIcon]="['fas', 'caret-down']">
-                        <select spAccessInputRef name="shipType" id="shipType" formControlName="shipType">
-                            <option disabled value="">Ship type*</option>
-                            <option *ngFor="let shipType of shipType" [value]="shipType.id">
-                                {{ shipType.name }}
-                            </option>
-                        </select>
-                    </div>
-                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_port.svg">
-                        <input inputRef type="text" maxlength="4" placeholder="Pavilion*" formControlName="pavilion" />
-                    </div>
-                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_engine.svg">
-                        <input inputRef type="number" placeholder="Engine power" formControlName="enginePower" />
-                    </div>
-                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_file.svg">
-                        <input inputRef type="number" placeholder="LOA" formControlName="lengthOverall" />
-                    </div>
-                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_width.svg">
-                        <input inputRef type="number" placeholder="Width (m)*" formControlName="width" />
-                    </div>
-                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_depth.svg">
-                        <input inputRef type="number" placeholder="Max draft (m)*" formControlName="maxDraft" />
-                    </div>
-                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_weight.svg">
-                        <input inputRef type="number" placeholder="C.max (t)*" formControlName="maxQuantity" />
-                    </div>
-                    <!-- <div iconic-input-wrapper leftSvg="assets/images/scheduling_ship_owner.svg">
-                        <input inputRef type="text" placeholder="Ship owner" formControlName="shipowner" />
-                    </div> -->
-                </div>
-                <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
+                   
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_ship_owner.svg">
                         <input inputRef type="text" placeholder="Ship owner" formControlName="shipowner" />
                     </div>
+                    <mat-select class="mb-6" placeholder="Products" multiple>
+                        <mat-option *ngFor="let product of products" (onSelectionChange)="onProductChange($event)" [value]="product.id">
+                            {{product.name}}
+                        </mat-option>
+                    </mat-select>
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_purpose.svg">
                         <input inputRef type="text" placeholder="Purpose" formControlName="purpose" />
                     </div>
-                    <!-- <div iconic-select-wrapper leftSvg="assets/images/scheduling_operator.svg"
-                        [rightIcon]="['fas', 'caret-down']">
-                        <select spAccessInputRef name="status" id="status" formControlName="status">
-                            <option disabled value="">Status</option>
-                            <option *ngFor="let status of statuses" [value]="status.id">
-                                {{ status.name }}
-                            </option>
-                        </select>
-                    </div> -->
-                    <!-- <div iconic-select-wrapper leftSvg="assets/images/scheduling_operator.svg"
-                        [rightIcon]="['fas', 'caret-down']">
-                        <select spAccessInputRef name="operator" id="operator" formControlName="operator">
-                            <option disabled value="">Operator*</option>
-                            <option *ngFor="let operator of operator" [value]="operator.id">
-                                {{ operator.name }}
-                            </option>
-                        </select>
-                    </div> -->
                     <div iconic-select-wrapper leftSvg="assets/images/scheduling_trafic_type.svg"
                         [rightIcon]="['fas', 'caret-down']">
                         <select spAccessInputRef name="trafficType" id="trafficType" formControlName="trafficType">
@@ -239,44 +187,74 @@
                             </option>
                         </select>
                     </div>
-                    <div iconic-select-wrapper leftSvg="assets/images/scheduling_cargo.svg"
-                        [rightIcon]="['fas', 'caret-down']">
-                        <select spAccessInputRef name="cargo" id="cargo" formControlName="cargo">
-                            <option disabled value="">Cargo*</option>
-                            <option *ngFor="let cargo of cargo" [value]="cargo.id">
-                                {{ cargo.name }}
-                            </option>
-                        </select>
-                    </div>
-                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_weight.svg">
-                        <input inputRef type="number" placeholder="Quantity (t)" formControlName="quantity" />
-                    </div>
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_unit.svg">
                         <input inputRef type="text" placeholder="Unit.no" formControlName="unitNo" />
-                    </div>
-                    <div iconic-select-wrapper leftSvg="assets/images/scheduling_port.svg"
-                        [rightIcon]="['fas', 'caret-down']">
-                        <select spAccessInputRef name="portOfOrigin" id="portOfOrigin" formControlName="originPort">
-                            <option disabled value="">
-                                Port of origin
-                            </option>
-                            <option *ngFor="let portOfOrigin of portOfOrigin" [value]="portOfOrigin.id">
-                                {{ portOfOrigin.name }}
-                            </option>
-                        </select>
-                    </div>
-                    <div iconic-select-wrapper leftSvg="assets/images/scheduling_destination.svg"
-                        [rightIcon]="['fas', 'caret-down']">
-                        <select spAccessInputRef name="destination" id="destination" formControlName="destination">
-                            <option disabled value="">Destination</option>
-                            <option *ngFor="let destination of destination" [value]="destination.id">
-                                {{ destination.name }}
-                            </option>
-                        </select>
                     </div>
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_observation.svg">
                         <input inputRef type="text" placeholder="Observation" formControlName="observation" />
                     </div>
+                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_port.svg">
+                        <input inputRef type="text" maxlength="4" placeholder="Pavilion*" formControlName="pavilion" />
+                    </div>
+                    
+                </div>
+                <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
+                    <div iconic-select-wrapper leftIcon="grid-2" [rightIcon]="['fas', 'caret-down']">
+                        <select spAccessInputRef name="ship" id="ship" (change)="onShipSelected($event)"
+                            formControlName="ship">
+                            <option disabled value="">Ship</option>
+                            <option *ngFor="let ship of shipsList" [value]="ship.attributes.id">
+                                {{ ship.attributes.name }}
+                            </option>
+                        </select>
+                    </div>
+                    <div iconic-select-wrapper leftSvg="assets/images/scheduling_ship_type.svg"
+                        [rightIcon]="['fas', 'caret-down']">
+                        <select spAccessInputRef name="shipType" id="shipType" formControlName="shipType">
+                            <option disabled value="">Ship type*</option>
+                            <option *ngFor="let shipType of shipType" [value]="shipType.id">
+                                {{ shipType.name }}
+                            </option>
+                        </select>
+                    </div>
+                    
+                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_engine.svg">
+                        <input inputRef type="number" placeholder="Engine power" formControlName="enginePower" />
+                    </div>
+
+                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_file.svg">
+                        <input inputRef type="number" placeholder="LOA" formControlName="lengthOverall" />
+                    </div>
+                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_width.svg">
+                        <input inputRef type="number" placeholder="Width (m)*" formControlName="width" />
+                    </div>
+                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_depth.svg">
+                        <input inputRef type="number" placeholder="Max draft (m)*" formControlName="maxDraft" />
+                    </div>
+                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_weight.svg">
+                        <input inputRef type="number" placeholder="C.max (t)*" formControlName="maxQuantity" />
+                    </div>
+                    <div iconic-input-wrapper
+                        leftSvg="assets/images/scheduling_convoy.svg">
+                        <input inputRef type="number" placeholder="Aerial Guage (M)*" formControlName="arrivalGauge" />
+                    </div>
+                    <!-- <div iconic-select-wrapper
+                        leftSvg="assets/images/scheduling_lock.svg" [rightIcon]="['fas', 'caret-down']">
+                        <select spAccessInputRef name="typeOfLock" id="typeOfLock" formControlName="lockType">
+                            <option disabled value="">Type of lock</option>
+                            <option *ngFor="let typeOfLock of typeOfLock" [value]="typeOfLock.id">
+                                {{ typeOfLock.name }}
+                            </option>
+                        </select>
+                    </div> -->
+                    <div iconic-input-wrapper
+                        leftSvg="assets/images/scheduling_lock.svg">
+                        <input inputRef type="text" placeholder="Type of lock" formControlName="lockType" />
+                    </div>
+                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_weight.svg">
+                        <input inputRef type="number" placeholder="Quantity (t)" formControlName="quantity" />
+                    </div>
+                    
                 </div>
             </div>
             <div class="min-xl:px-[50px] grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20 mt-4">
