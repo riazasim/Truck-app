@@ -37,6 +37,21 @@
             </th>
             <td cdk-cell *cdkCellDef="let row">{{row.name}}</td>
           </ng-container>
+          <ng-container cdkColumnDef="type">
+            <th cdk-header-cell *cdkHeaderCellDef scope="col">
+              <section class="flex flex-col">
+                <div mat-sort-header="type">Type</div>
+                <searchbar>
+                  <fa-icon icon="search"></fa-icon>
+                  <input #searchType input type="text" (keyup)="applyFilter($event.target, 'type')">
+                  <div *ngIf="searchType.value" close (click)="searchType.value=''; applyFilter({ value: '' }, 'name')">
+                    <fa-icon icon="close"></fa-icon>
+                  </div>
+                </searchbar>
+              </section>
+            </th>
+            <td cdk-cell *cdkCellDef="let row">{{row.type}}</td>
+          </ng-container>
           
 
           <ng-container cdkColumnDef="actions">

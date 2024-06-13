@@ -114,8 +114,8 @@ export class ProductsAddEditComponent {
             type: this.fb.control(data?.type || '', [...createRequiredValidators()]),
             productCode: this.fb.control(data?.productCode || '', [...createRequiredValidators()]),
             name: this.fb.control(data?.name || '', [...createRequiredValidators()]),
-            categoryId: this.fb.control(data?.category?.id || null, [...createRequiredValidators()]),
-            subCategoryId: this.fb.control(data?.subCategory?.id || null, [...createRequiredValidators()]),
+            categoryId: this.fb.control(data?.category?.id || '', [...createRequiredValidators()]),
+            subCategoryId: this.fb.control(data?.subCategory?.id || '', [...createRequiredValidators()]),
         });
         if (data?.type) {
             this.isOptionSelected = true;

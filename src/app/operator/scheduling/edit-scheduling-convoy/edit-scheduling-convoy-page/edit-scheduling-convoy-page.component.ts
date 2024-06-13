@@ -37,6 +37,7 @@ export class EditSchedulingConvoyPageComponent {
     images: any[] = [];
     tempImg: File[] = [];
     shipsList: any;
+    selectedProducts:[]
     selectedShips: Set<number> = new Set<number>();
     stepOne$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
@@ -160,6 +161,7 @@ export class EditSchedulingConvoyPageComponent {
 
 
     initConvoyForm(data?: any): void {
+        const ids = data?.planningConvoyProducts?.map((item : any) => item?.product?.id)
         this.convoyForm = this.fb.group({
             navigationType: this.fb.control(data?.navigationType || '', [...createRequiredValidators()]),
             ship: this.fb.control(data?.ship?.id || '', [...createRequiredValidators()]),
@@ -180,7 +182,7 @@ export class EditSchedulingConvoyPageComponent {
             operatonType: this.fb.control(data?.operatonType || '', [...createRequiredValidators()]),
             quantity: this.fb.control(data?.quantity || '', [...createRequiredValidators()]),
             unitNo: this.fb.control(data?.unitNo || '', [...createRequiredValidators()]),
-            products: this.fb.control(data?.planningConvoyProducts?.id || "", [...createRequiredValidators()]),
+            products: this.fb.control(ids || []),
             lockType: this.fb.control(data?.ship?.lockType || '', [...createRequiredValidators()]),
             arrivalGauge: this.fb.control(data?.ship?.aerialGauge || 0, [...createRequiredValidators()]),
             observation: this.fb.control(data?.observation || '', [...createRequiredValidators()]),

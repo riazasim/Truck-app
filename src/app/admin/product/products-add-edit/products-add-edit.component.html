@@ -33,22 +33,22 @@
     <app-loader *ngIf="isLoading$ | async" [isContainer]="true" [fullScreen]="false"></app-loader>
     <form [formGroup]="productForm" class="p-7" *ngIf="!(isLoading$ | async)">
         <div class="flex flex-col mx-auto max-w-[440px] gap-5">
-            <div iconic-input-wrapper leftIcon="location-dot">
+            <div iconic-input-wrapper leftSvg="assets/images/pcode.svg">
                 <input inputRef type="text" formControlName="productCode" placeholder="Product code"/>
             </div>
-            <div iconic-select-wrapper leftSvg="assets/images/scheduling_ship_type.svg" [rightIcon]="['fas', 'caret-down']" (change)="onCategoryChange($event)">
+            <div iconic-select-wrapper leftSvg="assets/images/pcategory.svg" [rightIcon]="['fas', 'caret-down']" (change)="onCategoryChange($event)">
                 <select spAccessInputRef name="category" id="category" formControlName="categoryId">
                     <option selected disabled value="">Category</option>
                     <option *ngFor="let category of category" [value]="category.attributes.id">{{ category.attributes.name }}</option>
                 </select>
             </div>
-            <div iconic-select-wrapper leftSvg="assets/images/scheduling_ship_type.svg" [rightIcon]="['fas', 'caret-down']">
+            <div iconic-select-wrapper leftSvg="assets/images/psubcategory.svg" [rightIcon]="['fas', 'caret-down']">
                 <select spAccessInputRef name="subCategory" id="subCategory" formControlName="subCategoryId">
                     <option selected disabled value="">Sub Category</option>
                     <option *ngFor="let subCategory of subCategory" [value]="subCategory.id">{{ subCategory.name }}</option>
                 </select>
             </div>
-            <div iconic-input-wrapper leftIcon="location-dot">
+            <div iconic-input-wrapper leftSvg="assets/images/pname.svg">
                 <input inputRef type="text" formControlName="name" placeholder="Product name"/>
             </div>
         </div>

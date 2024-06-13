@@ -17,7 +17,7 @@ import { ProductService } from 'src/app/core/services/product.service';
 })
 export class ProductsListComponent implements OnInit {
   isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
-  displayedColumns: string[] = ['productCode','name','actions'];
+  displayedColumns: string[] = ['productCode','name', 'type','actions'];
   faStarSolid: IconProp = <IconProp>faStar;
   dataSource: any[] = [];
   originalSource: any[] = [];
@@ -61,6 +61,7 @@ export class ProductsListComponent implements OnInit {
       if (isMultipleSearch) {
         this.appliedFilters['name'] = target.value;
         this.appliedFilters['code'] = target.value;
+        this.appliedFilters['type'] = target.value;
       } else {
         this.appliedFilters[column] = target.value;
       }
@@ -68,6 +69,7 @@ export class ProductsListComponent implements OnInit {
       if (isMultipleSearch) {
         delete this.appliedFilters['name']
         delete this.appliedFilters['code']
+        delete this.appliedFilters['type']
       } else {
         delete this.appliedFilters[column];
       }
@@ -110,6 +112,7 @@ export class ProductsListComponent implements OnInit {
       switch (sort.active) {
         case 'code': return compare(a.code, b.code, isAsc);
         case 'name': return compare(a.name, b.name, isAsc);
+        case 'type': return compare(a.type, b.type, isAsc);
         default: return 0;
       }
     });
@@ -124,7 +127,7 @@ export class ProductsListComponent implements OnInit {
       "start": this.pageIndex,
       "length": this.pageSize,
       "filters": ["", "", "", "", ""],
-      "order": []
+      "order": [{"dir": "DESC", "column": 0}]
     }
     this.productService.pagination(data).subscribe(response => {
       this.dataSource = response.items;
@@ -140,7 +143,7 @@ export class ProductsListComponent implements OnInit {
       "start": event.pageIndex ? event.pageIndex * event.pageSize : event.pageIndex,
       "length": event.pageSize,
       "filters": ["", "", "", "", ""],
-      "order": []
+      "order": [{"dir": "DESC", "column": 0}]
     }
     this.productService.pagination(data).subscribe(response => {
       this.dataSource = response.items;
