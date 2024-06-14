@@ -37,7 +37,7 @@ export class EditSchedulingConvoyPageComponent {
     images: any[] = [];
     tempImg: File[] = [];
     shipsList: any;
-    selectedProducts:[]
+    selectedProducts: []
     selectedShips: Set<number> = new Set<number>();
     stepOne$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
@@ -68,6 +68,7 @@ export class EditSchedulingConvoyPageComponent {
         { id: 2, name: 'operation type2' },
         { id: 3, name: 'operation type3' },
     ];
+    options:any
 
     constructor(private readonly fb: FormBuilder,
         private readonly planningService: PlanningService,
@@ -84,6 +85,9 @@ export class EditSchedulingConvoyPageComponent {
         this.initConvoyForm();
         this.isLoading$.next(false)
     }
+    // public filterOptions(filter: any): void {
+    //     this.options = this.products.filter(x => x.name.toLowerCase().includes(filter.toLowerCase()));
+    //    }
 
     getRoute() {
         this.id = this.route.snapshot.params['id'];
@@ -138,7 +142,7 @@ export class EditSchedulingConvoyPageComponent {
     }
 
     updateSelectedShipsState(): void {
-        this.shipsList.forEach((ship:any) => {
+        this.shipsList.forEach((ship: any) => {
             if (this.selectedShips.has(ship.id)) {
                 ship.disabled = true;
             }
@@ -161,7 +165,7 @@ export class EditSchedulingConvoyPageComponent {
 
 
     initConvoyForm(data?: any): void {
-        const ids = data?.planningConvoyProducts?.map((item : any) => item?.product?.id)
+        const ids = data?.planningConvoyProducts?.map((item: any) => item?.product?.id)
         this.convoyForm = this.fb.group({
             navigationType: this.fb.control(data?.navigationType || '', [...createRequiredValidators()]),
             ship: this.fb.control(data?.ship?.id || '', [...createRequiredValidators()]),
@@ -201,7 +205,7 @@ export class EditSchedulingConvoyPageComponent {
     }
 
     addShipToConvoy(shipId: number): void {
-        this.selectedShips.add(shipId); 
+        this.selectedShips.add(shipId);
         this.updateSelectedShipsState();
         this.convoyForm.patchValue({ ship: shipId });
     }

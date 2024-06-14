@@ -151,6 +151,10 @@ export class EditSchedulingRouteComponent implements OnInit {
         })
     }
 
+    onCompaniesChange(ev : any){
+        this.planningForm.patchValue({company : Number(ev?.target?.value)})
+    }
+
     OnDateChange(value: any) {
         let filterDate = value instanceof Date ? value : new Date(value);
         this.dateVal = this.formatDate(filterDate);
@@ -168,8 +172,9 @@ export class EditSchedulingRouteComponent implements OnInit {
         this.planningForm = this.fb.group({
             convoyType: this.fb.control(data?.convoyType || '', [...createRequiredValidators()]),
             estimatedTimeArrival: this.fb.control(data?.estimatedTimeArrival || '', [...createRequiredValidators()]),
-            locationPort: this.fb.control(data?.locationPort || '', [...createRequiredValidators()]),
-            zone: this.fb.control(data?.zone || null, [...createRequiredValidators()]),
+            // locationPort: this.fb.control(data?.locationPort || '', [...createRequiredValidators()]),
+            arrivalZone: this.fb.control(data?.arrivalZone || '', [...createRequiredValidators()]),
+            departureZone: this.fb.control(data?.departureZone || '', [...createRequiredValidators()]),
             departurePort: this.fb.control(data?.departurePort || '', [...createRequiredValidators()]),
             arrivalPort: this.fb.control(data?.arrivalPort || '', [...createRequiredValidators()]),
             company: this.fb.control(data?.company || null, [...createRequiredValidators()]),

@@ -59,7 +59,8 @@ export interface PlanningModel {
         convoyType: string;
         estimatedTimeArrival: string;
         locationPort: string;
-        zone: string;
+        departureZone: string;
+        arrivalZone: string;
         departurePort: string;
         arrivalPort: string;
         company: string;
@@ -87,7 +88,8 @@ export interface PlanningDetailModel {
     convoyType: string;
     estimatedTimeArrival: string;
     locationPort: string;
-    zone: number;
+    departureZone: string;
+    arrivalZone: string;
     departurePort: string;
     arrivalPort: number;
     company: string;
