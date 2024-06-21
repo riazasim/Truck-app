@@ -95,11 +95,8 @@ export class AddSchedulingComponent implements OnInit {
         return formattedDate;
     }
 
-    zone = [
-        { id: 1, name: 'zone1' },
-        { id: 2, name: 'zone2' },
-        { id: 3, name: 'zone3' },
-    ];
+    departureZone : any[] = [];
+    arrivalZone : any[] = [];
     companies: any[];
     shipType = [
         { id: 1, name: 'ship type1' },
@@ -204,7 +201,7 @@ export class AddSchedulingComponent implements OnInit {
     }
 
 
-    onPortChange(ev: any) {
+    onDeparturePortChange(ev: any) {
         this.isPortChangeLoading$.next(true);
         let port: any;
         this.ports.filter((item: any) => {
@@ -212,9 +209,21 @@ export class AddSchedulingComponent implements OnInit {
         })
         if (port) {
             this.schedulingForm.patchValue({ routingDetail: { ridCoordinates: port?.addrCoordinates } })
+            console.log(port?.zones);
+            this.departureZone = port?.zones;
             this.retriveCompanines(port.id);
         }
-        console.log(port)
+    }
+    onArrivalPortChange(ev: any) {
+        this.isPortChangeLoading$.next(true);
+        let port: any;
+        this.ports.filter((item: any) => {
+            if (Number(item.id) === Number(ev.target.value)) port = item;
+        })
+        if (port) {
+            console.log(port?.zones);
+            this.arrivalZone = port?.zones;
+        }
     }
 
     retriveCompanines(portId: any) {

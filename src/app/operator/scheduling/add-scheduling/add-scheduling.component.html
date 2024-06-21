@@ -23,25 +23,26 @@
                         <input inputRef type="text" placeholder="Location Port" formControlName="locationPort" />
                     </div> -->
                     <div [loading]="(isPortsLoading$ | async)" iconic-select-wrapper
+                    leftSvg="assets/images/scheduling_ship_type.svg" [rightIcon]="['fas', 'caret-down']"
+                    formGroupName="routingDetail" (change)="onDeparturePortChange($event)">
+                    <select spAccessInputRef name="departurePort" id="departurePort" 
+                        formControlName="departurePort">
+                        <option disabled value="">
+                            Departure Port
+                        </option>
+                        <option *ngFor="let departurePort of ports" [value]="departurePort.id">
+                            {{ departurePort.name }}
+                        </option>
+                    </select>
+                </div>
+                    <div [loading]="(isPortsLoading$ | async)" iconic-select-wrapper
                         leftSvg="assets/images/scheduling_map_location.svg" [rightIcon]="['fas', 'caret-down']"
                         formGroupName="routingDetail">
                         <select spAccessInputRef name="zone" id="zone" formControlName="departureZone">
                             <option disabled value="">
                                 Departure Zone
                             </option>
-                            <option *ngFor="let zone of zone" [value]="zone.id">
-                                {{ zone.name }}
-                            </option>
-                        </select>
-                    </div>
-                    <div [loading]="(isPortsLoading$ | async)" iconic-select-wrapper
-                        leftSvg="assets/images/scheduling_map_location.svg" [rightIcon]="['fas', 'caret-down']"
-                        formGroupName="routingDetail">
-                        <select spAccessInputRef name="zone" id="zone" formControlName="arrivalZone">
-                            <option disabled value="">
-                                Arrival Zone
-                            </option>
-                            <option *ngFor="let zone of zone" [value]="zone.id">
+                            <option *ngFor="let zone of departureZone" [value]="zone.id">
                                 {{ zone.name }}
                             </option>
                         </select>
@@ -59,22 +60,10 @@
                 </div>
                 <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
                     <!-- <p>&nbsp;</p> -->
-                    <div [loading]="(isPortsLoading$ | async)" iconic-select-wrapper
-                    leftSvg="assets/images/scheduling_ship_type.svg" [rightIcon]="['fas', 'caret-down']"
-                    formGroupName="routingDetail" (change)="onPortChange($event)">
-                    <select spAccessInputRef name="departurePort" id="departurePort" 
-                        formControlName="departurePort">
-                        <option disabled value="">
-                            Departure Port
-                        </option>
-                        <option *ngFor="let departurePort of ports" [value]="departurePort.id">
-                            {{ departurePort.name }}
-                        </option>
-                    </select>
-                </div>
+                    
                 <div [loading]="(isPortsLoading$ | async)" iconic-select-wrapper
                     leftSvg="assets/images/scheduling_arrival_port.svg" [rightIcon]="['fas', 'caret-down']"
-                    formGroupName="routingDetail">
+                    formGroupName="routingDetail" (change)="onArrivalPortChange($event)">
                     <select spAccessInputRef name="arrivalPort" id="arrivalPort" formControlName="arrivalPort">
                         <option disabled value="">Arival Port</option>
                         <option *ngFor="let arivalPort of ports" [value]="arivalPort.id">
@@ -82,6 +71,18 @@
                         </option>
                     </select>
                 </div>
+                <div [loading]="(isPortsLoading$ | async)" iconic-select-wrapper
+                        leftSvg="assets/images/scheduling_map_location.svg" [rightIcon]="['fas', 'caret-down']"
+                        formGroupName="routingDetail">
+                        <select spAccessInputRef name="zone" id="zone" formControlName="arrivalZone">
+                            <option disabled value="">
+                                Arrival Zone
+                            </option>
+                            <option *ngFor="let zone of arrivalZone" [value]="zone.id">
+                                {{ zone.name }}
+                            </option>
+                        </select>
+                    </div>
                 <div [loading]="(isPortsLoading$ | async) || (isPortChangeLoading$ | async)" iconic-select-wrapper
                 leftIcon="grid-2" [rightIcon]="['fas', 'caret-down']"
                     formGroupName="routingDetail">

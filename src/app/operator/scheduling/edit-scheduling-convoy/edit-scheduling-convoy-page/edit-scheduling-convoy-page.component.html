@@ -21,11 +21,8 @@
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_ship_owner.svg">
                         <input inputRef type="text" placeholder="Ship owner" formControlName="shipowner" />
                     </div>
-                    <mat-select class="mb-6" placeholder="Products" multiple>
-                        <!-- <mat-form-field>
-                            <input matInput placeholer="Search" (input)="filterOptions($event.target)" />
-                          </mat-form-field> -->
-                        <mat-option *ngFor="let product of products" (onSelectionChange)="onProductChange($event)" [value]="product.id">
+                    <mat-select class="mb-6" placeholder="Products" multiple formControlName="products" (onSelectionChange)="onProductChange($event)" >
+                        <mat-option *ngFor="let product of products" [value]="product.id">
                             {{product.name}}
                         </mat-option>
                     </mat-select>
