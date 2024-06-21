@@ -42,12 +42,8 @@ export class EditSchedulingRouteComponent implements OnInit {
     }
 
     companies: any[] = [];
-
-    zone = [
-        { id: 1, name: 'zone1' },
-        { id: 2, name: 'zone2' },
-        { id: 3, name: 'zone3' },
-    ];
+    departureZone : any[] = [];
+    arrivalZone : any[] = [];
 
     constructor(private readonly fb: FormBuilder,
         private readonly planningService: PlanningService,
@@ -113,17 +109,28 @@ export class EditSchedulingRouteComponent implements OnInit {
         })
     }
 
-    onPortChange(ev: any) {
+    onDeparturePortChange(ev: any) {
         this.isPortChangeLoading$.next(true);
         let port: any;
         this.ports.filter((item: any) => {
             if (Number(item.id) === Number(ev.target.value)) port = item;
         })
         if (port) {
-            this.planningForm.patchValue({ ridCoordinates: port?.addrCoordinates })
+            this.planningForm.patchValue({ routingDetail: { ridCoordinates: port?.addrCoordinates } })
+            console.log(port?.zones);
+            this.departureZone = port?.zones;
             this.retriveCompanines(port.id);
         }
-        console.log(port)
+    }
+    onArrivalPortChange(ev: any) {
+        let port: any;
+        this.ports.filter((item: any) => {
+            if (Number(item.id) === Number(ev.target.value)) port = item;
+        })
+        if (port) {
+            console.log(port?.zones);
+            this.arrivalZone = port?.zones;
+        }
     }
 
     retriveCompanines(portId: any) {
@@ -153,6 +160,12 @@ export class EditSchedulingRouteComponent implements OnInit {
 
     onCompaniesChange(ev : any){
         this.planningForm.patchValue({company : Number(ev?.target?.value)})
+    }
+    onDepartureZone(ev : any){
+        this.planningForm.patchValue({departureZone : Number(ev?.target?.value)})
+    }
+    onArrivalZone(ev : any){
+        this.planningForm.patchValue({arrivalZone : Number(ev?.target?.value)})
     }
 
     OnDateChange(value: any) {

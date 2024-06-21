@@ -202,27 +202,27 @@ export class AddSchedulingComponent implements OnInit {
 
 
     onDeparturePortChange(ev: any) {
+        debugger
         this.isPortChangeLoading$.next(true);
-        let port: any;
+        let departurePort: any;
         this.ports.filter((item: any) => {
-            if (Number(item.id) === Number(ev.target.value)) port = item;
+            if (Number(item.id) === Number(ev.target.value)) departurePort = item;
         })
-        if (port) {
-            this.schedulingForm.patchValue({ routingDetail: { ridCoordinates: port?.addrCoordinates } })
-            console.log(port?.zones);
-            this.departureZone = port?.zones;
-            this.retriveCompanines(port.id);
+        if (departurePort) {
+            this.schedulingForm.patchValue({ routingDetail: { ridCoordinates: departurePort?.addrCoordinates } })
+            console.log(departurePort?.zones);
+            this.departureZone = departurePort?.zones;
+            this.retriveCompanines(departurePort.id);
         }
     }
     onArrivalPortChange(ev: any) {
-        this.isPortChangeLoading$.next(true);
-        let port: any;
+        let arrivalPort: any;
         this.ports.filter((item: any) => {
-            if (Number(item.id) === Number(ev.target.value)) port = item;
+            if (Number(item.id) === Number(ev.target.value)) arrivalPort = item;
         })
-        if (port) {
-            console.log(port?.zones);
-            this.arrivalZone = port?.zones;
+        if (arrivalPort) {
+            console.log(arrivalPort?.zones);
+            this.arrivalZone = arrivalPort?.zones;
         }
     }
 
