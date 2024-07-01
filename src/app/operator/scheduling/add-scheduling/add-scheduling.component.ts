@@ -184,6 +184,10 @@ export class AddSchedulingComponent implements OnInit {
         })
     }
 
+    onInputChange(ev : any){
+        this.search = ev?.target?.value
+    }
+
     retrivePorts() {
         this.microService.getPorts().subscribe({
             next: res => {
@@ -202,7 +206,6 @@ export class AddSchedulingComponent implements OnInit {
 
 
     onDeparturePortChange(ev: any) {
-        debugger
         this.isPortChangeLoading$.next(true);
         let departurePort: any;
         this.ports.filter((item: any) => {

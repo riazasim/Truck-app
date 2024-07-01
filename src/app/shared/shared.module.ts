@@ -54,6 +54,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { InputRefDirective } from './directives/input-ref.directive';
 import {MatTabsModule} from '@angular/material/tabs';
+import { MultiselectsearchComponent } from './components/multiselectsearch/multiselectsearch.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 
 export const MY_FORMATS = {
@@ -96,6 +98,7 @@ export const MY_FORMATS = {
         GenericWrapperComponent,
         InputRefDirective,
         SelectRefDirective,
+        MultiselectsearchComponent
     ],
     imports: [
         FontAwesomeModule,
@@ -111,6 +114,8 @@ export const MY_FORMATS = {
         MatFormFieldModule,
         MatInputModule,
         MatTabsModule,
+        MatChipsModule,
+        MatAutocompleteModule,
         
     ],
     exports: [
@@ -168,6 +173,7 @@ export const MY_FORMATS = {
         TranslateModule,
         MatTabsModule,
         SearchbarModule,
+        MultiselectsearchComponent
     ],
     providers: [
         { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },

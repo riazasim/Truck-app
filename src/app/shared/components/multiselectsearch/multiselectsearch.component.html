@@ -38,22 +38,22 @@
   <div class="iconic-layout-wrapper">
     <div class="input-container">
       <fa-icon *ngIf="leftIcon" [icon]="leftIcon" size="lg" class="icon"></fa-icon>
-      <mat-chip-list #chipList>
+      <mat-chip-listbox #chipList>
         <mat-chip *ngFor="let item of items; let i = index" (removed)="remove(i)">
           {{ item[field] }}
           <button matChipRemove>
             <fa-icon icon="close"></fa-icon>
           </button>
         </mat-chip>
-        <input
+        <!-- <input
           [placeholder]="placeholder"
           #fruitInput
           [formControl]="fruitCtrl"
           [matAutocomplete]="auto"
           [matChipInputFor]="chipList"
           [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-          (matChipInputTokenEnd)="add($event)">
-      </mat-chip-list>
+          (matChipInputTokenEnd)="add($event)"> -->
+      </mat-chip-listbox>
       <fa-icon *ngIf="rightIcon" [icon]="rightIcon" size="lg" class="icon ml-auto pr-3"></fa-icon>
     </div>
   </div>

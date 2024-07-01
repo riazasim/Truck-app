@@ -36,7 +36,7 @@
                         <option disabled value="">
                             Departure Zone
                         </option>
-                        <option *ngFor="let zone of departureZone" [value]="zone.id">
+                        <option *ngFor="let zone of departureZone" [value]="zone.name">
                             {{ zone.name }}
                         </option>
                     </select>
@@ -58,7 +58,7 @@
                     <option disabled value="">
                         Arrival Zone
                     </option>
-                    <option *ngFor="let zone of arrivalZone" [value]="zone.id">
+                    <option *ngFor="let zone of arrivalZone" [value]="zone.name">
                         {{ zone.name }}
                     </option>
                 </select>

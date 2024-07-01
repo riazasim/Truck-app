@@ -134,3 +134,8 @@ ul li {
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+::ng-deep div.mat-mdc-select-panel {
+    scrollbar-width: none;
+    padding: 8px !important;
+}

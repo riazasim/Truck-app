@@ -42,7 +42,7 @@ export class EditSchedulingConvoyPageComponent {
     stepOne$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
     id: number;
-
+    search: string;
     shipType = [
         { id: 1, name: 'ship type1' },
         { id: 2, name: 'ship type2' },
@@ -116,6 +116,10 @@ export class EditSchedulingConvoyPageComponent {
             this.products = response.items;
             this.isLoading$.next(false);
         })
+    }
+
+    onInputChange(ev : any){
+        this.search = ev?.target?.value
     }
 
     onProductChange(ev: any) {

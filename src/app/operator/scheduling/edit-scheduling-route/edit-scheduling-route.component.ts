@@ -23,6 +23,7 @@ export class EditSchedulingRouteComponent implements OnInit {
     isRoutesLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     id: number;
+    search: string;
     ports: any[] = [];
     port: PlanningDetailModel;
     dateModal: Date;
@@ -32,18 +33,9 @@ export class EditSchedulingRouteComponent implements OnInit {
     filterDate: Date = new Date();
     filterTime = '00:00:00'
 
-    private formatDateObject(date: Date): string {
-        const year = date.getFullYear();
-        const month = date.getMonth() + 1;
-        const day = date.getDate();
-
-        const formattedDate = `${year}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`;
-        return formattedDate;
-    }
-
     companies: any[] = [];
-    departureZone : any[] = [];
-    arrivalZone : any[] = [];
+    departureZone: any[] = [];
+    arrivalZone: any[] = [];
 
     constructor(private readonly fb: FormBuilder,
         private readonly planningService: PlanningService,
@@ -52,12 +44,13 @@ export class EditSchedulingRouteComponent implements OnInit {
         private readonly statusListStatus: StatusListService,
         private readonly snackBar: MatSnackBar,
         private readonly microService: MicroService,
-    ) { }
+    ) {
+        this.retrivePorts();
+    }
 
     ngOnInit(): void {
         this.initForm();
         this.getRoute();
-        this.retrivePorts();
     }
 
     formatDate(date: Date | string): string {
@@ -73,6 +66,15 @@ export class EditSchedulingRouteComponent implements OnInit {
         return formattedDate;
     }
 
+    private formatDateObject(date: Date): string {
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1;
+        const day = date.getDate();
+
+        const formattedDate = `${year}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`;
+        return formattedDate;
+    }
+
     getRoute() {
         this.id = this.route.snapshot.params['id'];
         this.planningService.get(this.id).subscribe({
@@ -82,6 +84,8 @@ export class EditSchedulingRouteComponent implements OnInit {
                 this.dateVal = dateTimeVal[0];
                 this.timeVal = dateTimeVal[1];
                 this.retriveCompanines(res?.departurePort || 0);
+                this.retriveZones(res?.departurePort || 0 );
+                this.retriveArrivalZones(res?.arrivalPort || 0 );
                 this.initForm(res);
                 this.isRoutesLoading$.next(false);
             },
@@ -92,7 +96,7 @@ export class EditSchedulingRouteComponent implements OnInit {
         });
     }
 
-    retrivePorts() {
+    retrivePorts(zoneName: any = "", zone: any = "dep") {
         this.microService.getPorts().subscribe({
             next: res => {
                 if (res.length > 0) {
@@ -117,24 +121,23 @@ export class EditSchedulingRouteComponent implements OnInit {
         })
         if (port) {
             this.planningForm.patchValue({ routingDetail: { ridCoordinates: port?.addrCoordinates } })
-            console.log(port?.zones);
-            this.departureZone = port?.zones;
+            this.retriveZones(port.id);
             this.retriveCompanines(port.id);
         }
     }
+
     onArrivalPortChange(ev: any) {
+        this.isPortChangeLoading$.next(true);
         let port: any;
         this.ports.filter((item: any) => {
             if (Number(item.id) === Number(ev.target.value)) port = item;
         })
         if (port) {
-            console.log(port?.zones);
-            this.arrivalZone = port?.zones;
+            this.retriveArrivalZones(port.id);
         }
     }
 
     retriveCompanines(portId: any) {
-
         this.microService.getCompanies(portId).subscribe({
             next: res => {
                 this.companies = [];
@@ -157,15 +160,59 @@ export class EditSchedulingRouteComponent implements OnInit {
             }
         })
     }
+    retriveZones(portId: any) {
+        this.microService.getZones(portId).subscribe({
+            next: res => {
+                this.departureZone = [];
+                if (res?.status !== 'error') {
+                    res?.forEach((item: any) => {
+                        this.departureZone.push(item?.attributes);
+                    });
+                }
+                if (this.departureZone.length === 0) {
+                    this.planningForm.patchValue({ departureZone: null })
+                }
+                this.isPortChangeLoading$.next(false);
 
-    onCompaniesChange(ev : any){
-        this.planningForm.patchValue({company : Number(ev?.target?.value)})
+            },
+            error: err => {
+                this.isPortChangeLoading$.next(false);
+                throw err
+            }
+        })
     }
-    onDepartureZone(ev : any){
-        this.planningForm.patchValue({departureZone : Number(ev?.target?.value)})
+    retriveArrivalZones(portId: any) {
+        this.microService.getZones(portId).subscribe({
+            next: res => {
+                this.arrivalZone = [];
+                if (res?.status !== 'error') {
+                    res?.forEach((item: any) => {
+                        this.arrivalZone.push(item?.attributes);
+                    });
+                }
+                if (this.arrivalZone.length === 0) {
+                    this.planningForm.patchValue({ arrivalZone: null })
+                }
+                this.isPortChangeLoading$.next(false);
+
+            },
+            error: err => {
+                this.isPortChangeLoading$.next(false);
+                throw err
+            }
+        })
     }
-    onArrivalZone(ev : any){
-        this.planningForm.patchValue({arrivalZone : Number(ev?.target?.value)})
+
+    onCompaniesChange(ev: any) {
+        this.planningForm.patchValue({ company: Number(ev?.target?.value) })
+    }
+
+    onDepartureZone(ev: any) {
+        this.planningForm.patchValue({ departureZone: String(ev?.target?.value) })
+    }
+
+    onArrivalZone(ev: any) {
+        this.planningForm.patchValue({ arrivalZone: String(ev?.target?.value) })
     }
 
     OnDateChange(value: any) {
@@ -173,6 +220,7 @@ export class EditSchedulingRouteComponent implements OnInit {
         this.dateVal = this.formatDate(filterDate);
         this.planningForm.patchValue({ estimatedTimeArrival: this.dateVal })
     }
+
     OnTimeChange(value: any) {
         this.timeVal = value
     }
@@ -185,19 +233,12 @@ export class EditSchedulingRouteComponent implements OnInit {
         this.planningForm = this.fb.group({
             convoyType: this.fb.control(data?.convoyType || '', [...createRequiredValidators()]),
             estimatedTimeArrival: this.fb.control(data?.estimatedTimeArrival || '', [...createRequiredValidators()]),
-            // locationPort: this.fb.control(data?.locationPort || '', [...createRequiredValidators()]),
             arrivalZone: this.fb.control(data?.arrivalZone || '', [...createRequiredValidators()]),
             departureZone: this.fb.control(data?.departureZone || '', [...createRequiredValidators()]),
             departurePort: this.fb.control(data?.departurePort || '', [...createRequiredValidators()]),
             arrivalPort: this.fb.control(data?.arrivalPort || '', [...createRequiredValidators()]),
             company: this.fb.control(data?.company || null, [...createRequiredValidators()]),
             pilotCompany: this.fb.control(data?.pilotCompany || '', [...createRequiredValidators()]),
-            // length: this.fb.control(data?.length || null, [...createRequiredValidators()]),
-            // width: this.fb.control(data?.width || null, [...createRequiredValidators()]),
-            // maxDraft: this.fb.control(data?.maxDraft || null, [...createRequiredValidators()]),
-            // arrivalGauge: this.fb.control(data?.arrivalGauge || null, [...createRequiredValidators()]),
-            // maxCapacity: this.fb.control(data?.maxCapacity || null, [...createRequiredValidators()]),
-            // lockType: this.fb.control(data?.lockType || '', [...createRequiredValidators()]),
         })
     }
 

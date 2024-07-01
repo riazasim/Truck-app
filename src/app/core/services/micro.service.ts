@@ -36,4 +36,12 @@ export class MicroService {
                 })
             )
     }
+    getZones(id: any): Observable<any> {
+        return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getPortZones`, { "portId": id })
+            .pipe(pluckItemWrapperData<any, ResponseItemWrapper<any>>(),
+                map((p: any) => {
+                    return p;
+                })
+            )
+    }
 }
