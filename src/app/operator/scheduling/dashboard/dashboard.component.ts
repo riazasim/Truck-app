@@ -50,7 +50,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     readonly isComvexReorder$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     isTableLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     plannings: PlanningModel[] = []
-    filterDate: Date = new Date();
+    filterDate: any = new Date();
     filterTypeEnum = FilterTypeENum;
     userRole: string;
     logId: number;
@@ -478,25 +478,20 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         });
     }
 
-    retrievePlanningList(isDateRemoved: boolean = false): void {
+    dateRemoved() {
+        this.filterDate = "";
+        this.retrievePlanningList();
+    }
+
+    retrievePlanningList(): void {
         this.isTableLoading$.next(true);
         let data;
-        if (isDateRemoved) {
-            data = {
-                "start": this.pageSettings.start,
-                "length": this.pageSettings.length,
-                "filters": ["", "", "", "", "", ""],
-                "order": [{ "dir": "DESC", "column": 0 }],
-            };
-        }
-        else {
-            data = {
-                "start": this.pageSettings.start,
-                "length": this.pageSettings.length,
-                "filters": [this.formatDate(this.filterDate), "", "", "", "", ""],
-                "order": [{ "dir": "DESC", "column": 0 }],
-            };
-        }
+        data = {
+            "start": this.pageSettings.start,
+            "length": this.pageSettings.length,
+            "filters": [this.formatDate(this.filterDate), "", "", "", "", ""],
+            "order": [{ "dir": "DESC", "column": 0 }],
+        };
         this.planningService.pagination(data).subscribe((response: any) => {
             this.plannings = response.items;
             this.planning = this.plannings[0]?.planning;
@@ -510,7 +505,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
     formatDate(date: Date | string): string {
         let formattedDate = '';
-
+        if (date === "") return formattedDate;
         if (typeof date === 'string') {
             const tempDate = new Date(date);
             formattedDate = this.formatDateObject(tempDate);

@@ -41,7 +41,7 @@ export class SearchComponent {
     length: number = 0;
     timeFilter: any = {};
     ports: any[] = [];
-    portId: number = 0;
+    portId: any ;
     companyId: number = 0;
     arrivalPortId: number = 0;
     departurePortId: number = 0;
@@ -89,7 +89,7 @@ export class SearchComponent {
     }
 
     retriveCompanines() {
-        this.portId = 0;
+        this.portId = '';
         this.microService.getCompanies(this.portId).subscribe({
             next: res => {
                 res?.forEach((item: any) => {

@@ -29,7 +29,7 @@
                     <div class="w-full">
                         <datepicker matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
                             [matTooltip]="'Planning date' | translate" (dateChanged)="handleDateChange($event)"
-                            [model]="filterDate" [isHeaderPosition]="true" [height]="37" (dateRemoved)="retrievePlanningList($event)"></datepicker>
+                            [model]="filterDate" [isHeaderPosition]="true" [height]="37" (dateRemoved)="dateRemoved()"></datepicker>
                     </div>
                     <div *ngIf="isComvexOrganization$ | async" class="flex items-center gap-2 h-[37px] w-full">
                         <app-toggle (onModelChange)="isComvexReorder$.next($event)"

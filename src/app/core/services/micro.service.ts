@@ -28,6 +28,7 @@ export class MicroService {
                 })
             )
     }
+    
     getCompanies(id: any): Observable<any> {
         return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getCompanies`, { "portId": id })
             .pipe(pluckItemWrapperData<any, ResponseItemWrapper<any>>(),
@@ -44,4 +45,5 @@ export class MicroService {
                 })
             )
     }
+    
 }
