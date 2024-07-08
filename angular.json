@@ -32,7 +32,13 @@
             ],
             "scripts": [],
             "allowedCommonJsDependencies": [
-              "rfdc"
+              "rfdc",
+              "moment",
+              "core-js",
+              "raf",
+              "rgbcolor",
+              "html2canvas",
+              "exceljs"
             ]
           },
           "configurations": {

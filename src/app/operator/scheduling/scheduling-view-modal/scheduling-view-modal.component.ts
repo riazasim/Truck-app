@@ -10,6 +10,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { handleSuccess } from 'src/app/shared/utils/success-handling.function';
 import { handleError } from 'src/app/shared/utils/error-handling.function';
 import { RolesService } from 'src/app/core/services/roles.service';
+import html2canvas from 'html2canvas';
+import jspdf from 'jspdf';
 
 @Component({
     selector: 'scheduling-view-modal',
@@ -55,6 +57,22 @@ export class SchedulingViewModalComponent implements OnChanges {
     ) {
         this.getUser()
     }
+
+    convertToPDF(){  
+    var data = document.getElementById('content')!;
+    html2canvas(data).then(canvas => {  
+        var imgWidth = 208;   
+        var pageHeight = 295;    
+        var imgHeight = canvas.height * imgWidth / canvas.width;  
+        var heightLeft = imgHeight;  
+
+        const contentDataURL = canvas.toDataURL('image/png')  
+        let pdf = new jspdf('p', 'mm', 'a4'); // A4 size page of PDF  
+        var position = 0;  
+        pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight)  
+        pdf.save('RID-logs.pdf');   
+    });  
+}
 
     ngOnChanges(): void {
         this.retrieveLogHistory();

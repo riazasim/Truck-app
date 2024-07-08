@@ -6,6 +6,8 @@ import { BehaviorSubject } from 'rxjs';
 import { PlanningService } from 'src/app/core/services/planning.service';
 import { OpenImageModalComponent } from 'src/app/shared/components/open-image-modal/open-image-modal.component';
 import { MatTableDataSource } from '@angular/material/table';
+import html2canvas from 'html2canvas';
+import jspdf from 'jspdf';
 
 @Component({
     selector: 'convoy-logs-modal',
@@ -47,6 +49,22 @@ export class ConvoyLogsModal implements OnChanges {
         private readonly planningService: PlanningService,
         private readonly dialog: MatDialog,
     ) {}
+
+    convertToPDF(){  
+        var data = document.getElementById('content')!;
+        html2canvas(data).then(canvas => {  
+            var imgWidth = 208;   
+            var pageHeight = 295;    
+            var imgHeight = canvas.height * imgWidth / canvas.width;  
+            var heightLeft = imgHeight;  
+    
+            const contentDataURL = canvas.toDataURL('image/png')  
+            let pdf = new jspdf('p', 'mm', 'a4'); // A4 size page of PDF  
+            var position = 0;  
+            pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight)  
+            pdf.save('SID-logs.pdf');   
+        });  
+    }
 
     ngOnChanges(): void {
         this.retrieveLogHistory();
