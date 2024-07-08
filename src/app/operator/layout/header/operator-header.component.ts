@@ -34,7 +34,7 @@ export class OperatorHeaderComponent {
   @Input()
   public locationName$: string;
   @Input()
-  public companyName$: string;
+  public companyName$: any;
 
   public readonly expandBtnIcon: IconProp = faBars as any;
   public readonly closeBtnIcon = faTimes as any;
@@ -42,72 +42,70 @@ export class OperatorHeaderComponent {
   public isMenuClosed = true;
 
   constructor(public readonly activatedRoute: ActivatedRoute,
-    private readonly dialogService: MatDialog,
-    private readonly locationService: LocationService,
-    private readonly snackBar: MatSnackBar,
     private readonly organizationService: OrganizationService,
     public localizeService: LocalizeRouterService) {
-    this.language$ = localizeService.routerEvents.asObservable().pipe(startWith(localizeService.parser.currentLang))
+    this.language$ = localizeService.routerEvents.asObservable().pipe(startWith(localizeService.parser.currentLang));
+    this.companyName$ = organizationService.getLocalOrg();
   }
 
-  openChangeLocationModal(): void {
-    if (this.isLoading$.value) return;
-    this.isLoading$.next(true);
-    this.locationService.getLocationsByUser().subscribe({
-      next: (response: any) => {
-        this.isLoading$.next(false);
-        this.dialogService.open(ChangeLocationModalComponent, {
-          disableClose: true,
-          width: 'calc(100% - 400px)',
-          height: 'calc(100% - 100px)',
-          data: { locations: response }
-        }).afterClosed()
-          .subscribe({
-            next: (id: number) => {
-              if (id && !isNaN(id)) {
-                this.isLoading$.next(true);
-                this.locationService.changeLocation(id).subscribe({
-                  next: (location: any) => {
-                    this.companyName$ = location?.name;
-                    this.organizationService.organization.next({
-                      ...<any>this.organizationService.organization.getValue(),
-                      locationName: location?.location?.name,
-                      locationId: <number>location.locationId
-                    });
-                    this.snackBar.open('Location changed!', 'Success', {
-                      duration: 3000,
-                      horizontalPosition: 'center',
-                      panelClass: ['success-snackbar'],
-                      verticalPosition: 'top',
-                    });
-                    this.isLoading$.next(false);
-                  },
-                  error: (body) => {
-                    this.snackBar.open(body?.error?.detail, 'Error', {
-                      duration: 3000,
-                      horizontalPosition: 'center',
-                      panelClass: ['error-snackbar'],
-                      verticalPosition: 'top',
-                    });
-                    this.isLoading$.next(false);
-                  }
-                });
-              } else {
-                this.isLoading$.next(false);
-              }
-            }
-          });
-      },
-      error: (error) => {
-        this.isLoading$.next(false);
-        this.snackBar.open('Failed to load locations', 'Error', {
-          duration: 3000,
-          horizontalPosition: 'center',
-          panelClass: ['error-snackbar'],
-          verticalPosition: 'top',
-        });
-      }
-    });
-  }
+  // openChangeLocationModal(): void {
+  //   if (this.isLoading$.value) return;
+  //   this.isLoading$.next(true);
+  //   this.locationService.getLocationsByUser().subscribe({
+  //     next: (response: any) => {
+  //       this.isLoading$.next(false);
+  //       this.dialogService.open(ChangeLocationModalComponent, {
+  //         disableClose: true,
+  //         width: 'calc(100% - 400px)',
+  //         height: 'calc(100% - 100px)',
+  //         data: { locations: response }
+  //       }).afterClosed()
+  //         .subscribe({
+  //           next: (id: number) => {
+  //             if (id && !isNaN(id)) {
+  //               this.isLoading$.next(true);
+  //               this.locationService.changeLocation(id).subscribe({
+  //                 next: (location: any) => {
+  //                   this.companyName$ = location?.name;
+  //                   this.organizationService.organization.next({
+  //                     ...<any>this.organizationService.organization.getValue(),
+  //                     locationName: location?.location?.name,
+  //                     locationId: <number>location.locationId
+  //                   });
+  //                   this.snackBar.open('Location changed!', 'Success', {
+  //                     duration: 3000,
+  //                     horizontalPosition: 'center',
+  //                     panelClass: ['success-snackbar'],
+  //                     verticalPosition: 'top',
+  //                   });
+  //                   this.isLoading$.next(false);
+  //                 },
+  //                 error: (body) => {
+  //                   this.snackBar.open(body?.error?.detail, 'Error', {
+  //                     duration: 3000,
+  //                     horizontalPosition: 'center',
+  //                     panelClass: ['error-snackbar'],
+  //                     verticalPosition: 'top',
+  //                   });
+  //                   this.isLoading$.next(false);
+  //                 }
+  //               });
+  //             } else {
+  //               this.isLoading$.next(false);
+  //             }
+  //           }
+  //         });
+  //     },
+  //     error: (error) => {
+  //       this.isLoading$.next(false);
+  //       this.snackBar.open('Failed to load locations', 'Error', {
+  //         duration: 3000,
+  //         horizontalPosition: 'center',
+  //         panelClass: ['error-snackbar'],
+  //         verticalPosition: 'top',
+  //       });
+  //     }
+  //   });
+  // }
 
 }

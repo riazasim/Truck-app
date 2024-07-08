@@ -1,7 +1,7 @@
 <section>
     <main>
-        <app-loader *ngIf="(isLoading$ | async)" [isContainer]="true" [fullScreen]="false"></app-loader>
-        <ng-container *ngIf="!(isLoading$ | async)">
+        <!-- <app-loader *ngIf="(isLoading$ | async)" [isContainer]="true" [fullScreen]="false"></app-loader> -->
+        <ng-container>
             <div class="flex justify-center items-center gap-20 max-md:flex-col">
                 <fa-icon icon="camera" class="text-primary text-[160px]"></fa-icon>
             </div>

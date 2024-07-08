@@ -23,7 +23,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MapComponent } from './map/map.component';
 import { SearchComponent } from './map/search/search.component';
-import { ActivityLogComponent } from '../shared/components/activity-log/activity-log.component';
 
 
 

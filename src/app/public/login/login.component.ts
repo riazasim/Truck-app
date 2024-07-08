@@ -10,6 +10,7 @@ import { environment } from 'src/environments/environment';
 import { handleError } from 'src/app/shared/utils/error-handling.function';
 import { handleSuccess } from "../../shared/utils/success-handling.function";
 import { createEmailValidator, createRequiredValidators } from 'src/app/shared/validators/generic-validators';
+import { OrganizationService } from 'src/app/core/services/organization.service';
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
@@ -34,6 +35,7 @@ export class LoginComponent {
         private readonly auth: AuthService,
         private loaderService: LoaderOrchestratorService,
         private readonly rolesService: RolesService,
+        private organizationService: OrganizationService,
         private ref: ChangeDetectorRef) {
         this.preCompleteSignIn();
     }
@@ -63,22 +65,31 @@ export class LoginComponent {
                 this.auth.saveAuth(response);
                 this.rolesService.setAuthRoles([response.roles]);
                 this.rolesService.setUserRoles([response.roles]);
+                this.organizationService.get().subscribe({
+                    next: (response) => {
+                        this.organizationService.setLocalOrg(response?.name);
+                        handleSuccess(this.snackBar, response, this.isLoading$);
+                        this.router.navigate(['../operator/dashboard'], { relativeTo: this.route }).then(() => {
+                            this.loginForm.enable();
+                            // this.snackBar.open("Login success!", "", {
+                            //   duration: 3000,
+                            //   horizontalPosition: 'end',
+                            //   panelClass: ['success-snackbar'],
+                            //   verticalPosition: 'bottom',
+                            // });
+                            handleSuccess(this.snackBar, response, this.isLoading$);
+                            this.loaderService.hideLoader();
+                        })
+                    },
+                    error: (e) => {
+                        handleError(this.snackBar, e, this.isLoading$);
+                    }
+                })
                 // this.router.navigate(
                 //                                          ////operator/dashboard
                 //     [isTutorialTrue ? '/admin' : '../admin/dashboard'], { relativeTo: this.route }
                 // )
                 //   .then(() => {
-                this.router.navigate(['../operator/dashboard'], { relativeTo: this.route }).then(() => {
-                    this.loginForm.enable();
-                    // this.snackBar.open("Login success!", "", {
-                    //   duration: 3000,
-                    //   horizontalPosition: 'end',
-                    //   panelClass: ['success-snackbar'],
-                    //   verticalPosition: 'bottom',
-                    // });
-                    handleSuccess(this.snackBar, response, this.isLoading$);
-                    this.loaderService.hideLoader();
-                })
             }, error: (body) => {
                 //  console.log(body.data.attributes.message);
                 this.loginForm.enable()
