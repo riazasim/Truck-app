@@ -13,8 +13,8 @@
                             </section>
                         </th>
                         <td cdk-cell *cdkCellDef="let row">
-                            {{row.planning.rId || '-'}}
-                            <!-- <a class="text-primary" href="javascript:void(0)" (click)="triggerOpenLogs.emit({ view: 'view', id: row.id, planning: row })">{{row.id || '-'}}</a> -->
+                            {{row?.planning?.rId || '-'}}
+                            <!-- <a class="text-primary" href="javascript:void(0)" (click)="triggerOpenLogs.emit({ view: 'view', id: row?.id, plan?ning: row })">{{row?.id || '-?'}}</a> -->
                         </td>
                         <td cdk-footer-cell *cdkFooterCellDef [colSpan]="displayedColumns.length"
                             class="py-4 font-bold text-center">
@@ -28,7 +28,7 @@
                             </section>
                         </th>
                         <td cdk-cell *cdkCellDef="let row">
-                            {{ row.planning.manevre || "-" }}
+                            {{ row?.planning?.manevre || "-" }}
                         </td>
                     </ng-container>
 
@@ -39,7 +39,7 @@
                             </section>
                         </th>
                         <td cdk-cell *cdkCellDef="let row">
-                            {{ row.planning.vesselId || "-" }}
+                            {{ row?.planning?.vesselId || "-" }}
                         </td>
                     </ng-container>
 
@@ -52,7 +52,7 @@
                             </section>
                         </th>
                         <td cdk-cell *cdkCellDef="let row">
-                            {{ row.planning.berth || "-" }}
+                            {{ row?.planning?.berth || "-" }}
                         </td>
                     </ng-container>
                     <ng-container cdkColumnDef="products">
@@ -64,7 +64,7 @@
                             </section>
                         </th>
                         <td cdk-cell *cdkCellDef="let row">
-                            {{ row.planning.products || "-" }}
+                            {{ row?.planning?.planningConvoys[0]?.productCount || "-" }}
                         </td>
                     </ng-container>
                     <ng-container cdkColumnDef="estimatedTimeArrival">
@@ -76,7 +76,7 @@
                             </section>
                         </th>
                         <td cdk-cell *cdkCellDef="let row">
-                            {{ row.planning.estimatedTimeArrival || "-" }}
+                            {{ row?.planning?.estimatedTimeArrival || "-" }}
                         </td>
                     </ng-container>
                     <ng-container cdkColumnDef="relativeTimeArrival">
@@ -88,7 +88,7 @@
                             </section>
                         </th>
                         <td cdk-cell *cdkCellDef="let row">
-                            {{ row.planning.relativeTimeArrival || "-" }}
+                            {{ row?.planning?.relativeTimeArrival || "-" }}
                         </td>
                     </ng-container>
                     <ng-container cdkColumnDef="delay">
@@ -100,7 +100,7 @@
                             </section>
                         </th>
                         <td cdk-cell *cdkCellDef="let row">
-                            {{ row.delay || "-" }}
+                            {{ row?.planning?.delay || "-" }}
                         </td>
                     </ng-container>
                     <ng-container cdkColumnDef="coordinates">
@@ -112,7 +112,7 @@
                             </section>
                         </th>
                         <td cdk-cell *cdkCellDef="let row">
-                            {{ row.planning.coordinates || "-" }}
+                            {{ row?.planning?.coordinates || "-" }}
                         </td>
                     </ng-container>
                     <ng-container cdkColumnDef="shipmentStatus">
