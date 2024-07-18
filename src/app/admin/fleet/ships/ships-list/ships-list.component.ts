@@ -137,7 +137,7 @@ export class ShipsListComponent implements OnInit {
       "start": this.pageIndex,
       "length": this.pageSize,
       "filters": ["", "", "", "", ""],
-      "order": []
+      "order": [{ "dir": "DESC", "column": 0 }]
     }
     this.shipsService.pagination(data).subscribe(response => {
       this.dataSource = response.items;
@@ -153,7 +153,7 @@ export class ShipsListComponent implements OnInit {
       "start": event.pageIndex ? event.pageIndex * event.pageSize : event.pageIndex,
       "length": event.pageSize,
       "filters": ["", "", "", "", ""],
-      "order": []
+      "order": [{ "dir": "DESC", "column": 0 }]
     }
     this.shipsService.pagination(data).subscribe(response => {
       this.dataSource = response.items;

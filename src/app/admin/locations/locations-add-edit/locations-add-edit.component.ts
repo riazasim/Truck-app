@@ -68,7 +68,7 @@ export class LocationsAddEditComponent implements OnInit {
             contactPhoneRegionCode: this.fb.control(data?.contactPhoneRegionCode || '', [...createRequiredValidators(), ...createMaxLengthValidator(4) , ...createPatternValidators(RegExp("[-+0-9 ]"))]),
             contactEmail: this.fb.control(data?.contactEmail || '', [...createRequiredValidators(), Validators.email]),
             comments: this.fb.control(data?.comments || '', []),
-            imgPreview: this.fb.control(data?.imgPreview, []),
+            imgPreview: this.fb.control(data?.imgPreview || '', []),
         });
     }
 

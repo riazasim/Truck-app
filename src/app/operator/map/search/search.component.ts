@@ -41,7 +41,7 @@ export class SearchComponent {
     length: number = 0;
     timeFilter: any = {};
     ports: any[] = [];
-    portId: any ;
+    portId: any;
     companyId: number = 0;
     arrivalPortId: number = 0;
     departurePortId: number = 0;
@@ -92,9 +92,11 @@ export class SearchComponent {
         this.portId = '';
         this.microService.getCompanies(this.portId).subscribe({
             next: res => {
-                res?.forEach((item: any) => {
-                    this.companies.push(item?.attributes);
-                });
+                if (res.length !== 0 && res.length !== undefined) {
+                    res?.forEach((item: any) => {
+                        this.companies.push(item?.attributes);
+                    });
+                }
                 this.isCompaniesLoading$.next(false);
             },
             error: err => {
@@ -143,8 +145,8 @@ export class SearchComponent {
     OnDateChange(value: any) {
         let filterDate = value instanceof Date ? value : new Date(value);
         this.dateVal = this.formatDate(filterDate);
-        this.sidFilterForm.patchValue({ estimatedTimeArrival : this.dateVal})
-        if(this.sidFilterForm.valid){
+        this.sidFilterForm.patchValue({ estimatedTimeArrival: this.dateVal })
+        if (this.sidFilterForm.valid) {
             this.getResults(this.dateVal);
         }
     }
@@ -163,8 +165,8 @@ export class SearchComponent {
     }
 
 
-    OnStatusChange(value: any , action: string = 'search') {
-        if(action === 'search'){
+    OnStatusChange(value: any, action: string = 'search') {
+        if (action === 'search') {
             if (this.statusFilters.includes(value)) {
                 const index = this.statusFilters.indexOf(value);
                 this.statusFilters.splice(index, 1);
@@ -175,7 +177,7 @@ export class SearchComponent {
                 this.getResults();
             }
         }
-        if(action === 'delete'){
+        if (action === 'delete') {
             this.statusFilters = [];
             this.getResults();
         }
