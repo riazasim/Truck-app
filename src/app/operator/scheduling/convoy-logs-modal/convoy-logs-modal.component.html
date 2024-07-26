@@ -1,12 +1,12 @@
 <section class="bg-white max-md:min-w-100 min-lg:min-w-[850px] h-full p-[50px] overflow-auto" id="content">
     <app-loader class="m-auto flex-grow" *ngIf="(isLoading$ | async)" [fullScreen]="false"></app-loader>
     <div *ngIf="!(isLoading$ | async) &&  modal === 'shipment'">
-        <div class="flex justify-between min-lg:items-center max-lg:flex-col">
+        <div class=" flex justify-between min-lg:items-center max-lg:flex-col">
             <div>
                 <h2 class="heading-2 font-bold text-primary">Shipment ID - {{planning?.sId}}</h2>
             </div>
-            <div class="flex gap-10">
-                <fa-icon icon="print" class="text-primary text-[35px] cursor-pointer"></fa-icon>
+            <div class="non-printable flex gap-10">
+                <fa-icon (click)="printPage()" icon="print" class="text-primary text-[35px] cursor-pointer"></fa-icon>
                 <fa-icon (click)="convertToPDF()" icon="file-pdf" class="text-primary text-[35px] cursor-pointer"></fa-icon>
                 <fa-icon icon="envelope" class="text-primary text-[35px] cursor-pointer"></fa-icon>
             </div>

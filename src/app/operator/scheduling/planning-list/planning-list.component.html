@@ -10,7 +10,7 @@
                         <ng-container cdkColumnDef="id">
                             <th cdk-header-cell *cdkHeaderCellDef scope="col" class="max-w-40">
                                 <section class="flex flex-col gap-4">
-                                    <div mat-sort-header="id">SID</div>
+                                    <div mat-sort-header="id">RID</div>
                                 </section>
                             </th>
                             <td cdk-cell *cdkCellDef="let row">
@@ -63,8 +63,8 @@
                                     </div>
                                 </section>
                             </th>
-                            <td cdk-cell *cdkCellDef="let row">
-                                {{ row?.planning?.planningConvoys[0]?.productCount || "-" }}
+                            <td cdk-cell *cdkCellDef="let row; let i = $index;">
+                                {{ row?.planning?.planningConvoys[i]?.productCount || "-" }}
                             </td>
                         </ng-container>
                         <ng-container cdkColumnDef="estimatedTimeArrival">
@@ -171,7 +171,8 @@
                                     <app-loader *ngIf="(isTableLoading$ | async)" [isContainer]="true"
                                         [fullScreen]="false"></app-loader>
                                 </span>
-                                <span *ngIf="dataSource.length === 0 && !(isTableLoading$ | async)">No results found</span>
+                                <span *ngIf="dataSource.length === 0 && !(isTableLoading$ | async)">No results
+                                    found</span>
                                 <span *ngIf="dataSource.length > 0  && !(isTableLoading$ | async)">Nicio înregistrare nu
                                     corespunde criteriilor de căutare</span>
                             </td>

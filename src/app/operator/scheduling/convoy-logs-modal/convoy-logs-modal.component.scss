@@ -1,3 +1,14 @@
+@media print {
+  .printable{
+    visibility: visible;
+    // top: 0;
+    // bottom: 0;
+    // position: absolute;
+  }
+  .non-printable{
+    visibility: hidden;
+  }
+}
 ::ng-deep .mat-step-label {
     width: 100%;
 }

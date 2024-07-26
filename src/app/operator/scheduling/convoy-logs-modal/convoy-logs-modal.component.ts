@@ -48,7 +48,12 @@ export class ConvoyLogsModal implements OnChanges {
     constructor(
         private readonly planningService: PlanningService,
         private readonly dialog: MatDialog,
+        private window: Window
     ) {}
+
+    printPage(){
+        this.window.print();
+    }
 
     convertToPDF(){  
         var data = document.getElementById('content')!;

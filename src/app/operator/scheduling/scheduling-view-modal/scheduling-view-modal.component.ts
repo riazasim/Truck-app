@@ -55,7 +55,7 @@ export class SchedulingViewModalComponent implements OnChanges {
         private readonly snackBar: MatSnackBar,
         private readonly roleService : RolesService
     ) {
-        this.getUser()
+        this.getUser();
     }
 
     convertToPDF(){  
@@ -75,6 +75,7 @@ export class SchedulingViewModalComponent implements OnChanges {
 }
 
     ngOnChanges(): void {
+        if(this.modal === "shipment")
         this.retrieveLogHistory();
     }
 

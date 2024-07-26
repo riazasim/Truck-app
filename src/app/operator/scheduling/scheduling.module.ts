@@ -139,6 +139,6 @@ import { ConvoyLogsModal } from './convoy-logs-modal/convoy-logs-modal.component
         MatDatepickerModule,
         MatCheckboxModule
     ],
-    providers: []
+    providers: [{provide: Window, useValue: window}]
 })
 export class SchedulingModule { }

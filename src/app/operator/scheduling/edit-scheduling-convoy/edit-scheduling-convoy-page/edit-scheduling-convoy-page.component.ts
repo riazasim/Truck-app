@@ -170,19 +170,20 @@ export class EditSchedulingConvoyPageComponent {
 
     initConvoyForm(data?: any): void {
         const ids = data?.planningConvoyProducts?.map((item: any) => item?.product?.id)
+        // debugger
         this.convoyForm = this.fb.group({
             navigationType: this.fb.control(data?.navigationType || '', [...createRequiredValidators()]),
             ship: this.fb.control(data?.ship?.id || '', [...createRequiredValidators()]),
-            company: this.fb.control(data?.company || '', [...createRequiredValidators()]),
+            // company: this.fb.control(data?.company || '', [...createRequiredValidators()]),
             shipType: this.fb.control(data?.shipType || '', [...createRequiredValidators()]),
             pavilion: this.fb.control(data?.pavilion || '', [...createRequiredValidators()]),
             enginePower: this.fb.control(data?.enginePower || null, [...createRequiredValidators()]),
             lengthOverall: this.fb.control(data?.lengthOverall || null, [...createRequiredValidators()]),
-            width: this.fb.control(data?.ship?.width || null, [...createRequiredValidators()]),
-            maxDraft: this.fb.control(data?.ship?.maxDraft || null, [...createRequiredValidators()]),
-            maxQuantity: this.fb.control(data?.ship?.maxCapacity || null, [...createRequiredValidators()]),
-            agent: this.fb.control(data?.agent || '', [...createRequiredValidators()]),
-            maneuvering: this.fb.control(data?.maneuvering || '', [...createRequiredValidators()]),
+            width: this.fb.control(data?.width || null, [...createRequiredValidators()]),
+            maxDraft: this.fb.control(data?.maxDraft || null, [...createRequiredValidators()]),
+            maxQuantity: this.fb.control(data?.maxCapacity || null, [...createRequiredValidators()]),
+            // agent: this.fb.control(data?.agent || '', [...createRequiredValidators()]),
+            // maneuvering: this.fb.control(data?.maneuvering || '', [...createRequiredValidators()]),
             shipowner: this.fb.control(data?.shipowner || '', [...createRequiredValidators()]),
             purpose: this.fb.control(data?.purpose || '', [...createRequiredValidators()]),
             operator: this.fb.control(data?.operator || '', [...createRequiredValidators()]),
@@ -191,8 +192,8 @@ export class EditSchedulingConvoyPageComponent {
             quantity: this.fb.control(data?.quantity || '', [...createRequiredValidators()]),
             unitNo: this.fb.control(data?.unitNo || '', [...createRequiredValidators()]),
             products: this.fb.control(ids || []),
-            lockType: this.fb.control(data?.ship?.lockType || '', [...createRequiredValidators()]),
-            arrivalGauge: this.fb.control(data?.ship?.aerialGauge || 0, [...createRequiredValidators()]),
+            lockType: this.fb.control(data?.lockType || '', [...createRequiredValidators()]),
+            arrivalGauge: this.fb.control(data?.aerialGauge || 0, [...createRequiredValidators()]),
             observation: this.fb.control(data?.observation || '', [...createRequiredValidators()]),
             additionalOperator: this.fb.control(data?.additionalOperator || '', [...createRequiredValidators()]),
             clientComments: this.fb.control(data?.clientComments || '', [...createRequiredValidators()]),

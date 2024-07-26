@@ -66,8 +66,7 @@ export class UsersAddEditComponent {
         }
     }
 
-    initForm(data: UserModel = <UserModel>{}): void {
-
+    initForm(data: any = <any>{}): void {
         this.userForm = this.fb.group({
             user: this.fb.group({
                 email: this.fb.control(data?.user?.email || '', [...createRequiredValidators()]),
@@ -75,12 +74,12 @@ export class UsersAddEditComponent {
                 status: this.fb.control(data?.user?.status || true , [...createRequiredValidators()]),
             }),
             userSetting: this.fb.group({
-                timezone: this.fb.control(data?.userSetting?.timezone || '', [...createRequiredValidators()]),
-                firstName: this.fb.control(data?.userSetting?.firstName || '', [...createRequiredValidators()]),
-                lastName: this.fb.control(data?.userSetting?.lastName || '', [...createRequiredValidators()]),
-                language: this.fb.control(data?.userSetting?.language || '', [...createRequiredValidators()]),
-                phone: this.fb.control(data?.userSetting?.phone || '', [...createRequiredValidators() , Validators.pattern("[- +()0-9]+") , ...createMinLengthValidator(7) , ...createMaxLengthValidator(17)]),
-                phoneRegionCode: this.fb.control(data?.userSetting?.phoneRegionCode || '', [...createRequiredValidators(), ...createMaxLengthValidator(4) , Validators.pattern("[- +()0-9]+")]),
+                timezone: this.fb.control(data?.timezone || '', [...createRequiredValidators()]),
+                firstName: this.fb.control(data?.firstName || '', [...createRequiredValidators()]),
+                lastName: this.fb.control(data?.lastName || '', [...createRequiredValidators()]),
+                language: this.fb.control(data?.language || '', [...createRequiredValidators()]),
+                phone: this.fb.control(data?.phone || '', [...createRequiredValidators() , Validators.pattern("[- +()0-9]+") , ...createMinLengthValidator(7) , ...createMaxLengthValidator(17)]),
+                phoneRegionCode: this.fb.control(data?.phoneRegionCode || '', [...createRequiredValidators(), ...createMaxLengthValidator(4) , Validators.pattern("[- +()0-9]+")]),
             })
         });
     }

@@ -33,6 +33,7 @@
             "scripts": [],
             "allowedCommonJsDependencies": [
               "rfdc",
+              "lodash",
               "moment",
               "core-js",
               "raf",

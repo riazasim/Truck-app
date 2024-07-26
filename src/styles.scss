@@ -34,6 +34,12 @@
     font-size: 14px;
 }
 
+@media print{
+    body{
+      visibility:hidden
+    }
+}
+
 div.mat-autocomplete-panel {
     box-shadow: 1px 6px 4px 0px #ccc;
 
