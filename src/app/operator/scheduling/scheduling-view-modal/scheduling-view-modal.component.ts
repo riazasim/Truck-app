@@ -99,7 +99,7 @@ export class SchedulingViewModalComponent implements OnChanges {
             this.step$.next(2)
             this.transferData = response.data.attributes;
             this.dataSource = new MatTableDataSource<any>(this.transferData);
-            console.log('transfer',this.dataSource)
+            // console.log('transfer',this.dataSource)
             this.selection = this.transferData;
         })
     }

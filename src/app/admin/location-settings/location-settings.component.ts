@@ -17,7 +17,6 @@ export class LocationSettingsComponent {
     }
     getUser() {
         this.userRole = this.roleService.getAuthRoles();
-        console.log(this.userRole);
     }
     search: string;
     general: LocationSettingsModel[] = [{

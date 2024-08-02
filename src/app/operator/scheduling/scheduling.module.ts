@@ -64,6 +64,8 @@ import { RestrictionsComponent } from './restrictions/restrictions.component';
 import { ProductsComponent } from './products/products.component';
 import { ProductsTabsComponent } from './products/products-tab/products.-tabcomponent';
 import { ConvoyLogsModal } from './convoy-logs-modal/convoy-logs-modal.component';
+import { TrainAddSchedulingComponent } from './add-scheduling/train/train-add-scheduling.component';
+import { WaterAddSchedulingComponent } from './add-scheduling/water/water-add-scheduling.component';
 
 
 @NgModule({
@@ -97,7 +99,9 @@ import { ConvoyLogsModal } from './convoy-logs-modal/convoy-logs-modal.component
         RestrictionsComponent,
         ProductsComponent,
         ProductsTabsComponent,
-        ConvoyLogsModal
+        ConvoyLogsModal,
+        TrainAddSchedulingComponent,
+        WaterAddSchedulingComponent
     ],
     imports: [
         CommonModule,

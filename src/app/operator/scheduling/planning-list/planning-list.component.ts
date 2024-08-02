@@ -24,6 +24,7 @@ export class PlanningListComponent implements OnChanges {
     @Output() retrievePlannings: EventEmitter<any> = new EventEmitter();
     @Input() isTableLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     @Input() userRole: string;
+    @Input() transportMode: string;
     @Input() plannings: PlanningModel[] = [];
     @Input() length: number;
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);

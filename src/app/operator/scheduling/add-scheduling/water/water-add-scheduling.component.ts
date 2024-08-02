@@ -14,7 +14,7 @@ import { BuildingModel } from 'src/app/core/models/building.model';
 import { StatusListService } from 'src/app/core/services/status-list.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { handleError } from 'src/app/shared/utils/error-handling.function';
-import { getFormatHourSlot } from '../scheduling-box.helper';
+import { getFormatHourSlot } from '../../scheduling-box.helper';
 import { PlanningModel, convoyModel } from 'src/app/core/models/planning.model';
 import { ShipsService } from 'src/app/core/services/ships.service';
 import { ShipModel } from 'src/app/core/models/ship.model';
@@ -24,12 +24,12 @@ import { PageEvent } from '@angular/material/paginator';
 import { ProductService } from 'src/app/core/services/product.service';
 
 @Component({
-    selector: 'app-add-scheduling',
-    templateUrl: './add-scheduling.component.html',
-    styleUrls: ['./add-scheduling.component.scss'],
+    selector: 'water-app-add-scheduling',
+    templateUrl: './water-add-scheduling.component.html',
+    styleUrls: ['./water-add-scheduling.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AddSchedulingComponent implements OnInit {
+export class WaterAddSchedulingComponent implements OnInit {
     file1Text$: BehaviorSubject<string> = new BehaviorSubject<string>('');
     file2Text$: BehaviorSubject<string> = new BehaviorSubject<string>('');
     file3Text$: BehaviorSubject<string> = new BehaviorSubject<string>('');

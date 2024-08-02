@@ -41,6 +41,7 @@ export class AdminHeaderComponent {
   public readonly closeBtnIcon = faTimes as any;
 
   public isMenuClosed = true;
+  transportMode: string | null;
 
   constructor(public readonly activatedRoute: ActivatedRoute,
     private readonly dialogService: MatDialog,
@@ -48,7 +49,8 @@ export class AdminHeaderComponent {
     private readonly snackBar: MatSnackBar,
     private readonly organizationService: OrganizationService,
     public localizeService: LocalizeRouterService) {
-    this.language$ = localizeService.routerEvents.asObservable().pipe(startWith(localizeService.parser.currentLang))
+    this.language$ = localizeService.routerEvents.asObservable().pipe(startWith(localizeService.parser.currentLang));
+    this.transportMode = organizationService.getAppMode();
   }
 
   openChangeLocationModal(): void {
@@ -107,6 +109,16 @@ export class AdminHeaderComponent {
           panelClass: ['error-snackbar'],
           verticalPosition: 'top',
         });
+      }
+    });
+  }
+
+  changeTransportMode(ev: any) {
+    this.organizationService.changeTransportMode({ "transportMode": ev.value }).subscribe({
+      next: res => {
+        this.organizationService.setAppMode(res.transportMode);
+      },
+      error: err => {
       }
     });
   }

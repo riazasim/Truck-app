@@ -102,7 +102,7 @@ export class OperatorComponent {
         }
     
         openLocationSelectModal(locations: LocationModel[]): void {
-          console.log('Opening Location Select Modal with locations:', locations); // Add this line
+          // console.log('Opening Location Select Modal with locations:', locations); // Add this line
           if (locations.length === 0) {
             console.warn('No locations available to select.');
             return;

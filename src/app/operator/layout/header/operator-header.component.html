@@ -8,6 +8,19 @@
   <div class="logo-container" *ngIf="logoSrc" [routerLink]="logoRedirect" [relativeTo]="activatedRoute.parent">
     <img [src]="logoSrc" alt="logo">
   </div>
+
+  
+    <mat-button-toggle-group
+      name="favoriteColor"
+      aria-label="Favorite Color"
+      (change)="changeTransportMode($event)"
+      [value]="transportMode"
+    >
+      <mat-button-toggle value="WATER">Water</mat-button-toggle>
+      <mat-button-toggle value="RAILWAY">Train</mat-button-toggle>
+      <mat-button-toggle value="TRUCK">Truck</mat-button-toggle>
+    </mat-button-toggle-group>
+  
   
   <!-- <div class="current-location-container">
      <h2 class="heading-4 current-location">
