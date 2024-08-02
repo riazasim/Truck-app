@@ -57,7 +57,7 @@ export class SchedulingCardComponent {
         }
         this.planningService.pagination(data).subscribe((response: any) => {
             this.plannings = response.items;
-            console.log('plannings', this.plannings)
+            // console.log('plannings', this.plannings)
             this.originalSource = response.items;
             this.length = response.noTotal;
             this.isLoading$.next(false)

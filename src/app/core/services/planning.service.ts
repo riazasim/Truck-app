@@ -34,8 +34,8 @@ export class PlanningService {
     editConvoys(id: number, data: convoyModel): Observable<convoyModel> {
         data.planningConvoyId = id
         const body = convertJsonToFormData(data, '');
-        console.log(body)
-        console.log(data)
+        // console.log(body)
+        // console.log(data)
         return this.http.post<ResponseItemWrapper<convoyModel>>(`${environment.apiUrl}${environment.apiVersion}/updatePlanningConvoy`, body)
             .pipe(pluckItemWrapperData<convoyModel, ResponseItemWrapper<convoyModel>>(),
                 map((p: convoyModel) => {

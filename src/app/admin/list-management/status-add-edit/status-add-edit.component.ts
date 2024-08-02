@@ -32,7 +32,7 @@ export class StatusAddEditComponent implements OnInit {
 
   subscribeForQueryParams(): void {
     this.id = this.route.snapshot.params['id'];
-    console.log(this.id)
+    // console.log(this.id)
     if (this.id) {
       switch (this.statusType) {
         case StatusTypeEnum.SID:

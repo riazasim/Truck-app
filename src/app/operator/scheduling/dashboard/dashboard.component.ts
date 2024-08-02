@@ -53,6 +53,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     filterDate: any = new Date();
     filterTypeEnum = FilterTypeENum;
     userRole: string;
+    transportMode: any;
     logId: number;
     logModal: string;
     planning: any;
@@ -82,7 +83,10 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         private readonly cd: ChangeDetectorRef,
         private readonly organizationService: OrganizationService,
         private readonly roleService: RolesService
-    ) { }
+    ) {
+        this.getUserRole();
+        this.getTransportMode();
+    }
 
     ngOnInit(): void {
         this.retrievePlanningList();
@@ -91,7 +95,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         this.subscribeForSortByChanges(true);
         this.subscribeForSortOrderChanges(true);
         this.subscribeForOrganizationChanges();
-        this.getUserRole();
     }
 
     ngAfterViewInit(): void {
@@ -101,6 +104,11 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
     getUserRole() {
         this.userRole = this.roleService.getUserRoles();
+        console.log(this.userRole)
+    }
+    getTransportMode() {
+        this.transportMode = this.organizationService.getAppMode();
+        console.log(this.transportMode)
     }
 
     getCardDetails(item: any = 0) {

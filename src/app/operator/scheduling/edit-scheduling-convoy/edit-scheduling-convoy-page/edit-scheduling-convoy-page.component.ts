@@ -223,7 +223,7 @@ export class EditSchedulingConvoyPageComponent {
     updateConvoys(): void {
         this.isLoading$.next(true);
         this.convoyForm.patchValue({ documents: this.images, oldDocuments: `[${String(this.oldId)}]` })
-        console.log(this.convoyForm)
+        // console.log(this.convoyForm)
         this.planningService.editConvoys(this.id, this.convoyForm.value)
             .subscribe({
                 next: () => {

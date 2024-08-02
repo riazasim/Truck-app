@@ -62,3 +62,18 @@
     @apply min-md:flex-grow;
   }
 }
+
+.mat-button-toggle{
+  // background-color: #17A0B5;
+  color: #000000;
+}
+
+// .mat-button-toggle:hover {
+//   background-color: transparent;
+//   color: #17A0B5 !important;    
+// }
+
+.mat-button-toggle-checked {
+  // background-color: #ec2c4c;
+  color: #17A0B5 !important;
+}

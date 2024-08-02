@@ -98,7 +98,7 @@ export const MY_FORMATS = {
         GenericWrapperComponent,
         InputRefDirective,
         SelectRefDirective,
-        MultiselectsearchComponent
+        MultiselectsearchComponent,
     ],
     imports: [
         FontAwesomeModule,
@@ -116,6 +116,7 @@ export const MY_FORMATS = {
         MatTabsModule,
         MatChipsModule,
         MatAutocompleteModule,
+        MatButtonToggleModule
         
     ],
     exports: [
@@ -173,7 +174,7 @@ export const MY_FORMATS = {
         TranslateModule,
         MatTabsModule,
         SearchbarModule,
-        MultiselectsearchComponent
+        MultiselectsearchComponent,
     ],
     providers: [
         { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },

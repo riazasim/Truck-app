@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { faBars, faTimes } from '@fortawesome/pro-regular-svg-icons';
 import { LocationService } from 'src/app/core/services/location.service';
@@ -10,6 +10,7 @@ import { ChangeLocationModalComponent } from 'src/app/shared/components/change-l
 import { LocalizeRouterService } from '@gilsdav/ngx-translate-router';
 import { OrganizationService } from 'src/app/core/services/organization.service';
 import { Nullable } from 'src/app/core/models/navigation-menu.model';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'operator-header',
@@ -18,10 +19,9 @@ import { Nullable } from 'src/app/core/models/navigation-menu.model';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OperatorHeaderComponent {
- 
+
   isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   language$: Observable<string>;
-
   @Input()
   public logoSrc: Nullable<string> = null;
 
@@ -41,13 +41,17 @@ export class OperatorHeaderComponent {
 
   public isMenuClosed = true;
 
+  transportMode: string | null;
+
   constructor(public readonly activatedRoute: ActivatedRoute,
     private readonly dialogService: MatDialog,
     private readonly locationService: LocationService,
     private readonly snackBar: MatSnackBar,
+    private readonly authService: AuthService,
     private readonly organizationService: OrganizationService,
     public localizeService: LocalizeRouterService) {
-    this.language$ = localizeService.routerEvents.asObservable().pipe(startWith(localizeService.parser.currentLang))
+    this.language$ = localizeService.routerEvents.asObservable().pipe(startWith(localizeService.parser.currentLang));
+    this.transportMode = organizationService.getAppMode();
   }
 
   openChangeLocationModal(): void {
@@ -106,6 +110,16 @@ export class OperatorHeaderComponent {
           panelClass: ['error-snackbar'],
           verticalPosition: 'top',
         });
+      }
+    });
+  }
+
+  changeTransportMode(ev: any) {
+    this.organizationService.changeTransportMode({ "transportMode": ev.value }).subscribe({
+      next: res => {
+        this.organizationService.setAppMode(res.transportMode);
+      },
+      error: err => {
       }
     });
   }

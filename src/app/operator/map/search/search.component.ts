@@ -204,7 +204,7 @@ export class SearchComponent {
     getResults(date: any = ""): void {
         this.mapLoading$.emit(true);
         this.isLoading$.next(true);
-        console.log(this.timeFilter)
+        // console.log(this.timeFilter)
         let data = {
             "start": 0,
             "length": 5,

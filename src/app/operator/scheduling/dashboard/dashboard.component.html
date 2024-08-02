@@ -29,7 +29,8 @@
                     <div class="w-full">
                         <datepicker matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
                             [matTooltip]="'Planning date' | translate" (dateChanged)="handleDateChange($event)"
-                            [model]="filterDate" [isHeaderPosition]="true" [height]="37" (dateRemoved)="dateRemoved()"></datepicker>
+                            [model]="filterDate" [isHeaderPosition]="true" [height]="37" (dateRemoved)="dateRemoved()">
+                        </datepicker>
                     </div>
                     <div *ngIf="isComvexOrganization$ | async" class="flex items-center gap-2 h-[37px] w-full">
                         <app-toggle (onModelChange)="isComvexReorder$.next($event)"
@@ -131,8 +132,8 @@
                             <app-loader [isContainer]="false" *ngIf="cardLoading$ | async"
                                 [fullScreen]="false"></app-loader>
                         </ng-container>
-                        <no-scheduling *ngIf="!(isLoading$ | async) && !plannings.length"
-                            [userRole]="userRole"></no-scheduling>
+                        <no-scheduling *ngIf="!(isLoading$ | async) && !plannings.length" [userRole]="userRole"
+                            [transportMode]="transportMode"></no-scheduling>
                     </div>
                 </ng-scrollbar>
                 <!-- <div *ngIf="(isMobileCardList$ | async)" class="flex flex-col gap-4 card-container">
@@ -249,7 +250,7 @@
                         <no-scheduling *ngIf="
                                 !(isCardDetailsLoading$ | async) &&
                                 !plannings.length
-                            " [userRole]="userRole"></no-scheduling>
+                            " [userRole]="userRole" [transportMode]="transportMode"></no-scheduling>
                     </div>
                 </div>
             </div>
@@ -257,8 +258,8 @@
                 <!-- <app-loader *ngIf="isLoading$ | async" [isContainer]="true" [fullScreen]="false"></app-loader> -->
                 <app-planning-list (triggerOpenLogs)="toggleSidenav($event)" [userRole]="userRole"
                     [plannings]="plannings" [length]="length" [isTableLoading$]="isTableLoading$"
-                    (onPaginate)="onPaginateChange($event)"
-                    (retrievePlannings)="retrievePlanningList()"></app-planning-list>
+                    (onPaginate)="onPaginateChange($event)" (retrievePlannings)="retrievePlanningList()"
+                    [transportMode]="transportMode"></app-planning-list>
             </div>
         </div>
     </mat-sidenav-content>

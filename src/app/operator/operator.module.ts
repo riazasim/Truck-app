@@ -24,6 +24,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MapComponent } from './map/map.component';
 import { SearchComponent } from './map/search/search.component';
 import { ActivityLogComponent } from '../shared/components/activity-log/activity-log.component';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 
 
@@ -56,6 +57,9 @@ import { ActivityLogComponent } from '../shared/components/activity-log/activity
         MatInputModule,
         MatDatepickerModule,
         SharedModule,
+        MatButtonToggleModule
+        
+        
     ],
     exports: [MapComponent],
     providers: [],

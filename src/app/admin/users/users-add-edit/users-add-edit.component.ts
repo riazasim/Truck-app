@@ -55,7 +55,7 @@ export class UsersAddEditComponent {
         this.id = this.route.snapshot.params['id'];
         if (this.id) {
             this.userService.get(this.id).subscribe(response => {
-                console.log(response)
+                // console.log(response)
                 this.initForm(response);
                 this.selectedRole$.next('DRIVER');
                 this.isLoading$.next(false);
