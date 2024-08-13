@@ -73,23 +73,23 @@
                             </button>
                         </mat-menu>
                     </mat-button-toggle-group>
-                    <fa-icon icon="truck" size="2x" [matMenuTriggerFor]="sidType" #trigger="matMenuTrigger"
+                    <!-- <fa-icon icon="truck" size="2x" [matMenuTriggerFor]="sidType" #trigger="matMenuTrigger"
                         matTooltipClass="drop-shadow-lg" matTooltipPosition="above" [matTooltip]="'truck' | translate"
                         class="mx-2 cursor-pointer hover:text-primary">
-                    </fa-icon>
-                    <mat-menu #sidType="matMenu" class="!bg-white" xPosition="before">
+                    </fa-icon> -->
+                    <!-- <mat-menu #sidType="matMenu" class="!bg-white" xPosition="before">
                         <menu mat-menu-item>
                             {{ "ship" | translate }}
                         </menu>
                         <menu mat-menu-item>
                             {{ "train" | translate }}
                         </menu>
-                        <menu mat-menu-item>
+                        <menu mat-menu-item> -->
                             <!-- <fa-icon icon="plane" size="1x" class="mx-2 cursor-pointer hover:text-primary">
                                     </fa-icon> -->
-                            {{ "plane" | translate }}
+                            <!-- {{ "plane" | translate }}
                         </menu>
-                    </mat-menu>
+                    </mat-menu> -->
                     <fa-icon icon="grid-2" size="2x" matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
                         [matTooltip]="'table' | translate" *ngIf="!(isTableView$ | async)" [ngClass]="{
                             'text-[#17A0B5]': !(isTableView$ | async),

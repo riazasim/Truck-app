@@ -85,6 +85,10 @@ export class TrainAddSchedulingComponent implements OnInit {
     shipsList: any;
     filterDate: Date = new Date();
     filterTime = '00:00:00'
+    rowIndex: number = 1;
+  rows : any[] = [this.rowIndex];
+    noIndex: number = 1;
+  no : any[] = [this.noIndex];
 
     private formatDateObject(date: Date): string {
         const year = date.getFullYear();
@@ -98,30 +102,44 @@ export class TrainAddSchedulingComponent implements OnInit {
     departureZone : any[] = [];
     arrivalZone : any[] = [];
     companies: any[];
-    shipType = [
-        { id: 1, name: 'ship type1' },
-        { id: 2, name: 'ship type2' },
-        { id: 3, name: 'ship type3' },
+    category = [
+        { id: 1, name: 'Containers' },
+        { id: 2, name: 'Liquids' },
+        { id: 3, name: 'Grains' },
+        { id: 4, name: 'Fertilizers' },
+        { id: 5, name: 'Cement' },
+        { id: 6, name: 'Ore' },
+        { id: 7, name: 'Coal' },
+        { id: 8, name: 'Other' },
     ];
-    agent = [
-        { id: 1, name: 'agent1' },
-        { id: 2, name: 'agent2' },
-        { id: 3, name: 'agent3' },
+    subCategory = [
+        { id: 1, name: '40 DC' },
+        { id: 2, name: 'Crude oil' },
+        { id: 3, name: 'Wheat' },
+        { id: 4, name: 'Urea' },
+        { id: 5, name: 'B200' },
+        { id: 6, name: 'Mangan' },
+        { id: 7, name: 'Lignit' },
+        { id: 8, name: 'Spercial ' },
+    ];
+    stationType = [
+        { id: 1, name: 'Public' },
+        { id: 2, name: 'Private ' },
+    ];
+    station = [
+        { id: 1, name: 'Constanta Port' },
+        { id: 2, name: 'Nitramonia' },
+        { id: 3, name: 'Viromet' },
+    ];
+    points = [
+        { id: 1, name: 'point1' },
+        { id: 2, name: 'point2' },
+        { id: 3, name: 'point3' },
     ];
     companyList = [
         { id: 1, name: 'company1' },
         { id: 2, name: 'company2' },
         { id: 3, name: 'company3' },
-    ];
-    trafficType = [
-        { id: 1, name: 'traffic type1' },
-        { id: 2, name: 'traffic type2' },
-        { id: 3, name: 'traffic type3' },
-    ];
-    points = [
-        { id: 1, name: 'points1' },
-        { id: 2, name: 'points2' },
-        { id: 3, name: 'points3' },
     ];
 
     constructor(
@@ -368,6 +386,39 @@ export class TrainAddSchedulingComponent implements OnInit {
             documents: this.fb.control(data?.documents || []),
         });
     }
+
+
+    addPoints(): void {
+        this.rows.push(++this.rowIndex);
+      }
+      addWagons(): void {
+        this.no.push(++this.noIndex);
+      }
+
+    removeContact(): void {
+        // const companyId = this.company$?.value?.id;
+        // const contactsArray = this.company$?.value?.contacts;
+    
+        // if (companyId && contactsArray && contactsArray.length > 0) {
+        //   const contactId = contactsArray[index]?.id; // Get the ID of the contact at the specified index
+        //   if (contactId !== null && contactId !== undefined && contactId > -1) {
+        //     this.companyService.deleteContact(companyId, contactId).subscribe({
+        //       next: () => {
+        //         console.log('Contact deleted successfully');
+        //         this.contacts.removeAt(index); // Remove the contact from the form array
+        //         this.cd.detectChanges();
+        //         return this.companyForm.get('contacts');
+        //       },
+        //       error: error => {
+        //         console.error('Error deleting contact:', error);
+        //         // Handle error, such as showing an error message to the user
+        //       }
+        //     });
+        //   }
+        // } else {
+        //   this.contacts.removeAt(index);
+        // }
+      }
 
     saveScheduling(): void {
         this.isLoading$.next(true);
