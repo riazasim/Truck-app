@@ -13,11 +13,11 @@
       name="favoriteColor"
       aria-label="Favorite Color"
       (change)="changeTransportMode($event)"
-      [value]="transportMode"
+      [value]="transportModeId"
     >
-      <mat-button-toggle value="WATER">Water</mat-button-toggle>
-      <mat-button-toggle value="RAILWAY">Train</mat-button-toggle>
-      <mat-button-toggle value="TRUCK">Truck</mat-button-toggle>
+    <mat-button-toggle value="1">Road</mat-button-toggle>
+    <mat-button-toggle value="2">Railway</mat-button-toggle>
+    <mat-button-toggle value="3">Water</mat-button-toggle>
     </mat-button-toggle-group>
   
   <!-- <div class="current-location-container">

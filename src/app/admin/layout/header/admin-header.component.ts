@@ -41,7 +41,7 @@ export class AdminHeaderComponent {
   public readonly closeBtnIcon = faTimes as any;
 
   public isMenuClosed = true;
-  transportMode: string | null;
+  transportModeId: string | null;
 
   constructor(public readonly activatedRoute: ActivatedRoute,
     private readonly dialogService: MatDialog,
@@ -50,7 +50,7 @@ export class AdminHeaderComponent {
     private readonly organizationService: OrganizationService,
     public localizeService: LocalizeRouterService) {
     this.language$ = localizeService.routerEvents.asObservable().pipe(startWith(localizeService.parser.currentLang));
-    this.transportMode = organizationService.getAppMode();
+    this.transportModeId = organizationService.getAppMode();
   }
 
   openChangeLocationModal(): void {
@@ -114,7 +114,7 @@ export class AdminHeaderComponent {
   }
 
   changeTransportMode(ev: any) {
-    this.organizationService.changeTransportMode({ "transportMode": ev.value }).subscribe({
+    this.organizationService.changeTransportMode({ "transportModeId": ev.value }).subscribe({
       next: res => {
         this.organizationService.setAppMode(res.transportMode);
       },

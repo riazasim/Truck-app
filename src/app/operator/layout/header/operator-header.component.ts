@@ -41,7 +41,7 @@ export class OperatorHeaderComponent {
 
   public isMenuClosed = true;
 
-  transportMode: string | null;
+  transportModeId: string | null;
 
   constructor(public readonly activatedRoute: ActivatedRoute,
     private readonly dialogService: MatDialog,
@@ -51,7 +51,8 @@ export class OperatorHeaderComponent {
     private readonly organizationService: OrganizationService,
     public localizeService: LocalizeRouterService) {
     this.language$ = localizeService.routerEvents.asObservable().pipe(startWith(localizeService.parser.currentLang));
-    this.transportMode = organizationService.getAppMode();
+    this.transportModeId = organizationService.getAppMode();
+    console.log(this.transportModeId,"tId")
   }
 
   openChangeLocationModal(): void {
@@ -115,7 +116,7 @@ export class OperatorHeaderComponent {
   }
 
   changeTransportMode(ev: any) {
-    this.organizationService.changeTransportMode({ "transportMode": ev.value }).subscribe({
+    this.organizationService.changeTransportMode({ "transportModeId": ev.value }).subscribe({
       next: res => {
         this.organizationService.setAppMode(res.transportMode);
       },
