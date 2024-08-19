@@ -10,21 +10,17 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 import { createMaxLengthValidator, createMinLengthValidator, createRequiredValidators } from 'src/app/shared/validators/generic-validators';
 
 @Component({
-    selector: 'app-partners-add-edit',
-    templateUrl: './partners-add-edit.component.html',
+    selector: 'app-station-add-edit',
+    templateUrl: './station-add-edit.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PartnersAddEditComponent {
+export class StationAddEditComponent {
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-    partnerForm: UntypedFormGroup;
+    stationForm: UntypedFormGroup;
     id: number;
-    partnerType = [
+    stationType = [
         { id: 1, name: 'Public' },
         { id: 2, name: 'Private' }
-    ]
-    status = [
-        { id: 1, name: 'Active', value: true },
-        { id: 2, name: 'Inactive', value: false }
     ]
     constructor(private userService: UserService,
         private route: ActivatedRoute,
@@ -41,7 +37,6 @@ export class PartnersAddEditComponent {
         this.id = this.route.snapshot.params['id'];
         if (this.id) {
             this.userService.get(this.id).subscribe(response => {
-                // console.log(response)
                 this.initForm(response);
                 this.isLoading$.next(false);
             });
@@ -52,21 +47,17 @@ export class PartnersAddEditComponent {
     }
 
     initForm(data: any = <any>{}): void {
-        this.partnerForm = this.fb.group({
-                partnerName: this.fb.control(data?.partnerName || '', [...createRequiredValidators()]),
-                partnerType: this.fb.control(data?.partnerType || '', [...createRequiredValidators()]),
-                status: this.fb.control(data?.status || '' , [...createRequiredValidators()]),
-                address: this.fb.control(data?.address || '', [...createRequiredValidators()]),
-                phone: this.fb.control(data?.phone || '', [...createRequiredValidators() , Validators.pattern("[- +()0-9]+") , ...createMinLengthValidator(7) , ...createMaxLengthValidator(17)]),
-                email: this.fb.control(data?.email || '', [...createRequiredValidators()]),
-            })
+        this.stationForm = this.fb.group({
+                stationName: this.fb.control(data?.user?.stationName || '', [...createRequiredValidators()]),
+                stationType: this.fb.control(data?.user?.stationType || '', [...createRequiredValidators()]),
+        });
     }
 
 
     saveUser(): void {
         this.isLoading$.next(true);
         if (this.id) {
-            this.userService.edit(this.id, this.partnerForm.getRawValue()).subscribe({
+            this.userService.edit(this.id, this.stationForm.getRawValue()).subscribe({
                 next: () => {
                     this.isLoading$.next(false)
                     this.router.navigate(['../../success'], { relativeTo: this.route });
@@ -77,8 +68,8 @@ export class PartnersAddEditComponent {
                 }
             });
         } else {
-            this.partnerForm.patchValue({ user: { roles: [this.partnerForm.getRawValue().user.roles] } });
-            this.userService.create(this.partnerForm.getRawValue()).subscribe({
+            this.stationForm.patchValue({ user: { roles: [this.stationForm.getRawValue().user.roles] } });
+            this.userService.create(this.stationForm.getRawValue()).subscribe({
                 next: () => {
                     this.isLoading$.next(false)
                     this.router.navigate(['../../success'], { relativeTo: this.route });

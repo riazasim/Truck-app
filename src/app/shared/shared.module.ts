@@ -53,10 +53,10 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { InputRefDirective } from './directives/input-ref.directive';
-import {MatTabsModule} from '@angular/material/tabs';
+import { MatTabsModule } from '@angular/material/tabs';
 import { MultiselectsearchComponent } from './components/multiselectsearch/multiselectsearch.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-
+import { CdkDropList, CdkDrag } from '@angular/cdk/drag-drop';
 
 export const MY_FORMATS = {
     parse: {
@@ -116,8 +116,10 @@ export const MY_FORMATS = {
         MatTabsModule,
         MatChipsModule,
         MatAutocompleteModule,
-        MatButtonToggleModule
-        
+        MatButtonToggleModule,
+        CdkDropList,
+        CdkDrag
+
     ],
     exports: [
         IconicInputWrapperComponent,
@@ -175,6 +177,8 @@ export const MY_FORMATS = {
         MatTabsModule,
         SearchbarModule,
         MultiselectsearchComponent,
+        CdkDropList,
+        CdkDrag
     ],
     providers: [
         { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },

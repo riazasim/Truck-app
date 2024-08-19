@@ -50,7 +50,7 @@ export class AdminHeaderComponent {
     private readonly organizationService: OrganizationService,
     public localizeService: LocalizeRouterService) {
     this.language$ = localizeService.routerEvents.asObservable().pipe(startWith(localizeService.parser.currentLang));
-    this.transportModeId = organizationService.getAppMode();
+    this.transportModeId = organizationService.getAppModeId();
   }
 
   openChangeLocationModal(): void {

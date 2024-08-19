@@ -1,145 +1,50 @@
-<edit-container [headerTitle]="step === 1 ? (id ? 'Edit ':'Add ')+'partner': 'Enable access to docks'">
-    <app-loader *ngIf="(isLoading$ | async)" [isContainer]="true" [fullScreen]="false"></app-loader>
+<!--<edit-container headerTitle="Add user - users details">-->
+  <edit-container [headerTitle]="id ? 'Edit partner' : 'Add partner'">
+    <app-loader *ngIf="isLoading$ | async" [isContainer]="true" [fullScreen]="false"></app-loader>
     <form [formGroup]="partnerForm" *ngIf="!(isLoading$ | async)">
-        <section [@slideIn] [@slideOut] *ngIf="step === 1">
-            <div class="flex flex-col mx-auto max-w-[440px] gap-5">
-                <div>
-                    <div iconic-input-wrapper leftIcon="id-badge">
-                        <input inputRef type="text" placeholder="Partner Name" formControlName="fullName">
-                    </div>
+        <div class="flex flex-col mx-auto max-w-[440px] gap-5">
+                <div iconic-input-wrapper leftIcon="user">
+                    <input inputRef type="text" id="partnerName" placeholder="Partner Name" formControlName="partnerName" />
                 </div>
-                <div>
-                    <div iconic-select-wrapper leftIcon="user" [rightIcon]="['fas', 'caret-down']">
-                        <select inputRef name="partnerType" id="partnerType" formControlName="partnerType">
-                            <option value="" disabled>Select type</option>
-                            <option value="Customer">Customer</option>
-                            <option value="Vendor">Vendor</option>
-                            <option value="Transport">Transport</option>
+            <div iconic-select-wrapper leftSvg="assets/images/location_on_black_24dp.svg"
+                        [rightIcon]="['fas', 'caret-down']">
+                        <select spAccessInputRef name="partnerType" id="partnerType" formControlName="partnerType">
+                            <option disabled selected value="">Partner type</option>
+                            <option *ngFor="let partnerType of partnerType" [value]="partnerType.id">
+                                {{ partnerType.name }}
+                            </option>
                         </select>
-                      </div>
-                </div>
-                <div>
-                    <div iconic-select-wrapper leftIcon="eye" [rightIcon]="['fas', 'caret-down']">
-                        <select inputRef name="status" id="status" formControlName="status">
-                            <option value="" disabled>Select status</option>
-                            <option value="true">Active</option>
-                            <option value="false">Inactive</option>
+                    </div>
+            <div iconic-select-wrapper leftSvg="assets/images/location_on_black_24dp.svg"
+                        [rightIcon]="['fas', 'caret-down']">
+                        <select spAccessInputRef name="status" id="status" formControlName="status">
+                            <option disabled selected value="">Status</option>
+                            <option *ngFor="let status of status" [value]="status.name">
+                                {{ status.name }}
+                            </option>
                         </select>
-                      </div>
-                </div>
-                <div>
-                    <div iconic-input-wrapper leftIcon="location-dot">
-                        <input inputRef type="text" placeholder="Address" formControlName="address">
                     </div>
+                    <div iconic-input-wrapper leftIcon="user">
+                      <input inputRef type="text" id="address" placeholder="Address" formControlName="address" />
+                  </div>
+                  <div iconic-input-wrapper leftIcon="user">
+                    <input inputRef type="number" id="phone" placeholder="Phone" formControlName="phone" />
                 </div>
-                <div>
-                    <div iconic-input-wrapper leftIcon="phone">
-                        <input inputRef type="text" placeholder="Phone" formControlName="contactNumber">
-                    </div>
-                </div>
-                <div>
-                    <div iconic-input-wrapper leftIcon="envelope">
-                        <input inputRef type="text" placeholder="Email" formControlName="email">
-                    </div>
-                </div>
-                <div class="flex items-center">
-                    <input id="block" type="checkbox" formControlName="blockSidStatus" class="mr-2 h-[25px] w-[25px] cursor-pointer">
-                    <label class="cursor-pointer font-bold" for="block">Block new SID for license plate until checkout</label>
-                </div>
-            </div>
-
-            <div class="flex justify-end pt-5">
-                <div class="flex gap-4">
-                    <button [routerLink]="id ? '../../list' : '../list'" class="btn btn-outline-primary" type="button">Cancel</button>
-                    <button [disabled]="partnerForm.invalid" class="btn btn-primary" type="button" (click)="step = 2">Next</button>
-                </div>
-            </div>
-        </section>
-        <section [@slideIn] [@slideOut] *ngIf="step == 2">
-
-            <div class="w-full">
-                <ng-scrollbar track="vertical" class="min-h-[calc(100vh-200px)]">
-                  <table class="material-table no-wrap overflow-hidden" matSort
-                         [class.loading]="(isLoading$ | async)" aria-label="Usage Table"
-                         cdk-table [dataSource]="docks$.value">
-
-                    <ng-container cdkColumnDef="name">
-                      <th cdk-header-cell *cdkHeaderCellDef scope="col">
-                          <section class="flex flex-col">
-                              <div mat-sort-header="name">Dock name</div>
-                              <searchbar [maxWidth]="152">
-                                <fa-icon icon="search"></fa-icon>
-                                <input #searchName input type="text" (keyup)="applyFilter($event.target, 'name')">
-                                <div *ngIf="searchName.value" close (click)="searchName.value=''; applyFilter({ value: '' }, 'name')">
-                                  <fa-icon icon="close"></fa-icon>
-                                </div>
-                            </searchbar>
-                          </section>
-                      </th>
-                      <td cdk-cell *cdkCellDef="let row">{{row.name}}</td>
-                    </ng-container>
-
-                    <ng-container cdkColumnDef="location">
-                      <th cdk-header-cell *cdkHeaderCellDef scope="col">
-                          <section class="flex flex-col">
-                              <div mat-sort-header="location">Location</div>
-                              <searchbar [maxWidth]="152">
-                                <fa-icon icon="search"></fa-icon>
-                                <input #searchLocation input type="text" (keyup)="applyFilter($event.target, 'location')">
-                                <div *ngIf="searchLocation.value" close (click)="searchLocation.value=''; applyFilter({ value: '' }, 'location')">
-                                  <fa-icon icon="close"></fa-icon>
-                                </div>
-                            </searchbar>
-                          </section>
-                      </th>
-                      <td cdk-cell *cdkCellDef="let row">{{row.location.name}}</td>
-                    </ng-container>
-
-                    <ng-container cdkColumnDef="warehouse">
-                      <th cdk-header-cell *cdkHeaderCellDef scope="col">
-                          <section class="flex flex-col">
-                              <div mat-sort-header="warehouse">Docks</div>
-                              <searchbar [maxWidth]="152">
-                                <fa-icon icon="search"></fa-icon>
-                                <input #searchWarehouse input type="text" (keyup)="applyFilter($event.target, 'warehouse')">
-                                <div *ngIf="searchWarehouse.value" close (click)="searchWarehouse.value=''; applyFilter({ value: '' }, 'warehouse')">
-                                  <fa-icon icon="close"></fa-icon>
-                                </div>
-                            </searchbar>
-                          </section>
-                      </th>
-                      <td cdk-cell *cdkCellDef="let row">{{row.warehouse.name}}</td>
-                    </ng-container>
-
-                    <ng-container cdkColumnDef="access">
-                      <th cdk-header-cell *cdkHeaderCellDef scope="col">Enable dock access</th>
-                      <td cdk-cell *cdkCellDef="let row" >
-                        <mat-slide-toggle [checked]="row | hasPartnerDockAccess : partnerDocks" (change)="setAccess($event.checked, row.id)" class="ml-2"></mat-slide-toggle>
-                    </td>
-                    </ng-container>
-
-                    <!-- Header and Row Declarations -->
-                    <tr cdk-header-row *cdkHeaderRowDef="displayedColumns"></tr>
-                    <tr cdk-row *cdkRowDef="let row; columns: displayedColumns"></tr>
-                    <tr *cdkNoDataRow>
-                      <td [colSpan]="displayedColumns.length">
-                        <span *ngIf="(isLoading$ | async)">
-                          Loading the data
-                        </span>
-                        <span
-                          *ngIf="docks$.value?.length === 0 && !(isLoading$ | async)">No results found</span>
-                      </td>
-                    </tr>
-                  </table>
-                </ng-scrollbar>
+                <div iconic-input-wrapper leftIcon="user">
+                  <input inputRef type="email" id="email" placeholder="Email" formControlName="email" />
               </div>
+        </div>
 
-            <div class="flex justify-end pt-5">
-                <div class="flex gap-4">
-                    <button class="btn btn-outline-primary" type="button" (click)="step = 1">Back</button>
-                    <button [disabled]="partnerForm.invalid" class="btn btn-primary" type="button" (click)="savePartner()">Save</button>
-                </div>
+        <div class="flex justify-end pt-5">
+            <div class="flex gap-4">
+                <button [routerLink]="id ? '../../list' : '../list'" class="btn btn-outline-primary" type="button">
+                    Cancel
+                </button>
+                <button class="btn btn-primary" type="button" (click)="saveUser()"
+                    [disabled]="partnerForm.invalid || (isLoading$ | async)">
+                    Save
+                </button>
             </div>
-        </section>
+        </div>
     </form>
 </edit-container>

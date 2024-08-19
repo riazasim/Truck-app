@@ -51,8 +51,7 @@ export class OperatorHeaderComponent {
     private readonly organizationService: OrganizationService,
     public localizeService: LocalizeRouterService) {
     this.language$ = localizeService.routerEvents.asObservable().pipe(startWith(localizeService.parser.currentLang));
-    this.transportModeId = organizationService.getAppMode();
-    console.log(this.transportModeId,"tId")
+    this.transportModeId = organizationService.getAppModeId();
   }
 
   openChangeLocationModal(): void {

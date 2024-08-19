@@ -92,7 +92,6 @@ export class PlanningListComponent implements OnChanges {
     }
 
     OnEmit(row: any, modal: string) {
-        // debugger
         this.triggerOpenLogs.emit({ view: 'view', id: row.planning.id, planning: row, modal: modal })
     }
 

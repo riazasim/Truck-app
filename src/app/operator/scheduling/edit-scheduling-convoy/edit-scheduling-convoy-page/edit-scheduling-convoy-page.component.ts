@@ -170,7 +170,6 @@ export class EditSchedulingConvoyPageComponent {
 
     initConvoyForm(data?: any): void {
         const ids = data?.planningConvoyProducts?.map((item: any) => item?.product?.id)
-        // debugger
         this.convoyForm = this.fb.group({
             navigationType: this.fb.control(data?.navigationType || '', [...createRequiredValidators()]),
             ship: this.fb.control(data?.ship?.id || '', [...createRequiredValidators()]),

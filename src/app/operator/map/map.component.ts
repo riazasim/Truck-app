@@ -37,7 +37,6 @@ export class MapComponent {
     constructor() { }
 
     retrieveMapData(results: any): void {
-        // debugger
         if (results.length <= 0) {
             this.myMarkerPositions = [];
             this.otherMarkerPositions = [];

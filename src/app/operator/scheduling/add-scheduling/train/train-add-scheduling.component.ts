@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -17,11 +17,9 @@ import { handleError } from 'src/app/shared/utils/error-handling.function';
 import { getFormatHourSlot } from '../../scheduling-box.helper';
 import { PlanningModel, convoyModel } from 'src/app/core/models/planning.model';
 import { ShipsService } from 'src/app/core/services/ships.service';
-import { ShipModel } from 'src/app/core/models/ship.model';
-import { createRequiredValidators } from 'src/app/shared/validators/generic-validators';
 import { MicroService } from 'src/app/core/services/micro.service';
-import { PageEvent } from '@angular/material/paginator';
 import { ProductService } from 'src/app/core/services/product.service';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
     selector: 'train-app-add-scheduling',
@@ -86,9 +84,9 @@ export class TrainAddSchedulingComponent implements OnInit {
     filterDate: Date = new Date();
     filterTime = '00:00:00'
     rowIndex: number = 1;
-  rows : any[] = [this.rowIndex];
+    rows: any[] = [this.rowIndex];
     noIndex: number = 1;
-  no : any[] = [this.noIndex];
+    no: any[] = [this.noIndex];
 
     private formatDateObject(date: Date): string {
         const year = date.getFullYear();
@@ -99,8 +97,8 @@ export class TrainAddSchedulingComponent implements OnInit {
         return formattedDate;
     }
 
-    departureZone : any[] = [];
-    arrivalZone : any[] = [];
+    departureZone: any[] = [];
+    arrivalZone: any[] = [];
     companies: any[];
     category = [
         { id: 1, name: 'Containers' },
@@ -165,6 +163,10 @@ export class TrainAddSchedulingComponent implements OnInit {
         this.retriveProducts()
     }
 
+    drop(event: CdkDragDrop<string[]>) {
+        moveItemInArray(this.rows, event.previousIndex, event.currentIndex);
+    }
+
     formatDate(date: Date | string): string {
         let formattedDate = '';
 
@@ -202,7 +204,7 @@ export class TrainAddSchedulingComponent implements OnInit {
         })
     }
 
-    onInputChange(ev : any){
+    onInputChange(ev: any) {
         this.search = ev?.target?.value
     }
 
@@ -390,15 +392,15 @@ export class TrainAddSchedulingComponent implements OnInit {
 
     addPoints(): void {
         this.rows.push(++this.rowIndex);
-      }
-      addWagons(): void {
+    }
+    addWagons(): void {
         this.no.push(++this.noIndex);
-      }
+    }
 
     removeContact(): void {
         // const companyId = this.company$?.value?.id;
         // const contactsArray = this.company$?.value?.contacts;
-    
+
         // if (companyId && contactsArray && contactsArray.length > 0) {
         //   const contactId = contactsArray[index]?.id; // Get the ID of the contact at the specified index
         //   if (contactId !== null && contactId !== undefined && contactId > -1) {
@@ -418,7 +420,7 @@ export class TrainAddSchedulingComponent implements OnInit {
         // } else {
         //   this.contacts.removeAt(index);
         // }
-      }
+    }
 
     saveScheduling(): void {
         this.isLoading$.next(true);

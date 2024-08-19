@@ -6,20 +6,20 @@
                 class="grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20 gap-y-4 pt-[50px] min-xl:px-[50px]">
                 <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
                     <h4 class="font-bold">Locomotive and conductor</h4>
-                    <div [loading]="(isPortsLoading$ | async)" iconic-input-wrapper leftSvg="assets/images/carbon-train-speed.svg"
-                        formGroupName="routingDetail">
+                    <div [loading]="(isPortsLoading$ | async)" iconic-input-wrapper
+                        leftSvg="assets/images/carbon-train-speed.svg" formGroupName="routingDetail">
                         <input inputRef type="text" placeholder="Locomotive registration number"
                             formControlName="convoyType" />
                     </div>
-                    <div [loading]="(isPortsLoading$ | async)" iconic-input-wrapper leftSvg="assets/images/carbon-train-speed.svg"
-                        formGroupName="routingDetail">
+                    <div [loading]="(isPortsLoading$ | async)" iconic-input-wrapper
+                        leftSvg="assets/images/carbon-train-speed.svg" formGroupName="routingDetail">
                         <input inputRef type="text" placeholder="Locomotive type" />
                     </div>
 
                 </div>
                 <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
                     <p>&nbsp;</p>
-                    <div [loading]="(isPortsLoading$ | async)" iconic-select-wrapper
+                    <!-- <div [loading]="(isPortsLoading$ | async)" iconic-select-wrapper
                     leftSvg="assets/images/conductor-type.svg" [rightIcon]="['fas', 'caret-down']"
                         formGroupName="routingDetail">
                         <select spAccessInputRef name="zone" id="zone" formControlName="arrivalZone">
@@ -30,9 +30,24 @@
                                 {{ zone.name }}
                             </option>
                         </select>
+                    </div> -->
+                    <div class="flex w-full flex-col h-[76px]">
+                        <h2 class="text-[#696969] ">Conductor</h2>
+                        <div class="flex justify-between">
+                            <div class="flex justify-center items-center gap-1">
+                                <input type="radio" name="conductor" id="conductor"
+                                    class="focus:!shadow-none checked:!bg-none">
+                                <label for="conductor">With Lares Conductor app</label>
+                            </div>
+                            <div class="flex justify-center items-center gap-1">
+                                <input type="radio" name="conductor" id="conductor"
+                                    class="focus:!shadow-none checked:!bg-none">
+                                <label for="conductor">Without Lares Conductor app</label>
+                            </div>
+                        </div>
                     </div>
-                    <div [loading]="(isPortsLoading$ | async)" iconic-input-wrapper
-                    leftIcon="envelope" formGroupName="routingDetail">
+                    <div [loading]="(isPortsLoading$ | async)" iconic-input-wrapper leftIcon="envelope"
+                        formGroupName="routingDetail">
                         <input inputRef type="text" placeholder="User email" formControlName="pilotCompany" />
                     </div>
                 </div>
@@ -49,17 +64,18 @@
                             <th></th>
                         </tr>
                     </thead>
-                    <tbody >
-                        <tr *ngFor="let row of rows;"
-                        >
-                        <td>
-                            {{row}}
-                        </td>
-                        <td>
-                            <input matInput class="text-center" formControlName="product" />
-                        </td> 
+                    <tbody cdkDropList (cdkDropListDropped)="drop($event)">
+                        @for (row of rows; track row) {
+                        <tr cdkDrag>
                             <td>
-                                <select  name="stationType" id="stationType" >
+                                {{row}}
+                            </td>
+                            <td>
+                                <input class="text-center" formControlName="product" readonly
+                                    [value]="rows.indexOf(row) === 0 ? 'Start point' : rows.indexOf(row) === (rows.length - 1) ? 'End point' : 'Touch point'" />
+                            </td>
+                            <td>
+                                <select name="stationType" id="stationType">
                                     <option disabled selected value="">
                                         <!-- Station type -->
                                     </option>
@@ -69,7 +85,7 @@
                                 </select>
                             </td>
                             <td>
-                                <select  name="station" id="station" >
+                                <select name="station" id="station">
                                     <option disabled selected value="">
                                         <!-- Station -->
                                     </option>
@@ -79,19 +95,20 @@
                                 </select>
                             </td>
                             <!-- <td> -->
-                                <!-- <fa-icon  icon="pen" class="text-primary cursor-pointer"></fa-icon> -->
-                                <!-- <fa-icon icon="trash" 
-                                    class="text-primary cursor-pointer"></fa-icon>
-                            </td> -->
+                            <!-- <fa-icon  icon="pen" class="text-primary cursor-pointer"></fa-icon> -->
+                            <!-- <fa-icon icon="trash" 
+                                        class="text-primary cursor-pointer"></fa-icon>
+                                </td> -->
                         </tr>
+                        }
                     </tbody>
                 </table>
                 <div>
                     <button type="button" class="flex text-primary font-bold py-5" (click)="addPoints()">
-                    <fa-icon icon="circle-plus"></fa-icon> Add point
-                </button>
-            </div>
-                
+                        <fa-icon icon="circle-plus"></fa-icon> Add point
+                    </button>
+                </div>
+
             </div>
             <div class="min-xl:px-[50px] grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20 mt-4">
                 <div class="gap-y-4 mb-5 min-xl:px-[50px]">
@@ -192,17 +209,16 @@
                             <th></th>
                         </tr>
                     </thead>
-                    <tbody >
-                        <tr *ngFor="let no of no;"
-                        >
-                        <td>
-                            {{no}}
-                        </td>
-                        <td>
-                            <input matInput class="text-center" formControlName="product" />
-                        </td> 
+                    <tbody>
+                        <tr *ngFor="let no of no;">
                             <td>
-                                <select  name="category" id="category" >
+                                {{no}}
+                            </td>
+                            <td>
+                                <input matInput class="text-center" formControlName="product" />
+                            </td>
+                            <td>
+                                <select name="category" id="category">
                                     <option disabled selected value="">
                                         <!-- Category -->
                                     </option>
@@ -212,7 +228,7 @@
                                 </select>
                             </td>
                             <td>
-                                <select  name="subCategory" id="subCategory" >
+                                <select name="subCategory" id="subCategory">
                                     <option disabled selected value="">
                                         <!-- Subcategory -->
                                     </option>
@@ -222,20 +238,20 @@
                                 </select>
                             </td>
                             <td>
-                                <input matInput class="text-center"/>
+                                <input matInput class="text-center" />
                             </td>
                             <td>
-                                <input matInput class="text-center"/>
+                                <input matInput class="text-center" />
                             </td>
                             <td>
-                                <input matInput class="text-center"/>
+                                <input matInput class="text-center" />
                             </td>
                             <td>
-                                <input matInput class="text-center"/>
+                                <input matInput class="text-center" />
                             </td>
                             <!-- <td> -->
-                                <!-- <fa-icon  icon="pen" class="text-primary cursor-pointer"></fa-icon> -->
-                                <!-- <fa-icon icon="trash" 
+                            <!-- <fa-icon  icon="pen" class="text-primary cursor-pointer"></fa-icon> -->
+                            <!-- <fa-icon icon="trash" 
                                     class="text-primary cursor-pointer"></fa-icon>
                             </td> -->
                         </tr>

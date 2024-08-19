@@ -63,11 +63,10 @@ export class LoginComponent {
         const isTutorialTrue = localStorage.getItem('tutorial') === 'true';
         this.auth.signin(this.loginForm.getRawValue()).subscribe({
             next: (response) => {
-                debugger
                 this.auth.saveAuth(response);
                 this.rolesService.setAuthRoles([response.roles]);
                 this.rolesService.setUserRoles([response.roles]);
-                this.organizationService.setAppMode(response?.transportModeSetting?.transportMode?.name || "");
+                this.organizationService.setAppMode(response?.transportModeSetting?.transportMode || "");
                 // this.router.navigate(
                 //                                          ////operator/dashboard
                 //     [isTutorialTrue ? '/admin' : '../admin/dashboard'], { relativeTo: this.route }

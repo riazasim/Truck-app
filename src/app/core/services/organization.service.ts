@@ -41,13 +41,19 @@ export class OrganizationService {
     return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/changeTransportMode`, value).pipe(pluckItemWrapperData<any, ResponseItemWrapper<any>>());
   }
 
-  setAppMode(mode : string): void {
-    localStorage.setItem("appMode" , mode);
+  setAppMode(mode: any): void {
+    localStorage.setItem("appModeId", mode?.id);
+    localStorage.setItem("appMode", mode?.name);
     location.reload();
   }
 
+
   getAppMode(): string | null {
     return localStorage.getItem("appMode");
+  }
+
+  getAppModeId(): string | null {
+    return localStorage.getItem("appModeId");
   }
 
   updateLogo(id: number, file: File): Observable<OrganizationModel> {
