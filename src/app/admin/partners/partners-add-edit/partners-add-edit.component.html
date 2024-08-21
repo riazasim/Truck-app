@@ -4,33 +4,33 @@
     <form [formGroup]="partnerForm" *ngIf="!(isLoading$ | async)">
         <div class="flex flex-col mx-auto max-w-[440px] gap-5">
                 <div iconic-input-wrapper leftIcon="user">
-                    <input inputRef type="text" id="partnerName" placeholder="Partner Name" formControlName="partnerName" />
+                    <input inputRef type="text" id="name" placeholder="Partner Name" formControlName="name" />
                 </div>
-            <div iconic-select-wrapper leftSvg="assets/images/location_on_black_24dp.svg"
+            <div iconic-select-wrapper leftIcon="user"
                         [rightIcon]="['fas', 'caret-down']">
-                        <select spAccessInputRef name="partnerType" id="partnerType" formControlName="partnerType">
+                        <select spAccessInputRef name="type" id="type" formControlName="type">
                             <option disabled selected value="">Partner type</option>
-                            <option *ngFor="let partnerType of partnerType" [value]="partnerType.id">
-                                {{ partnerType.name }}
+                            <option *ngFor="let type of partnerType" [value]="type.value">
+                                {{ type.name }}
                             </option>
                         </select>
                     </div>
-            <div iconic-select-wrapper leftSvg="assets/images/location_on_black_24dp.svg"
+            <div iconic-select-wrapper leftIcon="eye"
                         [rightIcon]="['fas', 'caret-down']">
                         <select spAccessInputRef name="status" id="status" formControlName="status">
                             <option disabled selected value="">Status</option>
-                            <option *ngFor="let status of status" [value]="status.name">
+                            <option *ngFor="let status of status" [value]="status.value">
                                 {{ status.name }}
                             </option>
                         </select>
                     </div>
-                    <div iconic-input-wrapper leftIcon="user">
+                    <div iconic-input-wrapper leftIcon="location-crosshairs">
                       <input inputRef type="text" id="address" placeholder="Address" formControlName="address" />
                   </div>
-                  <div iconic-input-wrapper leftIcon="user">
+                  <div iconic-input-wrapper leftIcon="phone">
                     <input inputRef type="number" id="phone" placeholder="Phone" formControlName="phone" />
                 </div>
-                <div iconic-input-wrapper leftIcon="user">
+                <div iconic-input-wrapper leftIcon="envelope">
                   <input inputRef type="email" id="email" placeholder="Email" formControlName="email" />
               </div>
         </div>

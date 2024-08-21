@@ -1,61 +1,51 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
-import { pluckArrayWrapperData, pluckItemWrapperData, wrapJsonForRequest } from 'src/app/shared/utils/api.functions';
+import { pluckArrayPaginationWrapperData, pluckItemWrapperData, wrapJsonForRequest } from 'src/app/shared/utils/api.functions';
 import { environment } from 'src/environments/environment';
-import { DockOnlyRelationship, PartnerDockRelationships, PartnerModel } from '../models/partner.model';
-import { ResponseArrayWrapper, ResponseItemWrapper } from '../models/response-wrappers.types';
+import { ResponseArrayPaginationWrapper, ResponseItemWrapper } from '../models/response-wrappers.types';
+import { CustomFieldData } from '../models/custom-field.model';
+import { PartnerModel, PartnerTable } from '../models/partner.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PartnerService {
-  private route: string = '/admin/partners';
   constructor(private http: HttpClient) { }
 
   create(data: PartnerModel): Observable<any> {
-    return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}${this.route}`, wrapJsonForRequest(data));
+    return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/createPartner`, wrapJsonForRequest(data));
   }
 
-  edit(id: number, data: PartnerModel): Observable<any> {
-    return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}${this.route}/${id}`, wrapJsonForRequest(data));
+  edit(id:number,data: PartnerModel): Observable<any> {
+    data['partnerId']=id;
+    return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/setPartnerInfo`, wrapJsonForRequest(data));
   }
 
   get(id: number): Observable<any> {
-    return this.http.get<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}${this.route}/${id}`)
-                    .pipe(pluckItemWrapperData<any, ResponseItemWrapper<any>>(),
-                        map((p: PartnerModel) => {
-
-                          if ((<DockOnlyRelationship[]>p.partnerDockRelationships).length) {
-                            p['docks'] = (<DockOnlyRelationship[]>p.partnerDockRelationships).flatMap((p) =>
-                                                                          p.attributes.dock.map(x => (<number>x.attributes.id)));
-                          } else {
-                            p['docks'] = [];
-                          }
-
-                          return p;
-                        })
-                    )
+      let data ={
+        "partnerId":id
+      }
+    return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getPartner`, wrapJsonForRequest(data))
+                    .pipe(pluckItemWrapperData<any, ResponseItemWrapper<any>>())
   }
 
   delete(id: number): Observable<any> {
-    return this.http.delete(`${environment.apiUrl}${environment.apiVersion}${this.route}/${id}`)
+    let data ={
+      "partnerId":id
+    }
+    return this.http.post(`${environment.apiUrl}${environment.apiVersion}/deletePartner`, wrapJsonForRequest(data))
   }
 
-  list(data: any): Observable<PartnerModel[]> {
-    return this.http.get<ResponseArrayWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/admin/partners`)
-                    .pipe(pluckArrayWrapperData<any, ResponseArrayWrapper<any>>(),
-                      map((l: PartnerModel[]) => l.map((p: PartnerModel) => {
-                        if ((<PartnerDockRelationships[]>p.partnerDockRelationships).length) {
-                          p['partners'] = (<PartnerDockRelationships[]>p.partnerDockRelationships)[0].partners.map(sp => <number>sp.attributes.id);
-                          p['docks'] = (<PartnerDockRelationships[]>p.partnerDockRelationships)[0].docks.map(d => <number>d.attributes.id);
-                        } else {
-                          p['partners'] = [];
-                          p['docks'] = [];
-                        }
 
-                        return p;
-                      }))
-                    )
+
+  pagination(data: any): Observable<PartnerTable> {
+    return this.http.post<ResponseArrayPaginationWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/paginatePartners`, wrapJsonForRequest(data))
+        .pipe(pluckArrayPaginationWrapperData<any, ResponseArrayPaginationWrapper<any>>(),
+                        map((u: PartnerTable) => {
+                             u.items = (<any>u.items).map(((c: CustomFieldData) => c.attributes));
+                            return u;
+                        })
+            );
   }
 }

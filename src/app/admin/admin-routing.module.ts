@@ -44,7 +44,7 @@ const routes: Routes = [
         loadChildren: () => import('./partners/partners.module').then(m => m.PartnersModule),
       },
       {
-        path: 'station',
+        path: 'stations',
         loadChildren: () => import('./station/station.module').then(m => m.StationModule),
       },
       {

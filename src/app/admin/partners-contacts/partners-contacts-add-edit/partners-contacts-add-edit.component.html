@@ -11,7 +11,7 @@
                             formControlName="fullName">
                     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="updatePartnerId($event)">
                         <mat-option *ngFor="let partner of partners" [value]="partner">
-                            {{partner.fullName}}
+                            {{partner.name}}
                         </mat-option>
                         </mat-autocomplete>
                 </div>

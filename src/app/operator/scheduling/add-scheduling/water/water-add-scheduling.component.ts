@@ -297,6 +297,7 @@ export class WaterAddSchedulingComponent implements OnInit {
     }
 
     onProductChange(ev: any) {
+        debugger
         if (this.productsList.includes(ev?.source?.value)) {
             const index = this.productsList.indexOf(ev?.source?.value);
             this.productsList.splice(index, 1);

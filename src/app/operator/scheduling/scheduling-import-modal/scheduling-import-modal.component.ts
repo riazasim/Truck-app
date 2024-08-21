@@ -21,159 +21,159 @@ import { convertExcelRowToBasicPlanning, convertExcelRowToChimpexPlanning, conve
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SchedulingImportModalComponent {
-  @ViewChild('file') fileElement: ElementRef;
-  @ViewChild('input') inputElement: ElementRef;
-  isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  constructor(private readonly dialogRef: MatDialogRef<any>,
-              private readonly planningService: PlanningService,
-              private readonly snackBar: MatSnackBar,
-              private readonly translate: TranslateService,
-              private readonly dockService: DockService,
-              private readonly operationService: OperationService,
-              private readonly partnerService: PartnerService,
-              private readonly productService: ProductService,
-              private readonly organizationService: OrganizationService,
-              private readonly locationService: LocationService) { }
+  // @ViewChild('file') fileElement: ElementRef;
+  // @ViewChild('input') inputElement: ElementRef;
+  // isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  // constructor(private readonly dialogRef: MatDialogRef<any>,
+  //             private readonly planningService: PlanningService,
+  //             private readonly snackBar: MatSnackBar,
+  //             private readonly translate: TranslateService,
+  //             private readonly dockService: DockService,
+  //             private readonly operationService: OperationService,
+  //             private readonly partnerService: PartnerService,
+  //             private readonly productService: ProductService,
+  //             private readonly organizationService: OrganizationService,
+  //             private readonly locationService: LocationService) { }
 
-  cancel(): void {
-    this.dialogRef.close(false);
-  }
+  // cancel(): void {
+  //   this.dialogRef.close(false);
+  // }
 
-  confirm(): void {
-    this.isLoading$.next(true);
-    if (!this.fileElement.nativeElement.files.length) {
-      this.isLoading$.next(false);
-      return;
-    }
+  // confirm(): void {
+  //   this.isLoading$.next(true);
+  //   if (!this.fileElement.nativeElement.files.length) {
+  //     this.isLoading$.next(false);
+  //     return;
+  //   }
 
-    parseExcelFile(this.fileElement.nativeElement.files[0])
-      .pipe(
-        map(rowsWithHeader => rowsWithHeader.slice(1)),
-        map(rows => rows.map(row => this.processParsing(row))),
-        switchMap((plannings: BookingModel[]) => this.planningService.importPlannings(plannings))
-      ).subscribe({
-        next: () => {
-          this.snackBar.open('Imported!', 'Success', {
-            duration: 3000,
-            horizontalPosition: 'center',
-            panelClass: ['success-snackbar'],
-            verticalPosition: 'top', 
-          })
-          this.dialogRef.close(true);
-          this.isLoading$.next(false);
-        },
-        error: (body) => {
-          handleError(this.snackBar, body, this.isLoading$);
-        }
-      })
-  }
+  //   parseExcelFile(this.fileElement.nativeElement.files[0])
+  //     .pipe(
+  //       map(rowsWithHeader => rowsWithHeader.slice(1)),
+  //       map(rows => rows.map(row => this.processParsing(row))),
+  //       switchMap((plannings: BookingModel[]) => this.planningService.importPlannings(plannings))
+  //     ).subscribe({
+  //       next: () => {
+  //         this.snackBar.open('Imported!', 'Success', {
+  //           duration: 3000,
+  //           horizontalPosition: 'center',
+  //           panelClass: ['success-snackbar'],
+  //           verticalPosition: 'top', 
+  //         })
+  //         this.dialogRef.close(true);
+  //         this.isLoading$.next(false);
+  //       },
+  //       error: (body) => {
+  //         handleError(this.snackBar, body, this.isLoading$);
+  //       }
+  //     })
+  // }
 
-  private processParsing(row: Row) {
-    switch (true) {
-      case this.organizationService.isComvexOrganization$.getValue(): return convertExcelRowToComvexPlanning(row); break;
-      case this.organizationService.isUmexOrganization$.getValue(): return convertExcelRowToChimpexPlanning(row);break;
-      case this.organizationService.isChimpexOrganization$.getValue(): return convertExcelRowToChimpexPlanning(row);break;
-      default: return convertExcelRowToBasicPlanning(row);break;
-    }
-  }
+  // private processParsing(row: Row) {
+  //   switch (true) {
+  //     case this.organizationService.isComvexOrganization$.getValue(): return convertExcelRowToComvexPlanning(row); break;
+  //     case this.organizationService.isUmexOrganization$.getValue(): return convertExcelRowToChimpexPlanning(row);break;
+  //     case this.organizationService.isChimpexOrganization$.getValue(): return convertExcelRowToChimpexPlanning(row);break;
+  //     default: return convertExcelRowToBasicPlanning(row);break;
+  //   }
+  // }
 
-  handleFileChange(): void {
-    this.inputElement.nativeElement.value = this.fileElement.nativeElement.files[0].name
-  }
+  // handleFileChange(): void {
+  //   this.inputElement.nativeElement.value = this.fileElement.nativeElement.files[0].name
+  // }
 
-  download(): void {
-    switch (true) {
-      case this.organizationService.isComvexOrganization$.getValue(): this.downloadComvex() ;break; 
-      case this.organizationService.isUmexOrganization$.getValue(): this.downloadUmex(); break;
-      case this.organizationService.isChimpexOrganization$.getValue(): this.downloadChimpex() ; break;
-      default: this.downloadBasic(); break;
-    }
-  }
+  // download(): void {
+  //   switch (true) {
+  //     case this.organizationService.isComvexOrganization$.getValue(): this.downloadComvex() ;break; 
+  //     case this.organizationService.isUmexOrganization$.getValue(): this.downloadUmex(); break;
+  //     case this.organizationService.isChimpexOrganization$.getValue(): this.downloadChimpex() ; break;
+  //     default: this.downloadBasic(); break;
+  //   }
+  // }
 
-  private downloadBasic(): void {
-    this.isLoading$.next(true);
-    combineLatest([
-      this.operationService.list({}),
-      this.dockService.list({})
-    ]).subscribe({
-      next: ([operations, docks]) => {
-      generateBasicExcel(this.translate.currentLang).then((b: Blob) => {
-        const a = document.createElement("a");
-        a.href = URL.createObjectURL(b);
-        a.download = this.translate.currentLang ==='en' ? 'basic_EN.xlsx' : 'basic_RO.xlsx';
-        a.click();
-        URL.revokeObjectURL(a.href);
-        this.isLoading$.next(false);
-      });
-    }, error: (body) => {
-      handleError(this.snackBar, body, this.isLoading$);
-    }})
-  }
+  // private downloadBasic(): void {
+  //   this.isLoading$.next(true);
+  //   combineLatest([
+  //     this.operationService.list({}),
+  //     this.dockService.list({})
+  //   ]).subscribe({
+  //     next: ([operations, docks]) => {
+  //     generateBasicExcel(this.translate.currentLang).then((b: Blob) => {
+  //       const a = document.createElement("a");
+  //       a.href = URL.createObjectURL(b);
+  //       a.download = this.translate.currentLang ==='en' ? 'basic_EN.xlsx' : 'basic_RO.xlsx';
+  //       a.click();
+  //       URL.revokeObjectURL(a.href);
+  //       this.isLoading$.next(false);
+  //     });
+  //   }, error: (body) => {
+  //     handleError(this.snackBar, body, this.isLoading$);
+  //   }})
+  // }
 
-  private downloadUmex(): void {
-    this.isLoading$.next(true);
-    combineLatest([
-      this.operationService.list({}),
-      this.dockService.list({}),
-      this.partnerService.list({}),
-      this.productService.list({})
-    ]).subscribe({
-      next: ([operations, docks, partners, products]) => {
-      generateUmexExcel(this.translate.currentLang, operations, docks, partners, products).then((b: Blob) => {
-        const a = document.createElement("a");
-        a.href = URL.createObjectURL(b);
-        a.download = this.translate.currentLang ==='en' ? 'umex_EN.xlsx' : 'umex_RO.xlsx';
-        a.click();
-        URL.revokeObjectURL(a.href);
-        this.isLoading$.next(false);
-      });
-    }, error: (body) => {
-      handleError(this.snackBar, body, this.isLoading$);
-    }})
-  }
+  // private downloadUmex(): void {
+  //   this.isLoading$.next(true);
+  //   combineLatest([
+  //     this.operationService.list({}),
+  //     this.dockService.list({}),
+  //     this.partnerService.list({}),
+  //     this.productService.list({})
+  //   ]).subscribe({
+  //     next: ([operations, docks, partners, products]) => {
+  //     generateUmexExcel(this.translate.currentLang, operations, docks, partners, products).then((b: Blob) => {
+  //       const a = document.createElement("a");
+  //       a.href = URL.createObjectURL(b);
+  //       a.download = this.translate.currentLang ==='en' ? 'umex_EN.xlsx' : 'umex_RO.xlsx';
+  //       a.click();
+  //       URL.revokeObjectURL(a.href);
+  //       this.isLoading$.next(false);
+  //     });
+  //   }, error: (body) => {
+  //     handleError(this.snackBar, body, this.isLoading$);
+  //   }})
+  // }
 
-  private downloadComvex(): void {
-    this.isLoading$.next(true);
-    combineLatest([
-      this.operationService.list({}),
-      this.dockService.list({}),
-      this.partnerService.list({}),
-      this.productService.list({}),
-      this.locationService.listCountries()
-    ]).subscribe({
-      next: ([operations, docks, partners, products, countries]) => {
-      generateComvexExcel(this.translate.currentLang, operations, docks, partners, products, countries).then((b: Blob) => {
-        const a = document.createElement("a");
-        a.href = URL.createObjectURL(b);
-        a.download = this.translate.currentLang ==='en' ? 'comvex_EN.xlsx' : 'comvex_RO.xlsx';
-        a.click();
-        URL.revokeObjectURL(a.href);
-        this.isLoading$.next(false);
-      });
-    }, error: (body) => {
-      handleError(this.snackBar, body, this.isLoading$);
-    }})
-  }
+  // private downloadComvex(): void {
+  //   this.isLoading$.next(true);
+  //   combineLatest([
+  //     this.operationService.list({}),
+  //     this.dockService.list({}),
+  //     this.partnerService.list({}),
+  //     this.productService.list({}),
+  //     this.locationService.listCountries()
+  //   ]).subscribe({
+  //     next: ([operations, docks, partners, products, countries]) => {
+  //     generateComvexExcel(this.translate.currentLang, operations, docks, partners, products, countries).then((b: Blob) => {
+  //       const a = document.createElement("a");
+  //       a.href = URL.createObjectURL(b);
+  //       a.download = this.translate.currentLang ==='en' ? 'comvex_EN.xlsx' : 'comvex_RO.xlsx';
+  //       a.click();
+  //       URL.revokeObjectURL(a.href);
+  //       this.isLoading$.next(false);
+  //     });
+  //   }, error: (body) => {
+  //     handleError(this.snackBar, body, this.isLoading$);
+  //   }})
+  // }
 
-  private downloadChimpex(): void {
-    this.isLoading$.next(true);
-    combineLatest([
-      this.operationService.list({}),
-      this.dockService.list({}),
-      this.productService.list({})
-    ]).subscribe({
-      next: ([operations, docks, products]) => {
-        generateChimpexExcel(this.translate.currentLang, operations, docks, products).then((b: Blob) => {
-        const a = document.createElement("a");
-        a.href = URL.createObjectURL(b);
-        a.download = this.translate.currentLang ==='en' ? 'chimpex_EN.xlsx' : 'chimpex_RO.xlsx';
-        a.click();
-        URL.revokeObjectURL(a.href);
-        this.isLoading$.next(false);
-      });
-    }, error: (body) => {
-      handleError(this.snackBar, body, this.isLoading$);
-    }})
-  }
+  // private downloadChimpex(): void {
+  //   this.isLoading$.next(true);
+  //   combineLatest([
+  //     this.operationService.list({}),
+  //     this.dockService.list({}),
+  //     this.productService.list({})
+  //   ]).subscribe({
+  //     next: ([operations, docks, products]) => {
+  //       generateChimpexExcel(this.translate.currentLang, operations, docks, products).then((b: Blob) => {
+  //       const a = document.createElement("a");
+  //       a.href = URL.createObjectURL(b);
+  //       a.download = this.translate.currentLang ==='en' ? 'chimpex_EN.xlsx' : 'chimpex_RO.xlsx';
+  //       a.click();
+  //       URL.revokeObjectURL(a.href);
+  //       this.isLoading$.next(false);
+  //     });
+  //   }, error: (body) => {
+  //     handleError(this.snackBar, body, this.isLoading$);
+  //   }})
+  // }
 
 }

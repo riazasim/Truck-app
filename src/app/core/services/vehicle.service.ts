@@ -9,7 +9,6 @@ import {
   wrapJsonForRequest
 } from 'src/app/shared/utils/api.functions';
 import { environment } from 'src/environments/environment';
-import { DockOnlyRelationship, PartnerDockRelationships, PartnerModel } from '../models/partner.model';
 import {
   ResponseArrayPaginationWrapper,
   ResponseArrayWrapper,

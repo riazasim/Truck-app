@@ -30,6 +30,10 @@ export class LocationSettingsComponent {
         link: '../locations'
     },
      {
+      name: 'Stations',
+      link: '../stations'
+    },
+     {
       name: 'Branding',
       link: '../branding'
     },

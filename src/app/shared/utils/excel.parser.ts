@@ -225,8 +225,8 @@ export const generateUmexExcel = async (lang: string, operations: OperationModel
   partners: PartnerModel[], products: ProductModel[]): Promise<Blob> => {
 const workbook = new ExcelJS.Workbook();
 const list = workbook.addWorksheet('umex');
-const customers = partners.filter(p => p.partnerType.toLowerCase() === 'customer');
-const suppliers = partners.filter(p => p.partnerType.toLowerCase() === 'vendor');
+const customers = partners.filter(p => p.type.toLowerCase() === 'customer');
+const suppliers = partners.filter(p => p.type.toLowerCase() === 'vendor');
 list.getColumn(1).width = 15;
 list.getColumn(2).width = 25;
 list.getColumn(3).width = 25;
@@ -278,14 +278,14 @@ trailerTypeSheet.state = 'veryHidden';
 // Customers Sheet
 const customerSheet = workbook.addWorksheet('customers');
 customers.forEach((item) => {
-customerSheet.addRow([`${item.id} - ${item.fullName}`]);
+customerSheet.addRow([`${item.id} - ${item.name}`]);
 })
 customerSheet.state = 'veryHidden';
 
 // Supplier Sheet
 const supplierSheet = workbook.addWorksheet('suppliers');
 suppliers.forEach((item) => {
-supplierSheet.addRow([`${item.id} - ${item.fullName}`]);
+supplierSheet.addRow([`${item.id} - ${item.name}`]);
 })
 supplierSheet.state = 'veryHidden';
 
@@ -425,8 +425,8 @@ export const generateComvexExcel = async (lang: string, operations: OperationMod
 const workbook = new ExcelJS.Workbook();
 workbook.calcProperties.fullCalcOnLoad = true;
 const list = workbook.addWorksheet('comvex');
-const customers = partners.filter(p => p.partnerType.toLowerCase() === 'customer');
-const suppliers = partners.filter(p => p.partnerType.toLowerCase() === 'vendor');
+const customers = partners.filter(p => p.type.toLowerCase() === 'customer');
+const suppliers = partners.filter(p => p.type.toLowerCase() === 'vendor');
 list.getColumn(1).width = 15;
 list.getColumn(2).width = 25;
 list.getColumn(3).width = 25;
@@ -471,14 +471,14 @@ dockSheet.state = 'veryHidden';
 // Customers Sheet
 const customerSheet = workbook.addWorksheet('customers');
 customers.forEach((item) => {
-customerSheet.addRow([`${item.id} - ${item.fullName}`]);
+customerSheet.addRow([`${item.id} - ${item.name}`]);
 })
 customerSheet.state = 'veryHidden';
 
 // Supplier Sheet
 const supplierSheet = workbook.addWorksheet('suppliers');
 suppliers.forEach((item) => {
-supplierSheet.addRow([`${item.id} - ${item.fullName}`]);
+supplierSheet.addRow([`${item.id} - ${item.name}`]);
 })
 supplierSheet.state = 'veryHidden';
 

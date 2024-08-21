@@ -4,11 +4,12 @@ import { Sort } from '@angular/material/sort';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faStar } from '@fortawesome/pro-solid-svg-icons';
-import { PartnerModel } from 'src/app/core/models/partner.model';
-import { PartnerService } from 'src/app/core/services/partner.service';
 import { compare } from 'src/app/shared/utils/sort.function';
 import { StationDeleteModalComponent } from '../station-delete-modal/station-delete-modal.component';
 import { BehaviorSubject } from 'rxjs';
+import { StationService } from 'src/app/core/services/stations.service';
+import { StationModel } from 'src/app/core/models/station.model';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-station-list',
@@ -17,19 +18,23 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class StationListComponent implements OnInit {
   isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  displayedColumns = ['status', 'fullName', 'partnerType', 'address', 'contactNumber', 'email', 'actions'];
+  displayedColumns = ['name', 'type', 'actions'];
   faStarSolid: IconProp = <IconProp>faStar;
-  dataSource: PartnerModel[] = []
-  originalSource: PartnerModel[] = []
+  dataSource: StationModel [] = []
+  originalSource: StationModel[] = []
   appliedFilters: any = {};
+  pageSizeOptions: number[] = [5, 10, 12, 15];
+  pageIndex: number;
+  pageSize: number;
+  length: number;
   constructor(private readonly dialogService: MatDialog,
               private readonly router: Router,
               private readonly route: ActivatedRoute,
-              private readonly partnersService: PartnerService) {
+              private readonly stationService: StationService) {
                }
 
   ngOnInit(): void {
-    this.retrievePartners()
+    this.retrieveStations()
   }
 
   openDeleteModal(id: number): void {
@@ -41,13 +46,23 @@ export class StationListComponent implements OnInit {
         next: (isDelete: boolean) => {
           if (isDelete) {
             this.isLoading$.next(true);
-            this.partnersService.delete(id).subscribe(() => {
-              this.retrievePartners();
+            this.stationService.delete(id).subscribe(() => {
+              this.retrieveStations();
             })
           }
         }
       });
   }
+
+  filterByType(event: any): void {
+    this.isLoading$.next(true);
+    if (!event.target.value) {
+        this.dataSource = [...this.originalSource];
+    } else {
+        this.dataSource = this.originalSource.filter((el: any) => { return String(el.type).includes(event.target.value) });
+    }
+    this.isLoading$.next(false);
+}
 
   applyFilter(target: any, column: string): void {
     if (target.value) {
@@ -90,23 +105,46 @@ export class StationListComponent implements OnInit {
     this.dataSource = data.sort((a: any, b: any) => {
       const isAsc = sort.direction === 'asc';
       switch (sort.active) {
-        case 'fullName': return compare(a.fullName, b.fullName, isAsc);
-        case 'partnerType': return compare(a.partnerType, b.partnerType, isAsc);
-        case 'address': return compare(a.address, b.address, isAsc);
-        case 'contactNumber': return compare(a.contactNumber, b.contactNumber, isAsc);
-        case 'email': return compare(a.email, b.email, isAsc);
+        case 'name': return compare(a.name, b.name, isAsc);
+        case 'type': return compare(a.type, b.type, isAsc);
         default: return 0;
       }
     });
   }
 
-  retrievePartners(): void {
-    this.partnersService.list({}).subscribe(response => {
-      this.dataSource = response;
-      this.originalSource = response;
+  retrieveStations(): void {
+    this.pageIndex = 0;
+    this.pageSize = 5;
+
+    let data = {
+      "start": this.pageIndex,
+      "length": this.pageSize,
+      "filters": ["", "", "", "", ""],
+      "order": [{ "dir": "DESC", "column": 0 }]
+    }
+    this.stationService.pagination(data).subscribe(response => {
+      this.dataSource = response.items;
+      this.originalSource = response.items;
+      this.length = response.noTotal;
       this.isLoading$.next(false);
     })
   }
+
+  onPaginateChange(event: PageEvent) {
+    this.isLoading$.next(true);
+    let data = {
+        "start": event.pageIndex ? event.pageIndex * event.pageSize : event.pageIndex,
+
+        "length": event.pageSize,
+        "filters": ["", "", "", "", "", ""],
+        "order": [{ "dir": "DESC", "column": 0 }]
+    }
+    this.stationService.pagination(data).subscribe(response => {
+        this.dataSource = response.items;
+        this.originalSource = response.items;
+        this.isLoading$.next(false);
+    })
+}
 
   redirectAddStation(): void {
     this.router.navigate(['../add'], { relativeTo: this.route });

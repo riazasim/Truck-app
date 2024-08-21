@@ -48,9 +48,9 @@ export class PartnersContactsAddEditComponent implements OnInit {
   }
 
   retrievePartnersList(): void {
-    this.partnerService.list({}).subscribe((response: PartnerModel[]) => {
-      this.partners = response;
-    });
+    // this.partnerService.list({}).subscribe((response: PartnerModel[]) => {
+    //   this.partners = response;
+    // });
   }
 
   updatePartnerId(event: MatAutocompleteSelectedEvent): void {

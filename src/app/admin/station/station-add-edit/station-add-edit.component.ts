@@ -1,13 +1,12 @@
-import { animate, style, transition, trigger } from '@angular/animations';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
-import { UserModel } from 'src/app/core/models/user.model';
-import { UserService } from 'src/app/core/services/user.service';
 import { handleError } from "../../../shared/utils/error-handling.function";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { createMaxLengthValidator, createMinLengthValidator, createRequiredValidators } from 'src/app/shared/validators/generic-validators';
+import { createRequiredValidators } from 'src/app/shared/validators/generic-validators';
+import { StationService } from 'src/app/core/services/stations.service';
+import { StationModel } from 'src/app/core/models/station.model';
 
 @Component({
     selector: 'app-station-add-edit',
@@ -19,10 +18,10 @@ export class StationAddEditComponent {
     stationForm: UntypedFormGroup;
     id: number;
     stationType = [
-        { id: 1, name: 'Public' },
-        { id: 2, name: 'Private' }
+        { id: 1, name: 'Public', value: 'PUBLIC' },
+        { id: 2, name: 'Private', value: 'PRIVATE' }
     ]
-    constructor(private userService: UserService,
+    constructor(private stationService: StationService,
         private route: ActivatedRoute,
         private router: Router,
         private fb: UntypedFormBuilder,
@@ -36,7 +35,7 @@ export class StationAddEditComponent {
     subscribeForQueryParams(): void {
         this.id = this.route.snapshot.params['id'];
         if (this.id) {
-            this.userService.get(this.id).subscribe(response => {
+            this.stationService.get(this.id).subscribe(response => {
                 this.initForm(response);
                 this.isLoading$.next(false);
             });
@@ -46,18 +45,18 @@ export class StationAddEditComponent {
         }
     }
 
-    initForm(data: any = <any>{}): void {
+    initForm(data: StationModel = <StationModel>{}): void {
         this.stationForm = this.fb.group({
-                stationName: this.fb.control(data?.user?.stationName || '', [...createRequiredValidators()]),
-                stationType: this.fb.control(data?.user?.stationType || '', [...createRequiredValidators()]),
+                name: this.fb.control(data?.name || '', [...createRequiredValidators()]),
+                type: this.fb.control(data?.type || '', [...createRequiredValidators()]),
         });
     }
 
 
-    saveUser(): void {
+    saveStation(): void {
         this.isLoading$.next(true);
         if (this.id) {
-            this.userService.edit(this.id, this.stationForm.getRawValue()).subscribe({
+            this.stationService.edit(this.id, this.stationForm.getRawValue()).subscribe({
                 next: () => {
                     this.isLoading$.next(false)
                     this.router.navigate(['../../success'], { relativeTo: this.route });
@@ -68,11 +67,10 @@ export class StationAddEditComponent {
                 }
             });
         } else {
-            this.stationForm.patchValue({ user: { roles: [this.stationForm.getRawValue().user.roles] } });
-            this.userService.create(this.stationForm.getRawValue()).subscribe({
+            this.stationService.create(this.stationForm.getRawValue()).subscribe({
                 next: () => {
                     this.isLoading$.next(false)
-                    this.router.navigate(['../../success'], { relativeTo: this.route });
+                    this.router.navigate(['../success'], { relativeTo: this.route });
                 },
                 error: (body: any) => {
                     this.isLoading$.next(false)

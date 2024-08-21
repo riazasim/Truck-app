@@ -186,7 +186,7 @@ export class UsersListComponent {
         let data = {
             "start": this.pageIndex,
             "length": this.pageSize,
-            "filters": ["", "", "", "", ""],//["firstname/lastname", "status", "role", "phone", "email"]
+            "filters": ["", "", "", "", ""],
             "order": [{ "dir": "DESC", "column": 0 }]
         }
 
@@ -195,7 +195,6 @@ export class UsersListComponent {
             this.originalSource = response.items;
             this.length = response.noTotal;
             this.isLoading$.next(false);
-            // console.log(this.originalSource.length);
         });
     }
 

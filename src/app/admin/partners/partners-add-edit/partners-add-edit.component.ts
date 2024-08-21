@@ -1,13 +1,12 @@
-import { animate, style, transition, trigger } from '@angular/animations';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
-import { UserModel } from 'src/app/core/models/user.model';
-import { UserService } from 'src/app/core/services/user.service';
 import { handleError } from "../../../shared/utils/error-handling.function";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { createMaxLengthValidator, createMinLengthValidator, createRequiredValidators } from 'src/app/shared/validators/generic-validators';
+import { PartnerModel } from 'src/app/core/models/partner.model';
+import { PartnerService } from 'src/app/core/services/partner.service';
 
 @Component({
     selector: 'app-partners-add-edit',
@@ -19,14 +18,14 @@ export class PartnersAddEditComponent {
     partnerForm: UntypedFormGroup;
     id: number;
     partnerType = [
-        { id: 1, name: 'Public' },
-        { id: 2, name: 'Private' }
+        { id: 1, name: 'Public', value: 'PUBLIC' },
+        { id: 2, name: 'Private', value: 'PRIVATE' }
     ]
     status = [
         { id: 1, name: 'Active', value: true },
         { id: 2, name: 'Inactive', value: false }
     ]
-    constructor(private userService: UserService,
+    constructor(private partnerService: PartnerService,
         private route: ActivatedRoute,
         private router: Router,
         private fb: UntypedFormBuilder,
@@ -40,7 +39,7 @@ export class PartnersAddEditComponent {
     subscribeForQueryParams(): void {
         this.id = this.route.snapshot.params['id'];
         if (this.id) {
-            this.userService.get(this.id).subscribe(response => {
+            this.partnerService.get(this.id).subscribe(response => {
                 // console.log(response)
                 this.initForm(response);
                 this.isLoading$.next(false);
@@ -51,13 +50,13 @@ export class PartnersAddEditComponent {
         }
     }
 
-    initForm(data: any = <any>{}): void {
+    initForm(data: PartnerModel = <PartnerModel>{}): void {
         this.partnerForm = this.fb.group({
-                partnerName: this.fb.control(data?.partnerName || '', [...createRequiredValidators()]),
-                partnerType: this.fb.control(data?.partnerType || '', [...createRequiredValidators()]),
+                name: this.fb.control(data?.name || '', [...createRequiredValidators()]),
+                type: this.fb.control(data?.type || '', [...createRequiredValidators()]),
                 status: this.fb.control(data?.status || '' , [...createRequiredValidators()]),
                 address: this.fb.control(data?.address || '', [...createRequiredValidators()]),
-                phone: this.fb.control(data?.phone || '', [...createRequiredValidators() , Validators.pattern("[- +()0-9]+") , ...createMinLengthValidator(7) , ...createMaxLengthValidator(17)]),
+                phone: this.fb.control(data?.phone || '', [...createRequiredValidators()]),
                 email: this.fb.control(data?.email || '', [...createRequiredValidators()]),
             })
     }
@@ -66,7 +65,7 @@ export class PartnersAddEditComponent {
     saveUser(): void {
         this.isLoading$.next(true);
         if (this.id) {
-            this.userService.edit(this.id, this.partnerForm.getRawValue()).subscribe({
+            this.partnerService.edit(this.id, this.partnerForm.getRawValue()).subscribe({
                 next: () => {
                     this.isLoading$.next(false)
                     this.router.navigate(['../../success'], { relativeTo: this.route });
@@ -78,10 +77,10 @@ export class PartnersAddEditComponent {
             });
         } else {
             this.partnerForm.patchValue({ user: { roles: [this.partnerForm.getRawValue().user.roles] } });
-            this.userService.create(this.partnerForm.getRawValue()).subscribe({
+            this.partnerService.create(this.partnerForm.getRawValue()).subscribe({
                 next: () => {
                     this.isLoading$.next(false)
-                    this.router.navigate(['../../success'], { relativeTo: this.route });
+                    this.router.navigate(['../success'], { relativeTo: this.route });
                 },
                 error: (body: any) => {
                     this.isLoading$.next(false)

@@ -9,23 +9,29 @@ import { PartnerService } from 'src/app/core/services/partner.service';
 import { compare } from 'src/app/shared/utils/sort.function';
 import { PartnersDeleteModalComponent } from '../partners-delete-modal/partners-delete-modal.component';
 import { BehaviorSubject } from 'rxjs';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-partners-list',
   templateUrl: './partners-list.component.html',
+  styleUrl: './partners-list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PartnersListComponent implements OnInit {
   isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  displayedColumns = ['status', 'fullName', 'partnerType', 'address', 'contactNumber', 'email', 'actions'];
+  displayedColumns = ['name', 'type', 'status', 'phone', 'email', 'actions'];
   faStarSolid: IconProp = <IconProp>faStar;
   dataSource: PartnerModel[] = []
   originalSource: PartnerModel[] = []
   appliedFilters: any = {};
+  pageSizeOptions: number[] = [5, 10, 12, 15];
+    pageIndex: number;
+    pageSize: number;
+    length: number;
   constructor(private readonly dialogService: MatDialog,
               private readonly router: Router,
               private readonly route: ActivatedRoute,
-              private readonly partnersService: PartnerService) {
+              private readonly partnerService: PartnerService) {
                }
 
   ngOnInit(): void {
@@ -41,13 +47,33 @@ export class PartnersListComponent implements OnInit {
         next: (isDelete: boolean) => {
           if (isDelete) {
             this.isLoading$.next(true);
-            this.partnersService.delete(id).subscribe(() => {
+            this.partnerService.delete(id).subscribe(() => {
               this.retrievePartners();
             })
           }
         }
       });
   }
+
+  filterByType(event: any): void {
+    this.isLoading$.next(true);
+    if (!event.target.value) {
+        this.dataSource = [...this.originalSource];
+    } else {
+        this.dataSource = this.originalSource.filter((el: any) => { return String(el.type).includes(event.target.value) });
+    }
+    this.isLoading$.next(false);
+}
+
+  filterByStatus(event: any): void {
+    this.isLoading$.next(true);
+    if (!event.target.value) {
+        this.dataSource = [...this.originalSource];
+    } else {
+        this.dataSource = this.originalSource.filter((el: any) => { return String(el.status).includes(event.target.value) });
+    }
+    this.isLoading$.next(false);
+}
 
   applyFilter(target: any, column: string): void {
     if (target.value) {
@@ -90,10 +116,11 @@ export class PartnersListComponent implements OnInit {
     this.dataSource = data.sort((a: any, b: any) => {
       const isAsc = sort.direction === 'asc';
       switch (sort.active) {
-        case 'fullName': return compare(a.fullName, b.fullName, isAsc);
-        case 'partnerType': return compare(a.partnerType, b.partnerType, isAsc);
+        case 'name': return compare(a.name, b.name, isAsc);
+        case 'type': return compare(a.type, b.type, isAsc);
+        case 'status': return compare(a.status, b.status, isAsc);
         case 'address': return compare(a.address, b.address, isAsc);
-        case 'contactNumber': return compare(a.contactNumber, b.contactNumber, isAsc);
+        case 'phone': return compare(a.phone, b.phone, isAsc);
         case 'email': return compare(a.email, b.email, isAsc);
         default: return 0;
       }
@@ -101,12 +128,38 @@ export class PartnersListComponent implements OnInit {
   }
 
   retrievePartners(): void {
-    this.partnersService.list({}).subscribe(response => {
-      this.dataSource = response;
-      this.originalSource = response;
-      this.isLoading$.next(false);
-    })
+      this.pageIndex = 0;
+      this.pageSize = 5;
+
+      let data = {
+          "start": this.pageIndex,
+          "length": this.pageSize,
+          "filters": ["", "", "", "", ""],
+          "order": [{ "dir": "DESC", "column": 0 }]
+      }
+
+      this.partnerService.pagination(data).subscribe((response) => {
+          this.dataSource = response.items;
+          this.originalSource = response.items;
+          this.length = response.noTotal;
+          this.isLoading$.next(false);
+      });
   }
+  onPaginateChange(event: PageEvent) {
+    this.isLoading$.next(true);
+    let data = {
+        "start": event.pageIndex ? event.pageIndex * event.pageSize : event.pageIndex,
+
+        "length": event.pageSize,
+        "filters": ["", "", "", "", "", ""],//["firstname/lastname", "status", "role", "phone", "email"]
+        "order": [{ "dir": "DESC", "column": 0 }]
+    }
+    this.partnerService.pagination(data).subscribe(response => {
+        this.dataSource = response.items;
+        this.originalSource = response.items;
+        this.isLoading$.next(false);
+    })
+}
 
   redirectAddPartner(): void {
     this.router.navigate(['../add'], { relativeTo: this.route });
