@@ -13,6 +13,8 @@ import { RestrictionsComponent } from './restrictions/restrictions.component';
 import { TrainAddSchedulingComponent } from './add-scheduling/train/train-add-scheduling.component';
 import { A } from '@angular/cdk/keycodes';
 import { WaterAddSchedulingComponent } from './add-scheduling/water/water-add-scheduling.component';
+import { TrainPlanningListComponent } from './planning-list/train/train-planning-list.component';
+import { WaterPlanningListComponent } from './planning-list/water/water-planning-list.component';
 const appMode = localStorage.getItem("appMode");
 var routes: Routes = [
   {
@@ -30,7 +32,7 @@ var routes: Routes = [
       },
       {
         path: 'planning-list',
-        component: PlanningListComponent
+        component: appMode === "RAILWAY" ? TrainPlanningListComponent : appMode === "WATER" ? WaterPlanningListComponent : PlanningListComponent
       },
       {
         path: 'add',

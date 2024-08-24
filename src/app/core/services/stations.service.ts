@@ -56,6 +56,15 @@ export class StationService {
                         })
             );
   }
+
+  getStationListByType(type: any): Observable<any> {
+    return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getStationListByType`, { "type": type })
+        .pipe(pluckItemWrapperData<any, ResponseItemWrapper<any>>(),
+            map((p: any) => {
+                return p;
+            })
+        )
+}
   // getShipList(data: any): Observable<ShipTable> {
   //   return this.http.post<ResponseArrayPaginationWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getShipList`, wrapJsonForRequest(data))
   //       .pipe(pluckArrayPaginationWrapperData<any, ResponseArrayPaginationWrapper<any>>(),

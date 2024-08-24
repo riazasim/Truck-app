@@ -256,10 +256,14 @@
             </div>
             <div class="grid mt-4" *ngIf="isTableView$ | async">
                 <!-- <app-loader *ngIf="isLoading$ | async" [isContainer]="true" [fullScreen]="false"></app-loader> -->
-                <app-planning-list (triggerOpenLogs)="toggleSidenav($event)" [userRole]="userRole"
+                <app-planning-list *ngIf="transportMode !== 'RAILWAY'" (triggerOpenLogs)="toggleSidenav($event)" [userRole]="userRole"
                     [plannings]="plannings" [length]="length" [isTableLoading$]="isTableLoading$"
                     (onPaginate)="onPaginateChange($event)" (retrievePlannings)="retrievePlanningList()"
                     [transportMode]="transportMode"></app-planning-list>
+                <app-train-planning-list *ngIf="transportMode === 'RAILWAY'" (triggerOpenLogs)="toggleSidenav($event)" [userRole]="userRole"
+                    [plannings]="plannings" [length]="length" [isTableLoading$]="isTableLoading$"
+                    (onPaginate)="onPaginateChange($event)" (retrievePlannings)="retrievePlanningList()"
+                    [transportMode]="transportMode"></app-train-planning-list>
             </div>
         </div>
     </mat-sidenav-content>

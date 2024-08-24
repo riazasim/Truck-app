@@ -7,6 +7,12 @@
     }
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 ul li {
     @apply px-5 my-2 hover:bg-lightgray cursor-pointer;
 }

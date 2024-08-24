@@ -15,11 +15,15 @@ import { StatusListService } from 'src/app/core/services/status-list.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { handleError } from 'src/app/shared/utils/error-handling.function';
 import { getFormatHourSlot } from '../../scheduling-box.helper';
-import { PlanningModel, convoyModel } from 'src/app/core/models/planning.model';
+import { PlanningModel, PointModal, convoyModel } from 'src/app/core/models/planning.model';
 import { ShipsService } from 'src/app/core/services/ships.service';
 import { MicroService } from 'src/app/core/services/micro.service';
 import { ProductService } from 'src/app/core/services/product.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { createRequiredValidators } from 'src/app/shared/validators/generic-validators';
+import { PartnerService } from 'src/app/core/services/partner.service';
+import { TrainsService } from 'src/app/core/services/trains.service';
+import { StationService } from 'src/app/core/services/stations.service';
 
 @Component({
     selector: 'train-app-add-scheduling',
@@ -38,10 +42,12 @@ export class TrainAddSchedulingComponent implements OnInit {
 
     schedulingForm: FormGroup;
     convoyForm: FormGroup;
+    routingDetailsForm: FormGroup;
+    wagonForm: FormGroup;
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     showFileThree$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     isPortsLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
-    isPortChangeLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    isStationTypeChangeLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
     isLinear = true;
     customers: PartnerModel[] = [];
@@ -56,6 +62,8 @@ export class TrainAddSchedulingComponent implements OnInit {
     customFieldAdditionalData: SchedulingCustomField[] = [];
 
     products: ProductModel[] = [];
+    companiesList: PartnerModel[] = [];
+    locomotives: any;
     // listProducts: ProductModel[] = [];
     docks: DockModel[] = [];
     buildings: BuildingModel[] = [];
@@ -65,9 +73,12 @@ export class TrainAddSchedulingComponent implements OnInit {
     imageLen: number = 0;
     tempImg: File[] = [];
     customInputsFetched: boolean = false;
-    dateVal: string;
-    timeVal: string;
-    dateTimeVal: string;
+    etpDateVal: string;
+    etpTimeVal: string;
+    etpDateTimeVal: string;
+    etdDateVal: string;
+    etdTimeVal: string;
+    etdDateTimeVal: string;
     search: string;
     slots: number[] = [];
     ignoreSlots: number[] = [];
@@ -76,17 +87,33 @@ export class TrainAddSchedulingComponent implements OnInit {
     tomorrow: Date;
     selectedSlot$: BehaviorSubject<number | null> = new BehaviorSubject<number | null>(null);
     selectedCustomer$: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
+    isStationLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     ports: any[] = [];
     getFormatHourSlot: Function;
 
     id: number;
     shipsList: any;
-    filterDate: Date = new Date();
-    filterTime = '00:00:00'
+    etpDate: Date = new Date();
+    etpTime = '00:00:00';
+    etdDate: Date = new Date();
+    etdTime = '00:00:00';
     rowIndex: number = 1;
     rows: any[] = [this.rowIndex];
+    selectedIndex: any = 0;
     noIndex: number = 1;
     no: any[] = [this.noIndex];
+    points: any[] = [];
+    wagonsList: any[] = [];
+
+    stationType: any;
+    station: any;
+    wagon: any;
+    category: any;
+    subCategory: any;
+    grossWeight: any;
+    taraWeight: any;
+    netWeight: any;
+    seals: any;
 
     private formatDateObject(date: Date): string {
         const year = date.getFullYear();
@@ -100,7 +127,7 @@ export class TrainAddSchedulingComponent implements OnInit {
     departureZone: any[] = [];
     arrivalZone: any[] = [];
     companies: any[];
-    category = [
+    categoryList = [
         { id: 1, name: 'Containers' },
         { id: 2, name: 'Liquids' },
         { id: 3, name: 'Grains' },
@@ -110,7 +137,7 @@ export class TrainAddSchedulingComponent implements OnInit {
         { id: 7, name: 'Coal' },
         { id: 8, name: 'Other' },
     ];
-    subCategory = [
+    subCategoryList = [
         { id: 1, name: '40 DC' },
         { id: 2, name: 'Crude oil' },
         { id: 3, name: 'Wheat' },
@@ -120,25 +147,11 @@ export class TrainAddSchedulingComponent implements OnInit {
         { id: 7, name: 'Lignit' },
         { id: 8, name: 'Spercial ' },
     ];
-    stationType = [
-        { id: 1, name: 'Public' },
-        { id: 2, name: 'Private ' },
+    stationTypes = [
+        { id: 1, name: 'Public', value: 'PUBLIC' },
+        { id: 2, name: 'Private', value: 'PRIVATE' },
     ];
-    station = [
-        { id: 1, name: 'Constanta Port' },
-        { id: 2, name: 'Nitramonia' },
-        { id: 3, name: 'Viromet' },
-    ];
-    points = [
-        { id: 1, name: 'point1' },
-        { id: 2, name: 'point2' },
-        { id: 3, name: 'point3' },
-    ];
-    companyList = [
-        { id: 1, name: 'company1' },
-        { id: 2, name: 'company2' },
-        { id: 3, name: 'company3' },
-    ];
+    stations: any = [];
 
     constructor(
         private readonly fb: FormBuilder,
@@ -147,9 +160,9 @@ export class TrainAddSchedulingComponent implements OnInit {
         private readonly router: Router,
         private readonly statusListStatus: StatusListService,
         private readonly snackBar: MatSnackBar,
-        private readonly shipsService: ShipsService,
-        private readonly productService: ProductService,
-        private readonly microService: MicroService,
+        private readonly trainsService: TrainsService,
+        private readonly stationService: StationService,
+        private readonly partnerService: PartnerService,
     ) {
         this.getFormatHourSlot = getFormatHourSlot.bind(this);
     }
@@ -158,14 +171,46 @@ export class TrainAddSchedulingComponent implements OnInit {
         this.id = this.route.snapshot.params['id'];
         this.initForm();
         this.initConvoyForm();
+        this.initPointForm();
+        // this.initWagonForm();
         this.isLoading$.next(false);
-        this.retrivePorts();
-        this.retriveProducts()
+        this.retrieveCompanies();
+        this.retrieveLocomotives();
     }
 
     drop(event: CdkDragDrop<string[]>) {
-        moveItemInArray(this.rows, event.previousIndex, event.currentIndex);
+        if (event.previousIndex === this.rows.length - 1 || event.currentIndex === this.rows.length - 1) {
+            this.routingDetailsForm.patchValue({ pointType: "Touch Point", stationType: this.stationType || "", station: this.station || "" })
+            if (this.routingDetailsForm.valid) {
+                this.points.push(this.routingDetailsForm.value);
+                this.station = "";
+                this.stationType = "";
+            }
+        }
+        moveItemInArray(this.points, event.previousIndex, event.currentIndex);
     }
+    // wagonTable(event: CdkDragDrop<string[]>) {
+    //     if (event.previousIndex === this.no.length - 1 || event.currentIndex === this.no.length - 1) {
+    //         this.wagonForm.patchValue(
+    //         { 
+    //             wagion: this.wagon || "", 
+    //             category: this.stationType || "", 
+    //             subCategory: this.station || "",
+    //             grossWeight: this.station || "",
+    //             taraWeight: this.station || "",
+    //             netWeight: this.station || "",
+    //             seals: this.station || "", 
+
+    //         }
+    //     )
+    // if (this.wagonForm.valid) {
+    //     this.wagonsList.push(this.wagonForm.value);
+    // this.station = "";
+    // this.stationType = "";
+    // }
+    //     }
+    //     moveItemInArray(this.wagonsList, event.previousIndex, event.currentIndex);
+    // }
 
     formatDate(date: Date | string): string {
         let formattedDate = '';
@@ -180,17 +225,44 @@ export class TrainAddSchedulingComponent implements OnInit {
         return formattedDate;
     }
 
-
     navigate(index: number) {
+        if (this.etpDateVal === undefined) this.etpDateVal = this.formatDate(this.etpDate);
+        if (this.etpTimeVal === undefined) this.etpTimeVal = String(this.etpTime);
+        if (this.etdDateVal === undefined) this.etdDateVal = this.formatDate(this.etdDate);
+        if (this.etdTimeVal === undefined) this.etdTimeVal = String(this.etdTime);
+        this.etpDateTimeVal = `${this.etpDateVal} ${this.etpTimeVal}`;
+        this.etdDateTimeVal = `${this.etdDateVal} ${this.etdTimeVal}`;
+        this.convoyForm.patchValue({ estimatedTimePickUp: this.etpDateTimeVal, estimatedTimeDeliver: this.etdDateTimeVal });
         this.convoys.push(this.convoyForm.value)
         this.imageLen++
         this.tempImg = [];
-        this.initConvoyForm()
+        this.initConvoyForm();
         this.matStepper.selectedIndex = index;
     }
 
 
-    retriveProducts() {
+    retrieveLocomotives(): void {
+        let data = {
+            "start": '',
+            "length": '',
+            "filters": ["", "", "", "", ""],
+            "order": [{ "dir": "DESC", "column": 0 }]
+        }
+        this.trainsService.pagination(data).subscribe(response => {
+            this.locomotives = response?.items;
+            this.isLoading$.next(false);
+        })
+    }
+
+    onLocomotiveSelected(ev: any): void {
+        const selectedLocomotiveId = ev.target.value
+        const selectedLocomotive = this.locomotives.find((locomotive: any) => Number(locomotive.id) === Number(selectedLocomotiveId));
+        if (selectedLocomotive) {
+            this.schedulingForm.patchValue({ routingDetail: { locomotiveType: selectedLocomotive.type || '' } })
+        }
+    }
+
+    retrieveCompanies() {
         this.isLoading$.next(true);
         let data = {
             "start": 0,
@@ -198,9 +270,50 @@ export class TrainAddSchedulingComponent implements OnInit {
             "filters": ["", "", "", ""],
             "order": [{ "dir": "DESC", "column": 0 }]
         }
-        this.productService.pagination(data).subscribe(response => {
-            this.products = response.items;
+        this.partnerService.pagination(data).subscribe(response => {
+            this.companiesList = response.items;
             this.isLoading$.next(false);
+        })
+    }
+
+
+    onStationTypeChange(ev: any, index: any) {
+        this.selectedIndex = index;
+        if (index === this.rows.length - 1) {
+            this.stationType = ev?.target?.value;
+            this.retrieveStations(this.stationType, index);
+
+        }
+        else {
+            this.points[index].stationType = ev?.target?.value;
+            this.retrieveStations(this.points[index].stationType, index);
+            this.points[index].station = "";
+        }
+    }
+
+    retrieveStations(type: any, index: any) {
+        this.isStationLoading$.next(true);
+        this.stationService.getStationListByType(type).subscribe({
+            next: res => {
+                if (res?.status !== 'error') {
+                    let stationArray: any[] = [];
+                    res?.forEach((item: any) => {
+                        stationArray.push(item.attributes)
+                    });
+                    this.stations[index] = stationArray;
+
+                    console.log(this.stations);
+
+                }
+                if (this.stations.length === 0) {
+                    this.schedulingForm.patchValue({ routingDetail: { station: "" } })
+                }
+                this.isStationLoading$.next(false);
+            },
+            error: err => {
+                this.isStationLoading$.next(true);
+                throw err
+            }
         })
     }
 
@@ -208,193 +321,175 @@ export class TrainAddSchedulingComponent implements OnInit {
         this.search = ev?.target?.value
     }
 
-    retrivePorts() {
-        this.microService.getPorts().subscribe({
-            next: res => {
-                if (res.length > 0) {
-                    res?.forEach((item: any) => {
-                        this.ports.push(item?.attributes);
-                    });
-                }
-                this.isPortsLoading$.next(false)
-            },
-            error: err => {
-                throw err;
-            }
-        })
-    }
-
-
-    onDeparturePortChange(ev: any) {
-        this.isPortChangeLoading$.next(true);
-        let departurePort: any;
-        this.ports.filter((item: any) => {
-            if (Number(item.id) === Number(ev.target.value)) departurePort = item;
-        })
-        if (departurePort) {
-            this.schedulingForm.patchValue({ routingDetail: { ridCoordinates: departurePort?.addrCoordinates } })
-            // console.log(departurePort?.zones);
-            this.departureZone = departurePort?.zones;
-            this.retriveCompanines(departurePort.id);
-        }
-    }
-    onArrivalPortChange(ev: any) {
-        let arrivalPort: any;
-        this.ports.filter((item: any) => {
-            if (Number(item.id) === Number(ev.target.value)) arrivalPort = item;
-        })
-        if (arrivalPort) {
-            // console.log(arrivalPort?.zones);
-            this.arrivalZone = arrivalPort?.zones;
-        }
-    }
-
-    retriveCompanines(portId: any) {
-        this.microService.getCompanies(portId).subscribe({
-            next: res => {
-                this.companies = [];
-                if (res?.status !== 'error') {
-                    res?.forEach((item: any) => {
-                        this.companies.push(item?.attributes);
-                    });
-                }
-                if (this.companies.length === 0) {
-                    this.schedulingForm.patchValue({ routingDetail: { company: null } })
-                }
-                this.isPortChangeLoading$.next(false);
-            },
-            error: err => {
-                this.isPortChangeLoading$.next(false);
-                throw err
-            }
-        })
-    }
-
-
-
     next(index: any): void {
         if (this.matStepper.selectedIndex === 0) {
-            this.retrieveShips();
+            // this.retrieveShips();
         }
-        this.matStepper.selectedIndex = index;
+        if (index === 1) {
+            this.routingDetailsForm.patchValue({ pointType: "Touch Point", stationType: this.stationType || "", station: this.station || "" })
+            if (this.routingDetailsForm.valid) {
+                this.points.push(this.routingDetailsForm.value);
+                if (this.points.length < 1) {
+                    return
+                }
+                this.points[0].pointType = "Start Point"
+                this.points[this.points.length - 1].pointType = "End Point"
+                this.matStepper.selectedIndex = index;
+            }
+        }
+        else {
+            this.matStepper.selectedIndex = index;
+        }
     }
 
-    OnDateChange(value: any) {
+    OnETPDateChange(value: any) {
         let filterDate = value instanceof Date ? value : new Date(value);
-        this.dateVal = this.formatDate(filterDate);
-        this.schedulingForm.patchValue({ routingDetail: { estimatedTimeArrival: this.dateVal } })
-    }
-    OnTimeChange(value: any) {
-        this.timeVal = value
+        this.etpDateVal = this.formatDate(filterDate);
     }
 
-    retrieveShips(): void {
-        let data = {
-            "start": '',
-            "length": '',
-            "filters": ["", "", "", "", ""],
-            "order": [{ "dir": "DESC", "column": 0 }]
-        }
-        this.shipsService.getShipList(data).subscribe(response => {
-            this.shipsList = response;
-
-            this.isLoading$.next(false);
-        })
+    OnETDDateChange(value: any) {
+        let filterDate = value instanceof Date ? value : new Date(value);
+        this.etdDateVal = this.formatDate(filterDate);
     }
-
-    onShipSelected(ev: any): void {
-        const selectedShipId = ev.target.value
-        const selectedShip = this.shipsList.find((ship: any) => Number(ship.attributes.id) === Number(selectedShipId));
-        if (selectedShip) {
-            this.convoyForm.patchValue({
-                width: selectedShip.attributes.width || '',
-                maxDraft: selectedShip.attributes.maxDraft || '',
-                maxQuantity: selectedShip.attributes.maxCapacity || '',
-                arrivalGauge: selectedShip.attributes.aerialGauge || '',
-                lockType: selectedShip.attributes.lockType || ''
-            });
-        }
+    OnETPTimeChange(value: any) {
+        this.etpTimeVal = value
     }
-
-    onProductChange(ev: any) {
-        if (this.productsList.includes(ev?.source?.value)) {
-            const index = this.productsList.indexOf(ev?.source?.value);
-            this.productsList.splice(index, 1);
-        }
-        else this.productsList.push(ev?.source?.value);
-        this.convoyForm.patchValue({ products: `[${this.productsList}]` })
+    OnETDTimeChange(value: any) {
+        this.etpTimeVal = value
     }
-
 
     retrieveStatuses(): Observable<any> {
         return this.statusListStatus.listSid();
     }
 
-    initConvoyForm(data?: convoyModel): void {
+    initConvoyForm(data?: any): void {
         this.convoyForm = this.fb.group({
-            navigationType: this.fb.control(data?.navigationType),
-            company: this.fb.control(data?.company || ''),
-            status: this.fb.control(data?.status || ''),
-            ship: this.fb.control(data?.ship || ''),
-            shipType: this.fb.control(data?.shipType || ''),
-            pavilion: this.fb.control(data?.pavilion || ''),
-            enginePower: this.fb.control(data?.enginePower || 0),
-            lengthOverall: this.fb.control(data?.lengthOverall || 0),
-            width: this.fb.control(data?.width || 0),
-            maxDraft: this.fb.control(data?.maxDraft || 0),
-            maxQuantity: this.fb.control(data?.maxQuantity || 0),
-            agent: this.fb.control(data?.agent || ''),
-            maneuvering: this.fb.control(data?.maneuvering || ''),
-            shipowner: this.fb.control(data?.shipowner || ''),
-            purpose: this.fb.control(data?.purpose || ''),
-            operator: this.fb.control(data?.operator || ''),
-            trafficType: this.fb.control(data?.trafficType || ''),
-            operatonType: this.fb.control(data?.operatonType || ''),
-            cargo: this.fb.control(data?.cargo || ''),
-            quantity: this.fb.control(data?.quantity || 0),
-            unitNo: this.fb.control(data?.unitNo || ''),
-            observation: this.fb.control(data?.observation || ''),
+            pickUpFromCompany: this.fb.control(data?.pickUpFromCompany),
+            deliverToCompany: this.fb.control(data?.deliverToCompany || ''),
+            pickUpPoint: this.fb.control(data?.pickUpPoint || ''),
+            deliverPoint: this.fb.control(data?.deliverPoint || ''),
+            estimatedTimePickUp: this.fb.control(data?.estimatedTimePickUp || ''),
+            estimatedTimeDeliver: this.fb.control(data?.estimatedTimeDeliver || ''),
+            convoyWagonDetail: this.fb.array([{
+                wagion: '',
+                category: '',
+                subCategory: '',
+                grossWeight: '',
+                taraWeight: '',
+                netWeight: '',
+                seals: '',
+            }]),
             additionalOperator: this.fb.control(data?.additionalOperator || ''),
             clientComments: this.fb.control(data?.clientComments || ''),
             operatorComments: this.fb.control(data?.operatorComments),
-            products: this.fb.control(data?.products || ""),
-            lockType: this.fb.control(data?.lockType || ''),
-            arrivalGauge: this.fb.control(data?.arrivalGauge || 0),
         })
+        if (data?.convoyWagonDetail) {
+            data.convoyWagonDetail.forEach((wagon: any) => {
+                this.addWagons(wagon);
+            });
+        }
     }
 
-    initForm(data?: PlanningModel): void {
+    get wagons(): any {
+        return this.convoyForm.get('convoyWagonDetail');
+    }
+
+    addWagons(data?: any): void {
+        const newWagons = this.fb.group({
+            wagion: [data?.wagion || ''],
+            category: [data?.category || ''],
+            subCategory: [data?.subCategory || ''],
+            grossWeight: [data?.grossWeight || ''],
+            taraWeight: [data?.taraWeight || ''],
+            netWeight: [data?.netWeight || ''],
+            seals: [data?.seals || ''],
+        });
+        this.wagons.push(newWagons);
+    }
+
+    // initWagonForm(data?: any): void {
+    //     this.wagonForm = this.fb.group({
+    //         wagion: this.fb.control(data?.wagion || '', [...createRequiredValidators()]),
+    //         category: this.fb.control(data?.category || '', [...createRequiredValidators()]),
+    //         subCategory: this.fb.control(data?.subCategory || '', [...createRequiredValidators()]),
+    //         grossWeight: this.fb.control(data?.grossWeight || '', [...createRequiredValidators()]),
+    //         taraWeight: this.fb.control(data?.taraWeight || '', [...createRequiredValidators()]),
+    //         netWeight: this.fb.control(data?.netWeight || '', [...createRequiredValidators()]),
+    //         seals: this.fb.control(data?.seals || '', [...createRequiredValidators()]),
+    //     });
+    // }
+
+    initForm(data?: any): void {
         this.schedulingForm = this.fb.group({
             routingDetail: this.fb.group({
-                convoyType: this.fb.control(data?.routingDetail?.convoyType),
-                // convoyType: this.fb.control(data?.routingDetail?.convoyType || ''),
-                estimatedTimeArrival: this.fb.control(data?.routingDetail?.estimatedTimeArrival || ''),
-                // locationPort: this.fb.control(data?.routingDetail?.locationPort || ''),
-                departureZone: this.fb.control(data?.routingDetail?.departureZone || ''),
-                arrivalZone: this.fb.control(data?.routingDetail?.arrivalZone || ''),
-                departurePort: this.fb.control(data?.routingDetail?.departurePort || ''),
-                arrivalPort: this.fb.control(data?.routingDetail?.arrivalPort || ''),
-                company: this.fb.control(data?.routingDetail?.company || ''),
-                pilotCompany: this.fb.control(data?.routingDetail?.pilotCompany || ''),
-                // length: this.fb.control(data?.routingDetail?.length || 0),
-                // width: this.fb.control(data?.routingDetail?.width || 0),
-                // maxDraft: this.fb.control(data?.routingDetail?.maxDraft || 0),
-                // arrivalGauge: this.fb.control(data?.routingDetail?.arrivalGauge || 0),
-                // maxCapacity: this.fb.control(data?.routingDetail?.maxCapacity || 0),
-                // lockType: this.fb.control(data?.routingDetail?.lockType || ''),
-                ridCoordinates: this.fb.control(data?.routingDetail?.ridCoordinates || ''),
+                locomotiveId: this.fb.control(data?.routingDetail?.locomotiveId || ''),
+                locomotiveType: this.fb.control(data?.routingDetail?.locomotiveType || ''),
+                conductorType: this.fb.control(data?.routingDetail?.conductorType || ''),
+                userEmail: this.fb.control(data?.routingDetail?.userEmail || ''),
+                routingDetails: this.fb.control(data?.routingDetail?.routingDetails || []),
             }),
             convoyDetail: this.fb.control(data?.convoyDetail || []),
             documents: this.fb.control(data?.documents || []),
         });
     }
 
+    initPointForm(data?: PointModal): void {
+        this.routingDetailsForm = this.fb.group({
+            pointType: this.fb.control(data?.pointType),
+            stationType: this.fb.control(data?.stationType || '', [...createRequiredValidators()]),
+            station: this.fb.control(data?.station || '', [...createRequiredValidators()])
+        });
+    }
+
 
     addPoints(): void {
-        this.rows.push(++this.rowIndex);
+        if (this.rows.length <= this.points.length) {
+            this.rows.push(++this.rowIndex);
+        }
+        else {
+            this.routingDetailsForm.patchValue({ pointType: this.stationType || "", stationType: this.stationType || "", station: this.station || "" })
+            if (this.routingDetailsForm.valid) {
+                this.points.push(this.routingDetailsForm.value);
+                this.station = "";
+                this.stationType = "";
+                this.rows.push(++this.rowIndex);
+            }
+        }
     }
-    addWagons(): void {
-        this.no.push(++this.noIndex);
+    // addWagons(): void {
+    //     if (this.no.length <= this.wagonsList.length) {
+    //         this.no.push(++this.noIndex);
+    //     }
+    //     else {
+    //         this.wagonForm.patchValue(
+    //             {
+    //                 category: this.category || "",
+    //                 subCategory: this.subCategory || "",
+    //             }
+    //         )
+    //         if (this.wagonForm.valid) {
+    //             this.wagonsList.push(this.wagonForm.value);
+    //             this.wagon = "";
+    //             this.category = "";
+    //             this.subCategory = "";
+    //             this.grossWeight = "";
+    //             this.taraWeight = "";
+    //             this.netWeight = "";
+    //             this.seals = "";
+    //             this.no.push(++this.noIndex);
+    //         }
+    //     }
+    // }
+
+
+
+    onStationChange(ev: any, index: any) {
+        if (index === this.rows.length - 1) {
+            this.station = ev?.target?.value;
+        }
+        else {
+            this.points[index].station = ev?.target?.value;
+        }
     }
 
     removeContact(): void {
@@ -422,13 +517,36 @@ export class TrainAddSchedulingComponent implements OnInit {
         // }
     }
 
+    onCategoryChange(ev: any, index?: any) {
+        console.log(index)
+        if (index === this.no.length - 1) {
+            this.category = ev?.target?.value;
+        }
+        else {
+            this.wagonsList[index].category = ev?.target?.value;
+        }
+    }
+
+    onSubCategoryChange(ev: any, index?: any) {
+        if (index === this.no.length - 1) {
+            this.subCategory = ev?.target?.value;
+        }
+        else {
+            this.wagonsList[index].subCategory = ev?.target?.value;
+        }
+    }
+
     saveScheduling(): void {
         this.isLoading$.next(true);
-        this.convoys.push(this.convoyForm.value)
-        if (this.dateVal === undefined) this.dateVal = this.formatDate(this.filterDate);
-        if (this.timeVal === undefined) this.timeVal = String(this.filterTime);
-        this.dateTimeVal = `${this.dateVal} ${this.timeVal}`;
-        this.schedulingForm.patchValue({ convoyDetail: this.convoys, documents: this.images, routingDetail: { estimatedTimeArrival: this.dateTimeVal } })
+        if (this.etpDateVal === undefined) this.etpDateVal = this.formatDate(this.etpDate);
+        if (this.etpTimeVal === undefined) this.etpTimeVal = String(this.etpTime);
+        if (this.etdDateVal === undefined) this.etdDateVal = this.formatDate(this.etdDate);
+        if (this.etdTimeVal === undefined) this.etdTimeVal = String(this.etdTime);
+        this.etpDateTimeVal = `${this.etpDateVal} ${this.etpTimeVal}`;
+        this.etdDateTimeVal = `${this.etdDateVal} ${this.etdTimeVal}`;
+        this.convoyForm.patchValue({ estimatedTimePickUp: this.etpDateTimeVal, estimatedTimeDeliver: this.etdDateTimeVal });
+        this.convoys.push(this.convoyForm.value);
+        this.schedulingForm.patchValue({ convoyDetail: this.convoys, documents: this.images, routingDetail: { routingDetails: this.points } })
         this.planningService.create(this.schedulingForm.value).subscribe({
             next: () => {
                 this.router.navigate(['../success'], { relativeTo: this.route });

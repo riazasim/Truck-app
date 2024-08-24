@@ -76,7 +76,6 @@ export class PartnersAddEditComponent {
                 }
             });
         } else {
-            this.partnerForm.patchValue({ user: { roles: [this.partnerForm.getRawValue().user.roles] } });
             this.partnerService.create(this.partnerForm.getRawValue()).subscribe({
                 next: () => {
                     this.isLoading$.next(false)

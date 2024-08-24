@@ -66,6 +66,8 @@ import { ProductsTabsComponent } from './products/products-tab/products.-tabcomp
 import { ConvoyLogsModal } from './convoy-logs-modal/convoy-logs-modal.component';
 import { TrainAddSchedulingComponent } from './add-scheduling/train/train-add-scheduling.component';
 import { WaterAddSchedulingComponent } from './add-scheduling/water/water-add-scheduling.component';
+import { TrainPlanningListComponent } from './planning-list/train/train-planning-list.component';
+import { WaterPlanningListComponent } from './planning-list/water/water-planning-list.component';
 
 
 @NgModule({
@@ -92,6 +94,8 @@ import { WaterAddSchedulingComponent } from './add-scheduling/water/water-add-sc
         SchedulingShowClientSupplierCardLabelsComponent,
         SchedulingSearchBarComponent,
         PlanningListComponent,
+        TrainPlanningListComponent,
+        WaterPlanningListComponent,
         EditSchedulingRouteComponent,
         EditSchedulingConvoyComponent,
         EditSchedulingConvoyPageComponent,

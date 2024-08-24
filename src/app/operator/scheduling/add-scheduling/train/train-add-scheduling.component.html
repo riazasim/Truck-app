@@ -6,103 +6,108 @@
                 class="grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20 gap-y-4 pt-[50px] min-xl:px-[50px]">
                 <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
                     <h4 class="font-bold">Locomotive and conductor</h4>
-                    <div [loading]="(isPortsLoading$ | async)" iconic-input-wrapper
-                        leftSvg="assets/images/carbon-train-speed.svg" formGroupName="routingDetail">
-                        <input inputRef type="text" placeholder="Locomotive registration number"
-                            formControlName="convoyType" />
+                    <div iconic-select-wrapper leftSvg="assets/images/carbon-train-speed.svg"
+                        [rightIcon]="['fas', 'caret-down']" formGroupName="routingDetail"
+                        (change)="onLocomotiveSelected($event)">
+                        <select spAccessInputRef name="locomotiveId" id="locomotiveId" formControlName="locomotiveId">
+                            <option disabled selected value="">
+                                Locomotive registration number
+                            </option>
+                            <option *ngFor="let locomotive of locomotives" [value]="locomotive.id">
+                                {{ locomotive.registrationNumber + '(' + locomotive.name + ')' }}
+                            </option>
+                        </select>
                     </div>
-                    <div [loading]="(isPortsLoading$ | async)" iconic-input-wrapper
-                        leftSvg="assets/images/carbon-train-speed.svg" formGroupName="routingDetail">
-                        <input inputRef type="text" placeholder="Locomotive type" />
+                    <div iconic-input-wrapper leftSvg="assets/images/carbon-train-speed.svg"
+                        formGroupName="routingDetail">
+                        <input readonly inputRef type="text" placeholder="Locomotive type"
+                            formControlName="locomotiveType" />
                     </div>
 
                 </div>
                 <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
                     <p>&nbsp;</p>
-                    <!-- <div [loading]="(isPortsLoading$ | async)" iconic-select-wrapper
-                    leftSvg="assets/images/conductor-type.svg" [rightIcon]="['fas', 'caret-down']"
-                        formGroupName="routingDetail">
-                        <select spAccessInputRef name="zone" id="zone" formControlName="arrivalZone">
-                            <option disabled value="">
-                                Conductor type
-                            </option>
-                            <option *ngFor="let zone of arrivalZone" [value]="zone.name">
-                                {{ zone.name }}
-                            </option>
-                        </select>
-                    </div> -->
                     <div class="flex w-full flex-col h-[76px]">
                         <h2 class="text-[#696969] ">Conductor</h2>
-                        <div class="flex justify-between">
+                        <div class="flex justify-between" formGroupName="routingDetail">
                             <div class="flex justify-center items-center gap-1">
-                                <input type="radio" name="conductor" id="conductor"
-                                    class="focus:!shadow-none checked:!bg-none">
+                                <input type="radio" name="conductorType" id="conductor" value="With Laras Conductor App"
+                                    formControlName="conductorType" class="focus:!shadow-none checked:!bg-none">
                                 <label for="conductor">With Lares Conductor app</label>
                             </div>
                             <div class="flex justify-center items-center gap-1">
-                                <input type="radio" name="conductor" id="conductor"
+                                <input type="radio" name="conductorType" id="withoutconductor"
+                                    value="Without Laras Conductor App" formControlName="conductorType"
                                     class="focus:!shadow-none checked:!bg-none">
-                                <label for="conductor">Without Lares Conductor app</label>
+                                <label for="withoutconductor">Without Lares Conductor app</label>
                             </div>
                         </div>
                     </div>
-                    <div [loading]="(isPortsLoading$ | async)" iconic-input-wrapper leftIcon="envelope"
-                        formGroupName="routingDetail">
-                        <input inputRef type="text" placeholder="User email" formControlName="pilotCompany" />
+                    <div iconic-input-wrapper leftIcon="envelope" formGroupName="routingDetail">
+                        <input inputRef type="email" placeholder="User email" formControlName="userEmail" />
                     </div>
                 </div>
             </div>
             <div class="grid grid-cols-1 gap-x-10 gap-y-4 p-[100px] py-[30px] ">
                 <h4 class="font-bold">Route details</h4>
-                <table class="table border border-lightgray">
-                    <thead>
-                        <tr>
-                            <th>No.</th>
-                            <th>Point type</th>
-                            <th>Station type</th>
-                            <th>Station</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody cdkDropList (cdkDropListDropped)="drop($event)">
-                        @for (row of rows; track row) {
-                        <tr cdkDrag>
-                            <td>
-                                {{row}}
-                            </td>
-                            <td>
-                                <input class="text-center" formControlName="product" readonly
-                                    [value]="rows.indexOf(row) === 0 ? 'Start point' : rows.indexOf(row) === (rows.length - 1) ? 'End point' : 'Touch point'" />
-                            </td>
-                            <td>
-                                <select name="stationType" id="stationType">
-                                    <option disabled selected value="">
-                                        <!-- Station type -->
-                                    </option>
-                                    <option *ngFor="let stationType of stationType" [value]="stationType.name">
-                                        {{ stationType.name }}
-                                    </option>
-                                </select>
-                            </td>
-                            <td>
-                                <select name="station" id="station">
-                                    <option disabled selected value="">
-                                        <!-- Station -->
-                                    </option>
-                                    <option *ngFor="let station of station" [value]="station.name">
-                                        {{ station.name }}
-                                    </option>
-                                </select>
-                            </td>
-                            <!-- <td> -->
-                            <!-- <fa-icon  icon="pen" class="text-primary cursor-pointer"></fa-icon> -->
-                            <!-- <fa-icon icon="trash" 
-                                        class="text-primary cursor-pointer"></fa-icon>
-                                </td> -->
-                        </tr>
-                        }
-                    </tbody>
-                </table>
+                <form [formGroup]="routingDetailsForm">
+                    <table class="table border border-lightgray">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Point type</th>
+                                <th>Station type</th>
+                                <th>Station</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody cdkDropList (cdkDropListDropped)="drop($event)">
+
+                            @for (row of rows; track row) {
+                            <tr cdkDrag>
+                                <td class="flex gap-2 items-center h-[64px]">
+                                    <img src="assets/images/tdesign_move.svg" alt="Flag">
+                                    {{$index + 1}}
+                                </td>
+                                <td>
+                                    <input class="text-center" readonly
+                                        [value]="rows.indexOf(row) === 0 ? 'Start point' : rows.indexOf(row) === (rows.length - 1) ? 'End point' : 'Touch point'" />
+                                </td>
+                                <td>
+                                    <select name="stationType" id="stationType"
+                                        (change)="onStationTypeChange($event , $index)"
+                                        [value]="points[$index]?.stationType || ''">
+                                        <option disabled selected value="">
+                                            Station type
+                                        </option>
+                                        <option *ngFor="let stationType of stationTypes" [value]="stationType.value">
+                                            {{ stationType.name }}
+                                        </option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="station" id="station" (change)="onStationChange($event, $index)"
+                                        [value]="points[$index]?.station || ''"
+                                        [disabled]="(isStationLoading$ | async) && $index === selectedIndex">
+                                        <option disabled selected value="">
+                                            Station
+                                        </option>
+                                        <option *ngFor="let station of stations[$index]" [value]="station.name">
+                                            {{ station.name }}
+                                        </option>
+                                    </select>
+                                </td>
+                                <!-- <td> -->
+                                <!-- <fa-icon  icon="pen" class="text-primary cursor-pointer"></fa-icon> -->
+                                <!-- <fa-icon icon="trash" 
+                                                class="text-primary cursor-pointer"></fa-icon>
+                                        </td> -->
+                            </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </form>
                 <div>
                     <button type="button" class="flex text-primary font-bold py-5" (click)="addPoints()">
                         <fa-icon class="mt-[1px]" icon="circle-plus"></fa-icon>&nbsp; Add point
@@ -133,68 +138,66 @@
                     <h4 class="font-bold">ShipmentID details</h4>
                     <div iconic-select-wrapper leftSvg="assets/images/bi_building-down.svg"
                         [rightIcon]="['fas', 'caret-down']">
-                        <select spAccessInputRef name="pickUpFromCompany" id="pickUpFromCompany">
+                        <select spAccessInputRef name="pickUpFromCompany" id="pickUpFromCompany"
+                            formControlName="pickUpFromCompany">
                             <option disabled selected value="">Pick-up from company</option>
-                            <option *ngFor="let company of companyList" [value]="company.id">
+                            <option *ngFor="let company of companiesList" [value]="company.id">
                                 {{ company.name }}
                             </option>
                         </select>
                     </div>
                     <div iconic-select-wrapper leftSvg="assets/images/location_on_black_24dp.svg"
                         [rightIcon]="['fas', 'caret-down']">
-                        <select spAccessInputRef name="pickUpPoint" id="pickUpPoint">
+                        <select spAccessInputRef name="pickUpPoint" id="pickUpPoint" formControlName="pickUpPoint">
                             <option disabled selected value="">Pick-up point</option>
                             <option *ngFor="let point of points" [value]="point.id">
-                                {{ point.name }}
+                                {{ point.pointType + '(' + point.station + ')' }}
                             </option>
                         </select>
                     </div>
                     <div class="grid grid-cols-2 gap-x-8 gap-y-4 mb-5">
-                        <datepicker [loading]="(isPortsLoading$ | async)" matTooltipClass="drop-shadow-lg"
-                            matTooltipPosition="above" [matTooltip]="'Pick-up ETA date' | translate"
-                            [model]="filterDate" [isHeaderPosition]="true" [height]="52"
-                            (dateChanged)="OnDateChange($event)">
+                        <datepicker matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
+                            [matTooltip]="'Pick-up ETA date' | translate" [model]="etpDate" [isHeaderPosition]="true"
+                            [height]="52" (dateChanged)="OnETPDateChange($event)">
                         </datepicker>
-                        <timepicker [loading]="(isPortsLoading$ | async)" matTooltipClass="drop-shadow-lg"
-                            matTooltipPosition="above" [matTooltip]="'Pick-up ETA time' | translate" [height]="52"
-                            [model]="filterTime" (modelChange)="OnTimeChange($event)"></timepicker>
+                        <timepicker matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
+                            [matTooltip]="'Pick-up ETA time' | translate" [height]="52" [model]="etpTime"
+                            (modelChange)="OnETPTimeChange($event)"></timepicker>
                     </div>
                 </div>
                 <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
                     <p>&nbsp;</p>
                     <div iconic-select-wrapper leftSvg="assets/images/bi_building-up.svg"
                         [rightIcon]="['fas', 'caret-down']">
-                        <select spAccessInputRef name="deliveryToCompany" id="deliveryToCompany">
+                        <select spAccessInputRef name="deliveryToCompany" id="deliveryToCompany"
+                            formControlName="deliverToCompany">
                             <option disabled selected value="">Delivery to compny</option>
-                            <option *ngFor="let company of companyList" [value]="company.id">
+                            <option *ngFor="let company of companiesList" [value]="company.id">
                                 {{ company.name }}
                             </option>
                         </select>
                     </div>
                     <div iconic-select-wrapper leftSvg="assets/images/location_on_black_24dp.svg"
                         [rightIcon]="['fas', 'caret-down']">
-                        <select spAccessInputRef name="deliveryPoint" id="deliveryPoint">
+                        <select spAccessInputRef name="deliveryPoint" id="deliveryPoint" formControlName="deliverPoint">
                             <option disabled selected value="">Delivery point</option>
                             <option *ngFor="let point of points" [value]="point.id">
-                                {{ point.name }}
+                                {{ point.pointType + '(' + point.station + ')' }}
                             </option>
                         </select>
                     </div>
                     <div class="grid grid-cols-2 gap-x-8 gap-y-4 mb-5">
-                        <datepicker [loading]="(isPortsLoading$ | async)" matTooltipClass="drop-shadow-lg"
-                            matTooltipPosition="above" [matTooltip]="'Delivery ETA date' | translate"
-                            [model]="filterDate" [isHeaderPosition]="true" [height]="52"
-                            (dateChanged)="OnDateChange($event)">
+                        <datepicker matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
+                            [matTooltip]="'Delivery ETA date' | translate" [model]="etdDate" [isHeaderPosition]="true"
+                            [height]="52" (dateChanged)="OnETDDateChange($event)">
                         </datepicker>
-                        <timepicker [loading]="(isPortsLoading$ | async)" matTooltipClass="drop-shadow-lg"
-                            matTooltipPosition="above" [matTooltip]="'Delivery ETA time' | translate" [height]="52"
-                            [model]="filterTime" (modelChange)="OnTimeChange($event)"></timepicker>
+                        <timepicker matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
+                            [matTooltip]="'Delivery ETA time' | translate" [height]="52" [model]="etdTime"
+                            (modelChange)="OnETDTimeChange($event)"></timepicker>
                     </div>
                 </div>
             </div>
-            <!-- <div class="grid grid-cols-1 gap-x-10 gap-y-4 p-[100px] py-[50px] "><app-products></app-products></div> -->
             <div class="grid grid-cols-1 gap-x-10 gap-y-4 p-[100px] py-[30px] ">
-
                 <table class="table border border-lightgray">
                     <thead>
                         <tr>
@@ -209,45 +212,48 @@
                             <th></th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr *ngFor="let no of no;">
+                    <tbody formArrayName="convoyWagonDetail">
+                        <tr *ngFor="
+                        let wagon of wagons.controls;
+                        let i = index
+                    " [formGroupName]="i">
                             <td>
-                                {{no}}
+                                {{i + 1}}
                             </td>
                             <td>
-                                <input matInput class="text-center" formControlName="product" />
+                                <input type="number" class="text-center" formControlName="wagion" />
                             </td>
                             <td>
-                                <select name="category" id="category">
+                                <select name="category" id="category" formControlNam="category">
                                     <option disabled selected value="">
                                         <!-- Category -->
                                     </option>
-                                    <option *ngFor="let category of category" [value]="category.name">
+                                    <option *ngFor="let category of categoryList" [value]="category.name">
                                         {{ category.name }}
                                     </option>
                                 </select>
                             </td>
                             <td>
-                                <select name="subCategory" id="subCategory">
+                                <select name="subCategory" id="subCategory" formControlName="subCategory">
                                     <option disabled selected value="">
                                         <!-- Subcategory -->
                                     </option>
-                                    <option *ngFor="let subCategory of subCategory" [value]="subCategory.name">
+                                    <option *ngFor="let subCategory of subCategoryList" [value]="subCategory.name">
                                         {{ subCategory.name }}
                                     </option>
                                 </select>
                             </td>
                             <td>
-                                <input matInput class="text-center" />
+                                <input type="number" class="text-center" formControlName="grossWeight" />
                             </td>
                             <td>
-                                <input matInput class="text-center" />
+                                <input type="number" class="text-center" formControlName="taraWeight" />
                             </td>
                             <td>
-                                <input matInput class="text-center" />
+                                <input type="number" class="text-center" formControlName="netWeight" />
                             </td>
                             <td>
-                                <input matInput class="text-center" />
+                                <input type="text" class="text-center" formControlName="seals" />
                             </td>
                             <!-- <td> -->
                             <!-- <fa-icon  icon="pen" class="text-primary cursor-pointer"></fa-icon> -->

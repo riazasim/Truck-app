@@ -72,9 +72,16 @@ export interface PlanningModel {
         maxCapacity: number;
         lockType: string;
         ridCoordinates: string;
-    }
+    };
+    pointDetail: PointModal[];
     convoyDetail: convoyModel[];
     documents: any[];
+}
+
+export interface PointModal {
+    pointType: string;
+    stationType: string;
+    station: string;
 }
 
 export interface PlanningDetailModel {
