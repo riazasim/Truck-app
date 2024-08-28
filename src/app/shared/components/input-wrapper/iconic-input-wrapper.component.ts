@@ -29,6 +29,10 @@ export class IconicInputWrapperComponent extends GenericWrapperComponent<HTMLInp
     public loading: boolean | any;
 
 
+    @Input()
+    public className: string | any;
+
+
     @ContentChild(InputRefDirective)
     override set inputRef(ref: InputRefDirective) {
         this._inputRef = ref;

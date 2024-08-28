@@ -1,134 +1,5 @@
 <mat-stepper labelPosition="bottom" [linear]="isLinear" #stepper>
-    <mat-step label="Route Details" [stepControl]="schedulingForm">
-        <app-loader *ngIf="isLoading$ | async" [isContainer]="true" [fullScreen]="false"></app-loader>
-        <form [formGroup]="schedulingForm" *ngIf="!(isLoading$ | async)">
-            <div
-                class="grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20 gap-y-4 pt-[50px] min-xl:px-[50px]">
-                <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
-                    <h4 class="font-bold">Locomotive and conductor</h4>
-                    <div iconic-select-wrapper leftSvg="assets/images/carbon-train-speed.svg"
-                        [rightIcon]="['fas', 'caret-down']" formGroupName="routingDetail"
-                        (change)="onLocomotiveSelected($event)">
-                        <select spAccessInputRef name="locomotiveId" id="locomotiveId" formControlName="locomotiveId">
-                            <option disabled selected value="">
-                                Locomotive registration number
-                            </option>
-                            <option *ngFor="let locomotive of locomotives" [value]="locomotive.id">
-                                {{ locomotive.registrationNumber + '(' + locomotive.name + ')' }}
-                            </option>
-                        </select>
-                    </div>
-                    <div iconic-input-wrapper leftSvg="assets/images/carbon-train-speed.svg"
-                        formGroupName="routingDetail">
-                        <input readonly inputRef type="text" placeholder="Locomotive type" [value]="locomotiveType" />
-                    </div>
-
-                </div>
-                <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
-                    <p>&nbsp;</p>
-                    <div class="flex w-full flex-col h-[76px]">
-                        <h2 class="text-[#696969] ">Conductor</h2>
-                        <div class="flex justify-between" formGroupName="routingDetail">
-                            <div class="flex justify-center items-center gap-1">
-                                <input type="radio" name="conductorType" id="conductor" value="With Laras Conductor App"
-                                    formControlName="conductorType" class="focus:!shadow-none checked:!bg-none">
-                                <label for="conductor">With Lares Conductor app</label>
-                            </div>
-                            <div class="flex justify-center items-center gap-1">
-                                <input type="radio" name="conductorType" id="withoutconductor"
-                                    value="Without Laras Conductor App" formControlName="conductorType"
-                                    class="focus:!shadow-none checked:!bg-none">
-                                <label for="withoutconductor">Without Lares Conductor app</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div iconic-input-wrapper leftIcon="envelope" formGroupName="routingDetail">
-                        <input inputRef type="email" placeholder="User email" formControlName="userEmail" />
-                    </div>
-                </div>
-            </div>
-            <div class="grid grid-cols-1 gap-x-10 gap-y-4 p-[100px] py-[30px] ">
-                <h4 class="font-bold">Route details</h4>
-                <form [formGroup]="routingDetailsForm">
-                    <table class="table border border-lightgray">
-                        <thead>
-                            <tr>
-                                <th>No.</th>
-                                <th>Point type</th>
-                                <th>Station type</th>
-                                <th>Station</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody cdkDropList (cdkDropListDropped)="drop($event)">
-
-                            @for (row of rows; track row) {
-                            <tr cdkDrag>
-                                <td class="flex gap-2 items-center h-[64px]">
-                                    <img src="assets/images/tdesign_move.svg" alt="Flag">
-                                    {{$index + 1}}
-                                </td>
-                                <td>
-                                    <input class="text-center" readonly
-                                        [value]="rows.indexOf(row) === 0 ? 'Start point' : rows.indexOf(row) === (rows.length - 1) ? 'End point' : 'Touch point'" />
-                                </td>
-                                <td>
-                                    <select name="stationType" id="stationType"
-                                        (change)="onStationTypeChange($event , $index)"
-                                        [value]="points[$index]?.stationType || ''">
-                                        <option disabled selected value="">
-                                            Station type
-                                        </option>
-                                        <option *ngFor="let stationType of stationTypes" [value]="stationType.value">
-                                            {{ stationType.name }}
-                                        </option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <select name="station" id="station" (change)="onStationChange($event, $index)"
-                                        [value]="points[$index]?.station || ''"
-                                        [disabled]="(isStationLoading$ | async) && $index === selectedIndex">
-                                        <option disabled selected value="">
-                                            Station
-                                        </option>
-                                        <option *ngFor="let station of stations[$index]" [value]="station.id">
-                                            {{ station.name }}
-                                        </option>
-                                    </select>
-                                </td>
-                                <!-- <td> -->
-                                <!-- <fa-icon  icon="pen" class="text-primary cursor-pointer"></fa-icon> -->
-                                <!-- <fa-icon icon="trash" 
-                                                class="text-primary cursor-pointer"></fa-icon>
-                                        </td> -->
-                            </tr>
-                            }
-
-                        </tbody>
-                    </table>
-                </form>
-                <div>
-                    <button type="button" class="flex text-primary font-bold py-5" (click)="addPoints()">
-                        <fa-icon class="mt-[1px]" icon="circle-plus"></fa-icon>&nbsp; Add point
-                    </button>
-                </div>
-
-            </div>
-            <div class="min-xl:px-[50px] grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20 mt-4">
-                <div class="gap-y-4 mb-5 min-xl:px-[50px]">
-                    <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]" routerLink="../">
-                        {{ "button.back" | translate }}
-                    </button>
-                </div>
-                <div class="gap-y-4 mb-5 min-xl:px-[50px]">
-                    <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]" (click)="next(1)">
-                        {{ "button.next" | translate }}
-                    </button>
-                </div>
-            </div>
-        </form>
-    </mat-step>
-    <mat-step label="Wagons">
+    <mat-step label="Convoi">
         <app-loader *ngIf="isLoading$ | async" [isContainer]="true" [fullScreen]="false"></app-loader>
         <form [formGroup]="convoyForm" *ngIf="!(isLoading$ | async)">
             <div
@@ -149,9 +20,9 @@
                         [rightIcon]="['fas', 'caret-down']">
                         <select spAccessInputRef name="pickUpPoint" id="pickUpPoint" formControlName="pickUpPoint">
                             <option disabled selected value="">Pick-up point</option>
-                            <option *ngFor="let point of pickupPoints"
-                                [value]="point.pointType + '(' + point.station + ')'">
-                                {{ point.pointType + '(' + point.station + ')' }}
+                            <option *ngFor="let point of points"
+                                [value]="point.pointType + '(' + point.station.id + ')'">
+                                {{ point.station.name + ' (' + point.pointType + ')' }}
                             </option>
                         </select>
                     </div>
@@ -181,9 +52,9 @@
                         [rightIcon]="['fas', 'caret-down']">
                         <select spAccessInputRef name="deliveryPoint" id="deliveryPoint" formControlName="deliverPoint">
                             <option disabled selected value="">Delivery point</option>
-                            <option *ngFor="let point of deliveryPoints"
-                                [value]="point.pointType + '(' + point.station + ')'">
-                                {{ point.pointType + '(' + point.station + ')' }}
+                            <option *ngFor="let point of points"
+                                [value]="point.pointType + '(' + point.station.id + ')'">
+                                {{ point.station.name + ' (' + point.pointType + ')' }}
                             </option>
                         </select>
                     </div>
@@ -213,7 +84,7 @@
                             <th></th>
                         </tr>
                     </thead>
-                    <tbody formArrayName="convoyWagonDetail">
+                    <tbody formArrayName="planningConvoyWagons">
                         <tr *ngFor="
                         let wagon of wagons.controls;
                         let i = index
@@ -222,9 +93,6 @@
                                 {{i + 1}}
                             </td>
                             <td>
-                                <!-- <div iconic-input-wrapper leftIcon="envelope" className="!min-h-[35px]" [showValidation]="false">
-                                    <input inputRef type="number" class="text-center" formControlName="wagion" />
-                                </div> -->
                                 <input type="number" class="text-center" formControlName="wagion" />
                             </td>
                             <td>
@@ -275,13 +143,12 @@
             </div>
             <div class="min-xl:px-[50px] grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20 mt-4">
                 <div class="gap-y-4 mb-5 min-xl:px-[50px]">
-                    <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]" matStepperPrevious
-                        *ngIf="!(areRouteDetailsDone | async)">
+                    <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]" matStepperPrevious>
                         {{ "button.back" | translate }}
                     </button>
                 </div>
                 <div class="gap-y-4 mb-5 min-xl:px-[50px]">
-                    <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]" (click)="next(2)">
+                    <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]" (click)="next(1)">
                         {{ "button.next" | translate }}
                     </button>
                 </div>
@@ -360,8 +227,11 @@
                             <fa-icon icon="circle-plus"></fa-icon> Add New
                             Document
                         </button>
+                        <!-- <button *ngIf="!(showFileThree$ | async)" type="button" class="text-primary font-bold mr-auto" (click)="showFileThree$.next(true)">
+                            <fa-icon icon="circle-plus"></fa-icon> Add New Document
+                          </button> -->
                     </div>
-                    <div class="grid grid-rows-2 gap-y-4 min-xl:px-[50px]">
+                    <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
                         <div textarea-wrapper leftIcon="user" [isFullHeight]="true">
                             <textarea class="break-words whitespace-pre-wrap resize-none" inputRef
                                 placeholder="Client's comments:" rows="10" cols="1"
@@ -375,59 +245,18 @@
                     </div>
                 </form>
             </div>
-            <div class="min-xl:px-[50px] mt-8 grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20">
+            <div class="min-xl:px-[50px] grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20 mt-10">
                 <div class="gap-y-4 mb-5 min-xl:px-[50px]">
                     <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]" matStepperPrevious>
                         {{ "button.back" | translate }}
                     </button>
                 </div>
                 <div class="gap-y-4 mb-5 min-xl:px-[50px]">
-                    <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]" (click)="next(3)">
-                        {{ "button.next" | translate }}
+                    <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]"
+                        (click)="updateConvoys()">
+                        {{ "Update" | translate }}
                     </button>
                 </div>
-            </div>
-        </div>
-    </mat-step>
-    <mat-step label="Save or Extend">
-        <app-loader *ngIf="isLoading$ | async" [isContainer]="true" [fullScreen]="false"></app-loader>
-        <div class="flex flex-col justify-center" *ngIf="!(isLoading$ | async)">
-            <div class="flex-1 flex justify-center gap-10 w-full max-lg:flex-col cursor-pointer">
-                <div (click)="saveScheduling()"
-                    class="flex min-lg:flex-col gap-5 items-center justify-evenly w-full min-lg:w-[400px] h-[520px] rounded-[10px] border border-transparent shadow-md cursor-pointer">
-                    <div class="flex flex-col gap-2 items-center cursor-pointer">
-                        <div
-                            class="border border-[#B7B7B7] rounded-full flex justify-center items-center w-[155px] h-[155px] cursor-pointer">
-                            <img src="assets/images/scheduling_flag.svg" alt="Flag">
-                        </div>
-                        <h2 class="text-4xl text-[#696969] font-bold cursor-pointer">Train ended</h2>
-                    </div>
-                    <div class="w-[335px] mx-[auto] text-center cursor-pointer">
-                        <p class="text-3xl text-[#696969] font-normal cursor-pointer">
-                            Click this button if you added all the wagons of the train.
-                        </p>
-                    </div>
-                </div>
-                <div (click)="addPlanning()" *ngIf="addNewWagon$ | async"
-                    class="flex min-lg:flex-col justify-evenly gap-5 items-center w-full min-lg:w-[400px] h-[520px] rounded-[10px] border border-transparent shadow-md cursor-pointer">
-                    <div class="flex flex-col gap-2 items-center cursor-pointer">
-                        <div
-                            class="border border-[#B7B7B7] rounded-full flex justify-center items-center w-[155px] h-[155px] cursor-pointer">
-                            <img src="assets/images/carbon_train-speed-1.svg" alt="Flag">
-                        </div>
-                        <h2 class="text-4xl text-[#696969] font-bold cursor-pointer">Add wagonr to train</h2>
-                    </div>
-                    <div class="w-[335px] mx-[auto] text-center cursor-pointer">
-                        <p class="text-3xl text-[#696969] font-normal cursor-pointer">
-                            Click this button to add a new wagonr to the train.
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="flex justify-center mt-8">
-                <button type="button" class="btn btn-primary w-[440px] min-h-[50px] !text-[18px]" matStepperPrevious>
-                    {{ "button.back" | translate }}
-                </button>
             </div>
         </div>
     </mat-step>

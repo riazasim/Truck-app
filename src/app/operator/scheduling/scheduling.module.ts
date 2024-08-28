@@ -30,7 +30,6 @@ import { SchedulingSendMessageComponent } from './scheduling-send-message/schedu
 import { SchedulingDeleteModalComponent } from './scheduling-delete-modal/scheduling-delete-modal.component';
 import { NoSchedulingComponent } from './no-scheduling/no-scheduling.component';
 import { SchedulingAddProductModalComponent } from './scheduling-add-product-modal/scheduling-add-product-modal.component';
-import { MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule, MatRippleModule, provideNativeDateAdapter } from '@angular/material/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatMenuModule } from '@angular/material/menu';
@@ -68,6 +67,12 @@ import { TrainAddSchedulingComponent } from './add-scheduling/train/train-add-sc
 import { WaterAddSchedulingComponent } from './add-scheduling/water/water-add-scheduling.component';
 import { TrainPlanningListComponent } from './planning-list/train/train-planning-list.component';
 import { WaterPlanningListComponent } from './planning-list/water/water-planning-list.component';
+import { TrainEditSchedulingRouteComponent } from './edit-scheduling-route/train/train-edit-scheduling-route.component';
+import { WaterEditSchedulingRouteComponent } from './edit-scheduling-route/water/water-edit-scheduling-route.component';
+import { TrainEditSchedulingConvoyComponent } from './edit-scheduling-convoy/train/train-edit-scheduling-convoy.component';
+import { TrainEditSchedulingConvoyPageComponent } from './edit-scheduling-convoy/train/train-edit-scheduling-convoy-page/train-edit-scheduling-convoy-page.component';
+import { WaterEditSchedulingConvoyPageComponent } from './edit-scheduling-convoy/water/water-edit-scheduling-convoy-page/water-edit-scheduling-convoy-page.component';
+import { WaterEditSchedulingConvoyComponent } from './edit-scheduling-convoy/water/water-scheduling-convoy.component';
 
 
 @NgModule({
@@ -97,8 +102,14 @@ import { WaterPlanningListComponent } from './planning-list/water/water-planning
         TrainPlanningListComponent,
         WaterPlanningListComponent,
         EditSchedulingRouteComponent,
+        TrainEditSchedulingRouteComponent,
+        WaterEditSchedulingRouteComponent,
         EditSchedulingConvoyComponent,
         EditSchedulingConvoyPageComponent,
+        TrainEditSchedulingConvoyComponent,
+        TrainEditSchedulingConvoyPageComponent,
+        WaterEditSchedulingConvoyComponent,
+        WaterEditSchedulingConvoyPageComponent,
         NoRestrictionsComponent,
         RestrictionsComponent,
         ProductsComponent,

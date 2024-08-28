@@ -1,4 +1,4 @@
-import { NgModule, Type } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AddSchedulingComponent } from './add-scheduling/add-scheduling.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -11,10 +11,15 @@ import { EditSchedulingConvoyPageComponent } from './edit-scheduling-convoy/edit
 import { NoRestrictionsComponent } from './no-restrictions/no-restrictions.component';
 import { RestrictionsComponent } from './restrictions/restrictions.component';
 import { TrainAddSchedulingComponent } from './add-scheduling/train/train-add-scheduling.component';
-import { A } from '@angular/cdk/keycodes';
 import { WaterAddSchedulingComponent } from './add-scheduling/water/water-add-scheduling.component';
 import { TrainPlanningListComponent } from './planning-list/train/train-planning-list.component';
 import { WaterPlanningListComponent } from './planning-list/water/water-planning-list.component';
+import { TrainEditSchedulingRouteComponent } from './edit-scheduling-route/train/train-edit-scheduling-route.component';
+import { WaterEditSchedulingRouteComponent } from './edit-scheduling-route/water/water-edit-scheduling-route.component';
+import { TrainEditSchedulingConvoyComponent } from './edit-scheduling-convoy/train/train-edit-scheduling-convoy.component';
+import { TrainEditSchedulingConvoyPageComponent } from './edit-scheduling-convoy/train/train-edit-scheduling-convoy-page/train-edit-scheduling-convoy-page.component';
+import { WaterEditSchedulingConvoyPageComponent } from './edit-scheduling-convoy/water/water-edit-scheduling-convoy-page/water-edit-scheduling-convoy-page.component';
+import { WaterEditSchedulingConvoyComponent } from './edit-scheduling-convoy/water/water-scheduling-convoy.component';
 const appMode = localStorage.getItem("appMode");
 var routes: Routes = [
   {
@@ -39,16 +44,16 @@ var routes: Routes = [
         component: appMode === "RAILWAY" ? TrainAddSchedulingComponent : appMode === "WATER" ? WaterAddSchedulingComponent : AddSchedulingComponent
       },
       {
-        path: String(function () { return "edit/:id" }),
-        component: appMode === "RAILWAY" ? EditSchedulingRouteComponent : appMode === "WATER" ? EditSchedulingRouteComponent : EditSchedulingRouteComponent
+        path: "edit/:id",
+        component: appMode === "RAILWAY" ? TrainEditSchedulingRouteComponent : appMode === "WATER" ? WaterEditSchedulingRouteComponent : EditSchedulingRouteComponent
       },
       {
         path: 'route/:id/convoy-list',
-        component: EditSchedulingConvoyComponent
+        component: appMode === "RAILWAY" ? TrainEditSchedulingConvoyComponent : appMode === "WATER" ? WaterEditSchedulingConvoyComponent : EditSchedulingConvoyComponent
       },
       {
         path: 'route/:id/convoy-list/:id',
-        component: EditSchedulingConvoyPageComponent
+        component: appMode === "RAILWAY" ? TrainEditSchedulingConvoyPageComponent : appMode === "WATER" ? WaterEditSchedulingConvoyPageComponent : EditSchedulingConvoyPageComponent
       },
       {
         path: 'no-restrictions',

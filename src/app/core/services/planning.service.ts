@@ -23,22 +23,22 @@ export class PlanningService {
     }
 
 
-    editRouteingDetails(id: number, data: any): Observable<PlanningDetailModel> {
+    editRouteingDetails(id: number, data: any): Observable<any> {
         return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/updatePlanning`, { "planningId": id, ...data })
-            .pipe(pluckItemWrapperData<PlanningDetailModel, ResponseItemWrapper<PlanningDetailModel>>(),
-                map((p: PlanningDetailModel) => {
+            .pipe(pluckItemWrapperData<any, ResponseItemWrapper<any>>(),
+                map((p: any) => {
                     return p;
                 })
             )
     }
-    editConvoys(id: number, data: convoyModel): Observable<convoyModel> {
+    editConvoys(id: number, data: any): Observable<any> {
         data.planningConvoyId = id
         const body = convertJsonToFormData(data, '');
         // console.log(body)
         // console.log(data)
-        return this.http.post<ResponseItemWrapper<convoyModel>>(`${environment.apiUrl}${environment.apiVersion}/updatePlanningConvoy`, body)
-            .pipe(pluckItemWrapperData<convoyModel, ResponseItemWrapper<convoyModel>>(),
-                map((p: convoyModel) => {
+        return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/updatePlanningConvoy`, body)
+            .pipe(pluckItemWrapperData<any, ResponseItemWrapper<any>>(),
+                map((p: any) => {
                     return p;
                 })
             )
@@ -97,19 +97,28 @@ export class PlanningService {
         return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}${this.route}/${id}`, data);
     }
 
-    get(id: number): Observable<PlanningDetailModel> {
-        return this.http.post<ResponseItemWrapper<PlanningDetailModel>>(`${environment.apiUrl}${environment.apiVersion}/getPlanning`, { "planningId": id })
-            .pipe(pluckItemWrapperData<PlanningDetailModel, ResponseItemWrapper<PlanningDetailModel>>(),
-                map((p: PlanningDetailModel) => {
+    get(id: number): Observable<any> {
+        return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getPlanning`, { "planningId": id })
+            .pipe(pluckItemWrapperData<any, ResponseItemWrapper<any>>(),
+                map((p: any) => {
                     return p;
                 })
             )
     }
 
-    getConvoy(id: number): Observable<convoyModel> {
-        return this.http.post<ResponseItemWrapper<convoyModel>>(`${environment.apiUrl}${environment.apiVersion}/getPlanningConvoy`, { "planningConvoyId": id })
-            .pipe(pluckItemWrapperData<convoyModel, ResponseItemWrapper<convoyModel>>(),
-                map((p: convoyModel) => {
+    getConvoy(id: number): Observable<any> {
+        return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getPlanningConvoy`, { "planningConvoyId": id })
+            .pipe(pluckItemWrapperData<any, ResponseItemWrapper<any>>(),
+                map((p: any) => {
+                    return p;
+                })
+            )
+    }
+
+    getPlanningRouteDetailList(id: number): Observable<any> {
+        return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getPlanningRouteDetailList`, { "planningId": id })
+            .pipe(pluckItemWrapperData<any, ResponseItemWrapper<any>>(),
+                map((p: any) => {
                     return p;
                 })
             )

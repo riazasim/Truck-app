@@ -3,7 +3,7 @@
     [class.dashboard]="dashboardInp" [class.loading]="loading"  class="iconic-layout-wrapper relative">
     <div class="loader absolute top-0 right-0 left-0 bottom-0 hidden z-10"></div>
 
-    <div class="input-container" [class.!hidden]="loading">
+    <div class="input-container" [ngClass]="className" [class.!hidden]="loading">
         <img *ngIf="leftSvg" [src]="leftSvg" alt="icon" class="mx-[10px] max-h-5 max-w-5">
         <fa-icon [class.invalid]="isInvalid || !isValid && isTouched" *ngIf="leftIcon" [icon]="leftIcon" size="lg"
             class="icon"></fa-icon>
