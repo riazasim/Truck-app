@@ -147,18 +147,34 @@ export class TrainAddSchedulingComponent implements OnInit {
         this.isLoading$.next(false);
         this.retrieveCompanies();
         this.retrieveLocomotives();
+        this.addWagons();
     }
 
     drop(event: CdkDragDrop<string[]>) {
         if (event.previousIndex === this.rows.length - 1 || event.currentIndex === this.rows.length - 1) {
+            if (this.points.length === this.rows.length) {
+                this.station = "";
+                this.stationType = "";
+                moveItemInArray(this.points, event.previousIndex, event.currentIndex);
+                moveItemInArray(this.rows, event.previousIndex, event.currentIndex);
+                moveItemInArray(this.stations, event.previousIndex, event.currentIndex);
+            }
             this.routingDetailsForm.patchValue({ pointType: "Touch Point", stationType: this.stationType || "", station: this.station || "" })
             if (this.routingDetailsForm.valid) {
+                console.log("valid")
                 this.points.push(this.routingDetailsForm.value);
                 this.station = "";
                 this.stationType = "";
+                moveItemInArray(this.points, event.previousIndex, event.currentIndex);
+                moveItemInArray(this.rows, event.previousIndex, event.currentIndex);
+                moveItemInArray(this.stations, event.previousIndex, event.currentIndex);
             }
         }
-        moveItemInArray(this.points, event.previousIndex, event.currentIndex);
+        else {
+            moveItemInArray(this.points, event.previousIndex, event.currentIndex);
+            moveItemInArray(this.rows, event.previousIndex, event.currentIndex);
+            moveItemInArray(this.stations, event.previousIndex, event.currentIndex);
+        }
     }
 
     formatDate(date: Date | string): string {
@@ -183,8 +199,8 @@ export class TrainAddSchedulingComponent implements OnInit {
         const pickup = this.convoyForm?.get("pickUpPoint")?.value;
         // console.log(this.pickupPoints.indexOf(pickup), pickup.split("(")[1][0], this.pickupPoints)
         const newArr = this.pickupPoints.filter((item: any) => {
-            // console.log(item.station, pickup.split("(")[1][0])
-            if (item.station !== pickup.split("(")[1][0]) {
+            console.log(item.pointType, pickup)
+            if (item.pointType !== pickup) {
                 return item
             }
         })
@@ -192,7 +208,6 @@ export class TrainAddSchedulingComponent implements OnInit {
         if (this.pickupPoints.length === 1) {
             this.addNewWagon$.next(false);
         }
-        console.log(newArr, this.pickupPoints)
         this.etpDateTimeVal = `${this.etpDateVal} ${this.etpTimeVal}`;
         this.etdDateTimeVal = `${this.etdDateVal} ${this.etdTimeVal}`;
         this.convoyForm.patchValue({ estimatedTimePickUp: this.etpDateTimeVal, estimatedTimeDeliver: this.etdDateTimeVal });
@@ -288,28 +303,51 @@ export class TrainAddSchedulingComponent implements OnInit {
         if (this.matStepper.selectedIndex === 0) {
         }
         if (index === 1) {
-            this.routingDetailsForm.patchValue({ pointType: "Touch Point", stationType: this.stationType || "", station: this.station || "" })
-            if (this.routingDetailsForm.valid) {
-                this.points.push(this.routingDetailsForm.value);
-                if (this.points.length < 1) {
+            if (this.points.length === this.rows.length) {
+                if (this.points.length < 2) {
                     return
                 }
-                for (let i = 0; i < this.points.length; i++) {
-                    this.points[i].pointType = "Touch Point";
-                    if (i !== this.points.length - 1) {
-                        this.pickupPoints.push(this.points[i])
+                else {
+                    for (let i = 0; i < this.points.length; i++) {
+                        this.points[i].pointType = `Touch Point ( ${i} )`;
                     }
-                    if (i !== 0) {
-                        this.deliveryPoints.push(this.points[i])
+                    this.points[0].pointType = "Start Point";
+                    this.points[this.points.length - 1].pointType = "End Point";
+                    this.pickupPoints = this.points.slice(0, -1);
+                    this.deliveryPoints = this.points.slice(1);
+                    this.matStepper.selectedIndex = index;
+                }
+            }
+            else {
+                this.routingDetailsForm.patchValue({ pointType: "Touch Point", stationType: this.stationType || "", station: this.station || "" })
+                if (this.routingDetailsForm.valid) {
+                    this.points.push(this.routingDetailsForm.value);
+                    if (this.points.length < 2) {
+                        return
+                    }
+                    else {
+                        for (let i = 0; i < this.points.length; i++) {
+                            this.points[i].pointType = `Touch Point ( ${i} )`;
+                        }
+                        this.points[0].pointType = "Start Point";
+                        this.points[this.points.length - 1].pointType = "End Point";
+                        this.pickupPoints = this.points.slice(0, -1);
+                        this.deliveryPoints = this.points.slice(1);
+                        this.matStepper.selectedIndex = index;
                     }
                 }
-                this.points[0].pointType = "Start Point"
-                this.points[this.points.length - 1].pointType = "End Point"
-                this.matStepper.selectedIndex = index;
             }
         }
         else {
             this.matStepper.selectedIndex = index;
+        }
+    }
+
+    onRowDelete(index: any) {
+        if (this.points.length > 1) {
+            this.points.splice(Number(index), 1);
+            this.stations.splice(Number(index), 1);
+            this.rows.splice(Number(index), 1);
         }
     }
 
@@ -394,7 +432,9 @@ export class TrainAddSchedulingComponent implements OnInit {
 
 
     addPoints(): void {
+        this.isStationLoading$.next(true);
         if (this.rows.length <= this.points.length) {
+            ++this.selectedIndex;
             this.rows.push(++this.rowIndex);
         }
         else {
@@ -403,6 +443,7 @@ export class TrainAddSchedulingComponent implements OnInit {
                 this.points.push(this.routingDetailsForm.value);
                 this.station = "";
                 this.stationType = "";
+                ++this.selectedIndex;
                 this.rows.push(++this.rowIndex);
             }
         }

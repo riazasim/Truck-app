@@ -16,8 +16,7 @@
                     </select>
                 </div>
                 <div iconic-input-wrapper leftSvg="assets/images/carbon-train-speed.svg">
-                    <input readonly inputRef type="text" placeholder="Locomotive type"
-                        [value]="locomotiveType" />
+                    <input readonly inputRef type="text" placeholder="Locomotive type" [value]="locomotiveType" />
                 </div>
 
             </div>
@@ -65,7 +64,8 @@
                         </td>
                         <td>
                             <input class="text-center"
-                                [value]="points.controls.indexOf(point) === 0 ? 'Start point' : points.controls.indexOf(point) === (points.controls.length - 1) ? 'End point' : 'Touch point'" />
+                                [value]="points.controls.indexOf(point) === 0 ? 'Start point' : points.controls.indexOf(point) === (points.controls.length - 1) ? 'End point' : 'Touch point'"
+                                readonly />
                         </td>
                         <td>
                             <select formControlName="stationType" (change)="onStationTypeChange($event , $index)">
@@ -84,7 +84,9 @@
                             </select>
                         </td>
                         <td>
-                            <!-- <fa-icon icon="trash" class="text-primary cursor-pointer"></fa-icon> -->
+                            <a (click)="openDeleteModal(point , $index)">
+                                <fa-icon icon="trash" class="text-primary cursor-pointer"></fa-icon>
+                            </a>
                         </td>
                     </tr>
                     }
@@ -147,7 +149,8 @@
                 </button>
             </div>
             <div class="gap-y-4 mb-5 min-xl:px-[50px]">
-                <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]" [disabled]="!planningForm.valid" (click)="updateRoutingDetails()">
+                <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]"
+                    [disabled]="!planningForm.valid" (click)="updateRoutingDetails()">
                     {{ "Update" | translate }}
                 </button>
             </div>

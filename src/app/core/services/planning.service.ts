@@ -128,9 +128,20 @@ export class PlanningService {
         let data = { "planningId": id };
         return this.http.post(`${environment.apiUrl}${environment.apiVersion}/deletePlanning`, wrapJsonForRequest(data))
     }
+
     deleteConvoy(id: number): Observable<any> {
         let data = { "planningConvoyId": id };
         return this.http.post(`${environment.apiUrl}${environment.apiVersion}/deletePlanningConvoy`, wrapJsonForRequest(data))
+    }
+
+    checkDeleteRoute(id: number): Observable<any> {
+        let data = { "planningRouteDetailId": id };
+        return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/checkPlanningRouteDetailExistedInShipemntAlertElseDelete`, data)
+    }
+
+    deleteRoute(id: number): Observable<any> {
+        let data = { "planningRouteDetailId": id };
+        return this.http.post(`${environment.apiUrl}${environment.apiVersion}/deletePlanningRouteDetail`, wrapJsonForRequest(data))
     }
 
     pagination(data: any): Observable<PlanningTable> {

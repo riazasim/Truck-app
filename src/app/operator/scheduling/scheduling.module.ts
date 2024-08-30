@@ -73,6 +73,7 @@ import { TrainEditSchedulingConvoyComponent } from './edit-scheduling-convoy/tra
 import { TrainEditSchedulingConvoyPageComponent } from './edit-scheduling-convoy/train/train-edit-scheduling-convoy-page/train-edit-scheduling-convoy-page.component';
 import { WaterEditSchedulingConvoyPageComponent } from './edit-scheduling-convoy/water/water-edit-scheduling-convoy-page/water-edit-scheduling-convoy-page.component';
 import { WaterEditSchedulingConvoyComponent } from './edit-scheduling-convoy/water/water-scheduling-convoy.component';
+import { RouteDeleteModalComponent } from './route-delete-modal/route-delete-modal.component';
 
 
 @NgModule({
@@ -116,7 +117,8 @@ import { WaterEditSchedulingConvoyComponent } from './edit-scheduling-convoy/wat
         ProductsTabsComponent,
         ConvoyLogsModal,
         TrainAddSchedulingComponent,
-        WaterAddSchedulingComponent
+        WaterAddSchedulingComponent,
+        RouteDeleteModalComponent
     ],
     imports: [
         CommonModule,

@@ -40,6 +40,7 @@
                                 <span *ngIf="!isChangedImgLogo" class="text-lg">{{ 'branding.upload-logo' | translate }}</span>
                                 <input #logoFileElement hidden type="file" (change)="loadImage($event.target, 'imgLogo')" accept="image/*">
                             </button>
+                            <!-- <button (click)="updateAppModeLogo()"></button> -->
                         </div>
                         <div class="flex flex-col pt-10">
                             <div class="flex justify-center pt-10">

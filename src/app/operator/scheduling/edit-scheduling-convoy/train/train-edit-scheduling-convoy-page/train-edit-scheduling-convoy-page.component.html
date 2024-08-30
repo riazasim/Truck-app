@@ -20,9 +20,8 @@
                         [rightIcon]="['fas', 'caret-down']">
                         <select spAccessInputRef name="pickUpPoint" id="pickUpPoint" formControlName="pickUpPoint">
                             <option disabled selected value="">Pick-up point</option>
-                            <option *ngFor="let point of points"
-                                [value]="point.pointType + '(' + point.station.id + ')'">
-                                {{ point.station.name + ' (' + point.pointType + ')' }}
+                            <option *ngFor="let point of points" [value]="point.pointType">
+                                {{ point.pointType }}
                             </option>
                         </select>
                     </div>
@@ -52,9 +51,8 @@
                         [rightIcon]="['fas', 'caret-down']">
                         <select spAccessInputRef name="deliveryPoint" id="deliveryPoint" formControlName="deliverPoint">
                             <option disabled selected value="">Delivery point</option>
-                            <option *ngFor="let point of points"
-                                [value]="point.pointType + '(' + point.station.id + ')'">
-                                {{ point.station.name + ' (' + point.pointType + ')' }}
+                            <option *ngFor="let point of points" [value]="point.pointType">
+                                {{ point.pointType }}
                             </option>
                         </select>
                     </div>

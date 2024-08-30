@@ -62,6 +62,12 @@ export class OrganizationService {
     return this.http.post<ResponseItemWrapper<OrganizationModel>>(`${environment.apiUrl}${environment.apiVersion}${this.route}/logo/${id}`, data)
       .pipe(pluckItemWrapperData<OrganizationModel, ResponseItemWrapper<OrganizationModel>>());
   }
+  setTransportModeDetails(id: number, file: File): Observable<any> {
+    const data = new FormData();
+    data.append('logo', file);
+    return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/setTransportModeDetails/${id}`, data)
+      .pipe(pluckItemWrapperData<any, ResponseItemWrapper<any>>());
+  }
 
   updateCover(id: number, file: File): Observable<OrganizationModel> {
     const data = new FormData();

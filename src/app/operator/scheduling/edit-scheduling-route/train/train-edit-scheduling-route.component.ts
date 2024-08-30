@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
@@ -10,6 +10,10 @@ import { StationService } from 'src/app/core/services/stations.service';
 import { TrainsService } from 'src/app/core/services/trains.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { createRequiredValidators } from 'src/app/shared/validators/generic-validators';
+import { MatDialog } from '@angular/material/dialog';
+import { SchedulingDeleteModalComponent } from '../../scheduling-delete-modal/scheduling-delete-modal.component';
+import { RouteDeleteModalComponent } from '../../route-delete-modal/route-delete-modal.component';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
     selector: 'app-train-edit-scheduling-route',
@@ -42,7 +46,8 @@ export class TrainEditSchedulingRouteComponent implements OnInit {
         private readonly route: ActivatedRoute,
         private readonly router: Router,
         private readonly snackBar: MatSnackBar,
-        private readonly microService: MicroService
+        private readonly cd: ChangeDetectorRef,
+        private readonly dialogService: MatDialog
     ) { }
 
     ngOnInit(): void {
@@ -90,9 +95,8 @@ export class TrainEditSchedulingRouteComponent implements OnInit {
     }
 
     addPoints(data?: any): void {
-        console.log(data)
         const newPoint = this.fb.group({
-            planningRouteDetailId : [data?.id || null],
+            planningRouteDetailId: [data?.id || null],
             pointType: [data?.pointType || ''],
             stationType: [data?.stationType || ''],
             station: [data?.station?.id || '']
@@ -109,7 +113,7 @@ export class TrainEditSchedulingRouteComponent implements OnInit {
                 this.locomotiveType = res?.locomotive?.type;
                 for (let i = 0; i < res?.planningRouteDetails?.length; i++) {
                     console.log(res?.planningRouteDetails[i]?.stationType)
-                    this.retrieveStations(res?.planningRouteDetails[i]?.stationType, i);
+                    this.stations[i] = this.retrieveStations(res?.planningRouteDetails[i]?.stationType, i);
                 }
                 this.isRoutesLoading$.next(false);
             },
@@ -149,6 +153,50 @@ export class TrainEditSchedulingRouteComponent implements OnInit {
             this.locomotiveType = selectedLocomotive?.type;
         }
     }
+
+    openDeleteModal(point: any, index: any = -1) {
+        this.dialogService.open(RouteDeleteModalComponent, {
+            disableClose: true,
+            data: { "id": point?.value?.planningRouteDetailId, "title": "planning", "description": "" }
+        }).afterClosed()
+            .subscribe({
+                next: (isDelete: boolean) => {
+                    if (isDelete) {
+                        this.planningService.checkDeleteRoute(point?.value?.planningRouteDetailId).subscribe({
+                            next: res => {
+                                if (res.data.attributes.message === "existedInShipment") {
+                                    this.dialogService.open(RouteDeleteModalComponent, {
+                                        disableClose: true,
+                                        data: { "id": point?.value?.planningRouteDetailId, "title": "route point", "description": "Shipments exists against this route point. \n Shipments against this point will also be deleted." }
+                                    }).afterClosed()
+                                        .subscribe({
+                                            next: (isDelete: boolean) => {
+                                                if (isDelete) {
+                                                    this.planningService.deleteRoute(point?.value?.planningRouteDetailId).subscribe({
+                                                        next: res => {
+                                                            this.stations.splice(Number(index), 1);
+                                                            this.points.removeAt(Number(index));
+                                                            this.cd.detectChanges();
+                                                        }
+                                                    });
+                                                }
+                                            }
+                                        })
+                                }
+                                else {
+                                    if (index > -1) {
+                                        this.stations.splice(Number(index), 1);
+                                        this.points.removeAt(Number(index));
+                                        this.cd.detectChanges();
+                                    }
+                                }
+                            }
+                        })
+                    }
+                }
+            });
+    }
+
 
     onStationTypeChange(event: any, index: any): void {
         this.retrieveStations(event.target.value, index);

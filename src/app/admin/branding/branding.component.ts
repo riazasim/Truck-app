@@ -19,6 +19,7 @@ import { handleError } from 'src/app/shared/utils/error-handling.function';
 
 export class BrandingComponent implements OnInit {
 
+    modeLogo: string; 
     imgLogo: string;
     imgCover: string;
 
@@ -26,6 +27,7 @@ export class BrandingComponent implements OnInit {
   isChangedImgCover: boolean = false;
   imgCoverFile: File | null;
   imgLogoFile: File | null;
+  modeLogoFile: File | null;
   organization$: BehaviorSubject<OrganizationModel|null> = new BehaviorSubject<OrganizationModel|null>(null);
   isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   privacyLink = new FormControl('');
@@ -214,10 +216,35 @@ export class BrandingComponent implements OnInit {
       }
     });
   }
+  updateAppModeLogo(fileReference:any, f: File): void {
+    this.organizationService.setTransportModeDetails(<number>(<any>this.organization$.getValue()).id, f).subscribe({
+      next: (response: any) => {
+        this.organization$.next(response);
+        this.modeLogo = <string>response?.trasportModeSetting?.transportModeLogo;
+        this.snackBar.open('', 'Success', {
+          duration: 3000,
+          horizontalPosition: 'center',
+          panelClass: ['success-snackbar'],
+          verticalPosition: 'top',
+        })
+        this.isLoading$.next(false);
+      },
+      error: (body: any) => {
+        fileReference.value = '';
+        this.isChangedImgLogo = false;
+        this.imgCoverFile = null;
+        this.imgLogoFile = null;
+        this.modeLogoFile = null;
+        this.clear('modeLogo');
+        handleError(this.snackBar, body, this.isLoading$)
+      }
+    });
+  }
 
-  private clear(type: 'imgCover' | 'imgLogo'): void {
+  private clear(type: 'imgCover' |'imgLogo' | 'modeLogo'): void {
     if (type === 'imgCover') this.imgCover = '';
     if (type === 'imgLogo') this.imgLogo = '';
+    if (type === 'modeLogo') this.modeLogo = '';
   }
 
   private setOrganization(organization: OrganizationModel): void {

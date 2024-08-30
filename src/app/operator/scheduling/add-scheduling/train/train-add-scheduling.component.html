@@ -70,7 +70,7 @@
                                 </td>
                                 <td>
                                     <input class="text-center" readonly
-                                        [value]="rows.indexOf(row) === 0 ? 'Start point' : rows.indexOf(row) === (rows.length - 1) ? 'End point' : 'Touch point'" />
+                                        [value]="rows.indexOf(row) === 0 ? 'Start point' : rows.indexOf(row) === (rows.length - 1) ? 'End point' : 'Touch point ' + '( ' + $index + ' )'" />
                                 </td>
                                 <td>
                                     <select name="stationType" id="stationType"
@@ -96,14 +96,12 @@
                                         </option>
                                     </select>
                                 </td>
-                                <!-- <td> -->
-                                <!-- <fa-icon  icon="pen" class="text-primary cursor-pointer"></fa-icon> -->
-                                <!-- <fa-icon icon="trash" 
-                                                class="text-primary cursor-pointer"></fa-icon>
-                                        </td> -->
+                                <td>
+                                    <a (click)="onRowDelete($index)"><fa-icon icon="trash"
+                                            class="text-primary cursor-pointer"></fa-icon></a>
+                                </td>
                             </tr>
                             }
-
                         </tbody>
                     </table>
                 </form>
@@ -149,9 +147,8 @@
                         [rightIcon]="['fas', 'caret-down']">
                         <select spAccessInputRef name="pickUpPoint" id="pickUpPoint" formControlName="pickUpPoint">
                             <option disabled selected value="">Pick-up point</option>
-                            <option *ngFor="let point of pickupPoints"
-                                [value]="point.pointType + '(' + point.station + ')'">
-                                {{ point.pointType + '(' + point.station + ')' }}
+                            <option *ngFor="let point of pickupPoints" [value]="point.pointType">
+                                {{ point.pointType }}
                             </option>
                         </select>
                     </div>
@@ -181,9 +178,8 @@
                         [rightIcon]="['fas', 'caret-down']">
                         <select spAccessInputRef name="deliveryPoint" id="deliveryPoint" formControlName="deliverPoint">
                             <option disabled selected value="">Delivery point</option>
-                            <option *ngFor="let point of deliveryPoints"
-                                [value]="point.pointType + '(' + point.station + ')'">
-                                {{ point.pointType + '(' + point.station + ')' }}
+                            <option *ngFor="let point of deliveryPoints" [value]="point.pointType">
+                                {{ point.pointType }}
                             </option>
                         </select>
                     </div>
@@ -204,8 +200,8 @@
                         <tr>
                             <th>No.</th>
                             <th>Wagons</th>
-                            <th>Category</th>
-                            <th>Subcategory</th>
+                            <th class="min-w-[150px]">Category</th>
+                            <th class="min-w-[150px]">Subcategory</th>
                             <th>Brutto</th>
                             <th>Tara</th>
                             <th>Netto</th>

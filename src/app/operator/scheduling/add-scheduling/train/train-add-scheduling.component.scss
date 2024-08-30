@@ -166,3 +166,10 @@ ul li {
     border-width: 1px;
     border-color: #9ea5b3;
 }
+
+table.table > tbody > tr > td {
+    color: #595959;
+    text-align: center;
+    padding: 1rem 0rem;
+    font-weight: 500;
+}
