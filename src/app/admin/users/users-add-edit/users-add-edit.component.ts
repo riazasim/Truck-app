@@ -74,10 +74,10 @@ export class UsersAddEditComponent {
                 status: this.fb.control(data?.user?.status || true , [...createRequiredValidators()]),
             }),
             userSetting: this.fb.group({
-                timezone: this.fb.control(data?.timezone || '', [...createRequiredValidators()]),
+                // timezone: this.fb.control(data?.timezone || '', [...createRequiredValidators()]),
                 firstName: this.fb.control(data?.firstName || '', [...createRequiredValidators()]),
                 lastName: this.fb.control(data?.lastName || '', [...createRequiredValidators()]),
-                language: this.fb.control(data?.language || '', [...createRequiredValidators()]),
+                // language: this.fb.control(data?.language || '', [...createRequiredValidators()]),
                 phone: this.fb.control(data?.phone || '', [...createRequiredValidators() , Validators.pattern("[- +()0-9]+") , ...createMinLengthValidator(7) , ...createMaxLengthValidator(17)]),
                 phoneRegionCode: this.fb.control(data?.phoneRegionCode || '', [...createRequiredValidators(), ...createMaxLengthValidator(4) , Validators.pattern("[- +()0-9]+")]),
             })

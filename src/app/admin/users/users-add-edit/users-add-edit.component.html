@@ -23,10 +23,10 @@
                     <select spAccessInputRef name="userRole" id="userRole" formControlName="userRole"
                         (change)="onRoleChange($event)">
                         <option value="" disabled>Select user role</option>
-                        <option value="ROLE_USER_OPERATOR">OPERATOR</option>
                         <option value="ROLE_USER_CAPTAIN">CAPTAIN</option>
-                        <!-- <option value="DRIVER">DRIVER</option> -->
-                        <!-- <option value="PARTNER">PARTNER</option> -->
+                        <option value="ROLE_USER_CONDUCTOR">CONDUCTOR</option>
+                        <option value="ROLE_USER_DRIVER">DRIVER</option>
+                        <option value="ROLE_USER_OPERATOR">OPERATOR</option>
                     </select>
                 </div>
             </div>
@@ -40,7 +40,7 @@
                 </div>
             </div>
             <div formGroupName="userSetting">
-                <div iconic-select-wrapper leftIcon="eye" [rightIcon]="['fas', 'caret-down']">
+                <!-- <div iconic-select-wrapper leftIcon="eye" [rightIcon]="['fas', 'caret-down']">
                     <select spAccessInputRef name="timezone" id="timezone" formControlName="timezone">
                         <option value="" disabled>Select Timezone</option>
                         <option value="Europe/Bucharest">
@@ -48,16 +48,16 @@
                         </option>
                         <option value="Asia/Karachi">Asia/Karachi</option>
                     </select>
-                </div>
+                </div> -->
             </div>
             <div formGroupName="userSetting">
-                <div iconic-select-wrapper leftIcon="eye" [rightIcon]="['fas', 'caret-down']">
+                <!-- <div iconic-select-wrapper leftIcon="eye" [rightIcon]="['fas', 'caret-down']">
                     <select spAccessInputRef name="language" id="language" formControlName="language">
                         <option value="" disabled>Select Language</option>
                         <option value="EN">EN</option>
                         <option value="RO">RO</option>
                     </select>
-                </div>
+                </div> -->
             </div>
             <div formGroupName="userSetting">
                 <div iconic-input-wrapper leftIcon="phone">
