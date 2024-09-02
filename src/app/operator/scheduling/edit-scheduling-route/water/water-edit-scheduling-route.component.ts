@@ -84,8 +84,8 @@ export class WaterEditSchedulingRouteComponent implements OnInit {
                 this.dateVal = dateTimeVal[0];
                 this.timeVal = dateTimeVal[1];
                 this.retriveCompanines(res?.departurePort || 0);
-                this.retriveZones(res?.departurePort || 0 );
-                this.retriveArrivalZones(res?.arrivalPort || 0 );
+                // this.retriveZones(res?.departurePort || 0 );
+                // this.retriveArrivalZones(res?.arrivalPort || 0 );
                 this.initForm(res);
                 this.isRoutesLoading$.next(false);
             },
@@ -121,7 +121,7 @@ export class WaterEditSchedulingRouteComponent implements OnInit {
         })
         if (port) {
             this.planningForm.patchValue({ routingDetail: { ridCoordinates: port?.addrCoordinates } })
-            this.retriveZones(port.id);
+            // this.retriveZones(port.id);
             this.retriveCompanines(port.id);
         }
     }
@@ -132,9 +132,9 @@ export class WaterEditSchedulingRouteComponent implements OnInit {
         this.ports.filter((item: any) => {
             if (Number(item.id) === Number(ev.target.value)) port = item;
         })
-        if (port) {
-            this.retriveArrivalZones(port.id);
-        }
+        // if (port) {
+        //     this.retriveArrivalZones(port.id);
+        // }
     }
 
     retriveCompanines(portId: any) {
@@ -160,60 +160,60 @@ export class WaterEditSchedulingRouteComponent implements OnInit {
             }
         })
     }
-    retriveZones(portId: any) {
-        this.microService.getZones(portId).subscribe({
-            next: res => {
-                this.departureZone = [];
-                if (res?.status !== 'error') {
-                    res?.forEach((item: any) => {
-                        this.departureZone.push(item?.attributes);
-                    });
-                }
-                if (this.departureZone.length === 0) {
-                    this.planningForm.patchValue({ departureZone: null })
-                }
-                this.isPortChangeLoading$.next(false);
+    // retriveZones(portId: any) {
+    //     this.microService.getZones(portId).subscribe({
+    //         next: res => {
+    //             this.departureZone = [];
+    //             if (res?.status !== 'error') {
+    //                 res?.forEach((item: any) => {
+    //                     this.departureZone.push(item?.attributes);
+    //                 });
+    //             }
+    //             if (this.departureZone.length === 0) {
+    //                 this.planningForm.patchValue({ departureZone: null })
+    //             }
+    //             this.isPortChangeLoading$.next(false);
 
-            },
-            error: err => {
-                this.isPortChangeLoading$.next(false);
-                throw err
-            }
-        })
-    }
-    retriveArrivalZones(portId: any) {
-        this.microService.getZones(portId).subscribe({
-            next: res => {
-                this.arrivalZone = [];
-                if (res?.status !== 'error') {
-                    res?.forEach((item: any) => {
-                        this.arrivalZone.push(item?.attributes);
-                    });
-                }
-                if (this.arrivalZone.length === 0) {
-                    this.planningForm.patchValue({ arrivalZone: null })
-                }
-                this.isPortChangeLoading$.next(false);
+    //         },
+    //         error: err => {
+    //             this.isPortChangeLoading$.next(false);
+    //             throw err
+    //         }
+    //     })
+    // }
+    // retriveArrivalZones(portId: any) {
+    //     this.microService.getZones(portId).subscribe({
+    //         next: res => {
+    //             this.arrivalZone = [];
+    //             if (res?.status !== 'error') {
+    //                 res?.forEach((item: any) => {
+    //                     this.arrivalZone.push(item?.attributes);
+    //                 });
+    //             }
+    //             if (this.arrivalZone.length === 0) {
+    //                 this.planningForm.patchValue({ arrivalZone: null })
+    //             }
+    //             this.isPortChangeLoading$.next(false);
 
-            },
-            error: err => {
-                this.isPortChangeLoading$.next(false);
-                throw err
-            }
-        })
-    }
+    //         },
+    //         error: err => {
+    //             this.isPortChangeLoading$.next(false);
+    //             throw err
+    //         }
+    //     })
+    // }
 
     onCompaniesChange(ev: any) {
         this.planningForm.patchValue({ company: Number(ev?.target?.value) })
     }
 
-    onDepartureZone(ev: any) {
-        this.planningForm.patchValue({ departureZone: String(ev?.target?.value) })
-    }
+    // onDepartureZone(ev: any) {
+    //     this.planningForm.patchValue({ departureZone: String(ev?.target?.value) })
+    // }
 
-    onArrivalZone(ev: any) {
-        this.planningForm.patchValue({ arrivalZone: String(ev?.target?.value) })
-    }
+    // onArrivalZone(ev: any) {
+    //     this.planningForm.patchValue({ arrivalZone: String(ev?.target?.value) })
+    // }
 
     OnDateChange(value: any) {
         let filterDate = value instanceof Date ? value : new Date(value);
@@ -233,8 +233,8 @@ export class WaterEditSchedulingRouteComponent implements OnInit {
         this.planningForm = this.fb.group({
             convoyType: this.fb.control(data?.convoyType || '', [...createRequiredValidators()]),
             estimatedTimeArrival: this.fb.control(data?.estimatedTimeArrival || '', [...createRequiredValidators()]),
-            arrivalZone: this.fb.control(data?.arrivalZone || '', [...createRequiredValidators()]),
-            departureZone: this.fb.control(data?.departureZone || '', [...createRequiredValidators()]),
+            arrivalZone: this.fb.control(data?.arrivalZone || ''),
+            departureZone: this.fb.control(data?.departureZone || ''),
             departurePort: this.fb.control(data?.departurePort || '', [...createRequiredValidators()]),
             arrivalPort: this.fb.control(data?.arrivalPort || '', [...createRequiredValidators()]),
             company: this.fb.control(data?.company || null, [...createRequiredValidators()]),

@@ -3,10 +3,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject } from "rxjs";
 import { PlanningService } from 'src/app/core/services/planning.service';
 import { convoyModel, PlanningModel } from 'src/app/core/models/planning.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatSidenav } from '@angular/material/sidenav';
 import { MatSnackBar, MatSnackBarRef, TextOnlySnackBar } from '@angular/material/snack-bar';
 import { SchedulingDeleteModalComponent } from '../../scheduling-delete-modal/scheduling-delete-modal.component';
+import { OrganizationService } from 'src/app/core/services/organization.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { RolesService } from 'src/app/core/services/roles.service';
 
 
 @Component({
@@ -24,21 +27,36 @@ export class TrainEditSchedulingConvoyComponent {
     @Output() retrieveConvoys: EventEmitter<any> = new EventEmitter();
     @Input() plannings: PlanningModel[] = [];
     toggleRef: MatSnackBarRef<TextOnlySnackBar>;
-    displayedColumns: string[] = ['id', 'manevure', 'ship', 'operator', 'destination', 'navigationType', 'sidCoordinates', 'sidStatus', 'actions'];
+    displayedColumns: string[] = ['id', 'pickUpPoint', 'deliverPoint', 'estimatedTimePickUp', 'estimatedTimeDeliver', 'sidCoordinates', 'sidStatus', 'actions'];
     dataSource: convoyModel[] = [];
     originalSource: convoyModel[] = [];
     appliedFilters: any = {};
-    id : number;
-    headerTitle : string;
+    userRole: string | null;
+    transportMode: string | null;
+    id: number;
+    headerTitle: string;
     logId: number;
     logModal: string;
+    status = [
+        { id: 1, name: 'Port Queue', color: '#3386FE' },
+    ];
 
     constructor(private readonly dialogService: MatDialog,
         private readonly planningService: PlanningService,
         private readonly route: ActivatedRoute,
         private readonly cd: ChangeDetectorRef,
-        private readonly snackBar: MatSnackBar,) {
+        private readonly snackBar: MatSnackBar,
+        private readonly orgService: OrganizationService,
+        private readonly roleService: RolesService,
+        private readonly router: Router
+    ) {
         this.retrievePlanningList();
+        this.transportMode = orgService.getAppMode();
+        this.userRole = roleService.getUserRoles();
+    }
+
+    redirectToAddShipment() {
+        this.router.navigate(['./add'], { relativeTo: this.route });
     }
 
 
@@ -74,7 +92,7 @@ export class TrainEditSchedulingConvoyComponent {
         if (!data) {
             console.error('Sidenav is not initialized');
             return;
-          }
+        }
         this.logModal = data.modal
         switch (data.view) {
             // case 'copy':
@@ -107,7 +125,7 @@ export class TrainEditSchedulingConvoyComponent {
     openDeleteModal(id: number) {
         this.dialogService.open(SchedulingDeleteModalComponent, {
             disableClose: true,
-            data: { "id" : id , "title" : "convoy"}
+            data: { "id": id, "title": "convoy" }
         }).afterClosed()
             .subscribe({
                 next: (isDelete: boolean) => {

@@ -26,6 +26,7 @@ export class TrainEditSchedulingConvoyPageComponent {
     });
 
     convoyForm: FormGroup;
+    convoyDetailsForm: FormGroup;
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     showFileThree$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     stepOne$: BehaviorSubject<boolean> = new BehaviorSubject(false);
@@ -48,7 +49,7 @@ export class TrainEditSchedulingConvoyPageComponent {
     tempImg: File[] = [];
     convoys: convoyModel[] = [];
 
-    id: number;
+    id: any;
     planningId: any;
     search: string;
     companies: any[];
@@ -74,7 +75,9 @@ export class TrainEditSchedulingConvoyPageComponent {
         { id: 7, name: 'Lignit' },
         { id: 8, name: 'Spercial ' },
     ];
-    options: any
+    options: any;
+    pickupPoints: any[] = [];
+    deliveryPoints: any[] = [];
 
     private formatDateObject(date: Date): string {
         const year = date.getFullYear();
@@ -95,26 +98,35 @@ export class TrainEditSchedulingConvoyPageComponent {
     ngOnInit(): void {
         this.getRoute();
         this.initConvoyForm();
-        this.isLoading$.next(false)
+        this.addWagons();
+        this.initConvoyDetailsForm();
+        this.isLoading$.next(false);
+
     }
 
     getRoute() {
-
+        this.id = this.route.snapshot.params['id'];
         const urlSegments = this.route.snapshot.url;
         if (urlSegments.length > 1) {
             this.routeId.next(urlSegments[1].path);
             this.planningId = this.routeId.getValue();
             this.getPlanningRouteDetailList(this.planningId);
         }
-        this.id = this.route.snapshot.params['id'];
-        this.planningService.getConvoy(this.id).subscribe(response => {
-            response.planningConvoyDocuments.map((item: any) => {
-                this.oldImagesId.push(item.id)
-            })
+        if (this.id !== "add") {
+            this.planningService.getConvoy(this.id).subscribe(response => {
+                response.planningConvoyDocuments.map((item: any) => {
+                    this.oldImagesId.push(item.id)
+                })
+                this.retrieveCompanies();
+                this.initConvoyForm(response);
+                this.isLoading$.next(false);
+            });
+        }
+        else {
+            this.initConvoyForm();
             this.retrieveCompanies();
-            this.initConvoyForm(response);
             this.isLoading$.next(false);
-        });
+        }
     }
     getPlanningRouteDetailList(id: number) {
         this.planningService.getPlanningRouteDetailList(id).subscribe({
@@ -124,7 +136,8 @@ export class TrainEditSchedulingConvoyPageComponent {
                         this.points.push(item.attributes)
                     }
                 });
-                console.log(this.points)
+                this.pickupPoints = this.points.slice(0, -1);
+                this.deliveryPoints = this.points.slice(1);
             },
             error: (err) => {
                 handleError(this.snackBar, err);
@@ -159,6 +172,12 @@ export class TrainEditSchedulingConvoyPageComponent {
                 this.addWagons(wagon);
             });
         }
+    }
+
+    initConvoyDetailsForm(data?: any): void {
+        this.convoyDetailsForm = this.fb.group({
+            convoyDetail: this.fb.control(data?.convoyDetail || [])
+        })
     }
 
     get wagons(): any {
@@ -223,19 +242,42 @@ export class TrainEditSchedulingConvoyPageComponent {
 
     updateConvoys(): void {
         this.isLoading$.next(true);
-        this.convoyForm.patchValue({ documents: this.images, oldDocuments: `[${String(this.oldId)}]` })
-        // console.log(this.convoyForm)
-        this.planningService.editConvoys(this.id, this.convoyForm.value)
-            .subscribe({
-                next: () => {
-                    this.router.navigate(['../../../../success'], { relativeTo: this.route });
-                },
-                error: (body) => {
-                    handleError(this.snackBar, body);
-                    this.matStepper.selectedIndex = 0;
-                    this.isLoading$.next(false);
-                }
-            })
+        if (this.etpDateVal === undefined) this.etpDateVal = this.formatDate(this.etpDate);
+        if (this.etpTimeVal === undefined) this.etpTimeVal = String(this.etpTime);
+        if (this.etdDateVal === undefined) this.etdDateVal = this.formatDate(this.etdDate);
+        if (this.etdTimeVal === undefined) this.etdTimeVal = String(this.etdTime);
+        this.etpDateTimeVal = `${this.etpDateVal} ${this.etpTimeVal}`;
+        this.etdDateTimeVal = `${this.etdDateVal} ${this.etdTimeVal}`;
+        this.convoyForm.patchValue({ documents: this.images, oldDocuments: `[${String(this.oldId)}]`, estimatedTimePickUp: this.etpDateTimeVal, estimatedTimeDeliver: this.etdDateTimeVal })
+        if (this.id !== "add") {
+            this.planningService.editConvoys(this.id, this.convoyForm.value)
+                .subscribe({
+                    next: () => {
+                        this.router.navigate(['../../../../success'], { relativeTo: this.route });
+                    },
+                    error: (body) => {
+                        handleError(this.snackBar, body);
+                        this.matStepper.selectedIndex = 0;
+                        this.isLoading$.next(false);
+                    }
+                })
+        }
+        else {
+            this.convoys.push(this.convoyForm.value)
+            this.convoyDetailsForm.patchValue({ convoyDetail: this.convoys })
+            this.planningService.addConvoys(this.planningId, this.convoyDetailsForm.value)
+                .subscribe({
+                    next: () => {
+                        this.router.navigate(['../../../../success'], { relativeTo: this.route });
+                    },
+                    error: (body) => {
+                        handleError(this.snackBar, body);
+                        this.matStepper.selectedIndex = 0;
+                        this.isLoading$.next(false);
+                    }
+                })
+        }
+
     }
 
     patchFile(file: File, index: number): void {

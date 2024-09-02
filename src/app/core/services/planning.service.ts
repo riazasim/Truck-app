@@ -44,6 +44,19 @@ export class PlanningService {
             )
     }
 
+    addConvoys(id: number, data: any): Observable<any> {
+        data.planningId = id
+        const body = convertJsonToFormData(data, '');
+        // console.log(body)
+        // console.log(data)
+        return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/createPlanningConvoyOnUpdate`, body)
+            .pipe(pluckItemWrapperData<any, ResponseItemWrapper<any>>(),
+                map((p: any) => {
+                    return p;
+                })
+            )
+    }
+
     edit(id: number, body: Partial<SchedulingModel>): Observable<any> {
         const products = [...<SchedulingProduct[]>body.products];
         const customFieldCargoData = [...<SchedulingCustomField[]>body.customFieldCargoData];

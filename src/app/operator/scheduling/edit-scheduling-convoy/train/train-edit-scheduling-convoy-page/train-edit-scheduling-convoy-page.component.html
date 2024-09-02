@@ -20,7 +20,7 @@
                         [rightIcon]="['fas', 'caret-down']">
                         <select spAccessInputRef name="pickUpPoint" id="pickUpPoint" formControlName="pickUpPoint">
                             <option disabled selected value="">Pick-up point</option>
-                            <option *ngFor="let point of points" [value]="point.pointType">
+                            <option *ngFor="let point of pickupPoints" [value]="point.pointType">
                                 {{ point.pointType }}
                             </option>
                         </select>
@@ -51,7 +51,7 @@
                         [rightIcon]="['fas', 'caret-down']">
                         <select spAccessInputRef name="deliveryPoint" id="deliveryPoint" formControlName="deliverPoint">
                             <option disabled selected value="">Delivery point</option>
-                            <option *ngFor="let point of points" [value]="point.pointType">
+                            <option *ngFor="let point of deliveryPoints" [value]="point.pointType">
                                 {{ point.pointType }}
                             </option>
                         </select>
@@ -141,7 +141,7 @@
             </div>
             <div class="min-xl:px-[50px] grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20 mt-4">
                 <div class="gap-y-4 mb-5 min-xl:px-[50px]">
-                    <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]" matStepperPrevious>
+                    <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]" routerLink="../">
                         {{ "button.back" | translate }}
                     </button>
                 </div>

@@ -38,10 +38,6 @@ export class TrainPlanningListComponent implements OnChanges {
     logId: number;
     logModal: string;
 
-    status = [
-        { id: 1, name: 'On route', color: '#3386FE' },
-    ];
-
     constructor(private readonly dialogService: MatDialog,
         private readonly planningService: PlanningService,
         private readonly cd: ChangeDetectorRef,
