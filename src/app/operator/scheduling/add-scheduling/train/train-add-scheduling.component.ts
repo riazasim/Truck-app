@@ -196,18 +196,18 @@ export class TrainAddSchedulingComponent implements OnInit {
         if (this.etpTimeVal === undefined) this.etpTimeVal = String(this.etpTime);
         if (this.etdDateVal === undefined) this.etdDateVal = this.formatDate(this.etdDate);
         if (this.etdTimeVal === undefined) this.etdTimeVal = String(this.etdTime);
-        const pickup = this.convoyForm?.get("pickUpPoint")?.value;
+        // const pickup = this.convoyForm?.get("pickUpPoint")?.value;
         // console.log(this.pickupPoints.indexOf(pickup), pickup.split("(")[1][0], this.pickupPoints)
-        const newArr = this.pickupPoints.filter((item: any) => {
-            console.log(item.pointType, pickup)
-            if (item.pointType !== pickup) {
-                return item
-            }
-        })
-        this.pickupPoints = newArr;
-        if (this.pickupPoints.length === 1) {
-            this.addNewWagon$.next(false);
-        }
+        // const newArr = this.pickupPoints.filter((item: any) => {
+        //     console.log(item.pointType, pickup)
+        //     if (item.pointType !== pickup) {
+        //         return item
+        //     }
+        // })
+        // this.pickupPoints = newArr;
+        // if (this.pickupPoints.length === 1) {
+        //     this.addNewWagon$.next(false);
+        // }
         this.etpDateTimeVal = `${this.etpDateVal} ${this.etpTimeVal}`;
         this.etdDateTimeVal = `${this.etdDateVal} ${this.etdTimeVal}`;
         this.convoyForm.patchValue({ estimatedTimePickUp: this.etpDateTimeVal, estimatedTimeDeliver: this.etdDateTimeVal });
