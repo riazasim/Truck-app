@@ -27,7 +27,7 @@ export class TrainEditSchedulingRouteComponent implements OnInit {
     isRoutesLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     isStationLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
-
+    selectedIndex: any = 0;
     locomotives: any[] = [];
     locomotiveType: any;
     stationTypes = [
@@ -35,6 +35,7 @@ export class TrainEditSchedulingRouteComponent implements OnInit {
         { id: 2, name: 'Private', value: 'PRIVATE' },
     ];
     stations: any[] = [];
+    station: any[] = [];
     id: number;
     index: number = 0;
 
@@ -48,7 +49,8 @@ export class TrainEditSchedulingRouteComponent implements OnInit {
         private readonly snackBar: MatSnackBar,
         private readonly cd: ChangeDetectorRef,
         private readonly dialogService: MatDialog
-    ) { }
+    ) {
+    }
 
     ngOnInit(): void {
         this.getRoute();
@@ -72,6 +74,7 @@ export class TrainEditSchedulingRouteComponent implements OnInit {
 
 
     drop(event: CdkDragDrop<string[]>) {
+        moveItemInArray(this.stations, event.previousIndex, event.currentIndex)
         this.moveItemInFormArray(this.points, event.previousIndex, event.currentIndex);
     }
 
@@ -112,9 +115,9 @@ export class TrainEditSchedulingRouteComponent implements OnInit {
                 this.retrieveLocomotives();
                 this.locomotiveType = res?.locomotive?.type;
                 for (let i = 0; i < res?.planningRouteDetails?.length; i++) {
-                    console.log(res?.planningRouteDetails[i]?.stationType)
-                    this.stations[i] = this.retrieveStations(res?.planningRouteDetails[i]?.stationType, i);
+                    this.retrieveStations(res?.planningRouteDetails[i]?.stationType, i);
                 }
+                this.cd.detectChanges();
                 this.isRoutesLoading$.next(false);
             },
             error: (err) => {
@@ -134,6 +137,7 @@ export class TrainEditSchedulingRouteComponent implements OnInit {
         this.trainsService.pagination(data).subscribe({
             next: (response) => {
                 this.locomotives = response?.items || [];
+                this.cd.detectChanges();
                 this.isLoading$.next(false);
             },
             error: (err) => {
@@ -211,6 +215,8 @@ export class TrainEditSchedulingRouteComponent implements OnInit {
                     stationArray.push(item.attributes)
                 });
                 this.stations[index] = stationArray;
+                console.log(this.stations, stationArray);
+                this.cd.detectChanges();
                 this.isStationLoading$.next(false);
             },
             error: (err) => {

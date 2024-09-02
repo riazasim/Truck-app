@@ -56,6 +56,10 @@ var routes: Routes = [
         component: appMode === "RAILWAY" ? TrainEditSchedulingConvoyPageComponent : appMode === "WATER" ? WaterEditSchedulingConvoyPageComponent : EditSchedulingConvoyPageComponent
       },
       {
+        path: 'route/:id/convoy-list/add',
+        component: appMode === "RAILWAY" ? TrainEditSchedulingConvoyPageComponent : appMode === "WATER" ? WaterEditSchedulingConvoyPageComponent : EditSchedulingConvoyPageComponent
+      },
+      {
         path: 'no-restrictions',
         component: NoRestrictionsComponent
       },

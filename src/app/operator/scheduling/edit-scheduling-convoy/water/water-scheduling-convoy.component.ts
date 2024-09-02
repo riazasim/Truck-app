@@ -3,10 +3,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject } from "rxjs";
 import { PlanningService } from 'src/app/core/services/planning.service';
 import { convoyModel, PlanningModel } from 'src/app/core/models/planning.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatSidenav } from '@angular/material/sidenav';
 import { MatSnackBar, MatSnackBarRef, TextOnlySnackBar } from '@angular/material/snack-bar';
 import { SchedulingDeleteModalComponent } from '../../scheduling-delete-modal/scheduling-delete-modal.component';
+import { RolesService } from 'src/app/core/services/roles.service';
+import { OrganizationService } from 'src/app/core/services/organization.service';
 
 
 @Component({
@@ -28,17 +30,24 @@ export class WaterEditSchedulingConvoyComponent {
     dataSource: convoyModel[] = [];
     originalSource: convoyModel[] = [];
     appliedFilters: any = {};
-    id : number;
-    headerTitle : string;
+    id: number;
+    headerTitle: string;
     logId: number;
     logModal: string;
+    userRole: string | null;
+    transportMode: string | null;
 
     constructor(private readonly dialogService: MatDialog,
         private readonly planningService: PlanningService,
         private readonly route: ActivatedRoute,
         private readonly cd: ChangeDetectorRef,
-        private readonly snackBar: MatSnackBar,) {
+        private readonly orgService: OrganizationService,
+        private readonly roleService: RolesService,
+        private readonly router: Router,
+        private readonly snackBar: MatSnackBar) {
         this.retrievePlanningList();
+        this.transportMode = orgService.getAppMode();
+        this.userRole = roleService.getUserRoles();
     }
 
 
@@ -50,6 +59,10 @@ export class WaterEditSchedulingConvoyComponent {
             this.originalSource = response.planningConvoys;
             this.isLoading$.next(false);
         });
+    }
+
+    redirectToAddShipment() {
+        this.router.navigate(['./add'], { relativeTo: this.route });
     }
 
     // OnEmit(row: any, modal: string) {
@@ -74,7 +87,7 @@ export class WaterEditSchedulingConvoyComponent {
         if (!data) {
             console.error('Sidenav is not initialized');
             return;
-          }
+        }
         this.logModal = data.modal
         switch (data.view) {
             // case 'copy':
@@ -107,7 +120,7 @@ export class WaterEditSchedulingConvoyComponent {
     openDeleteModal(id: number) {
         this.dialogService.open(SchedulingDeleteModalComponent, {
             disableClose: true,
-            data: { "id" : id , "title" : "convoy"}
+            data: { "id": id, "title": "convoy" }
         }).afterClosed()
             .subscribe({
                 next: (isDelete: boolean) => {

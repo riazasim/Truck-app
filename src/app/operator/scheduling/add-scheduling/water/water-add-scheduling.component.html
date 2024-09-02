@@ -173,8 +173,8 @@
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_ship_owner.svg">
                         <input inputRef type="text" placeholder="Ship owner" formControlName="shipowner" />
                     </div>
-                    <mat-select class="mb-6" placeholder="Products" multiple formControlName="products"
-                        (onSelectionChange)="onProductChange($event)">
+                    <mat-select class="mb-6" placeholder="Products" multiple
+                        (selectionChange)="onProductChange($event)">
                         <searchbar>
                             <fa-icon icon="search" leftIcon></fa-icon>
                             <input input type="text" (keyup)="onInputChange($event)">

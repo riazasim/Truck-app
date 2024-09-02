@@ -124,12 +124,12 @@
                                 </section>
                             </th>
                             <td cdk-cell  *cdkCellDef="let row">
-                                <!-- <mat-chip [ngStyle]="{'background-color': row?.planning?.planningStatus?.color}">
+                                <mat-chip [ngStyle]="{'background-color': row?.planning?.planningStatus?.color}">
                                     {{ row?.planning?.planningStatus?.name }}
-                                </mat-chip> -->
-                                <mat-chip *ngFor="let status of status" [ngStyle]="{'background-color': status.color}">
-                                    {{ status.name }}
                                 </mat-chip>
+                                <!-- <mat-chip *ngFor="let status of status" [ngStyle]="{'background-color': status.color}">
+                                    {{ status.name }}
+                                </mat-chip> -->
                             </td>
                         </ng-container>
 

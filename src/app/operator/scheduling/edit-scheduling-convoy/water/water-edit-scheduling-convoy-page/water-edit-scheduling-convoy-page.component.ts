@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
@@ -10,6 +10,7 @@ import { createRequiredValidators } from 'src/app/shared/validators/generic-vali
 import { ShipsService } from 'src/app/core/services/ships.service';
 import { ProductModel } from 'src/app/core/models/product.model';
 import { ProductService } from 'src/app/core/services/product.service';
+import { convoyModel } from 'src/app/core/models/planning.model';
 
 
 @Component({
@@ -40,9 +41,10 @@ export class WaterEditSchedulingConvoyPageComponent {
     selectedProducts: []
     selectedShips: Set<number> = new Set<number>();
     stepOne$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-
-    id: number;
+    convoyDetailsForm: FormGroup;
+    id: any;
     search: string;
+    planningId: any;
     shipType = [
         { id: 1, name: 'ship type1' },
         { id: 2, name: 'ship type2' },
@@ -68,7 +70,8 @@ export class WaterEditSchedulingConvoyPageComponent {
         { id: 2, name: 'operation type2' },
         { id: 3, name: 'operation type3' },
     ];
-    options:any
+    options: any;
+    convoys: convoyModel[] = [];
 
     constructor(private readonly fb: FormBuilder,
         private readonly planningService: PlanningService,
@@ -76,13 +79,16 @@ export class WaterEditSchedulingConvoyPageComponent {
         private readonly router: Router,
         private readonly productService: ProductService,
         private readonly shipsService: ShipsService,
-        private readonly snackBar: MatSnackBar,) { }
+        private readonly snackBar: MatSnackBar,
+        private readonly cd: ChangeDetectorRef,
+    ) { }
 
     ngOnInit(): void {
         this.getRoute();
         this.retrieveShips();
         this.retriveProducts();
         this.initConvoyForm();
+        this.initConvoyDetailsForm();
         this.isLoading$.next(false)
     }
     // public filterOptions(filter: any): void {
@@ -91,13 +97,16 @@ export class WaterEditSchedulingConvoyPageComponent {
 
     getRoute() {
         this.id = this.route.snapshot.params['id'];
-        this.planningService.getConvoy(this.id).subscribe(response => {
-            response.planningConvoyDocuments.map((item: any) => {
-                this.oldImagesId.push(item.id)
-            })
-            this.initConvoyForm(response);
-            this.isLoading$.next(false);
-        });
+        console.log(this.id)
+        if (this.id !== "add") {
+            this.planningService.getConvoy(this.id).subscribe(response => {
+                response.planningConvoyDocuments.map((item: any) => {
+                    this.oldImagesId.push(item.id)
+                })
+                this.initConvoyForm(response);
+                this.isLoading$.next(false);
+            });
+        }
     }
 
     next(index: any): void {
@@ -118,17 +127,13 @@ export class WaterEditSchedulingConvoyPageComponent {
         })
     }
 
-    onInputChange(ev : any){
+    onInputChange(ev: any) {
         this.search = ev?.target?.value
     }
 
     onProductChange(ev: any) {
-        if (this.productsList.includes(ev?.source?.value)) {
-            const index = this.productsList.indexOf(ev?.source?.value);
-            this.productsList.splice(index, 1);
-        }
-        else this.productsList.push(ev?.source?.value);
-        this.convoyForm.patchValue({ products: `[${this.productsList}]` })
+        this.productsList = ev?.source?.value;
+        this.convoyForm.patchValue({ products: this.productsList })
     }
 
     retrieveShips(): void {
@@ -219,21 +224,49 @@ export class WaterEditSchedulingConvoyPageComponent {
         this.updateSelectedShipsState();
     }
 
+    initConvoyDetailsForm(data?: any): void {
+        this.convoyDetailsForm = this.fb.group({
+            convoyDetail: this.fb.control(data?.convoyDetail || [])
+        })
+    }
+
     updateConvoys(): void {
+        const urlSegments = this.route.snapshot.url;
+        if (urlSegments.length > 1) {
+            this.planningId = urlSegments[1].path
+        }
         this.isLoading$.next(true);
         this.convoyForm.patchValue({ documents: this.images, oldDocuments: `[${String(this.oldId)}]` })
-        // console.log(this.convoyForm)
-        this.planningService.editConvoys(this.id, this.convoyForm.value)
-            .subscribe({
-                next: () => {
-                    this.router.navigate(['../../../../success'], { relativeTo: this.route });
-                },
-                error: (body) => {
-                    handleError(this.snackBar, body);
-                    this.matStepper.selectedIndex = 0;
-                    this.isLoading$.next(false);
-                }
-            })
+        // console.log(this.convoyForm
+        if (this.id !== "add") {
+            this.planningService.editConvoys(this.id, this.convoyForm.value)
+                .subscribe({
+                    next: () => {
+                        this.router.navigate(['../../../../success'], { relativeTo: this.route });
+                    },
+                    error: (body) => {
+                        handleError(this.snackBar, body);
+                        this.matStepper.selectedIndex = 0;
+                        this.isLoading$.next(false);
+                    }
+                })
+        }
+        else {
+            this.convoyForm.patchValue({ products: `[${this.productsList}]` })
+            this.convoys.push(this.convoyForm.value)
+            this.convoyDetailsForm.patchValue({ convoyDetail: this.convoys })
+            this.planningService.addConvoys(this.planningId, this.convoyDetailsForm.value)
+                .subscribe({
+                    next: () => {
+                        this.router.navigate(['../../../../success'], { relativeTo: this.route });
+                    },
+                    error: (body) => {
+                        handleError(this.snackBar, body);
+                        this.matStepper.selectedIndex = 0;
+                        this.isLoading$.next(false);
+                    }
+                })
+        }
     }
 
     patchFile(file: File, index: number): void {

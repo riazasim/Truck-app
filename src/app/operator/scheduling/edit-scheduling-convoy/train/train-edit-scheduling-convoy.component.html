@@ -6,7 +6,7 @@
                 [filterDate]="filterDate" (triggerFetchPlannings)="handleDateChange($event)"></scheduling-edit-plan> -->
             <!-- <scheduling-view-modal [planning$]="editPlanning$" [id]="logId" *ngSwitchCase="'view'" [modal]="logModal"
                 [sidenav]="sidenav"></scheduling-view-modal> -->
-                <convoy-logs-modal [planning$]="editPlanning$" [id]="logId" *ngSwitchCase="'view'" [modal]="logModal"
+            <convoy-logs-modal [planning$]="editPlanning$" [id]="logId" *ngSwitchCase="'view'" [modal]="logModal"
                 [sidenav]="sidenav"></convoy-logs-modal>
             <!-- <scheduling-send-message [planning$]="editPlanning$" *ngSwitchCase="'mess'" [sidenav]="sidenav"
                 (triggerPlanUpgradeWarning)="handleOpenPlanUpgradeWarning()"></scheduling-send-message> -->
@@ -15,7 +15,7 @@
     <mat-sidenav-content>
         <section *ngIf="(isLoading$ | async) || originalSource.length; else empty">
             <material-panel-table [showSearchbar]="false" [showHeader]="true" tableTitle="RID-{{headerTitle}}"
-                microService>
+                buttonLabel="Add Shipment" (buttonClicked)="redirectToAddShipment()" microService>
                 <div table class="w-full overflow-hidden">
                     <ng-scrollbar track="horizontal" [autoHeightDisabled]="false" style="scrollbar-width: none;">
                         <table class="material-table no-wrap overflow-hidden" [class.loading]="isLoading$ | async"
@@ -29,66 +29,49 @@
                                 </th>
                                 <td cdk-cell *cdkCellDef="let row">{{ row?.sId}}</td>
                             </ng-container>
-                            <ng-container cdkColumnDef="manevure">
+                            <ng-container cdkColumnDef="pickUpPoint">
                                 <th cdk-header-cell *cdkHeaderCellDef scope="col" class="max-w-20">
                                     <section class="flex flex-col gap-4">
-                                        <div mat-header="manevure">Manevure</div>
+                                        <div mat-header="pickUpPoint">PickUp Point</div>
                                     </section>
                                 </th>
                                 <td cdk-cell *cdkCellDef="let row">
-                                    {{ row?.manevure || "-" }}
+                                    {{ row?.pickUpPoint || "-" }}
+                                </td>
+                            </ng-container>
+                            <ng-container cdkColumnDef="deliverPoint">
+                                <th cdk-header-cell *cdkHeaderCellDef scope="col" class="max-w-20">
+                                    <section class="flex flex-col gap-4">
+                                        <div mat-header="deliverPoint">Deliver Point</div>
+                                    </section>
+                                </th>
+                                <td cdk-cell *cdkCellDef="let row">
+                                    {{ row?.deliverPoint || "-" }}
+                                </td>
+                            </ng-container>
+                            <ng-container cdkColumnDef="estimatedTimePickUp">
+                                <th cdk-header-cell *cdkHeaderCellDef scope="col" class="max-w-20">
+                                    <section class="flex flex-col gap-4">
+                                        <div mat-header="estimatedTimePickUp">ETA</div>
+                                    </section>
+                                </th>
+                                <td cdk-cell *cdkCellDef="let row">
+                                    {{ row?.estimatedTimePickUp || "-" }}
+                                </td>
+                            </ng-container>
+                            <ng-container cdkColumnDef="estimatedTimeDeliver">
+                                <th cdk-header-cell *cdkHeaderCellDef scope="col" class="max-w-20">
+                                    <section class="flex flex-col gap-4">
+                                        <div mat-header="estimatedTimeDeliver">RTA</div>
+                                    </section>
+                                </th>
+                                <td cdk-cell *cdkCellDef="let row">
+                                    {{ row?.estimatedTimeDeliver || "-" }}
                                 </td>
                             </ng-container>
 
 
-                            <ng-container cdkColumnDef="ship">
-                                <th cdk-header-cell *cdkHeaderCellDef scope="col" class="max-w-20">
-                                    <section class="flex flex-col gap-4">
-                                        <div mat-header="ship">
-                                            Ship
-                                        </div>
-                                    </section>
-                                </th>
-                                <td cdk-cell *cdkCellDef="let row">
-                                    {{ row?.ship?.name || "-" }}
-                                </td>
-                            </ng-container>
-                            <ng-container cdkColumnDef="operator">
-                                <th cdk-header-cell *cdkHeaderCellDef scope="col" class="max-w-20">
-                                    <section class="flex flex-col gap-4">
-                                        <div mat-header="operator">
-                                            Operator
-                                        </div>
-                                    </section>
-                                </th>
-                                <td cdk-cell *cdkCellDef="let row">
-                                    {{ row?.operator || "-" }}
-                                </td>
-                            </ng-container>
-                            <ng-container cdkColumnDef="destination">
-                                <th cdk-header-cell *cdkHeaderCellDef scope="col" class="max-w-20">
-                                    <section class="flex flex-col gap-4">
-                                        <div mat-header="Destination">
-                                            Destination
-                                        </div>
-                                    </section>
-                                </th>
-                                <td cdk-cell *cdkCellDef="let row">
-                                    {{ row?.destination || "-" }}
-                                </td>
-                            </ng-container>
-                            <ng-container cdkColumnDef="navigationType">
-                                <th cdk-header-cell *cdkHeaderCellDef scope="col" class="max-w-20">
-                                    <section class="flex flex-col gap-4">
-                                        <div mat-header="Navigation Type">
-                                            Navigation Type
-                                        </div>
-                                    </section>
-                                </th>
-                                <td cdk-cell *cdkCellDef="let row">
-                                    {{ row?.navigationType || "-" }}
-                                </td>
-                            </ng-container>
+                            
                             <ng-container cdkColumnDef="sidCoordinates">
                                 <th cdk-header-cell *cdkHeaderCellDef scope="col" class="max-w-20">
                                     <section class="flex flex-col gap-4">
@@ -111,9 +94,12 @@
                                     </section>
                                 </th>
                                 <td cdk-cell *cdkCellDef="let row">
-                                    <mat-chip [ngStyle]="{'background-color': row?.planningConvoyStatus?.color}">
+                                    <!-- <mat-chip [ngStyle]="{'background-color': row?.planningConvoyStatus?.color}">
                                         {{row?.planningConvoyStatus?.name}}
-                                    </mat-chip>
+                                    </mat-chip> -->
+                                    <mat-chip *ngFor="let status of status" [ngStyle]="{'background-color': status.color}">
+                                    {{ status.name }}
+                                </mat-chip>
                                 </td>
                             </ng-container>
 
@@ -165,15 +151,7 @@
         </section>
 
         <ng-template #empty>
-            <full-empty-container>
-                <div class="flex justify-center">
-                    <fa-icon icon="comment-lines" class="text-primary text-[160px]"></fa-icon>
-                </div>
-
-                <div class="mt-10">
-                    <h4 class="heading-4 text-center pb-10">{{'There are no convoys' | translate}}</h4>
-                </div>
-            </full-empty-container>
+            <no-convoy [userRole]="userRole" [transportMode]="transportMode"></no-convoy>
         </ng-template>
     </mat-sidenav-content>
 </mat-sidenav-container>

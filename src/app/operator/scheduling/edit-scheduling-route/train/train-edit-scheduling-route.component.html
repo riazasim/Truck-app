@@ -1,6 +1,6 @@
 <section class="bg-white w-full">
-    <app-loader *ngIf="isLoading$ | async" [isContainer]="true" [fullScreen]="false"></app-loader>
-    <form [formGroup]="planningForm" *ngIf="!(isLoading$ | async)">
+    <app-loader *ngIf="isRoutesLoading$ | async" [isContainer]="true" [fullScreen]="false"></app-loader>
+    <form *ngIf="!(isRoutesLoading$ | async)" [formGroup]="planningForm">
         <div class="grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20 gap-y-4 pt-[50px] min-xl:px-[50px]">
             <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
                 <h4 class="font-bold">Locomotive and conductor</h4>

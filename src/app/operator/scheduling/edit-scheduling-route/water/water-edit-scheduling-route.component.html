@@ -30,7 +30,7 @@
                     </option>
                 </select>
             </div>
-                <div [loading]="(isPortsLoading$ | async)" iconic-select-wrapper
+                <!-- <div [loading]="(isPortsLoading$ | async)" iconic-select-wrapper
                     leftSvg="assets/images/scheduling_map_location.svg" [rightIcon]="['fas', 'caret-down']">
                     <select spAccessInputRef name="zone" id="zone" (change)="onDepartureZone($event)" formControlName="departureZone">
                         <option disabled value="">
@@ -40,7 +40,7 @@
                             {{ zone.name }}
                         </option>
                     </select>
-                </div>
+                </div> -->
             </div>
             <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
             <div [loading]="(isPortsLoading$ | async)" iconic-select-wrapper
@@ -52,7 +52,7 @@
                     </option>
                 </select>
             </div>
-            <div [loading]="(isPortsLoading$ | async)" iconic-select-wrapper
+            <!-- <div [loading]="(isPortsLoading$ | async)" iconic-select-wrapper
                 leftSvg="assets/images/scheduling_map_location.svg" [rightIcon]="['fas', 'caret-down']">
                 <select spAccessInputRef name="zone" id="zone" (change)="onArrivalZone($event)" formControlName="arrivalZone">
                     <option disabled value="">
@@ -62,7 +62,7 @@
                         {{ zone.name }}
                     </option>
                 </select>
-            </div>
+            </div> -->
             <div [loading]="(isPortsLoading$ | async) || (isPortChangeLoading$ | async)" iconic-select-wrapper
             leftIcon="grid-2" [rightIcon]="['fas', 'caret-down']">
                 <select spAccessInputRef name="company" id="company" (change)="onCompaniesChange($event)" formControlName="company">

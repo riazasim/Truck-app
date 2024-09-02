@@ -95,8 +95,8 @@ export class WaterAddSchedulingComponent implements OnInit {
         return formattedDate;
     }
 
-    departureZone : any[] = [];
-    arrivalZone : any[] = [];
+    departureZone: any[] = [];
+    arrivalZone: any[] = [];
     companies: any[];
     shipType = [
         { id: 1, name: 'ship type1' },
@@ -162,6 +162,8 @@ export class WaterAddSchedulingComponent implements OnInit {
 
 
     navigate(index: number) {
+        const any = this.convoyForm.get("products")?.value
+        console.log(this.convoyForm.get("products"), any)
         this.convoys.push(this.convoyForm.value)
         this.imageLen++
         this.tempImg = [];
@@ -184,7 +186,7 @@ export class WaterAddSchedulingComponent implements OnInit {
         })
     }
 
-    onInputChange(ev : any){
+    onInputChange(ev: any) {
         this.search = ev?.target?.value
     }
 
@@ -297,12 +299,9 @@ export class WaterAddSchedulingComponent implements OnInit {
     }
 
     onProductChange(ev: any) {
-        if (this.productsList.includes(ev?.source?.value)) {
-            const index = this.productsList.indexOf(ev?.source?.value);
-            this.productsList.splice(index, 1);
-        }
-        else this.productsList.push(ev?.source?.value);
+        this.productsList = (ev?.source?.value)
         this.convoyForm.patchValue({ products: `[${this.productsList}]` })
+        console.log(this.convoyForm.value)
     }
 
 
