@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { LocationModel } from 'src/app/core/models/location.model';
 import { LocationService } from 'src/app/core/services/location.service';
+import { OrganizationService } from 'src/app/core/services/organization.service';
 import { handleError } from 'src/app/shared/utils/error-handling.function';
 import { createMaxLengthValidator, createMinLengthValidator, createPatternValidators, createRequiredValidators } from 'src/app/shared/validators/generic-validators';
 
@@ -18,12 +19,16 @@ export class LocationsAddEditComponent implements OnInit {
     location$: BehaviorSubject<LocationModel | null> = new BehaviorSubject<LocationModel | null>(null);
     id: number;
     phoneRegionCode : string;
+    transportMode: string | null;
     constructor(private fb: UntypedFormBuilder,
         private locationService: LocationService,
         private router: Router,
         private route: ActivatedRoute,
-        private snackBar: MatSnackBar
-    ) { }
+        private snackBar: MatSnackBar,
+        private readonly orgService: OrganizationService,
+    ) { 
+        this.transportMode = orgService.getAppMode();
+    }
 
     ngOnInit(): void {
         this.subscribeForQueryParams();

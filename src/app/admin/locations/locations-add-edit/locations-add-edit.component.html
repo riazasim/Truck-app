@@ -49,7 +49,7 @@
             <div>
                 <h6 class="font-bold">Address</h6>
                 <div class="min-xl:columns-3">
-                    <div class="h-[110px]">
+                    <div class="h-[110px]" *ngIf="transportMode === 'ROAD'">
                         <div iconic-input-wrapper leftIcon="location-crosshairs">
                             <input placeholder="Street" inputRef type="text" id="addrStreet"
                                 formControlName="addrStreet">
@@ -57,7 +57,7 @@
                     </div>
                     <div class="h-[110px]">
                         <div class="min-md:flex gap-2">
-                            <div class="flex-2">
+                            <div class="flex-2"*ngIf="transportMode === 'ROAD'">
                                 <div iconic-input-wrapper>
                                     <input placeholder="No." inputRef type="text" formControlName="addrNumber">
                                 </div>
@@ -127,7 +127,7 @@
                                 formControlName="contactEmail">
                         </div>
                     </div>
-                    <div>
+                    <!-- <div>
                         <div iconic-select-wrapper leftIcon="eye" [rightIcon]="['fas', 'caret-down']">
                             <select spAccessInputRef name="addrTimezone" id="timezone" formControlName="addrTimezone">
                                 <option value="" disabled>Select Timezone</option>
@@ -135,7 +135,7 @@
                                 <option value="Asia/Karachi">Asia/Karachi</option>
                             </select>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div>
