@@ -21,6 +21,11 @@ export class ProductsAddEditComponent {
     subCategory: any;
     isOptionSelected: boolean = false;
 
+    status = [
+        { id: 1, name: 'Active', value: 'ACTIVE' },
+        { id: 2, name: 'Inactive', value: 'INACTIVE' },
+    ]
+
     constructor(
         private readonly fb: UntypedFormBuilder,
         private readonly productService: ProductService,
@@ -112,10 +117,11 @@ export class ProductsAddEditComponent {
     initForm(data: any = <any>{}): void {
         this.productForm = this.fb.group({
             type: this.fb.control(data?.type || '', [...createRequiredValidators()]),
-            productCode: this.fb.control(data?.productCode || '', [...createRequiredValidators()]),
             name: this.fb.control(data?.name || '', [...createRequiredValidators()]),
+            productCode: this.fb.control(data?.productCode || '', [...createRequiredValidators()]),
             categoryId: this.fb.control(data?.category?.id || '', [...createRequiredValidators()]),
             subCategoryId: this.fb.control(data?.subCategory?.id || '', [...createRequiredValidators()]),
+            status: this.fb.control(data?.status || '', [...createRequiredValidators()]),
         });
         if (data?.type) {
             this.isOptionSelected = true;

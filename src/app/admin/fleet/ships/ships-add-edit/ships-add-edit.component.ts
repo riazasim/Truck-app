@@ -19,10 +19,9 @@ export class ShipsAddEditComponent {
     id: number;
     appliedFilters: any = {};
 
-    selfPropelled = [
-        { id: 1, name: 'Self Propelled 1' },
-        { id: 2, name: 'Self Propelled 2' },
-        { id: 3, name: 'Self Propelled 3' },
+    propulsionType = [
+        { id: 1, name: 'Self propelled' },
+        { id: 2, name: 'Without propulsion' },
     ]
     typeOfLock = [
         { id: 1, name: 'Type Of Lock1' },
@@ -66,7 +65,7 @@ export class ShipsAddEditComponent {
             name: this.fb.control(data?.name || '', [...createRequiredValidators()]),
             registrationNo: this.fb.control(data?.registrationNo || '', [...createRequiredValidators()]),
             ais: this.fb.control(data?.ais || '', [...createRequiredValidators()]),
-            selfPropelled: this.fb.control(data?.selfPropelled || '', [...createRequiredValidators()]),
+            propulsionType: this.fb.control(data?.propulsionType || '', [...createRequiredValidators()]),
             lockType: this.fb.control(data?.lockType || '', [...createRequiredValidators()]),
             length: this.fb.control(data?.length || '', [...createRequiredValidators()]),
             width: this.fb.control(data?.width || '', [...createRequiredValidators()]),

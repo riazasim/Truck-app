@@ -1,13 +1,5 @@
 <header class="layout-wrapper">
   <app-loader class="m-auto flex-grow" *ngIf="(isLoading$ | async)" [fullScreen]="false"></app-loader>
-  <div *ngIf="!(isLoading$ | async)" class="flex flex-grow justify-center items-center gap-2">
-    <!-- <fa-icon (click)="openChangeLocationModal()" icon="location-dot" class="text-primary cursor-pointer text-3xl font-bold"></fa-icon> -->
-    <span class="text-3xl font-bold">{{companyName$}}</span>
-  </div>
-  <div class="logo-container" *ngIf="logoSrc" [routerLink]="logoRedirect" [relativeTo]="activatedRoute.parent">
-    <img [src]="logoSrc" alt="logo">
-  </div>
-
 
   <mat-button-toggle-group
       name="favoriteColor"
@@ -16,9 +8,18 @@
       [value]="transportModeId"
     >
     <mat-button-toggle value="1">Road</mat-button-toggle>
-    <mat-button-toggle value="2">Railway</mat-button-toggle>
+    <mat-button-toggle value="2">Train</mat-button-toggle>
     <mat-button-toggle value="3">Water</mat-button-toggle>
     </mat-button-toggle-group>
+    
+  <div *ngIf="!(isLoading$ | async)" class="flex flex-grow justify-center items-center gap-2">
+    <!-- <fa-icon (click)="openChangeLocationModal()" icon="location-dot" class="text-primary cursor-pointer text-3xl font-bold"></fa-icon> -->
+    <span class="text-3xl font-bold">{{companyName$}}</span>
+  </div>
+  <div class="logo-container" *ngIf="logoSrc" [routerLink]="logoRedirect" [relativeTo]="activatedRoute.parent">
+    <img [src]="logoSrc" alt="logo">
+  </div>
+
   
   <!-- <div class="current-location-container">
      <h2 class="heading-4 current-location">
