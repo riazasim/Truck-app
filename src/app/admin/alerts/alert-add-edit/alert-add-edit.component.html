@@ -22,7 +22,7 @@
           <div class="col-span-2 grid grid-cols-2 gap-x-10 gap-y-4 px-[50px]">
             <div class="flex flex-col gap-x-10 gap-y-4 px-[50px]">
               <timepicker [isMinutes]="true" placeholder="Timeslot start" (modelChange)="handleTimeSlotChange($event, 'start')"></timepicker>
-              <div iconic-select-wrapper leftIcon="truck-ramp-box" [rightIcon]="['fas', 'caret-down']">
+              <div iconic-select-wrapper leftIcon="truck-ramp-box" >
                 <select inputRef name="dock" formControlName="dock">
                   <option value="null" disabled>Select dock</option>
                   <option *ngFor="let dock of docks" [value]="dock.id">{{dock.name}}</option>
@@ -31,7 +31,7 @@
             </div>
             <div class="flex flex-col gap-x-10 gap-y-4 px-[50px]">
               <timepicker [isMinutes]="true" placeholder="Timeslot end" (modelChange)="handleTimeSlotChange($event, 'end')"></timepicker>
-              <div iconic-select-wrapper leftIcon="clock" [rightIcon]="['fas', 'caret-down']">
+              <div iconic-select-wrapper leftIcon="clock" >
                 <select inputRef name="warehouse" id="warehouse" formControlName="warehouse">
                   <option value="null" disabled>Select building</option>
                   <option *ngFor="let building of buildings" [value]="building.id">{{building.name}}</option>
@@ -59,13 +59,13 @@
             <div [style.visibility]="'hidden'" [style.height.px]="21"></div>
           </div>
           &lt;!&ndash; </div> &ndash;&gt;
-          <div iconic-select-wrapper leftIcon="grid-2" [rightIcon]="['fas', 'caret-down']">
+          <div iconic-select-wrapper leftIcon="grid-2" >
             <select inputRef name="operation" id="operation" formControlName="operation">
               <option value="null" disabled>Operation type</option>
               <option *ngFor="let operation of operations" [value]="operation.id">{{operation.name}}</option>
             </select>
           </div>
-          <div iconic-select-wrapper leftIcon="id-card" [rightIcon]="['fas', 'caret-down']">
+          <div iconic-select-wrapper leftIcon="id-card" >
             <select inputRef name="customer" id="customer" formControlName="customer">
               <option value="null" disabled>Customer</option>
               <option *ngFor="let customer of customers" [value]="customer.id">{{customer.fullName}}</option>
@@ -152,7 +152,7 @@
               </ng-container>
               <ng-container *ngSwitchCase="'select'">
                 <label *ngIf="input.label">{{input.label}}</label>
-                <div iconic-select-wrapper [rightIcon]="['fas', 'caret-down']">
+                <div iconic-select-wrapper >
                   <select class="w-full" [required]="input.required" inputRef (change)="updateCustomFieldAdditional(input.id, input.type, $event.target)">
                     <option value="">{{input.placeholder}}</option>
                     <option *ngFor="let field of input.customFieldLists" [value]="field.value">{{field.label}}</option>

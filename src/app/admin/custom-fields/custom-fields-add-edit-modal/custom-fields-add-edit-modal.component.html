@@ -14,7 +14,7 @@
                 </div>
               </div>
               <div class="w-full">
-                <div iconic-select-wrapper [rightIcon]="['fas', 'caret-down']">
+                <div iconic-select-wrapper >
                     <select inputRef name="type" id="type" formControlName="type">
                         <option value="" disabled>Select type</option>
                         <option value="text">Text</option>
@@ -26,7 +26,7 @@
                         <option value="radio">Radio</option>
                     </select>
                 </div>
-                <div *ngIf="(inputType$ | async) === 'date'" class="pt-4" iconic-select-wrapper [rightIcon]="['fas', 'caret-down']">
+                <div *ngIf="(inputType$ | async) === 'date'" class="pt-4" iconic-select-wrapper >
                   <select inputRef name="type" id="type" formControlName="format">
                       <option value="" disabled>Select format</option>
                       <option value="dd-MMM-yyyy">dd-MMM-yyyy</option>
@@ -35,7 +35,7 @@
                       <option value="yyyy-MM-dd">yyyy-MM-dd</option>
                   </select>
                 </div>
-                <div *ngIf="(inputType$ | async) === 'time'" class="pt-4" iconic-select-wrapper [rightIcon]="['fas', 'caret-down']">
+                <div *ngIf="(inputType$ | async) === 'time'" class="pt-4" iconic-select-wrapper >
                   <select inputRef name="type" id="type" formControlName="format">
                       <option value="" disabled>Select format</option>
                       <option value="HH:mm:ss">HH:mm:ss</option>
@@ -79,7 +79,7 @@
             <fa-icon *ngIf="customFieldsList.length < 30" (click)="addCustomFieldList()" class="text-primary cursor-pointer self-center" icon="square-plus" size="lg"></fa-icon>
           </div>
         </div>
-      
+
         <div class="flex justify-between flex-wrap-reverse gap-4">
           <button (click)="cancel()"
             class="border border-primary py-2 text-primary min-w-[130px] rounded-full">Cancel</button>
@@ -88,4 +88,3 @@
         </div>
     </form>
   </div>
-  

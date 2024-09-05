@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { CustomFieldModel } from 'src/app/core/models/custom-field.model';
@@ -20,10 +20,12 @@ import { ShipsService } from 'src/app/core/services/ships.service';
 import { MicroService } from 'src/app/core/services/micro.service';
 import { ProductService } from 'src/app/core/services/product.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { createRequiredValidators } from 'src/app/shared/validators/generic-validators';
+import { createMinLengthValidator, createRequiredValidators } from 'src/app/shared/validators/generic-validators';
 import { PartnerService } from 'src/app/core/services/partner.service';
 import { TrainsService } from 'src/app/core/services/trains.service';
 import { StationService } from 'src/app/core/services/stations.service';
+import { MatDialog } from '@angular/material/dialog';
+import { WarningModalComponent } from 'src/app/shared/components/modals/warning-modal/warning-modal.component';
 
 @Component({
     selector: 'train-app-add-scheduling',
@@ -43,8 +45,12 @@ export class TrainAddSchedulingComponent implements OnInit {
     schedulingForm: FormGroup;
     convoyForm: FormGroup;
     routingDetailsForm: FormGroup;
+    stepOneForm: FormGroup;
+    stepTwoForm: FormGroup;
+    stepThreeForm: FormGroup;
     wagonForm: FormGroup;
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+    hideEmail$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     showFileThree$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     isPortsLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     isStationTypeChangeLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
@@ -83,10 +89,9 @@ export class TrainAddSchedulingComponent implements OnInit {
     selectedIndex: any = 0;
     noIndex: number = 1;
     no: any[] = [this.noIndex];
-    points: any[] = [];
     wagonsList: any[] = [];
     locomotiveType: any = "";
-    stationType: any;
+    stationTypes: any = [];
     station: any;
 
 
@@ -119,10 +124,6 @@ export class TrainAddSchedulingComponent implements OnInit {
         { id: 7, name: 'Lignit' },
         { id: 8, name: 'Spercial ' },
     ];
-    stationTypes = [
-        { id: 1, name: 'Public', value: 'PUBLIC' },
-        { id: 2, name: 'Private', value: 'PRIVATE' },
-    ];
     stations: any = [];
 
     constructor(
@@ -135,6 +136,8 @@ export class TrainAddSchedulingComponent implements OnInit {
         private readonly trainsService: TrainsService,
         private readonly stationService: StationService,
         private readonly partnerService: PartnerService,
+        private readonly cd: ChangeDetectorRef,
+        private readonly dialogService: MatDialog
     ) {
         this.getFormatHourSlot = getFormatHourSlot.bind(this);
     }
@@ -142,40 +145,41 @@ export class TrainAddSchedulingComponent implements OnInit {
     ngOnInit(): void {
         this.id = this.route.snapshot.params['id'];
         this.initForm();
-        this.initConvoyForm();
-        this.initPointForm();
-        this.isLoading$.next(false);
+        // this.initConvoyForm();
         this.retrieveCompanies();
         this.retrieveLocomotives();
         this.addWagons();
+        this.addPoints();
+        this.retrieveStations();
+        this.isLoading$.next(false);
     }
 
-    drop(event: CdkDragDrop<string[]>) {
-        if (event.previousIndex === this.rows.length - 1 || event.currentIndex === this.rows.length - 1) {
-            if (this.points.length === this.rows.length) {
-                this.station = "";
-                this.stationType = "";
-                moveItemInArray(this.points, event.previousIndex, event.currentIndex);
-                moveItemInArray(this.rows, event.previousIndex, event.currentIndex);
-                moveItemInArray(this.stations, event.previousIndex, event.currentIndex);
-            }
-            this.routingDetailsForm.patchValue({ pointType: "Touch Point", stationType: this.stationType || "", station: this.station || "" })
-            if (this.routingDetailsForm.valid) {
-                console.log("valid")
-                this.points.push(this.routingDetailsForm.value);
-                this.station = "";
-                this.stationType = "";
-                moveItemInArray(this.points, event.previousIndex, event.currentIndex);
-                moveItemInArray(this.rows, event.previousIndex, event.currentIndex);
-                moveItemInArray(this.stations, event.previousIndex, event.currentIndex);
-            }
-        }
-        else {
-            moveItemInArray(this.points, event.previousIndex, event.currentIndex);
-            moveItemInArray(this.rows, event.previousIndex, event.currentIndex);
-            moveItemInArray(this.stations, event.previousIndex, event.currentIndex);
-        }
+    hideEmail(ev: boolean) {
+        this.hideEmail$.next(ev);
     }
+
+    moveItemInFormArray(
+        formArray: FormArray,
+        fromIndex: number,
+        toIndex: number
+    ): void {
+        const dir = toIndex > fromIndex ? 1 : -1;
+
+        const item = formArray.at(fromIndex);
+        for (let i = fromIndex; i * dir < toIndex * dir; i = i + dir) {
+            const current = formArray.at(i + dir);
+            formArray.setControl(i, current);
+        }
+        formArray.setControl(toIndex, item);
+    }
+
+
+    drop(event: CdkDragDrop<string[]>) {
+        moveItemInArray(this.stations, event.previousIndex, event.currentIndex)
+        moveItemInArray(this.stationTypes, event.previousIndex, event.currentIndex)
+        this.moveItemInFormArray(this.points, event.previousIndex, event.currentIndex);
+    }
+
 
     formatDate(date: Date | string): string {
         let formattedDate = '';
@@ -196,25 +200,26 @@ export class TrainAddSchedulingComponent implements OnInit {
         if (this.etpTimeVal === undefined) this.etpTimeVal = String(this.etpTime);
         if (this.etdDateVal === undefined) this.etdDateVal = this.formatDate(this.etdDate);
         if (this.etdTimeVal === undefined) this.etdTimeVal = String(this.etdTime);
-        const pickup = this.convoyForm?.get("pickUpPoint")?.value;
+        // const pickup = this.convoyForm?.get("pickUpPoint")?.value;
         // console.log(this.pickupPoints.indexOf(pickup), pickup.split("(")[1][0], this.pickupPoints)
-        const newArr = this.pickupPoints.filter((item: any) => {
-            console.log(item.pointType, pickup)
-            if (item.pointType !== pickup) {
-                return item
-            }
-        })
-        this.pickupPoints = newArr;
-        if (this.pickupPoints.length === 1) {
-            this.addNewWagon$.next(false);
-        }
+        // const newArr = this.pickupPoints.filter((item: any) => {
+        //     console.log(item.pointType, pickup)
+        //     if (item.pointType !== pickup) {
+        //         return item
+        //     }
+        // })
+        // this.pickupPoints = newArr;
+        // if (this.pickupPoints.length === 1) {
+        //     this.addNewWagon$.next(false);
+        // }
         this.etpDateTimeVal = `${this.etpDateVal} ${this.etpTimeVal}`;
         this.etdDateTimeVal = `${this.etdDateVal} ${this.etdTimeVal}`;
-        this.convoyForm.patchValue({ estimatedTimePickUp: this.etpDateTimeVal, estimatedTimeDeliver: this.etdDateTimeVal });
-        this.convoys.push(this.convoyForm.value);
+        this.stepTwoForm.patchValue({ estimatedTimePickUp: this.etpDateTimeVal, estimatedTimeDeliver: this.etdDateTimeVal });
+        this.convoys.push({ ...this.stepTwoForm.value, ...this.stepThreeForm.value });
+        this.initForm(1);
         this.imageLen++;
         this.tempImg = [];
-        this.initConvoyForm();
+        // this.initConvoyForm();
         this.matStepper.selectedIndex = 1;
     }
 
@@ -254,45 +259,34 @@ export class TrainAddSchedulingComponent implements OnInit {
         })
     }
 
-
-    onStationTypeChange(ev: any, index: any) {
-        this.selectedIndex = index;
-        if (index === this.rows.length - 1) {
-            this.stationType = ev?.target?.value;
-            this.retrieveStations(this.stationType, index);
-
+    retrieveStations() {
+        let data = {
+            "start": 0,
+            "length": 0,
+            "filters": ["", "", "", ""],
+            "order": [{ "dir": "DESC", "column": 0 }]
         }
-        else {
-            this.points[index].stationType = ev?.target?.value;
-            this.retrieveStations(this.points[index].stationType, index);
-            this.points[index].station = "";
-        }
-    }
-
-    retrieveStations(type: any, index: any) {
         this.isStationLoading$.next(true);
-        this.stationService.getStationListByType(type).subscribe({
+        this.stationService.pagination(data).subscribe({
             next: res => {
-                if (res?.status !== 'error') {
-                    let stationArray: any[] = [];
-                    res?.forEach((item: any) => {
-                        stationArray.push(item.attributes)
-                    });
-                    this.stations[index] = stationArray;
-
-                    console.log(this.stations);
-
-                }
-                if (this.stations.length === 0) {
-                    this.schedulingForm.patchValue({ routingDetail: { station: "" } })
-                }
+                console.log(res?.items);
+                this.stations = res?.items;
                 this.isStationLoading$.next(false);
+                this.cd.detectChanges()
             },
             error: err => {
                 this.isStationLoading$.next(true);
-                throw err
             }
         })
+    }
+
+    OnStationChange(ev: any, index?: any) {
+        const newStation = this.stations.find((item: any) => {
+            if (Number(item.id) === Number(ev.target?.value)) {
+                return item
+            }
+        })
+        this.stationTypes[index] = newStation?.type
     }
 
     onInputChange(ev: any) {
@@ -303,39 +297,23 @@ export class TrainAddSchedulingComponent implements OnInit {
         if (this.matStepper.selectedIndex === 0) {
         }
         if (index === 1) {
-            if (this.points.length === this.rows.length) {
-                if (this.points.length < 2) {
-                    return
-                }
-                else {
-                    for (let i = 0; i < this.points.length; i++) {
-                        this.points[i].pointType = `Touch Point ( ${i} )`;
-                    }
-                    this.points[0].pointType = "Start Point";
-                    this.points[this.points.length - 1].pointType = "End Point";
-                    this.pickupPoints = this.points.slice(0, -1);
-                    this.deliveryPoints = this.points.slice(1);
-                    this.matStepper.selectedIndex = index;
-                }
+            if (this.points.length < 2) {
+                this.dialogService.open(WarningModalComponent, {
+                    disableClose: true,
+                })
             }
             else {
-                this.routingDetailsForm.patchValue({ pointType: "Touch Point", stationType: this.stationType || "", station: this.station || "" })
-                if (this.routingDetailsForm.valid) {
-                    this.points.push(this.routingDetailsForm.value);
-                    if (this.points.length < 2) {
-                        return
-                    }
-                    else {
-                        for (let i = 0; i < this.points.length; i++) {
-                            this.points[i].pointType = `Touch Point ( ${i} )`;
-                        }
-                        this.points[0].pointType = "Start Point";
-                        this.points[this.points.length - 1].pointType = "End Point";
-                        this.pickupPoints = this.points.slice(0, -1);
-                        this.deliveryPoints = this.points.slice(1);
-                        this.matStepper.selectedIndex = index;
-                    }
+                console.log("ok")
+                const newArr = this.points.value;
+                for (let i = 0; i < newArr.length; i++) {
+                    newArr[i].pointType = "Touch Point";
+                    newArr[i].stationType = this.stationTypes[i];
                 }
+                newArr[0].pointType = "Start Point";
+                newArr[newArr.length - 1].pointType = "End Point";
+                this.pickupPoints = newArr.slice(0, -1);
+                this.deliveryPoints = newArr.slice(1);
+                this.matStepper.selectedIndex = index;
             }
         }
         else {
@@ -345,9 +323,9 @@ export class TrainAddSchedulingComponent implements OnInit {
 
     onRowDelete(index: any) {
         if (this.points.length > 1) {
-            this.points.splice(Number(index), 1);
+            this.points.removeAt(Number(index));
             this.stations.splice(Number(index), 1);
-            this.rows.splice(Number(index), 1);
+            this.stationTypes.splice(Number(index), 1);
         }
     }
 
@@ -371,116 +349,131 @@ export class TrainAddSchedulingComponent implements OnInit {
         return this.statusListStatus.listSid();
     }
 
-    initConvoyForm(data?: any): void {
-        this.convoyForm = this.fb.group({
-            pickUpFromCompany: this.fb.control(data?.pickUpFromCompany || ''),
-            deliverToCompany: this.fb.control(data?.deliverToCompany || ''),
-            pickUpPoint: this.fb.control(data?.pickUpPoint || ''),
-            deliverPoint: this.fb.control(data?.deliverPoint || ''),
-            estimatedTimePickUp: this.fb.control(data?.estimatedTimePickUp || ''),
-            estimatedTimeDeliver: this.fb.control(data?.estimatedTimeDeliver || ''),
-            convoyWagonDetail: this.fb.array([]),
-            additionalOperator: this.fb.control(data?.additionalOperator || ''),
-            clientComments: this.fb.control(data?.clientComments || ''),
-            operatorComments: this.fb.control(data?.operatorComments),
-        })
-        if (data?.convoyWagonDetail) {
-            data.convoyWagonDetail.forEach((wagon: any) => {
-                this.addWagons(wagon);
-            });
-        }
-    }
+    // initConvoyForm(data?: any): void {
+    //     this.convoyForm = this.fb.group({
+    //         pickUpFromCompany: this.fb.control(data?.pickUpFromCompany || '', [...createRequiredValidators()]),
+    //         deliverToCompany: this.fb.control(data?.deliverToCompany || '', [...createRequiredValidators()]),
+    //         pickUpPoint: this.fb.control(data?.pickUpPoint || '', [...createRequiredValidators()]),
+    //         deliverPoint: this.fb.control(data?.deliverPoint || '', [...createRequiredValidators()]),
+    //         estimatedTimePickUp: this.fb.control(data?.estimatedTimePickUp || ''),
+    //         estimatedTimeDeliver: this.fb.control(data?.estimatedTimeDeliver || ''),
+    //         convoyWagonDetail: this.fb.array([]),
+    //         additionalOperator: this.fb.control(data?.additionalOperator || '', [...createRequiredValidators()]),
+    //         clientComments: this.fb.control(data?.clientComments || '', [...createRequiredValidators()]),
+    //         operatorComments: this.fb.control(data?.operatorComments || '', [...createRequiredValidators()]),
+    //     })
+    //     if (data?.convoyWagonDetail) {
+    //         data.convoyWagonDetail.forEach((wagon: any) => {
+    //             this.addWagons(wagon);
+    //         });
+    //     }
+    // }
 
     get wagons(): any {
-        return this.convoyForm.get('convoyWagonDetail');
+        return this.stepTwoForm.get('convoyWagonDetail');
     }
 
-    addWagons(data?: any): void {
+    addWagons(): void {
         const newWagons = this.fb.group({
-            wagion: [data?.wagion || ''],
-            category: [data?.category || ''],
-            subCategory: [data?.subCategory || ''],
-            grossWeight: [data?.grossWeight || ''],
-            taraWeight: [data?.taraWeight || ''],
-            netWeight: [data?.netWeight || ''],
-            seals: [data?.seals || ''],
+            wagion: ['', [...createRequiredValidators()]],
+            category: ['', [...createRequiredValidators()]],
+            subCategory: ['', [...createRequiredValidators()]],
+            grossWeight: ['', [...createRequiredValidators()]],
+            taraWeight: ['', [...createRequiredValidators()]],
+            netWeight: ['', [...createRequiredValidators()]],
+            seals: ['', [...createRequiredValidators()]],
         });
         this.wagons.push(newWagons);
     }
 
-    initForm(data?: any): void {
-        this.schedulingForm = this.fb.group({
-            routingDetail: this.fb.group({
-                locomotiveId: this.fb.control(data?.routingDetail?.locomotiveId || ''),
-                locomotiveType: this.fb.control(data?.routingDetail?.locomotiveType || ''),
-                conductorType: this.fb.control(data?.routingDetail?.conductorType || 'With Laras Conductor App'),
-                userEmail: this.fb.control(data?.routingDetail?.userEmail || ''),
-                planningRouteDetails: this.fb.control(data?.routingDetail?.planningRouteDetails || []),
-            }),
-            convoyDetail: this.fb.control(data?.convoyDetail || []),
-            documents: this.fb.control(data?.documents || []),
+    // this.schedulingForm = this.fb.group({
+    //     routingDetail: this.fb.group({
+    //         locomotiveId: this.fb.control(data?.routingDetail?.locomotiveId || '', [...createRequiredValidators()]),
+    //         locomotiveType: this.fb.control(data?.routingDetail?.locomotiveType || ''),
+    //         conductorType: this.fb.control(data?.routingDetail?.conductorType || 'With Laras Conductor App', [...createRequiredValidators()]),
+    //         userEmail: this.fb.control(data?.routingDetail?.userEmail || ''),
+    //         planningRouteDetails: this.fb.array([]),
+    //     }),
+    //     convoyDetail: this.fb.control(data?.convoyDetail || []),
+    //     documents: this.fb.control(data?.documents || []),
+    // });
+
+    initForm(index: any = 0): void {
+        if (index !== 1) {
+            this.schedulingForm = this.fb.group({
+                routingDetail: this.fb.group({
+                    locomotiveId: this.fb.control(''),
+                    locomotiveType: this.fb.control(''),
+                    conductorType: this.fb.control(''),
+                    userEmail: this.fb.control(''),
+                    planningRouteDetails: this.fb.array([]),
+                }),
+                convoyDetail: this.fb.control([]),
+                documents: this.fb.control([]),
+            });
+            this.stepOneForm = this.fb.group({
+                locomotiveId: this.fb.control('', [...createRequiredValidators()]),
+                conductorType: this.fb.control('With Laras Conductor App', [...createRequiredValidators()]),
+                userEmail: this.fb.control(''),
+                planningRouteDetails: this.fb.array([]),
+            });
+        }
+        this.stepTwoForm = this.fb.group({
+            pickUpFromCompany: this.fb.control('', [...createRequiredValidators()]),
+            deliverToCompany: this.fb.control('', [...createRequiredValidators()]),
+            pickUpPoint: this.fb.control('', [...createRequiredValidators()]),
+            deliverPoint: this.fb.control('', [...createRequiredValidators()]),
+            estimatedTimePickUp: this.fb.control(''),
+            estimatedTimeDeliver: this.fb.control(''),
+            convoyWagonDetail: this.fb.array([]),
+        });
+
+        this.stepThreeForm = this.fb.group({
+            clientComments: this.fb.control(''),
+            operatorComments: this.fb.control(''),
+            additionalOperator: this.fb.control(''),
         });
     }
 
-    initPointForm(data?: PointModal): void {
-        this.routingDetailsForm = this.fb.group({
-            pointType: this.fb.control(data?.pointType),
-            stationType: this.fb.control(data?.stationType || '', [...createRequiredValidators()]),
-            station: this.fb.control(data?.station || '', [...createRequiredValidators()])
-        });
+    get points(): FormArray {
+        return this.stepOneForm?.get('planningRouteDetails') as FormArray;
     }
 
 
     addPoints(): void {
-        this.isStationLoading$.next(true);
-        if (this.rows.length <= this.points.length) {
-            ++this.selectedIndex;
-            this.rows.push(++this.rowIndex);
-        }
-        else {
-            this.routingDetailsForm.patchValue({ pointType: this.stationType || "", stationType: this.stationType || "", station: this.station || "" })
-            if (this.routingDetailsForm.valid) {
-                this.points.push(this.routingDetailsForm.value);
-                this.station = "";
-                this.stationType = "";
-                ++this.selectedIndex;
-                this.rows.push(++this.rowIndex);
-            }
-        }
-    }
-    onStationChange(ev: any, index: any) {
-        if (index === this.rows.length - 1) {
-            this.station = ev?.target?.value;
-        }
-        else {
-            this.points[index].station = ev?.target?.value;
-        }
+        const newPoint = this.fb.group({
+            planningRouteDetailId: [null],
+            pointType: [''],
+            stationType: [''],
+            station: ['', [...createRequiredValidators()]]
+        });
+        this.points.push(newPoint);
     }
 
-    removeContact(): void {
-        // const companyId = this.company$?.value?.id;
-        // const contactsArray = this.company$?.value?.contacts;
+    // removeContact(): void {
+    // const companyId = this.company$?.value?.id;
+    // const contactsArray = this.company$?.value?.contacts;
 
-        // if (companyId && contactsArray && contactsArray.length > 0) {
-        //   const contactId = contactsArray[index]?.id; // Get the ID of the contact at the specified index
-        //   if (contactId !== null && contactId !== undefined && contactId > -1) {
-        //     this.companyService.deleteContact(companyId, contactId).subscribe({
-        //       next: () => {
-        //         console.log('Contact deleted successfully');
-        //         this.contacts.removeAt(index); // Remove the contact from the form array
-        //         this.cd.detectChanges();
-        //         return this.companyForm.get('contacts');
-        //       },
-        //       error: error => {
-        //         console.error('Error deleting contact:', error);
-        //         // Handle error, such as showing an error message to the user
-        //       }
-        //     });
-        //   }
-        // } else {
-        //   this.contacts.removeAt(index);
-        // }
-    }
+    // if (companyId && contactsArray && contactsArray.length > 0) {
+    //   const contactId = contactsArray[index]?.id; // Get the ID of the contact at the specified index
+    //   if (contactId !== null && contactId !== undefined && contactId > -1) {
+    //     this.companyService.deleteContact(companyId, contactId).subscribe({
+    //       next: () => {
+    //         console.log('Contact deleted successfully');
+    //         this.contacts.removeAt(index); // Remove the contact from the form array
+    //         this.cd.detectChanges();
+    //         return this.companyForm.get('contacts');
+    //       },
+    //       error: error => {
+    //         console.error('Error deleting contact:', error);
+    //         // Handle error, such as showing an error message to the user
+    //       }
+    //     });
+    //   }
+    // } else {
+    //   this.contacts.removeAt(index);
+    // }
+    // }
 
     // onCategoryChange(ev: any, index?: any) {
     //     console.log(index)
@@ -509,9 +502,9 @@ export class TrainAddSchedulingComponent implements OnInit {
         if (this.etdTimeVal === undefined) this.etdTimeVal = String(this.etdTime);
         this.etpDateTimeVal = `${this.etpDateVal} ${this.etpTimeVal}`;
         this.etdDateTimeVal = `${this.etdDateVal} ${this.etdTimeVal}`;
-        this.convoyForm.patchValue({ estimatedTimePickUp: this.etpDateTimeVal, estimatedTimeDeliver: this.etdDateTimeVal });
-        this.convoys.push(this.convoyForm.value);
-        this.schedulingForm.patchValue({ convoyDetail: this.convoys, documents: this.images, routingDetail: { planningRouteDetails: this.points } })
+        this.stepTwoForm.patchValue({ estimatedTimePickUp: this.etpDateTimeVal, estimatedTimeDeliver: this.etdDateTimeVal });
+        this.convoys.push({ ...this.stepTwoForm.value, ...this.stepThreeForm.value });
+        this.schedulingForm.patchValue({ convoyDetail: this.convoys, documents: this.images, routingDetail: this.stepOneForm })
         this.planningService.create(this.schedulingForm.value).subscribe({
             next: () => {
                 this.router.navigate(['../success'], { relativeTo: this.route });

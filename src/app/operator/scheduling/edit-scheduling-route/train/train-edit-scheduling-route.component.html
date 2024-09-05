@@ -5,7 +5,7 @@
             <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
                 <h4 class="font-bold">Locomotive and conductor</h4>
                 <div iconic-select-wrapper leftSvg="assets/images/carbon-train-speed.svg"
-                    [rightIcon]="['fas', 'caret-down']" (change)="onLocomotiveSelected($event)">
+                     (change)="onLocomotiveSelected($event)">
                     <select spAccessInputRef name="locomotive" id="locomotive" formControlName="locomotiveId">
                         <option disabled selected value="">
                             Locomotive registration number
@@ -55,11 +55,11 @@
                         <th></th>
                     </tr>
                 </thead>
-                <tbody formArrayName="planningRouteDetails" cdkDropList (cdkDropListDropped)="drop($event)">
+                <tbody formArrayName="planningRouteDetails">
                     @for(point of points.controls;track point){
-                    <tr [formGroupName]="$index" cdkDrag>
+                    <tr [formGroupName]="$index">
                         <td class="flex gap-2 items-center h-[64px]">
-                            <img src="assets/images/tdesign_move.svg" alt="Flag">
+                            <!-- <img src="assets/images/tdesign_move.svg" alt="Flag"> -->
                             {{$index + 1}}
                         </td>
                         <td>
@@ -70,7 +70,7 @@
                         <td>
                             <select formControlName="stationType" (change)="onStationTypeChange($event , $index)">
                                 <option disabled selected value="">Station type</option>
-                                <option *ngFor="let stationType of stationTypes" [value]="stationType.value">
+                                <option *ngFor="let stationType of stationTypes" [value]="stationType.value" disabled>
                                     {{ stationType.name }}
                                 </option>
                             </select>
@@ -78,7 +78,7 @@
                         <td>
                             <select formControlName="station">
                                 <option disabled selected value="">Station</option>
-                                <option *ngFor="let station of stations[$index]" [value]="station.id">
+                                <option *ngFor="let station of stations[$index]" [value]="station.id" disabled>
                                     {{ station.name }}
                                 </option>
                             </select>
@@ -92,49 +92,7 @@
                     }
                 </tbody>
 
-                <!-- <tbody formArrayName="planningRouteDetails" cdkDropList *ngFor="
-                        let point of points.controls;
-                        let i = index;
-                        let last = last;
-                        let first = first;
-                    " [formGroupName]="i">
-                        <tr cdkDrag>
-                            <td class="flex gap-2 items-center h-[64px]">
-                                <img src="assets/images/tdesign_move.svg" alt="Flag">
-                                {{i + 1}}
-                            </td>
-                            <td>
-                                <input class="text-center" readonly formControlName="pointType"
-                                    [value]="first ? 'Start point' : last ? 'End point' : 'Touch point'" />
-                            </td>
-                            <td>
-                                <select name="stationType" id="stationType"
-                                    formControlName="stationType">
-                                    <option disabled selected value="">
-                                        Station type
-                                    </option>
-                                    <option *ngFor="let stationType of stationTypes" [value]="stationType.value">
-                                        {{ stationType.name }}
-                                    </option>
-                                </select>
-                            </td>
-                            <td>
-                                <select name="station" id="station" 
-                                    formControlName="station">
-                                    <option disabled selected value="">
-                                        Station
-                                    </option>
-                                    <option *ngFor="let station of stations" [value]="station.id">
-                                        {{ station.name }}
-                                    </option>
-                                </select>
-                            </td>
-                            <td>
-                                <fa-icon icon="trash" class="text-primary cursor-pointer"></fa-icon>
-                            </td>
-                        </tr>
-                    </tbody> -->
-            </table>
+                 </table>
             <div>
                 <button type="button" class="flex text-primary font-bold py-5" (click)="addPoints()">
                     <fa-icon class="mt-[1px]" icon="circle-plus"></fa-icon>&nbsp; Add point

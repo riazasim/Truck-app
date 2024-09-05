@@ -6,7 +6,7 @@
                     <input inputRef type="text" id="name" placeholder="Station Name" formControlName="name" />
                 </div>
                 <div iconic-select-wrapper leftSvg="assets/images/location_on_black_24dp.svg"
-                        [rightIcon]="['fas', 'caret-down']">
+                        >
                         <select spAccessInputRef name="type" id="type" formControlName="type">
                             <option disabled selected value="">Station Type</option>
                             <option *ngFor="let type of stationType" [value]="type.value">

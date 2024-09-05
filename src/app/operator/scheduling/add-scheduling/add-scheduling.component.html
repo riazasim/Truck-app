@@ -23,9 +23,9 @@
                         <input inputRef type="text" placeholder="Location Port" formControlName="locationPort" />
                     </div> -->
                     <div [loading]="(isPortsLoading$ | async)" iconic-select-wrapper
-                    leftSvg="assets/images/scheduling_ship_type.svg" [rightIcon]="['fas', 'caret-down']"
+                    leftSvg="assets/images/scheduling_ship_type.svg"
                     formGroupName="routingDetail" (change)="onDeparturePortChange($event)">
-                    <select spAccessInputRef name="departurePort" id="departurePort" 
+                    <select spAccessInputRef name="departurePort" id="departurePort"
                         formControlName="departurePort">
                         <option disabled value="">
                             Departure Port
@@ -36,7 +36,7 @@
                     </select>
                 </div>
                     <div [loading]="(isPortsLoading$ | async)" iconic-select-wrapper
-                        leftSvg="assets/images/scheduling_map_location.svg" [rightIcon]="['fas', 'caret-down']"
+                        leftSvg="assets/images/scheduling_map_location.svg"
                         formGroupName="routingDetail">
                         <select spAccessInputRef name="zone" id="zone" formControlName="departureZone">
                             <option disabled value="">
@@ -47,8 +47,8 @@
                             </option>
                         </select>
                     </div>
-                   
-                    <!-- <div iconic-select-wrapper leftIcon="grid-2" [rightIcon]="['fas', 'caret-down']"
+
+                    <!-- <div iconic-select-wrapper leftIcon="grid-2"
                         [formGroup]="routingDetail">
                         <select spAccessInputRef name="company" id="company" formControlName="company">
                             <option disabled value="">Company</option>
@@ -60,9 +60,9 @@
                 </div>
                 <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
                     <!-- <p>&nbsp;</p> -->
-                    
+
                 <div [loading]="(isPortsLoading$ | async)" iconic-select-wrapper
-                    leftSvg="assets/images/scheduling_arrival_port.svg" [rightIcon]="['fas', 'caret-down']"
+                    leftSvg="assets/images/scheduling_arrival_port.svg"
                     formGroupName="routingDetail" (change)="onArrivalPortChange($event)">
                     <select spAccessInputRef name="arrivalPort" id="arrivalPort" formControlName="arrivalPort">
                         <option disabled value="">Arival Port</option>
@@ -72,7 +72,7 @@
                     </select>
                 </div>
                 <div [loading]="(isPortsLoading$ | async)" iconic-select-wrapper
-                        leftSvg="assets/images/scheduling_map_location.svg" [rightIcon]="['fas', 'caret-down']"
+                        leftSvg="assets/images/scheduling_map_location.svg"
                         formGroupName="routingDetail">
                         <select spAccessInputRef name="zone" id="zone" formControlName="arrivalZone">
                             <option disabled value="">
@@ -84,7 +84,7 @@
                         </select>
                     </div>
                 <div [loading]="(isPortsLoading$ | async) || (isPortChangeLoading$ | async)" iconic-select-wrapper
-                leftIcon="grid-2" [rightIcon]="['fas', 'caret-down']"
+                leftIcon="grid-2"
                     formGroupName="routingDetail">
                     <select spAccessInputRef name="company" id="company" formControlName="company">
                         <option disabled value="">Company</option>
@@ -118,7 +118,7 @@
                         <input inputRef type="number" placeholder="Capacity max (m)*" formControlName="maxCapacity" />
                     </div> -->
                     <!-- <div [loading]="(isPortsLoading$ | async)" iconic-select-wrapper
-                        leftSvg="assets/images/scheduling_lock.svg" [rightIcon]="['fas', 'caret-down']"
+                        leftSvg="assets/images/scheduling_lock.svg"
                         formGroupName="routingDetail">
                         <select spAccessInputRef name="typeOfLock" id="typeOfLock" formControlName="lockType">
                             <option disabled value="">Type of lock</option>
@@ -150,7 +150,7 @@
             <div
                 class="grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20 gap-y-4 pt-[100px] min-xl:px-[50px]">
                 <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
-                    <!-- <div iconic-select-wrapper leftIcon="grid-2" [rightIcon]="['fas', 'caret-down']">
+                    <!-- <div iconic-select-wrapper leftIcon="grid-2" >
                         <select spAccessInputRef name="company" id="company" formControlName="company">
                             <option disabled value="">Company</option>
                             <option *ngFor="let company of companies" [value]="company.id">
@@ -159,7 +159,7 @@
                         </select>
                     </div> -->
                     <div iconic-select-wrapper leftSvg="assets/images/scheduling_operator.svg"
-                        [rightIcon]="['fas', 'caret-down']">
+                        >
                         <select spAccessInputRef name="operator" id="operator" formControlName="operator">
                             <option disabled value="">Operator*</option>
                             <option *ngFor="let operator of operator" [value]="operator.id">
@@ -170,7 +170,7 @@
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_navigation.svg">
                         <input inputRef type="text" placeholder="Navigation type*" formControlName="navigationType" />
                     </div>
-                   
+
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_ship_owner.svg">
                         <input inputRef type="text" placeholder="Ship owner" formControlName="shipowner" />
                     </div>
@@ -193,7 +193,7 @@
                         <input inputRef type="text" placeholder="Purpose" formControlName="purpose" />
                     </div>
                     <div iconic-select-wrapper leftSvg="assets/images/scheduling_trafic_type.svg"
-                        [rightIcon]="['fas', 'caret-down']">
+                        >
                         <select spAccessInputRef name="trafficType" id="trafficType" formControlName="trafficType">
                             <option disabled value="">Traffic type*</option>
                             <option *ngFor="let trafficType of trafficType" [value]="trafficType.id">
@@ -202,7 +202,7 @@
                         </select>
                     </div>
                     <div iconic-select-wrapper leftSvg="assets/images/scheduling_operation_type.svg"
-                        [rightIcon]="['fas', 'caret-down']">
+                        >
                         <select spAccessInputRef name="operationType" id="operationType" formControlName="operatonType">
                             <option disabled value="">Operation type</option>
                             <option *ngFor="let operationType of operationType" [value]="operationType.id">
@@ -219,10 +219,10 @@
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_port.svg">
                         <input inputRef type="text" maxlength="4" placeholder="Pavilion*" formControlName="pavilion" />
                     </div>
-                    
+
                 </div>
                 <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
-                    <div iconic-select-wrapper leftIcon="grid-2" [rightIcon]="['fas', 'caret-down']">
+                    <div iconic-select-wrapper leftIcon="grid-2" >
                         <select spAccessInputRef name="ship" id="ship" (change)="onShipSelected($event)"
                             formControlName="ship">
                             <option disabled value="">Ship</option>
@@ -232,7 +232,7 @@
                         </select>
                     </div>
                     <div iconic-select-wrapper leftSvg="assets/images/scheduling_ship_type.svg"
-                        [rightIcon]="['fas', 'caret-down']">
+                        >
                         <select spAccessInputRef name="shipType" id="shipType" formControlName="shipType">
                             <option disabled value="">Ship type*</option>
                             <option *ngFor="let shipType of shipType" [value]="shipType.id">
@@ -240,7 +240,7 @@
                             </option>
                         </select>
                     </div>
-                    
+
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_engine.svg">
                         <input inputRef type="number" placeholder="Engine power" formControlName="enginePower" />
                     </div>
@@ -262,7 +262,7 @@
                         <input inputRef type="number" placeholder="Aerial Guage (M)*" formControlName="arrivalGauge" />
                     </div>
                     <!-- <div iconic-select-wrapper
-                        leftSvg="assets/images/scheduling_lock.svg" [rightIcon]="['fas', 'caret-down']">
+                        leftSvg="assets/images/scheduling_lock.svg" >
                         <select spAccessInputRef name="typeOfLock" id="typeOfLock" formControlName="lockType">
                             <option disabled value="">Type of lock</option>
                             <option *ngFor="let typeOfLock of typeOfLock" [value]="typeOfLock.id">
@@ -277,7 +277,7 @@
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_weight.svg">
                         <input inputRef type="number" placeholder="Quantity (t)" formControlName="quantity" />
                     </div>
-                    
+
                 </div>
             </div>
             <div class="min-xl:px-[50px] grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20 mt-4">
@@ -349,7 +349,7 @@
                                     class="mx-2 cursor-pointer">
                                 </fa-icon>
                             </button>
-                            <input class="text-center w-full outline-0 shadow-none ring-offset-0 focus:ring-offset-0 focus:shadow-none focus:ring-0 min-h-[53px] border-x-0 border-borderColor	rounded-x-0" 
+                            <input class="text-center w-full outline-0 shadow-none ring-offset-0 focus:ring-offset-0 focus:shadow-none focus:ring-0 min-h-[53px] border-x-0 border-borderColor	rounded-x-0"
                             type="text" [value]="file3Text$ | async" (click)="file3.click()" readonly placeholder="Choose file">
                             <input #file3 hidden type="file" (change)="patchFile($any($event.target).files[0], 2)">
                             <button (click)="file3.click()" class="bg-primary text-white hover:bg-primary-dark min-h-[53px] min-md:min-w-[60px] max-sm:w-full rounded">
