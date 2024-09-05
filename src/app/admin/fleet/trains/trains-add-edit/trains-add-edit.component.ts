@@ -17,9 +17,14 @@ import { TrainModel } from 'src/app/core/models/trains.model';
 export class TrainsAddEditComponent {
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     trainForm: FormGroup;
+    type: any
     trainsType = [
-        { id: 1, name: 'GOODS' },
-        { id: 2, name: 'PASSENGER' },
+        { id: 1, name: 'Locomotive', value: 'LOCOMOTIVE' },
+        { id: 2, name: 'Wagon', value: 'WAGON' },
+    ]
+    locomotiveTypes = [
+        { id: 1, name: 'Locomotive', value: 'LOCOMOTIVE' },
+        { id: 2, name: 'Locomotive2', value: 'LOCOMOTIVE2' },
     ]
     id: number;
     appliedFilters: any = {};
@@ -32,7 +37,6 @@ export class TrainsAddEditComponent {
     }
 
     subscribeForQueryParams(): void {
-        // debugger
         this.id = this.route.snapshot.params['id'];
         if (this.id) {
             this.trainsService.get(this.id).subscribe(response => {
@@ -46,6 +50,10 @@ export class TrainsAddEditComponent {
         }
     }
 
+    typeChanged(ev:any){
+        this.type = ev.target.value;
+    }
+
     applyFilter(target: any, column: string): void {
         if (typeof target.value !== 'object' && (target.value || typeof target.value === 'boolean')) {
             this.appliedFilters[column] = target.value;
@@ -57,9 +65,10 @@ export class TrainsAddEditComponent {
     initForm(data: TrainModel = <TrainModel>{}): void {
         this.trainForm = this.fb.group({
             //locomotiveId: this.fb.control(data?.id),
-            name: this.fb.control(data?.name || '', [...createRequiredValidators()]),
+            // name: this.fb.control(data?.name || '', [...createRequiredValidators()]),
             registrationNumber: this.fb.control(data?.registrationNumber || '', [...createRequiredValidators()]),
             type: this.fb.control(data?.type || '', [...createRequiredValidators()]),
+            locomotiveType: this.fb.control(data?.locomotiveType || ''),
             status: this.fb.control(data?.status || '', [...createRequiredValidators()]),
         });
     }

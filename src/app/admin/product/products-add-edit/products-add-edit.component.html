@@ -33,6 +33,9 @@
     <app-loader *ngIf="isLoading$ | async" [isContainer]="true" [fullScreen]="false"></app-loader>
     <form [formGroup]="productForm" class="p-7" *ngIf="!(isLoading$ | async)">
         <div class="flex flex-col mx-auto max-w-[440px] gap-5">
+            <div iconic-input-wrapper leftSvg="assets/images/pname.svg">
+                <input inputRef type="text" formControlName="name" placeholder="Product name"/>
+            </div>
             <div iconic-input-wrapper leftSvg="assets/images/pcode.svg">
                 <input inputRef type="text" formControlName="productCode" placeholder="Product code"/>
             </div>
@@ -48,8 +51,11 @@
                     <option *ngFor="let subCategory of subCategory" [value]="subCategory.id">{{ subCategory.name }}</option>
                 </select>
             </div>
-            <div iconic-input-wrapper leftSvg="assets/images/pname.svg">
-                <input inputRef type="text" formControlName="name" placeholder="Product name"/>
+            <div iconic-select-wrapper leftIcon="eye" [rightIcon]="['fas', 'caret-down']">
+                <select spAccessInputRef name="status" id="status" formControlName="status">
+                    <option selected disabled value="">status</option>
+                    <option *ngFor="let status of status" [value]="status.value">{{ status.name }}</option>
+                </select>
             </div>
         </div>
         <div class="min-xl:px-[50px] grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20 mt-7">

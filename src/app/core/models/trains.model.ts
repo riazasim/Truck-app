@@ -4,6 +4,7 @@ export type TrainModel = {
     name: string;
     registrationNumber:string;
     type:string;
+    locomotiveType: string
     status:boolean;
     
 }

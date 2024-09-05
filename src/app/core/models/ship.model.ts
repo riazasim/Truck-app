@@ -4,7 +4,7 @@ export type ShipModel = {
     name: string;
     registrationNo:string;
     ais:string;
-    selfPropelled: string;    
+    propulsionType: string;    
     lockType:string;
     length:number;
     width: number;

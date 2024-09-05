@@ -62,9 +62,16 @@
   }
 }
 
+.mat-button-toggle-group{
+  background: #E5E7EA;
+  // padding: 6px;
+  border-radius: 8px;
+}
+
 .mat-button-toggle{
   // background-color: #17A0B5;
   color: #000000;
+  padding: 7px;
 }
 
 // .mat-button-toggle:hover {
@@ -75,4 +82,19 @@
 .mat-button-toggle-checked {
   // background-color: #ec2c4c;
   color: #17A0B5 !important;
+  --segmented-control-button-inner-padding: 12px;
+  --segmented-control-button-bg-inset: 4px;
+  --segmented-control-outer-radius: 6px;
+  background-color: #E5F5F7 !important;
+  border-color: #E5E7EA;
+  border-radius: 8px;
+  border-width: 3px;
+  color: currentcolor;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 600;
+  padding: 4px;
+  height: 100%;
+  width: 100%;
 }

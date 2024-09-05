@@ -1,6 +1,16 @@
 
 <header class="layout-wrapper">
   <app-loader class="m-auto flex-grow" *ngIf="(isLoading$ | async)" [fullScreen]="false"></app-loader>
+  <mat-button-toggle-group
+      name="favoriteColor"
+      aria-label="Favorite Color"
+      (change)="changeTransportMode($event)"
+      [value]="transportModeId"
+    >
+    <mat-button-toggle value="1">Road</mat-button-toggle>
+    <mat-button-toggle value="2">Train</mat-button-toggle>
+    <mat-button-toggle value="3">Water</mat-button-toggle>
+    </mat-button-toggle-group>
   <div *ngIf="!(isLoading$ | async)" class="flex flex-grow justify-center items-center gap-2">
     <!-- <fa-icon (click)="openChangeLocationModal()" icon="location-dot" class="text-primary cursor-pointer text-3xl font-bold"></fa-icon> -->
     <span class="text-3xl font-bold">{{companyName$}}</span>
@@ -10,16 +20,7 @@
   </div>
 
   
-    <mat-button-toggle-group
-      name="favoriteColor"
-      aria-label="Favorite Color"
-      (change)="changeTransportMode($event)"
-      [value]="transportModeId"
-    >
-    <mat-button-toggle value="1">Road</mat-button-toggle>
-    <mat-button-toggle value="2">Railway</mat-button-toggle>
-    <mat-button-toggle value="3">Water</mat-button-toggle>
-    </mat-button-toggle-group>
+    
   
   
   <!-- <div class="current-location-container">
