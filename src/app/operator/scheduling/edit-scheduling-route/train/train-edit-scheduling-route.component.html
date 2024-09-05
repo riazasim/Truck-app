@@ -5,7 +5,7 @@
             <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
                 <h4 class="font-bold">Locomotive and conductor</h4>
                 <div iconic-select-wrapper leftSvg="assets/images/carbon-train-speed.svg"
-                    [rightIcon]="['fas', 'caret-down']" (change)="onLocomotiveSelected($event)">
+                     (change)="onLocomotiveSelected($event)">
                     <select spAccessInputRef name="locomotive" id="locomotive" formControlName="locomotiveId">
                         <option disabled selected value="">
                             Locomotive registration number

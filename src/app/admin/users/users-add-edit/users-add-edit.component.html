@@ -19,7 +19,7 @@
                 </div>
             </div>
             <div formGroupName="user">
-                <div iconic-select-wrapper leftIcon="id-card" [rightIcon]="['fas', 'caret-down']">
+                <div iconic-select-wrapper leftIcon="id-card" >
                     <select spAccessInputRef name="userRole" id="userRole" formControlName="userRole"
                         (change)="onRoleChange($event)">
                         <option value="" disabled>Select user role</option>
@@ -31,7 +31,7 @@
                 </div>
             </div>
             <div formGroupName="user">
-                <div iconic-select-wrapper leftIcon="envelope" [rightIcon]="['fas', 'caret-down']">
+                <div iconic-select-wrapper leftIcon="envelope" >
                     <select spAccessInputRef name="status" id="status" formControlName="status">
                         <option value="" disabled>Select status</option>
                         <option [value]="status.value" *ngFor="let status of status">{{status.name}}</option>
@@ -40,7 +40,7 @@
                 </div>
             </div>
             <div formGroupName="userSetting">
-                <!-- <div iconic-select-wrapper leftIcon="eye" [rightIcon]="['fas', 'caret-down']">
+                <div iconic-select-wrapper leftIcon="eye" >
                     <select spAccessInputRef name="timezone" id="timezone" formControlName="timezone">
                         <option value="" disabled>Select Timezone</option>
                         <option value="Europe/Bucharest">
@@ -48,16 +48,16 @@
                         </option>
                         <option value="Asia/Karachi">Asia/Karachi</option>
                     </select>
-                </div> -->
+                </div>
             </div>
             <div formGroupName="userSetting">
-                <!-- <div iconic-select-wrapper leftIcon="eye" [rightIcon]="['fas', 'caret-down']">
+                <div iconic-select-wrapper leftIcon="eye" >
                     <select spAccessInputRef name="language" id="language" formControlName="language">
                         <option value="" disabled>Select Language</option>
                         <option value="EN">EN</option>
                         <option value="RO">RO</option>
                     </select>
-                </div> -->
+                </div>
             </div>
             <div formGroupName="userSetting">
                 <div iconic-input-wrapper leftIcon="phone">
@@ -73,7 +73,7 @@
             </div>
 
             <!-- <div formGroupName="userSetting" *ngIf="(selectedRole$ | async) === 'DRIVER'">
-                <div iconic-select-wrapper leftIcon="eye" [rightIcon]="['fas', 'caret-down']">
+                <div iconic-select-wrapper leftIcon="eye" >
                     <select spAccessInputRef name="identityDocumentType" id="identityDocumentType"
                         formControlName="identityDocumentType">
                         <option value="" disabled>

@@ -25,13 +25,15 @@
         }
     }
 
-    &.valid {
+    &.valid,
+    &.tableInp.valid {
         >.input-container {
             border-color: var(--valid-color);
         }
     }
 
-    &.invalid {
+    &.invalid,
+    &.tableInp.invalid {
         >.input-container {
             border-color: var(--invalid-color);
         }
@@ -60,7 +62,7 @@
         }
     }
 
-    &.loading:not(.dashboard) {
+    &.loading:not(.dashboard, .tableInp) {
         min-height: var(--control-height, 50px);
         margin-bottom: 21px;
 
@@ -69,6 +71,17 @@
             animation: skeleton-loading 1s linear infinite alternate;
             border: 1px solid transparent;
             border-radius: var(--app-border-radius);
+        }
+    }
+
+    &.loading.tableInp {
+        min-height: 35px;
+
+        .loader {
+            border: 1px solid transparent;
+            animation: skeleton-loading 1s linear infinite alternate;
+            border-radius: var(--app-border-radius);
+            display: block;
         }
     }
 
@@ -138,6 +151,87 @@
 
             &.valid {
                 color: var(--valid-color);
+            }
+
+            &.invalid {
+                color: var(--invalid-color);
+            }
+
+            &:first-child {
+                margin-left: 10px;
+                margin-right: 10px;
+            }
+
+            &:not(:first-child):not(:last-child) {
+                margin-right: 10px;
+            }
+
+            &:last-child {
+                margin-right: 1px;
+            }
+        }
+    }
+
+    &.tableInp>.input-container {
+        background-color: white;
+        position: relative;
+        display: flex;
+        align-items: center;
+
+        border: 1px solid transparent;
+        border-radius: var(--app-border-radius);
+
+        padding: 0.5rem;
+
+        min-height: 35px;
+
+        &:focus-within {
+            border-color: var(--primary-color);
+        }
+
+        >input[inputref],
+        select[spaccessinputref],
+        textarea[inputRef] {
+            border: unset;
+            outline: 0;
+            box-shadow: unset;
+            padding: unset;
+            background-color: transparent;
+            flex-grow: 1;
+            font-size: var(--form-control-font-size);
+            width: 100%;
+
+
+            &[type=number] {
+                -moz-appearance: textfield;
+
+                &::-webkit-outer-spin-button,
+                &::-webkit-inner-spin-button {
+                    -webkit-appearance: none;
+                    margin: 0;
+                }
+
+            }
+
+        }
+
+        select[spaccessinputref] {
+            z-index: 2;
+            background: unset;
+
+            >option {
+                color: black;
+            }
+        }
+
+        >.icon {
+
+            &.valid {
+                color: var(--valid-color);
+            }
+
+            &.invalid {
+                color: var(--invalid-color);
             }
 
             &:first-child {

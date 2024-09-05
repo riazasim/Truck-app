@@ -1,6 +1,6 @@
-<div [class.valid]="isValid === true && (isTouched || withoutTouched)"
+<div [class.valid]="isValid === true && (isTouched || withoutTouched)" [class.tableInp]="isTable"
     [class.invalid]="isInvalid || !isValid && (isTouched || withoutTouched)" [class.disabled]="isDisabled"
-    [class.dashboard]="dashboardInp" [class.loading]="loading"  class="iconic-layout-wrapper relative">
+    [class.dashboard]="dashboardInp" [class.loading]="loading" class="iconic-layout-wrapper relative">
     <div class="loader absolute top-0 right-0 left-0 bottom-0 hidden z-10"></div>
 
     <div class="input-container" [ngClass]="className" [class.!hidden]="loading">
@@ -13,8 +13,10 @@
             class="icon"></fa-icon>
         <fa-icon *ngIf="isValid && withCheckmark && (isTouched || withoutTouched)" [icon]="checkmark" size="lg"
             class="icon valid"></fa-icon>
+        <fa-icon *ngIf="isInvalid && isTouched" [icon]="xmark" size="lg" class="icon invalid">
+        </fa-icon>
     </div>
-    <div *ngIf="showValidation" class="errors-container" [class.!hidden]="loading"
+    <div *ngIf="showValidation && showValidationMessageDiv" class="errors-container" [class.!hidden]="loading"
         [style.visibility]="(isTouched || withoutTouched) && showValidationMessages && errors ? 'visible': 'hidden'"
         [style.height.px]="21">
         <div *ngFor="let error of (errors | keyvalue)" class="text-center">

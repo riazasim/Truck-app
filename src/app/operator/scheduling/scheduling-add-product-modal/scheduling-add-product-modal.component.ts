@@ -14,7 +14,7 @@ export class SchedulingAddProductModalComponent {
   productId: number|null = null;
   constructor(private readonly dialogRef: MatDialogRef<any>,
               @Inject(MAT_DIALOG_DATA) public data: {
-                product: ProductModel, 
+                product: ProductModel,
                 products: ProductModel[],
                 customFieldCargoData: SchedulingCustomField[],
                 cargoData: CustomFieldModel[]

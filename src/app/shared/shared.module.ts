@@ -57,6 +57,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MultiselectsearchComponent } from './components/multiselectsearch/multiselectsearch.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { CdkDropList, CdkDrag } from '@angular/cdk/drag-drop';
+import { WarningModalComponent } from './components/modals/warning-modal/warning-modal.component';
 
 export const MY_FORMATS = {
     parse: {
@@ -99,6 +100,7 @@ export const MY_FORMATS = {
         InputRefDirective,
         SelectRefDirective,
         MultiselectsearchComponent,
+        WarningModalComponent
     ],
     imports: [
         FontAwesomeModule,
@@ -178,7 +180,8 @@ export const MY_FORMATS = {
         SearchbarModule,
         MultiselectsearchComponent,
         CdkDropList,
-        CdkDrag
+        CdkDrag,
+        WarningModalComponent
     ],
     providers: [
         { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },

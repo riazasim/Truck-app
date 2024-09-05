@@ -7,7 +7,7 @@
                 <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
                     <h4 class="font-bold">ShipmentID details</h4>
                     <div iconic-select-wrapper leftSvg="assets/images/bi_building-down.svg"
-                        [rightIcon]="['fas', 'caret-down']">
+                        >
                         <select spAccessInputRef name="pickUpFromCompany" id="pickUpFromCompany"
                             formControlName="pickUpFromCompany">
                             <option disabled selected value="">Pick-up from company</option>
@@ -17,7 +17,7 @@
                         </select>
                     </div>
                     <div iconic-select-wrapper leftSvg="assets/images/location_on_black_24dp.svg"
-                        [rightIcon]="['fas', 'caret-down']">
+                        >
                         <select spAccessInputRef name="pickUpPoint" id="pickUpPoint" formControlName="pickUpPoint">
                             <option disabled selected value="">Pick-up point</option>
                             <option *ngFor="let point of pickupPoints" [value]="point.pointType">
@@ -38,7 +38,7 @@
                 <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
                     <p>&nbsp;</p>
                     <div iconic-select-wrapper leftSvg="assets/images/bi_building-up.svg"
-                        [rightIcon]="['fas', 'caret-down']">
+                        >
                         <select spAccessInputRef name="deliveryToCompany" id="deliveryToCompany"
                             formControlName="deliverToCompany">
                             <option disabled selected value="">Delivery to compny</option>
@@ -48,7 +48,7 @@
                         </select>
                     </div>
                     <div iconic-select-wrapper leftSvg="assets/images/location_on_black_24dp.svg"
-                        [rightIcon]="['fas', 'caret-down']">
+                        >
                         <select spAccessInputRef name="deliveryPoint" id="deliveryPoint" formControlName="deliverPoint">
                             <option disabled selected value="">Delivery point</option>
                             <option *ngFor="let point of deliveryPoints" [value]="point.pointType">
@@ -127,7 +127,7 @@
                             </td>
                             <!-- <td> -->
                             <!-- <fa-icon  icon="pen" class="text-primary cursor-pointer"></fa-icon> -->
-                            <!-- <fa-icon icon="trash" 
+                            <!-- <fa-icon icon="trash"
                                     class="text-primary cursor-pointer"></fa-icon>
                             </td> -->
                         </tr>
