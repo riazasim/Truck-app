@@ -18,16 +18,18 @@ export class LocationsAddEditComponent implements OnInit {
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     location$: BehaviorSubject<LocationModel | null> = new BehaviorSubject<LocationModel | null>(null);
     id: number;
-    phoneRegionCode : string;
+    phoneRegionCode: string;
     transportMode: string | null;
+    railwayClass: string;
     constructor(private fb: UntypedFormBuilder,
         private locationService: LocationService,
         private router: Router,
         private route: ActivatedRoute,
         private snackBar: MatSnackBar,
         private readonly orgService: OrganizationService,
-    ) { 
+    ) {
         this.transportMode = orgService.getAppMode();
+        this.railwayClass = this.transportMode === "ROAD" ? 'flex-1' : 'flex-[2]';
     }
 
     ngOnInit(): void {
@@ -69,8 +71,8 @@ export class LocationsAddEditComponent implements OnInit {
             addrTimezone: this.fb.control(data?.addrTimezone || '', [...createRequiredValidators()]),
             contactFirstName: this.fb.control(data?.contactFirstName || '', [...createRequiredValidators()]),
             contactLastName: this.fb.control(data?.contactLastName || '', [...createRequiredValidators()]),
-            contactPhone: this.fb.control(data?.contactPhone || '', [...createRequiredValidators() , ...createPatternValidators(RegExp("[-+()0-9 ]")) , ...createMinLengthValidator(7) , ...createMaxLengthValidator(17)]),
-            contactPhoneRegionCode: this.fb.control(data?.contactPhoneRegionCode || '', [...createRequiredValidators(), ...createMaxLengthValidator(4) , ...createPatternValidators(RegExp("[-+0-9 ]"))]),
+            contactPhone: this.fb.control(data?.contactPhone || '', [...createRequiredValidators(), ...createPatternValidators(RegExp("[-+()0-9 ]")), ...createMinLengthValidator(7), ...createMaxLengthValidator(17)]),
+            contactPhoneRegionCode: this.fb.control(data?.contactPhoneRegionCode || '', [...createRequiredValidators(), ...createMaxLengthValidator(4), ...createPatternValidators(RegExp("[-+0-9 ]"))]),
             contactEmail: this.fb.control(data?.contactEmail || '', [...createRequiredValidators(), Validators.email]),
             comments: this.fb.control(data?.comments || '', []),
             imgPreview: this.fb.control(data?.imgPreview || '', []),

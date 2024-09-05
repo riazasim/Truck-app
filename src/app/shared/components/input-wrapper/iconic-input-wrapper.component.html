@@ -13,7 +13,7 @@
             class="icon"></fa-icon>
         <fa-icon *ngIf="isValid && withCheckmark && (isTouched || withoutTouched)" [icon]="checkmark" size="lg"
             class="icon valid"></fa-icon>
-        <fa-icon *ngIf="isInvalid && isTouched" [icon]="xmark" size="lg" class="icon invalid">
+        <fa-icon *ngIf="!isValid && isTouched" [icon]="xmark" size="lg" class="icon invalid">
         </fa-icon>
     </div>
     <div *ngIf="showValidation && showValidationMessageDiv" class="errors-container" [class.!hidden]="loading"

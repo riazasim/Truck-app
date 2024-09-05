@@ -14,9 +14,9 @@
                     <input inputRef type="text" placeholder="AIS" formControlName="ais" />
                 </div>
                 <div iconic-select-wrapper leftSvg="assets/images/engine.svg" >
-                    <select spAccessInputRef name="selfPropelled" id="selfPropelled" formControlName="selfPropelled">
+                    <select spAccessInputRef name="propulsionType" id="propulsionType" formControlName="propulsionType">
                         <option value="" disabled selected>Self propelled</option>
-                        <option *ngFor="let item of selfPropelled" [value]="item.id">
+                        <option *ngFor="let item of propulsionType" [value]="item.id">
                             {{ item.name }}
                         </option>
                     </select>

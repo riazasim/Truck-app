@@ -2,8 +2,7 @@
     <mat-step label="Route Details" [stepControl]="stepOneForm">
         <app-loader *ngIf="isLoading$ | async" [isContainer]="true" [fullScreen]="false"></app-loader>
         <form [formGroup]="stepOneForm" *ngIf="!(isLoading$ | async)">
-            <div
-                class="grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20 gap-y-4 pt-[100px] min-xl:px-[50px]">
+            <div class="grid grid-cols-1 gap-x-10 w-full place-items-center gap-y-4 pt-[100px] min-xl:px-[50px]">
                 <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
                     <div [loading]="(isPortsLoading$ | async)" iconic-input-wrapper leftIcon="user">
                         <input inputRef type="text" placeholder="Convoy Type" formControlName="convoyType" />
@@ -22,8 +21,7 @@
                         <input inputRef type="text" placeholder="Location Port" formControlName="locationPort" />
                     </div> -->
                     <div [loading]="(isPortsLoading$ | async)" iconic-select-wrapper
-                        leftSvg="assets/images/scheduling_ship_type.svg"
-                        (change)="onDeparturePortChange($event)">
+                        leftSvg="assets/images/scheduling_ship_type.svg" (change)="onDeparturePortChange($event)">
                         <select spAccessInputRef name="departurePort" id="departurePort"
                             formControlName="departurePort">
                             <option disabled value="">
@@ -61,8 +59,7 @@
                     <!-- <p>&nbsp;</p> -->
 
                     <div [loading]="(isPortsLoading$ | async)" iconic-select-wrapper
-                        leftSvg="assets/images/scheduling_arrival_port.svg"
-                        (change)="onArrivalPortChange($event)">
+                        leftSvg="assets/images/scheduling_arrival_port.svg" (change)="onArrivalPortChange($event)">
                         <select spAccessInputRef name="arrivalPort" id="arrivalPort" formControlName="arrivalPort">
                             <option disabled value="">Arival Port</option>
                             <option *ngFor="let arivalPort of ports" [value]="arivalPort.id">
@@ -83,7 +80,7 @@
                         </select>
                     </div> -->
                     <div [loading]="(isPortsLoading$ | async) || (isPortChangeLoading$ | async)" iconic-select-wrapper
-                        leftIcon="grid-2" >
+                        leftIcon="grid-2">
                         <select spAccessInputRef name="company" id="company" formControlName="company">
                             <option disabled value="">Company</option>
                             <option *ngFor="let company of companies" [value]="company.id">
@@ -127,14 +124,15 @@
                     </div> -->
                 </div>
             </div>
-            <div class="min-xl:px-[50px] grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20 mt-4">
+            <div class="min-xl:px-[50px] grid grid-cols-1 gap-x-10 mt-4">
                 <div class="gap-y-4 mb-5 min-xl:px-[50px]">
                     <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]" routerLink="../">
                         {{ "button.back" | translate }}
                     </button>
                 </div>
                 <div class="gap-y-4 mb-5 min-xl:px-[50px]">
-                    <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]" (click)="next(1)" [disabled]="!(stepOneForm.valid)">
+                    <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]" (click)="next(1)"
+                        [disabled]="!(stepOneForm.valid)">
                         {{ "button.next" | translate }}
                     </button>
                 </div>
@@ -155,8 +153,7 @@
                             </option>
                         </select>
                     </div> -->
-                    <div iconic-select-wrapper leftSvg="assets/images/scheduling_operator.svg"
-                        >
+                    <div iconic-select-wrapper leftSvg="assets/images/scheduling_operator.svg">
                         <select spAccessInputRef name="operator" id="operator" formControlName="operator">
                             <option disabled value="">Operator*</option>
                             <option *ngFor="let operator of operator" [value]="operator.id">
@@ -189,8 +186,7 @@
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_purpose.svg">
                         <input inputRef type="text" placeholder="Purpose" formControlName="purpose" />
                     </div>
-                    <div iconic-select-wrapper leftSvg="assets/images/scheduling_trafic_type.svg"
-                        >
+                    <div iconic-select-wrapper leftSvg="assets/images/scheduling_trafic_type.svg">
                         <select spAccessInputRef name="trafficType" id="trafficType" formControlName="trafficType">
                             <option disabled value="">Traffic type*</option>
                             <option *ngFor="let trafficType of trafficType" [value]="trafficType.id">
@@ -198,8 +194,7 @@
                             </option>
                         </select>
                     </div>
-                    <div iconic-select-wrapper leftSvg="assets/images/scheduling_operation_type.svg"
-                        >
+                    <div iconic-select-wrapper leftSvg="assets/images/scheduling_operation_type.svg">
                         <select spAccessInputRef name="operationType" id="operationType" formControlName="operatonType">
                             <option disabled value="">Operation type</option>
                             <option *ngFor="let operationType of operationType" [value]="operationType.id">
@@ -218,7 +213,7 @@
                     </div>
                 </div>
                 <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
-                    <div iconic-select-wrapper leftIcon="grid-2" >
+                    <div iconic-select-wrapper leftIcon="grid-2">
                         <select spAccessInputRef name="ship" id="ship" (change)="onShipSelected($event)"
                             formControlName="ship">
                             <option disabled value="">Ship</option>
@@ -227,8 +222,7 @@
                             </option>
                         </select>
                     </div>
-                    <div iconic-select-wrapper leftSvg="assets/images/scheduling_ship_type.svg"
-                        >
+                    <div iconic-select-wrapper leftSvg="assets/images/scheduling_ship_type.svg">
                         <select spAccessInputRef name="shipType" id="shipType" formControlName="shipType">
                             <option disabled value="">Ship type*</option>
                             <option *ngFor="let shipType of shipType" [value]="shipType.id">
@@ -281,7 +275,8 @@
                     </button>
                 </div>
                 <div class="gap-y-4 mb-5 min-xl:px-[50px]">
-                    <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]" (click)="next(2)" [disabled]="!(stepTwoForm.valid)">
+                    <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]" (click)="next(2)"
+                        [disabled]="!(stepTwoForm.valid)">
                         {{ "button.next" | translate }}
                     </button>
                 </div>
@@ -382,7 +377,8 @@
                     </button>
                 </div>
                 <div class="gap-y-4 mb-5 min-xl:px-[50px]">
-                    <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]" (click)="next(3)" [disabled]="!(stepThreeForm.valid)">
+                    <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]" (click)="next(3)"
+                        [disabled]="!(stepThreeForm.valid)">
                         {{ "button.next" | translate }}
                     </button>
                 </div>

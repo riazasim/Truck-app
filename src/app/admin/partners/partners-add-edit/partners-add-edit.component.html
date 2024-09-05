@@ -1,12 +1,12 @@
 <!--<edit-container headerTitle="Add user - users details">-->
-  <edit-container [headerTitle]="id ? 'Edit partner' : 'Add partner'">
+<edit-container [headerTitle]="id ? 'Edit partner' : 'Add partner'">
     <app-loader *ngIf="isLoading$ | async" [isContainer]="true" [fullScreen]="false"></app-loader>
     <form [formGroup]="partnerForm" *ngIf="!(isLoading$ | async)">
         <div class="flex flex-col mx-auto max-w-[440px] gap-5">
-                <div iconic-input-wrapper leftIcon="user">
-                    <input inputRef type="text" id="name" placeholder="Partner Name" formControlName="name" />
-                </div>
-            <div iconic-select-wrapper leftIcon="user"
+            <div iconic-input-wrapper leftIcon="user">
+                <input inputRef type="text" id="name" placeholder="Partner Name" formControlName="name" />
+            </div>
+            <!-- <div iconic-select-wrapper leftIcon="user"
                         >
                         <select spAccessInputRef name="type" id="type" formControlName="type">
                             <option disabled selected value="">Partner type</option>
@@ -15,24 +15,23 @@
                             </option>
                         </select>
                     </div> -->
-            <div iconic-select-wrapper leftIcon="eye"
-                        >
-                        <select spAccessInputRef name="status" id="status" formControlName="status">
-                            <option disabled selected value="">Status</option>
-                            <option *ngFor="let status of status" [value]="status.value">
-                                {{ status.name }}
-                            </option>
-                        </select>
-                    </div>
-                    <div iconic-input-wrapper leftIcon="location-crosshairs">
-                      <input inputRef type="text" id="address" placeholder="Address" formControlName="address" />
-                  </div>
-                  <div iconic-input-wrapper leftIcon="phone">
-                    <input inputRef type="number" id="phone" placeholder="Phone" formControlName="phone" />
-                </div>
-                <div iconic-input-wrapper leftIcon="envelope">
-                  <input inputRef type="email" id="email" placeholder="Email" formControlName="email" />
-              </div>
+            <div iconic-select-wrapper leftIcon="eye">
+                <select spAccessInputRef name="status" id="status" formControlName="status">
+                    <option disabled selected value="">Status</option>
+                    <option *ngFor="let status of status" [value]="status.value">
+                        {{ status.name }}
+                    </option>
+                </select>
+            </div>
+            <div iconic-input-wrapper leftIcon="location-crosshairs">
+                <input inputRef type="text" id="address" placeholder="Address" formControlName="address" />
+            </div>
+            <div iconic-input-wrapper leftIcon="phone">
+                <input inputRef type="number" id="phone" placeholder="Phone" formControlName="phone" />
+            </div>
+            <div iconic-input-wrapper leftIcon="envelope">
+                <input inputRef type="email" id="email" placeholder="Email" formControlName="email" />
+            </div>
         </div>
 
         <div class="flex justify-end pt-5">
