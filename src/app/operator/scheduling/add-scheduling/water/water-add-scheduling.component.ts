@@ -80,6 +80,9 @@ export class WaterAddSchedulingComponent implements OnInit {
     selectedCustomer$: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
     ports: any[] = [];
     getFormatHourSlot: Function;
+    stepOneForm: FormGroup;
+    stepTwoForm: FormGroup;
+    stepThreeForm: FormGroup;
 
     id: number;
     shipsList: any;
@@ -141,7 +144,7 @@ export class WaterAddSchedulingComponent implements OnInit {
     ngOnInit(): void {
         this.id = this.route.snapshot.params['id'];
         this.initForm();
-        this.initConvoyForm();
+        // this.initConvoyForm();
         this.isLoading$.next(false);
         this.retrivePorts();
         this.retriveProducts()
@@ -161,13 +164,13 @@ export class WaterAddSchedulingComponent implements OnInit {
     }
 
 
-    navigate(index: number) {
-        const any = this.convoyForm.get("products")?.value
-        console.log(this.convoyForm.get("products"), any)
-        this.convoys.push(this.convoyForm.value)
+    addPlanning(index: number) {
+        this.convoys.push({ ...this.stepTwoForm.value, ...this.stepThreeForm.value })
         this.imageLen++
         this.tempImg = [];
-        this.initConvoyForm()
+        this.initForm(1);
+        this.productsList = [];
+        // this.initConvoyForm()
         this.matStepper.selectedIndex = index;
     }
 
@@ -214,9 +217,9 @@ export class WaterAddSchedulingComponent implements OnInit {
             if (Number(item.id) === Number(ev.target.value)) departurePort = item;
         })
         if (departurePort) {
-            this.schedulingForm.patchValue({ routingDetail: { ridCoordinates: departurePort?.addrCoordinates } })
+            this.stepOneForm.patchValue({ ridCoordinates: departurePort?.addrCoordinates })
             // console.log(departurePort?.zones);
-            this.departureZone = departurePort?.zones;
+            // this.departureZone = departurePort?.zones;
             this.retriveCompanines(departurePort.id);
         }
     }
@@ -227,7 +230,7 @@ export class WaterAddSchedulingComponent implements OnInit {
         })
         if (arrivalPort) {
             // console.log(arrivalPort?.zones);
-            this.arrivalZone = arrivalPort?.zones;
+            // this.arrivalZone = arrivalPort?.zones;
         }
     }
 
@@ -241,7 +244,7 @@ export class WaterAddSchedulingComponent implements OnInit {
                     });
                 }
                 if (this.companies.length === 0) {
-                    this.schedulingForm.patchValue({ routingDetail: { company: null } })
+                    this.stepOneForm.patchValue({ company: null })
                 }
                 this.isPortChangeLoading$.next(false);
             },
@@ -264,7 +267,7 @@ export class WaterAddSchedulingComponent implements OnInit {
     OnDateChange(value: any) {
         let filterDate = value instanceof Date ? value : new Date(value);
         this.dateVal = this.formatDate(filterDate);
-        this.schedulingForm.patchValue({ routingDetail: { estimatedTimeArrival: this.dateVal } })
+        // this.schedulingForm.patchValue({ routingDetail: { estimatedTimeArrival: this.dateVal } })
     }
     OnTimeChange(value: any) {
         this.timeVal = value
@@ -288,7 +291,7 @@ export class WaterAddSchedulingComponent implements OnInit {
         const selectedShipId = ev.target.value
         const selectedShip = this.shipsList.find((ship: any) => Number(ship.attributes.id) === Number(selectedShipId));
         if (selectedShip) {
-            this.convoyForm.patchValue({
+            this.stepTwoForm.patchValue({
                 width: selectedShip.attributes.width || '',
                 maxDraft: selectedShip.attributes.maxDraft || '',
                 maxQuantity: selectedShip.attributes.maxCapacity || '',
@@ -300,8 +303,7 @@ export class WaterAddSchedulingComponent implements OnInit {
 
     onProductChange(ev: any) {
         this.productsList = (ev?.source?.value)
-        this.convoyForm.patchValue({ products: `[${this.productsList}]` })
-        console.log(this.convoyForm.value)
+        this.stepTwoForm.patchValue({ products: `[${this.productsList}]` })
     }
 
 
@@ -309,72 +311,127 @@ export class WaterAddSchedulingComponent implements OnInit {
         return this.statusListStatus.listSid();
     }
 
-    initConvoyForm(data?: convoyModel): void {
-        this.convoyForm = this.fb.group({
-            navigationType: this.fb.control(data?.navigationType),
-            company: this.fb.control(data?.company || ''),
-            status: this.fb.control(data?.status || ''),
-            ship: this.fb.control(data?.ship || ''),
-            shipType: this.fb.control(data?.shipType || ''),
-            pavilion: this.fb.control(data?.pavilion || ''),
-            enginePower: this.fb.control(data?.enginePower || 0),
-            lengthOverall: this.fb.control(data?.lengthOverall || 0),
-            width: this.fb.control(data?.width || 0),
-            maxDraft: this.fb.control(data?.maxDraft || 0),
-            maxQuantity: this.fb.control(data?.maxQuantity || 0),
-            agent: this.fb.control(data?.agent || ''),
-            maneuvering: this.fb.control(data?.maneuvering || ''),
-            shipowner: this.fb.control(data?.shipowner || ''),
-            purpose: this.fb.control(data?.purpose || ''),
-            operator: this.fb.control(data?.operator || ''),
-            trafficType: this.fb.control(data?.trafficType || ''),
-            operatonType: this.fb.control(data?.operatonType || ''),
-            cargo: this.fb.control(data?.cargo || ''),
-            quantity: this.fb.control(data?.quantity || 0),
-            unitNo: this.fb.control(data?.unitNo || ''),
-            observation: this.fb.control(data?.observation || ''),
-            additionalOperator: this.fb.control(data?.additionalOperator || ''),
-            clientComments: this.fb.control(data?.clientComments || ''),
-            operatorComments: this.fb.control(data?.operatorComments),
-            products: this.fb.control(data?.products || ""),
-            lockType: this.fb.control(data?.lockType || ''),
-            arrivalGauge: this.fb.control(data?.arrivalGauge || 0),
-        })
-    }
+    // initConvoyForm(data?: convoyModel): void {
+    //     this.convoyForm = this.fb.group({
+    //         navigationType: this.fb.control(data?.navigationType || '', [...createRequiredValidators()]),
+    //         company: this.fb.control(data?.company || '', [...createRequiredValidators()]),
+    //         status: this.fb.control(data?.status || '', [...createRequiredValidators()]),
+    //         ship: this.fb.control(data?.ship || '', [...createRequiredValidators()]),
+    //         shipType: this.fb.control(data?.shipType || '', [...createRequiredValidators()]),
+    //         pavilion: this.fb.control(data?.pavilion || '', [...createRequiredValidators()]),
+    //         enginePower: this.fb.control(data?.enginePower || 0, [...createRequiredValidators()]),
+    //         lengthOverall: this.fb.control(data?.lengthOverall || 0, [...createRequiredValidators()]),
+    //         width: this.fb.control(data?.width || 0, [...createRequiredValidators()]),
+    //         maxDraft: this.fb.control(data?.maxDraft || 0, [...createRequiredValidators()]),
+    //         maxQuantity: this.fb.control(data?.maxQuantity || 0, [...createRequiredValidators()]),
+    //         agent: this.fb.control(data?.agent || '', [...createRequiredValidators()]),
+    //         maneuvering: this.fb.control(data?.maneuvering || '', [...createRequiredValidators()]),
+    //         shipowner: this.fb.control(data?.shipowner || '', [...createRequiredValidators()]),
+    //         purpose: this.fb.control(data?.purpose || '', [...createRequiredValidators()]),
+    //         operator: this.fb.control(data?.operator || '', [...createRequiredValidators()]),
+    //         trafficType: this.fb.control(data?.trafficType || '', [...createRequiredValidators()]),
+    //         operatonType: this.fb.control(data?.operatonType || '', [...createRequiredValidators()]),
+    //         cargo: this.fb.control(data?.cargo || '', [...createRequiredValidators()]),
+    //         quantity: this.fb.control(data?.quantity || 0, [...createRequiredValidators()]),
+    //         unitNo: this.fb.control(data?.unitNo || '', [...createRequiredValidators()]),
+    //         observation: this.fb.control(data?.observation || '', [...createRequiredValidators()]),
+    //         additionalOperator: this.fb.control(data?.additionalOperator || '', [...createRequiredValidators()]),
+    //         clientComments: this.fb.control(data?.clientComments || '', [...createRequiredValidators()]),
+    //         operatorComments: this.fb.control(data?.operatorComments, [...createRequiredValidators()]),
+    //         products: this.fb.control(data?.products || "", [...createRequiredValidators()]),
+    //         lockType: this.fb.control(data?.lockType || '', [...createRequiredValidators()]),
+    //         arrivalGauge: this.fb.control(data?.arrivalGauge || 0, [...createRequiredValidators()]),
+    //     })
+    // }
 
-    initForm(data?: PlanningModel): void {
+    // this.schedulingForm = this.fb.group({
+    //     routingDetail: this.fb.group({
+    //         convoyType: this.fb.control(''),
+    //         // convoyType: this.fb.control(data?.routingDetail?.convoyType || ''),
+    //         estimatedTimeArrival: this.fb.control(''),
+    //         // locationPort: this.fb.control(data?.routingDetail?.locationPort || ''),
+    //         departurePort: this.fb.control(''),
+    //         arrivalPort: this.fb.control(''),
+    //         company: this.fb.control(''),
+    //         pilotCompany: this.fb.control(''),
+    //         // length: this.fb.control(data?.routingDetail?.length || 0),
+    //         // width: this.fb.control(data?.routingDetail?.width || 0),
+    //         // maxDraft: this.fb.control(data?.routingDetail?.maxDraft || 0),
+    //         // arrivalGauge: this.fb.control(data?.routingDetail?.arrivalGauge || 0),
+    //         // maxCapacity: this.fb.control(data?.routingDetail?.maxCapacity || 0),
+    //         // lockType: this.fb.control(data?.routingDetail?.lockType || ''),
+    //         ridCoordinates: this.fb.control(''),
+    //     }),
+    //     convoyDetail: this.fb.control([]),
+    //     documents: this.fb.control([]),
+    // });
+
+    initForm(index?: any): void {
         this.schedulingForm = this.fb.group({
             routingDetail: this.fb.group({
-                convoyType: this.fb.control(data?.routingDetail?.convoyType),
-                // convoyType: this.fb.control(data?.routingDetail?.convoyType || ''),
-                estimatedTimeArrival: this.fb.control(data?.routingDetail?.estimatedTimeArrival || ''),
-                // locationPort: this.fb.control(data?.routingDetail?.locationPort || ''),
-                departureZone: this.fb.control(data?.routingDetail?.departureZone || ''),
-                arrivalZone: this.fb.control(data?.routingDetail?.arrivalZone || ''),
-                departurePort: this.fb.control(data?.routingDetail?.departurePort || ''),
-                arrivalPort: this.fb.control(data?.routingDetail?.arrivalPort || ''),
-                company: this.fb.control(data?.routingDetail?.company || ''),
-                pilotCompany: this.fb.control(data?.routingDetail?.pilotCompany || ''),
-                // length: this.fb.control(data?.routingDetail?.length || 0),
-                // width: this.fb.control(data?.routingDetail?.width || 0),
-                // maxDraft: this.fb.control(data?.routingDetail?.maxDraft || 0),
-                // arrivalGauge: this.fb.control(data?.routingDetail?.arrivalGauge || 0),
-                // maxCapacity: this.fb.control(data?.routingDetail?.maxCapacity || 0),
-                // lockType: this.fb.control(data?.routingDetail?.lockType || ''),
-                ridCoordinates: this.fb.control(data?.routingDetail?.ridCoordinates || ''),
+                convoyType: this.fb.control(''),
+                estimatedTimeArrival: this.fb.control(''),
+                departurePort: this.fb.control(''),
+                arrivalPort: this.fb.control(''),
+                company: this.fb.control(''),
+                pilotCompany: this.fb.control(''),
+                ridCoordinates: this.fb.control(''),
             }),
-            convoyDetail: this.fb.control(data?.convoyDetail || []),
-            documents: this.fb.control(data?.documents || []),
+            convoyDetail: this.fb.control([]),
+            documents: this.fb.control([]),
         });
+
+        if (index !== 1) {
+            this.stepOneForm = this.fb.group({
+                convoyType: this.fb.control('', [...createRequiredValidators()]),
+                estimatedTimeArrival: this.fb.control(''),
+                departurePort: this.fb.control('', [...createRequiredValidators()]),
+                arrivalPort: this.fb.control('', [...createRequiredValidators()]),
+                company: this.fb.control('', [...createRequiredValidators()]),
+                pilotCompany: this.fb.control('', [...createRequiredValidators()]),
+                ridCoordinates: this.fb.control('', [...createRequiredValidators()]),
+            });
+        }
+        this.stepTwoForm = this.fb.group({
+            navigationType: this.fb.control('', [...createRequiredValidators()]),
+            company: this.fb.control(''),
+            ship: this.fb.control('', [...createRequiredValidators()]),
+            shipType: this.fb.control('', [...createRequiredValidators()]),
+            pavilion: this.fb.control('', [...createRequiredValidators()]),
+            enginePower: this.fb.control(0, [...createRequiredValidators()]),
+            lengthOverall: this.fb.control(0, [...createRequiredValidators()]),
+            width: this.fb.control(0, [...createRequiredValidators()]),
+            maxDraft: this.fb.control(0, [...createRequiredValidators()]),
+            maxQuantity: this.fb.control(0, [...createRequiredValidators()]),
+            shipowner: this.fb.control('', [...createRequiredValidators()]),
+            purpose: this.fb.control('', [...createRequiredValidators()]),
+            operator: this.fb.control('', [...createRequiredValidators()]),
+            trafficType: this.fb.control('', [...createRequiredValidators()]),
+            operatonType: this.fb.control('', [...createRequiredValidators()]),
+            quantity: this.fb.control(0, [...createRequiredValidators()]),
+            unitNo: this.fb.control('', [...createRequiredValidators()]),
+            observation: this.fb.control('', [...createRequiredValidators()]),
+            products: this.fb.control('', [...createRequiredValidators()]),
+            lockType: this.fb.control('', [...createRequiredValidators()]),
+            arrivalGauge: this.fb.control(0, [...createRequiredValidators()]),
+        });
+
+        this.stepThreeForm = this.fb.group({
+            clientComments: this.fb.control(''),
+            operatorComments: this.fb.control(''),
+            additionalOperator: this.fb.control(''),
+        });
+
     }
 
     saveScheduling(): void {
         this.isLoading$.next(true);
-        this.convoys.push(this.convoyForm.value)
+        this.convoys.push({ ...this.stepTwoForm.value, ...this.stepThreeForm.value })
         if (this.dateVal === undefined) this.dateVal = this.formatDate(this.filterDate);
         if (this.timeVal === undefined) this.timeVal = String(this.filterTime);
         this.dateTimeVal = `${this.dateVal} ${this.timeVal}`;
-        this.schedulingForm.patchValue({ convoyDetail: this.convoys, documents: this.images, routingDetail: { estimatedTimeArrival: this.dateTimeVal } })
+        this.stepOneForm.patchValue({ estimatedTimeArrival: this.dateTimeVal })
+        this.schedulingForm.patchValue({ convoyDetail: this.convoys, documents: this.images, routingDetail: { ...this.stepOneForm.value } })
         this.planningService.create(this.schedulingForm.value).subscribe({
             next: () => {
                 this.router.navigate(['../success'], { relativeTo: this.route });

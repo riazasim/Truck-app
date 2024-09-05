@@ -1,6 +1,7 @@
-<div [class.dashboard]="dashboardInp" [class.valid]="isValid === true && isTouched"
-    [class.invalid]="isValid === false && isTouched" [class.disabled]="isDisabled" [class.loading]="loading"
-    class="iconic-layout-wrapper relative">
+<div [class.dashboard]="dashboardInp" [class.tableInp]="isTable"
+    [class.valid]="isValid && (isTouched || withoutTouched)"
+    [class.invalid]="isInvalid || !isValid && (isTouched || withoutTouched)" [class.disabled]="isDisabled"
+    [class.loading]="loading" class="iconic-layout-wrapper relative">
 
     <div class="loader absolute top-0 right-0 left-0 bottom-0 hidden z-10"></div>
 
@@ -15,9 +16,11 @@
         <ng-container *ngIf="appendedTemplate" [ngTemplateOutlet]="appendedTemplate"></ng-container>
         <fa-icon *ngIf="isValid && withCheckmark && isTouched" [icon]="checkmark" size="lg" class="icon valid">
         </fa-icon>
+        <fa-icon *ngIf="!isValid && isTouched" [icon]="xmark" size="lg" class="icon invalid">
+        </fa-icon>
     </div>
 
-    <div *ngIf="showValidation" class="errors-container" [class.!hidden]="loading"
+    <div *ngIf="showValidation && showValidationMessageDiv" class="errors-container" [class.!hidden]="loading"
         [style.visibility]="isTouched && showValidationMessages && errors ? 'visible': 'hidden'" [style.height.px]="21">
         <div *ngFor="let error of (errors | keyvalue)" class="text-center">
             <span *ngIf="$any(error)?.value && $any(error)?.value?.message;"

@@ -3,7 +3,7 @@
     <div mat-dialog-content class="whitespace-pre-line mb-8 ">
         <div class="flex gap-2">
             <div class="w-full">
-                <div iconic-select-wrapper [rightIcon]="['fas', 'caret-down']">
+                <div iconic-select-wrapper >
                     <select [disabled]="!!product" inputRef name="product" id="product" (change)="setProduct($event)" [(ngModel)]="productId">
                         <option [value]="null" selected disabled>Select product</option>
                         <option *ngFor="let product of data.products" [value]="product.id">{{product.name}}</option>
@@ -44,7 +44,7 @@
                 </div>
             </div>
         </div>
-        
+
     </div>
 
     <div mat-dialog-actions class="flex justify-around flex-wrap-reverse gap-4">
@@ -52,4 +52,3 @@
         <button [disabled]="!product" tabIndex="-1" (click)="confirm()" class="btn btn-primary min-w-[130px]">Add</button>
     </div>
 </div>
-  

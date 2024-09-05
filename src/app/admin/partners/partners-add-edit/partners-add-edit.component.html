@@ -7,7 +7,7 @@
                     <input inputRef type="text" id="name" placeholder="Partner Name" formControlName="name" />
                 </div>
             <div iconic-select-wrapper leftIcon="user"
-                        [rightIcon]="['fas', 'caret-down']">
+                        >
                         <select spAccessInputRef name="type" id="type" formControlName="type">
                             <option disabled selected value="">Partner type</option>
                             <option *ngFor="let type of partnerType" [value]="type.value">
@@ -16,7 +16,7 @@
                         </select>
                     </div>
             <div iconic-select-wrapper leftIcon="eye"
-                        [rightIcon]="['fas', 'caret-down']">
+                        >
                         <select spAccessInputRef name="status" id="status" formControlName="status">
                             <option disabled selected value="">Status</option>
                             <option *ngFor="let status of status" [value]="status.value">

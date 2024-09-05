@@ -26,8 +26,13 @@ export class IconicInputWrapperComponent extends GenericWrapperComponent<HTMLInp
     public withoutTouched: boolean;
 
     @Input()
-    public loading: boolean | any;
+    public isTable: boolean;
 
+    @Input()
+    public showValidationMessageDiv: boolean = true;
+
+    @Input()
+    public loading: boolean | any;
 
     @Input()
     public className: string | any;

@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div>
-                <div iconic-select-wrapper leftIcon="user" [rightIcon]="['fas', 'caret-down']">
+                <div iconic-select-wrapper leftIcon="user" >
                     <select spAccessInputRef name="type" id="type" formControlName="type">
                         <option value="" disabled>Select Type</option>
                         <option *ngFor="let type of trainsType" value="{{type.name}}">{{type.name}}</option>
@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div>
-                <div iconic-select-wrapper leftIcon="eye" [rightIcon]="['fas', 'caret-down']">
+                <div iconic-select-wrapper leftIcon="eye" >
                     <select spAccessInputRef name="status" id="status" formControlName="status">
                         <option value="" disabled>Select status</option>
                         <option value="true">Active</option>
@@ -30,7 +30,7 @@
                     </select>
                 </div>
             </div>
-            
+
         </div>
         <div class="flex justify-end pt-5">
             <div class="flex gap-4">

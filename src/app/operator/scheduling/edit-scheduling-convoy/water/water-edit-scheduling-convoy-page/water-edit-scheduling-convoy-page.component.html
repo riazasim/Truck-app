@@ -6,7 +6,7 @@
                 class="grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20 gap-y-4 pt-[100px] min-xl:px-[50px]">
                 <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
                     <div iconic-select-wrapper leftSvg="assets/images/scheduling_operator.svg"
-                        [rightIcon]="['fas', 'caret-down']">
+                        >
                         <select spAccessInputRef name="operator" id="operator" formControlName="operator">
                             <option disabled value="">Operator*</option>
                             <option *ngFor="let operator of operator" [value]="operator.id">
@@ -39,7 +39,7 @@
                         <input inputRef type="text" placeholder="Purpose" formControlName="purpose" />
                     </div>
                     <div iconic-select-wrapper leftSvg="assets/images/scheduling_trafic_type.svg"
-                        [rightIcon]="['fas', 'caret-down']">
+                        >
                         <select spAccessInputRef name="trafficType" id="trafficType" formControlName="trafficType">
                             <option disabled value="">Traffic type*</option>
                             <option *ngFor="let trafficType of trafficType" [value]="trafficType.id">
@@ -48,7 +48,7 @@
                         </select>
                     </div>
                     <div iconic-select-wrapper leftSvg="assets/images/scheduling_operation_type.svg"
-                        [rightIcon]="['fas', 'caret-down']">
+                        >
                         <select spAccessInputRef name="operationType" id="operationType" formControlName="operatonType">
                             <option disabled value="">Operation type</option>
                             <option *ngFor="let operationType of operationType" [value]="operationType.id">
@@ -68,7 +68,7 @@
 
                 </div>
                 <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
-                    <div iconic-select-wrapper leftIcon="grid-2" [rightIcon]="['fas', 'caret-down']">
+                    <div iconic-select-wrapper leftIcon="grid-2" >
                         <select spAccessInputRef name="ship" id="ship" (change)="onShipSelected($event)"
                             formControlName="ship">
                             <option disabled value="">Ship</option>
@@ -78,7 +78,7 @@
                         </select>
                     </div>
                     <div iconic-select-wrapper leftSvg="assets/images/scheduling_ship_type.svg"
-                        [rightIcon]="['fas', 'caret-down']">
+                        >
                         <select spAccessInputRef name="shipType" id="shipType" formControlName="shipType">
                             <option disabled value="">Ship type*</option>
                             <option *ngFor="let shipType of shipType" [value]="shipType.id">
@@ -185,7 +185,7 @@
                                     class="mx-2 cursor-pointer">
                                 </fa-icon>
                             </button>
-                            <input class="text-center w-full outline-0 shadow-none ring-offset-0 focus:ring-offset-0 focus:shadow-none focus:ring-0 min-h-[53px] border-x-0 border-borderColor	rounded-x-0" 
+                            <input class="text-center w-full outline-0 shadow-none ring-offset-0 focus:ring-offset-0 focus:shadow-none focus:ring-0 min-h-[53px] border-x-0 border-borderColor	rounded-x-0"
                             type="text" [value]="file3Text$ | async" (click)="file3.click()" readonly placeholder="Choose file">
                             <input #file3 hidden type="file" (change)="patchFile($any($event.target).files[0], 2)">
                             <button (click)="file3.click()" class="bg-primary text-white hover:bg-primary-dark min-h-[53px] min-md:min-w-[60px] max-sm:w-full rounded">

@@ -36,7 +36,7 @@
                 </div>
               </div>
               <div>
-                <div iconic-select-wrapper leftIcon="clock" [rightIcon]="['fas', 'caret-down']">
+                <div iconic-select-wrapper leftIcon="clock" >
                   <select inputRef [(ngModel)]="repeatOption"  [ngModelOptions]="{ standalone: true }">
                       <option value="0">Doesn't repeat</option>
                       <option value="1">Daily</option>
@@ -63,7 +63,7 @@
       <div #currentEl class="flex slide-in-bottom" *ngFor="let query of whereQuery; let i = index">
         <div>
           <div *ngIf="(automationType | async) !== automationTypeEnum.timeBased" class="bar-vertical"></div>
-          <div *ngIf="(automationType | async) == automationTypeEnum.timeBased" class="bar-vertical" 
+          <div *ngIf="(automationType | async) == automationTypeEnum.timeBased" class="bar-vertical"
                       [style.marginTop.px]="-120"
                       [style.marginBottom.px]="-120"
                       [style.marginLeft.px]="47"
