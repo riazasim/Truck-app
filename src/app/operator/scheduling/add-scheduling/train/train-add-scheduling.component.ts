@@ -20,7 +20,7 @@ import { ShipsService } from 'src/app/core/services/ships.service';
 import { MicroService } from 'src/app/core/services/micro.service';
 import { ProductService } from 'src/app/core/services/product.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { createMinLengthValidator, createRequiredValidators } from 'src/app/shared/validators/generic-validators';
+import { createMinLengthValidator, createOptionalRequiredValidators, createRequiredValidators } from 'src/app/shared/validators/generic-validators';
 import { PartnerService } from 'src/app/core/services/partner.service';
 import { TrainsService } from 'src/app/core/services/trains.service';
 import { StationService } from 'src/app/core/services/stations.service';
@@ -155,6 +155,16 @@ export class TrainAddSchedulingComponent implements OnInit {
     }
 
     hideEmail(ev: boolean) {
+        localStorage.setItem("userEmail", String(this.stepOneForm.get('userEmail')))
+        if (ev) {
+            this.stepOneForm.get("userEmail")?.setValidators([...createRequiredValidators()]);
+            this.stepOneForm.get("userEmail")?.setValue(String(localStorage.getItem("userEmail")) || "");
+        }
+        else {
+            this.stepOneForm.get("userEmail")?.setValidators([]);
+            this.stepOneForm.get("userEmail")?.setValue("");
+        }
+        this.stepOneForm.get('userEmail')?.updateValueAndValidity();
         this.hideEmail$.next(ev);
     }
 
@@ -414,7 +424,7 @@ export class TrainAddSchedulingComponent implements OnInit {
             this.stepOneForm = this.fb.group({
                 locomotiveId: this.fb.control('', [...createRequiredValidators()]),
                 conductorType: this.fb.control('With Laras Conductor App', [...createRequiredValidators()]),
-                userEmail: this.fb.control(''),
+                userEmail: this.fb.control('', [...createRequiredValidators()]),
                 planningRouteDetails: this.fb.array([]),
             });
         }

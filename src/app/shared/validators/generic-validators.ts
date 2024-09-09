@@ -127,10 +127,23 @@ export function createRequiredValidators(): ValidatorFn[] {
     ];
 }
 
-export function createPatternValidators(pattern : RegExp): ValidatorFn[] {
+export function createOptionalRequiredValidators(required: boolean): ValidatorFn[] {
+    if (required) {
+        return [
+            RxwebValidators.required({
+                message: 'Values Required'
+            })
+        ];
+    }
+    return [
+        RxwebValidators.custom()
+    ];
+}
+
+export function createPatternValidators(pattern: RegExp): ValidatorFn[] {
     return [
         RxwebValidators.pattern({
-            expression: {pattern},
+            expression: { pattern },
             message: "Invalid Entry. Only use [0-9,+,-,(),' ']"
         })
     ];

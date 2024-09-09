@@ -1,9 +1,9 @@
 <mat-stepper labelPosition="bottom" [linear]="isLinear" #stepper>
     <mat-step label="Route Details" [stepControl]="stepOneForm">
         <app-loader *ngIf="isLoading$ | async" [isContainer]="true" [fullScreen]="false"></app-loader>
-        <form [formGroup]="stepOneForm" *ngIf="!(isLoading$ | async)">
+        <form [formGroup]="stepOneForm" *ngIf="!(isLoading$ | async)" class="flex flex-col items-center">
             <div class="grid grid-cols-1 gap-x-10 w-full place-items-center gap-y-4 pt-[100px] min-xl:px-[50px]">
-                <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
+                <div class="flex flex-col gap-y-4 min-xl:px-[50px] min-md:w-[640px] w-[90%]">
                     <div [loading]="(isPortsLoading$ | async)" iconic-input-wrapper leftIcon="user">
                         <input inputRef type="text" placeholder="Convoy Type" formControlName="convoyType" />
                     </div>
@@ -55,7 +55,7 @@
                         </select>
                     </div> -->
                 </div>
-                <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
+                <div class="flex flex-col gap-y-4 min-xl:px-[50px] min-md:w-[640px] w-[90%]">
                     <!-- <p>&nbsp;</p> -->
 
                     <div [loading]="(isPortsLoading$ | async)" iconic-select-wrapper
@@ -124,7 +124,7 @@
                     </div> -->
                 </div>
             </div>
-            <div class="min-xl:px-[50px] grid grid-cols-1 gap-x-10 mt-4">
+            <div class="grid grid-cols-1 gap-x-10 mt-4 min-md:w-[640px] w-[90%]">
                 <div class="gap-y-4 mb-5 min-xl:px-[50px]">
                     <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]" routerLink="../">
                         {{ "button.back" | translate }}

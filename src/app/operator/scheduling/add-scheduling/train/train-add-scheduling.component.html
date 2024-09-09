@@ -148,7 +148,7 @@
                                     <input class="text-center" inputRef formControlName="stationType"
                                         [value]="stationTypes[$index]" readonly />
                                 </div> -->
-                                <input class="text-center" [value]="stationTypes[$index]" readonly />
+                                <input class="text-center" [value]="stationTypes[$index] || 'Station Type'" readonly />
                             </td>
                             <td>
                                 <a (click)="onRowDelete($index)">

@@ -168,8 +168,8 @@ export class WaterAddSchedulingComponent implements OnInit {
         this.convoys.push({ ...this.stepTwoForm.value, ...this.stepThreeForm.value })
         this.imageLen++
         this.tempImg = [];
-        this.initForm(1);
         this.productsList = [];
+        this.initForm(1);
         // this.initConvoyForm()
         this.matStepper.selectedIndex = index;
     }
