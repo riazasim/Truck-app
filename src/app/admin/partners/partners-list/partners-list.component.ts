@@ -19,7 +19,7 @@ import { PageEvent } from '@angular/material/paginator';
 })
 export class PartnersListComponent implements OnInit {
   isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  displayedColumns = ['name', 'type', 'status', 'phone', 'email', 'actions'];
+  displayedColumns = ['name', 'status', 'addrCountry', 'contactPhone', 'contactEmail', 'actions'];
   faStarSolid: IconProp = <IconProp>faStar;
   dataSource: PartnerModel[] = []
   originalSource: PartnerModel[] = []

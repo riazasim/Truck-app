@@ -29,7 +29,7 @@
                         <th cdk-header-cell *cdkHeaderCellDef scope="col">
                             <section class="flex flex-col gap-4">
                                 <div mat-sort-header="name">Location name</div>
-                                <searchbar [maxWidth]="152">
+                                <searchbar >
                                     <fa-icon icon="search"></fa-icon>
                                     <input #searchName input type="text" (keyup)="applyFilter($event.target, 'name')">
                                     <div [style.visibility]="searchName.value ? 'visible': 'hidden'" close
@@ -46,7 +46,7 @@
                         <th cdk-header-cell *cdkHeaderCellDef scope="col">
                             <section class="flex flex-col gap-4">
                                 <div mat-sort-header="addrStreet">Street</div>
-                                <searchbar [maxWidth]="152">
+                                <searchbar >
                                     <fa-icon icon="search"></fa-icon>
                                     <input #searchStreet input type="text"
                                         (keyup)="applyFilter($event.target, 'addrStreet')">
@@ -64,7 +64,7 @@
                         <th cdk-header-cell *cdkHeaderCellDef scope="col">
                             <section class="flex flex-col gap-4">
                                 <div mat-sort-header="addrNumber">No.</div>
-                                <searchbar [maxWidth]="76">
+                                <searchbar >
                                     <fa-icon icon="search"></fa-icon>
                                     <input #searchStreetNo input type="text"
                                         (keyup)="applyFilter($event.target, 'addrNumber')">
@@ -79,10 +79,10 @@
                     </ng-container>
 
                     <ng-container cdkColumnDef="addrCounty">
-                        <th cdk-header-cell *cdkHeaderCellDef scope="col">
+                        <th cdk-header-cell *cdkHeaderCellDef scope="colgroup">
                             <section class="flex flex-col gap-4">
                                 <div mat-sort-header="addrCounty">County</div>
-                                <searchbar [maxWidth]="73">
+                                <searchbar >
                                     <fa-icon icon="search"></fa-icon>
                                     <input #searchCounty input type="text"
                                         (keyup)="applyFilter($event.target, 'addrCounty')">
@@ -100,7 +100,7 @@
                         <th cdk-header-cell *cdkHeaderCellDef scope="col">
                             <section class="flex flex-col gap-4">
                                 <div mat-sort-header="addrCity">City</div>
-                                <searchbar [maxWidth]="73">
+                                <searchbar >
                                     <fa-icon icon="search"></fa-icon>
                                     <input #searchCity input type="text"
                                         (keyup)="applyFilter($event.target, 'addrCity')">
@@ -118,7 +118,7 @@
                         <th cdk-header-cell *cdkHeaderCellDef scope="col">
                             <section class="flex flex-col gap-4">
                                 <div mat-sort-header="addrCountry">Country</div>
-                                <searchbar [maxWidth]="108">
+                                <searchbar >
                                     <fa-icon icon="search"></fa-icon>
                                     <input #searchCountry input type="text"
                                         (keyup)="applyFilter($event.target, 'addrCountry')">
@@ -136,7 +136,7 @@
                         <th cdk-header-cell *cdkHeaderCellDef scope="col">
                             <section class="flex flex-col gap-4">
                                 <div mat-sort-header="addrZipCode">Zip Code</div>
-                                <searchbar [maxWidth]="85">
+                                <searchbar >
                                     <fa-icon icon="search"></fa-icon>
                                     <input #searchZipCode input type="text"
                                         (keyup)="applyFilter($event.target, 'addrZipCode')">
@@ -154,7 +154,7 @@
                         <th cdk-header-cell *cdkHeaderCellDef scope="col">
                             <section class="flex flex-col gap-4">
                                 <div>Contact</div>
-                                <searchbar [maxWidth]="189">
+                                <searchbar >
                                     <fa-icon icon="search"></fa-icon>
                                     <input #searchContact input type="text"
                                         (keyup)="applyFilter($event.target, 'contact', true)">

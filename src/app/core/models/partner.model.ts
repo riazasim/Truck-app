@@ -2,11 +2,19 @@ export type PartnerModel = {
     id?: number;
     partnerId?: number;
     name: string;
-    email: string;
-    phone: string;
     status: boolean;
+    addrStreet: string;
+    addrStreetNumber: string;
+    addrCity:string,
+    addrCounty: string;
+    addrCountry: string;
+    addrZipCode: string;
+    contactPhone: string;
+    contactEmail: string;
+    // email: string;
+    // phone: string;
     // contactNumber: string;
-    address: string;
+    // address: string;
     // partnerSpecialStatus: number;
     type: string;
     // blockSidStatus: boolean;

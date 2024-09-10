@@ -7,6 +7,7 @@ export type LocationModel = {
     id?: number;
     locationId?: number;
     name: string;
+    locationType: string;
     addrCoordinates: string;
     addrStreet: string;
     addrNumber: string;

@@ -147,4 +147,13 @@ export class LocationService {
       shareReplay()
     );
   }
+
+  listCounties(): Observable<string[]> {
+    return this.http.get<string[]>('assets/counties.json').pipe(shareReplay());
+  }
+
+  listTimeZones(): Observable<string[]> {
+    return this.http.get<string[]>('assets/timezones.json').pipe(shareReplay());
+  }
+  
 }

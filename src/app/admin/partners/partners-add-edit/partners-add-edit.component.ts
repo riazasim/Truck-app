@@ -53,11 +53,15 @@ export class PartnersAddEditComponent {
     initForm(data: PartnerModel = <PartnerModel>{}): void {
         this.partnerForm = this.fb.group({
                 name: this.fb.control(data?.name || '', [...createRequiredValidators()]),
-                type: this.fb.control(data?.type || '', [...createRequiredValidators()]),
                 status: this.fb.control(data?.status || '' , [...createRequiredValidators()]),
-                address: this.fb.control(data?.address || '', [...createRequiredValidators()]),
-                phone: this.fb.control(data?.phone || '', [...createRequiredValidators()]),
-                email: this.fb.control(data?.email || '', [...createRequiredValidators()]),
+                addrStreet: this.fb.control(data?.addrStreet || '' , [...createRequiredValidators()]),
+                addrStreetNumber: this.fb.control(data?.addrStreetNumber || '' , [...createRequiredValidators()]),
+                addrCity: this.fb.control(data?.addrCity || '' , [...createRequiredValidators()]),
+                addrCounty: this.fb.control(data?.addrCounty || '' , [...createRequiredValidators()]),
+                addrCountry: this.fb.control(data?.addrCountry || '' , [...createRequiredValidators()]),
+                addrZipCode: this.fb.control(data?.addrZipCode || '' , [...createRequiredValidators()]),
+                contactPhone: this.fb.control(data?.contactPhone || '', [...createRequiredValidators()]),
+                contactEmail: this.fb.control(data?.contactEmail || '', [...createRequiredValidators()]),
             })
     }
 

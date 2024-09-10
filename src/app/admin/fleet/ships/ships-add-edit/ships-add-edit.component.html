@@ -15,8 +15,8 @@
                 </div>
                 <div iconic-select-wrapper leftSvg="assets/images/engine.svg" >
                     <select spAccessInputRef name="propulsionType" id="propulsionType" formControlName="propulsionType">
-                        <option value="" disabled selected>Self propelled</option>
-                        <option *ngFor="let item of propulsionType" [value]="item.id">
+                        <option value="" disabled selected>Propulsion Type</option>
+                        <option *ngFor="let item of propulsionType" [value]="item.name">
                             {{ item.name }}
                         </option>
                     </select>

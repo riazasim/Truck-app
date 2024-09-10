@@ -20,8 +20,8 @@ export class ShipsAddEditComponent {
     appliedFilters: any = {};
 
     propulsionType = [
-        { id: 1, name: 'Self propelled' },
-        { id: 2, name: 'Without propulsion' },
+        { id: 1, name: 'SELF PROPELLED' },
+        { id: 2, name: 'WITHOUT PROPULSION' },
     ]
     typeOfLock = [
         { id: 1, name: 'Type Of Lock1' },

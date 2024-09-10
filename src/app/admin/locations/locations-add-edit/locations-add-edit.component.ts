@@ -61,14 +61,15 @@ export class LocationsAddEditComponent implements OnInit {
     initForm(data: LocationModel = <LocationModel>{}): void {
         this.locationForm = this.fb.group({
             name: this.fb.control(data?.name || '', [...createRequiredValidators()]),
+            locationType: this.fb.control(data?.locationType || 'ROAD', [...createRequiredValidators()]),
             addrCoordinates: this.fb.control(data?.addrCoordinates || '', [...createRequiredValidators()]),
-            addrStreet: this.fb.control(data?.addrStreet || '', [...createRequiredValidators()]),
-            addrNumber: this.fb.control(data?.addrNumber || '', [...createRequiredValidators()]),
+            addrStreet: this.fb.control(data?.addrStreet || ''),
+            addrNumber: this.fb.control(data?.addrNumber || ''),
             addrCity: this.fb.control(data?.addrCity || '', [...createRequiredValidators()]),
             addrCountry: this.fb.control(data?.addrCountry || '', [...createRequiredValidators()]),
             addrCounty: this.fb.control(data?.addrCounty || '', [...createRequiredValidators()]),
             addrZipCode: this.fb.control(data?.addrZipCode || '', [...createRequiredValidators()]),
-            addrTimezone: this.fb.control(data?.addrTimezone || '', [...createRequiredValidators()]),
+            // addrTimezone: this.fb.control(data?.addrTimezone || '', [...createRequiredValidators()]),
             contactFirstName: this.fb.control(data?.contactFirstName || '', [...createRequiredValidators()]),
             contactLastName: this.fb.control(data?.contactLastName || '', [...createRequiredValidators()]),
             contactPhone: this.fb.control(data?.contactPhone || '', [...createRequiredValidators(), ...createPatternValidators(RegExp("[-+()0-9 ]")), ...createMinLengthValidator(7), ...createMaxLengthValidator(17)]),
@@ -104,7 +105,7 @@ export class LocationsAddEditComponent implements OnInit {
             this.locationService.create(this.locationForm.value).subscribe({
                 next: () => {
                     this.isLoading$.next(false)
-                    this.router.navigate(['../../success'], { relativeTo: this.route });
+                    this.router.navigate(['../success'], { relativeTo: this.route });
                 },
                 error: (body: any) => {
                     this.isLoading$.next(false)

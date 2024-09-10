@@ -16,6 +16,7 @@ import { AssetsProviderService } from '../core/services/assets-provider.service'
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {MatRippleModule} from "@angular/material/core";
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 
 
 @NgModule({
@@ -36,8 +37,10 @@ import {MatRippleModule} from "@angular/material/core";
         PublicRoutingModule,
         SharedModule,
         FontAwesomeModule,
-        MatRippleModule
+        MatRippleModule,
+        NgxMaskDirective, 
+        NgxMaskPipe,
     ],
-  providers: [LoaderOrchestratorService, AssetsProviderService],
+  providers: [ provideNgxMask(), NgxMaskPipe,LoaderOrchestratorService, AssetsProviderService],
 })
 export class PublicModule { }

@@ -24,24 +24,6 @@
                       <td cdk-cell *cdkCellDef="let row">{{row?.name}}</td>
                   </ng-container>
 
-                  <ng-container cdkColumnDef="type">
-                    <th cdk-header-cell *cdkHeaderCellDef scope="col">
-                        <section class="flex flex-col">
-                            <div mat-sort-header="type">Type</div>
-                            <select (change)="filterByType($event)" filter-select>
-                                <option value="" selected>Select</option>
-                                <option value="PUBLIC">Public</option>
-                                <option value="PRIVATE">Private</option>
-                            </select>
-                        </section>
-                    </th>
-                    <td cdk-cell *cdkCellDef="let row">
-                        <!-- <mat-chip [ngStyle]="{'background-color': row?.type === PUBLIC ? 'green' : 'red'}"> -->
-                            {{ row?.type === 'PUBLIC' ? 'Public' : 'Private'}}
-                        <!-- </mat-chip> -->
-                    </td>
-                </ng-container>
-
                   <ng-container cdkColumnDef="status">
                       <th cdk-header-cell *cdkHeaderCellDef scope="col">
                           <section class="flex flex-col">
@@ -60,38 +42,55 @@
                       </td>
                   </ng-container>
 
-                  <ng-container cdkColumnDef="phone">
+                  <ng-container cdkColumnDef="addrCountry">
+                    <th cdk-header-cell *cdkHeaderCellDef scope="col">
+                        <section class="flex flex-col" (keyup)="applyFilter($event.target, 'addrCountry')">
+                            <div mat-sort-header="addrCountry">Country</div>
+                            <searchbar>
+                                <fa-icon icon="search"></fa-icon>
+                                <input #searchAddrCountry input type="text" (keyup)="applyFilter($event.target, 'addrCountry')">
+                                <div *ngIf="searchAddrCountry.value" close
+                                    (click)="searchAddrCountry.value=''; applyFilter({ value: '' }, 'addrCountry')">
+                                    <fa-icon icon="close"></fa-icon>
+                                </div>
+                            </searchbar>
+                        </section>
+                    </th>
+                    <td cdk-cell *cdkCellDef="let row">{{row?.addrCountry}}</td>
+                </ng-container>
+
+                  <ng-container cdkColumnDef="contactPhone">
                       <th cdk-header-cell *cdkHeaderCellDef scope="col">
-                          <section class="flex flex-col" (keyup)="applyFilter($event.target, 'phone')">
-                              <div mat-sort-header="phone">Phone</div>
+                          <section class="flex flex-col" (keyup)="applyFilter($event.target, 'contactPhone')">
+                              <div mat-sort-header="contactPhone">Phone</div>
                               <searchbar>
                                   <fa-icon icon="search"></fa-icon>
-                                  <input #searchPhone input type="text" (keyup)="applyFilter($event.target, 'phone')">
-                                  <div *ngIf="searchPhone.value" close
-                                      (click)="searchPhone.value=''; applyFilter({ value: '' }, 'phone')">
+                                  <input #searchContactPhone input type="text" (keyup)="applyFilter($event.target, 'contactPhone')">
+                                  <div *ngIf="searchContactPhone.value" close
+                                      (click)="searchContactPhone.value=''; applyFilter({ value: '' }, 'contactPhone')">
                                       <fa-icon icon="close"></fa-icon>
                                   </div>
                               </searchbar>
                           </section>
                       </th>
-                      <td cdk-cell *cdkCellDef="let row">{{row?.phone}}</td>
+                      <td cdk-cell *cdkCellDef="let row">{{row?.contactPhone}}</td>
                   </ng-container>
 
-                  <ng-container cdkColumnDef="email">
+                  <ng-container cdkColumnDef="contactEmail">
                       <th cdk-header-cell *cdkHeaderCellDef scope="col">
                           <section class="flex flex-col">
-                              <div mat-sort-header="email">Email</div>
+                              <div mat-sort-header="contactEmail">Email</div>
                               <searchbar>
                                   <fa-icon icon="search"></fa-icon>
-                                  <input #searchEmail input type="text" (keyup)="applyFilter($event.target, 'email')">
-                                  <div *ngIf="searchEmail.value" close
-                                      (click)="searchEmail.value=''; applyFilter({ value: '' }, 'email')">
+                                  <input #searchContactEmail input type="text" (keyup)="applyFilter($event.target, 'contactEmail')">
+                                  <div *ngIf="searchContactEmail.value" close
+                                      (click)="searchContactEmail.value=''; applyFilter({ value: '' }, 'contactEmail')">
                                       <fa-icon icon="close"></fa-icon>
                                   </div>
                               </searchbar>
                           </section>
                       </th>
-                      <td cdk-cell *cdkCellDef="let row">{{row?.email}}</td>
+                      <td cdk-cell *cdkCellDef="let row">{{row?.contactEmail}}</td>
                   </ng-container>
 
                   <ng-container cdkColumnDef="actions">
