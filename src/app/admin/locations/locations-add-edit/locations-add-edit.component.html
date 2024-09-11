@@ -1,4 +1,46 @@
-﻿<edit-container [headerTitle]="id ?  'Edit location details':'Add location details'">
+﻿<section *ngIf="!isOptionSelected && !id">
+    <header class="flex min-md:flex-row flex-col justify-between pb-2">
+        <h3 class="heading-3 font-bold">Add product-product details</h3>
+    </header>
+</section>
+
+<div *ngIf="!isOptionSelected && !id" class="flex justify-center mt-10 max-md:grid gap-8 min-lg:columns-2 max-md:columns-1">
+    <div class="slide-in-bottom max-w-[300px] rounded-lg overflow-hidden shadow-lg bg-white p-20 min-h-[400px] cursor-pointer" (click)="selectOption('ROAD')">
+        <div class="flex justify-center p-10 border border-gray rounded-full h-[150px] w-[150px] items-center m-auto">
+            <img src="assets/images/bulk.svg" alt="Flag">
+        </div>
+        <div class="flex justify-center pt-5 pb-10">
+            <h4 class="heading-4 text-gray">Bulk</h4>
+        </div>
+        <p class="heading-6 text-center text-gray">
+            Add products such as liquids, grains or minerals.<br>
+        </p>
+    </div>
+
+    <div class="slide-in-bottom max-w-[300px] rounded-lg overflow-hidden shadow-lg bg-white p-20 min-h-[400px] cursor-pointer" (click)="selectOption('PORT')">
+        <div class="flex justify-center p-10 border border-gray rounded-full h-[150px] w-[150px] items-center m-auto">
+            <img src="assets/images/unit.svg" alt="Flag">
+        </div>
+        <div class="flex justify-center pt-5 pb-10">
+            <h4 class="heading-4 text-gray">Unit</h4>
+        </div>
+        <p class="heading-6 text-center text-gray">
+            Add products such as containers, pallets or bonds.<br>
+        </p>
+    </div>
+    <div class="slide-in-bottom max-w-[300px] rounded-lg overflow-hidden shadow-lg bg-white p-20 min-h-[400px] cursor-pointer" (click)="selectOption('STATION')">
+        <div class="flex justify-center p-10 border border-gray rounded-full h-[150px] w-[150px] items-center m-auto">
+            <img src="assets/images/unit.svg" alt="Flag">
+        </div>
+        <div class="flex justify-center pt-5 pb-10">
+            <h4 class="heading-4 text-gray">Unit</h4>
+        </div>
+        <p class="heading-6 text-center text-gray">
+            Add products such as containers, pallets or bonds.<br>
+        </p>
+    </div>
+</div>
+<edit-container *ngIf="isOptionSelected || id" [headerTitle]="id ?  'Edit location details':'Add location details'">
     <app-loader *ngIf="(isLoading$ | async)" [isContainer]="true" [fullScreen]="false"></app-loader>
     <form *ngIf="!(isLoading$ | async)" [formGroup]="locationForm">
         <div>

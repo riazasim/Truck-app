@@ -17,6 +17,7 @@ export class LocationsAddEditComponent implements OnInit {
     locationForm: FormGroup;
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     location$: BehaviorSubject<LocationModel | null> = new BehaviorSubject<LocationModel | null>(null);
+    isOptionSelected: boolean = false;
     id: number;
     phoneRegionCode: string;
     transportMode: string | null;
@@ -41,6 +42,7 @@ export class LocationsAddEditComponent implements OnInit {
         if (this.id) {
             this.locationService.get(this.id).subscribe(async response => {
                 this.initForm(response);
+                this.isOptionSelected = true;
                 this.location$.next({ ...response })
                 this.isLoading$.next(false);
             });
@@ -69,7 +71,6 @@ export class LocationsAddEditComponent implements OnInit {
             addrCountry: this.fb.control(data?.addrCountry || '', [...createRequiredValidators()]),
             addrCounty: this.fb.control(data?.addrCounty || '', [...createRequiredValidators()]),
             addrZipCode: this.fb.control(data?.addrZipCode || '', [...createRequiredValidators()]),
-            // addrTimezone: this.fb.control(data?.addrTimezone || '', [...createRequiredValidators()]),
             contactFirstName: this.fb.control(data?.contactFirstName || '', [...createRequiredValidators()]),
             contactLastName: this.fb.control(data?.contactLastName || '', [...createRequiredValidators()]),
             contactPhone: this.fb.control(data?.contactPhone || '', [...createRequiredValidators(), ...createPatternValidators(RegExp("[-+()0-9 ]")), ...createMinLengthValidator(7), ...createMaxLengthValidator(17)]),
@@ -78,6 +79,14 @@ export class LocationsAddEditComponent implements OnInit {
             comments: this.fb.control(data?.comments || '', []),
             imgPreview: this.fb.control(data?.imgPreview || '', []),
         });
+        if (data?.locationType) {
+            this.isOptionSelected = true;
+        }
+    }
+
+    selectOption(locationType: string): void {
+        this.locationForm.patchValue({ locationType });
+        this.isOptionSelected = true;
     }
 
     setImgPreview(target: any, input: any): void {
