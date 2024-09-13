@@ -59,7 +59,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { CdkDropList, CdkDrag } from '@angular/cdk/drag-drop';
 import { WarningModalComponent } from './components/modals/warning-modal/warning-modal.component';
 import { PhonenumberComponent } from './components/phonenumber/phonenumber.component';
-import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 
 export const MY_FORMATS = {
     parse: {
@@ -124,8 +124,8 @@ export const MY_FORMATS = {
         MatButtonToggleModule,
         CdkDropList,
         CdkDrag,
-        NgxMaskDirective, 
-    NgxMaskPipe,
+        NgxMaskDirective,
+        NgxMaskPipe,
 
     ],
     exports: [
@@ -190,6 +190,8 @@ export const MY_FORMATS = {
         PhonenumberComponent
     ],
     providers: [
+        provideNgxMask(),
+        NgxMaskPipe,
         { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
         { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS }
     ],

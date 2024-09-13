@@ -497,7 +497,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         data = {
             "start": this.pageSettings.start,
             "length": this.pageSettings.length,
-            "filters": [this.formatDate(this.filterDate), "", "", "", "", ""],
+            "filters": [this.formatDate(this.filterDate), "", "", "", "", "", "", ""],
             "order": [{ "dir": "DESC", "column": 0 }],
         };
         this.planningService.pagination(data).subscribe((response: any) => {

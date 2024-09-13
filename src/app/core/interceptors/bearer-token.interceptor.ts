@@ -27,9 +27,18 @@ export class BearerTokenInterceptor implements HttpInterceptor {
         const noTokenRequestFlag = request.context.get(NO_TOKEN_REQUEST);
         if ((typeof token === 'string') && !noTokenRequestFlag) {
             request = request.clone({
-                setHeaders: { [this.authorizationHeaderName]: token }
+                setHeaders: {
+                    [this.authorizationHeaderName]: token
+                }
             });
         }
+        request = request.clone({
+            setHeaders: {
+                'Transport-Mode':  "WATER"
+            }
+        });
+
+        console.log(request);
 
         return next.handle(request).pipe(
             catchError((response: any) => {

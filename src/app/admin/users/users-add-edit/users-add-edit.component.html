@@ -3,12 +3,12 @@
     <app-loader *ngIf="isLoading$ | async" [isContainer]="true" [fullScreen]="false"></app-loader>
     <form [formGroup]="userForm" *ngIf="!(isLoading$ | async)">
         <div class="flex flex-col mx-auto max-w-[440px] gap-5">
-            <div formGroupName="userSetting">
+            <div [formGroup]="userSetting">
                 <div iconic-input-wrapper leftIcon="user">
                     <input inputRef type="text" id="firstName" placeholder="First Name" formControlName="firstName" />
                 </div>
             </div>
-            <div formGroupName="userSetting">
+            <div [formGroup]="userSetting">
                 <div iconic-input-wrapper leftIcon="user">
                     <input inputRef type="text" id="lastName" placeholder="Last Name" formControlName="lastName" />
                 </div>
@@ -19,7 +19,7 @@
                 </div>
             </div>
             <div formGroupName="user">
-                <div iconic-select-wrapper leftIcon="id-card" >
+                <div iconic-select-wrapper leftIcon="id-card">
                     <select spAccessInputRef name="userRole" id="userRole" formControlName="userRole"
                         (change)="onRoleChange($event)">
                         <option value="" disabled>Select user role</option>
@@ -31,7 +31,7 @@
                 </div>
             </div>
             <div formGroupName="user">
-                <div iconic-select-wrapper leftIcon="envelope" >
+                <div iconic-select-wrapper leftIcon="envelope">
                     <select spAccessInputRef name="status" id="status" formControlName="status">
                         <option value="" disabled>Select status</option>
                         <option [value]="status.value" *ngFor="let status of status">{{status.name}}</option>
@@ -39,8 +39,8 @@
                     </select>
                 </div>
             </div>
-            <div formGroupName="userSetting">
-                <div iconic-select-wrapper leftIcon="eye" >
+            <!-- <div formGroupName="userSetting">
+                <div iconic-select-wrapper leftIcon="eye">
                     <select spAccessInputRef name="timezone" id="timezone" formControlName="timezone">
                         <option value="" disabled>Select Timezone</option>
                         <option value="Europe/Bucharest">
@@ -49,7 +49,7 @@
                         <option value="Asia/Karachi">Asia/Karachi</option>
                     </select>
                 </div>
-            </div>
+            </div> -->
             <!-- <div formGroupName="userSetting">
                 <div iconic-select-wrapper leftIcon="eye" >
                     <select spAccessInputRef name="language" id="language" formControlName="language">
@@ -59,11 +59,17 @@
                     </select>
                 </div>
             </div> -->
-            <div formGroupName="userSetting">
+            <!-- <div formGroupName="userSetting">
                 <div iconic-input-wrapper leftIcon="phone">
                     <input inputRef type="text" id="phone" placeholder="Phone" minlength="7" maxlength="17" formControlName="phone" />
                 </div>
-            </div>
+            </div> -->
+            <!-- <phonenumber [formGroup]="userSetting" /> -->
+
+            <phonenumber [buttonPlaceholder]="'button.select' | translate"
+                [placeholder]="'contact.phone-nr' | translate" containerClass="tw-w-[140px]" [formGroup]="userSetting"
+                buttonField="phoneRegionCode" [selectedPhoneRegionCode]="selectedPhoneRegionCode" field="phone">
+            </phonenumber>
 
             <!-- <div formGroupName="userSetting">
                 <div iconic-input-wrapper leftIcon="phone">

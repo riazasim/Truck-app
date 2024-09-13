@@ -18,7 +18,7 @@ import { SchedulingImportModalComponent } from '../../scheduling-import-modal/sc
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WaterPlanningListComponent implements OnChanges {
-    
+
     @Output() triggerOpenLogs: EventEmitter<{ view: string, id: number, planning: PlanningModel, modal: string }> = new EventEmitter();
     @Output() onPaginate: EventEmitter<any> = new EventEmitter();
     @Output() retrievePlannings: EventEmitter<any> = new EventEmitter();
@@ -97,7 +97,7 @@ export class WaterPlanningListComponent implements OnChanges {
 
 
 
-    
+
 
     openDeleteModal(id: number) {
         this.dialogService.open(SchedulingDeleteModalComponent, {

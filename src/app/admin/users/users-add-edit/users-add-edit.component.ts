@@ -1,6 +1,6 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormGroup, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { UserModel } from 'src/app/core/models/user.model';
@@ -30,9 +30,12 @@ import { createMaxLengthValidator, createMinLengthValidator, createRequiredValid
 export class UsersAddEditComponent {
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     selectedRole$: BehaviorSubject<string> = new BehaviorSubject<string>('');
-    userForm: UntypedFormGroup;
+    userForm: FormGroup;
+    userSetting: FormGroup;
     displayedColumns = ['name', 'city', 'county', 'country', 'status', 'assigned'];
     id: number;
+    selectedPhoneRegionCode: string;
+
     status = [
         { name: 'Active', value: true },
         { name: 'Inactive', value: false }
@@ -41,10 +44,11 @@ export class UsersAddEditComponent {
         private route: ActivatedRoute,
         private router: Router,
         private fb: UntypedFormBuilder,
-        private snackBar: MatSnackBar) { }
+        private snackBar: MatSnackBar) {
+        this.subscribeForQueryParams();
+    }
 
     ngOnInit(): void {
-        this.subscribeForQueryParams();
         this.initForm();
     }
     onRoleChange(value: any) {
@@ -56,6 +60,7 @@ export class UsersAddEditComponent {
         if (this.id) {
             this.userService.get(this.id).subscribe(response => {
                 // console.log(response)
+                this.selectedPhoneRegionCode = response?.phoneRegionCode;
                 this.initForm(response);
                 this.selectedRole$.next('DRIVER');
                 this.isLoading$.next(false);
@@ -67,20 +72,21 @@ export class UsersAddEditComponent {
     }
 
     initForm(data: any = <any>{}): void {
+        this.userSetting = this.fb.group({
+            // timezone: this.fb.control(data?.timezone || '', [...createRequiredValidators()]),
+            firstName: this.fb.control(data?.firstName || '', [...createRequiredValidators()]),
+            lastName: this.fb.control(data?.lastName || '', [...createRequiredValidators()]),
+            // language: this.fb.control(data?.language || '', [...createRequiredValidators()]),
+            phone: this.fb.control(data?.phone || ''),
+            phoneRegionCode: this.fb.control(data?.phoneRegionCode || ''),
+        });
         this.userForm = this.fb.group({
             user: this.fb.group({
                 email: this.fb.control(data?.user?.email || '', [...createRequiredValidators()]),
                 userRole: this.fb.control(data?.user?.userRole || '', [...createRequiredValidators()]),
-                status: this.fb.control(data?.user?.status || true , [...createRequiredValidators()]),
+                status: this.fb.control(data?.user?.status || true, [...createRequiredValidators()]),
             }),
-            userSetting: this.fb.group({
-                // timezone: this.fb.control(data?.timezone || '', [...createRequiredValidators()]),
-                firstName: this.fb.control(data?.firstName || '', [...createRequiredValidators()]),
-                lastName: this.fb.control(data?.lastName || '', [...createRequiredValidators()]),
-                // language: this.fb.control(data?.language || '', [...createRequiredValidators()]),
-                phone: this.fb.control(data?.phone || '', [...createRequiredValidators() , Validators.pattern("[- +()0-9]+") , ...createMinLengthValidator(7) , ...createMaxLengthValidator(17)]),
-                phoneRegionCode: this.fb.control(data?.phoneRegionCode || '', [...createRequiredValidators(), ...createMaxLengthValidator(4) , Validators.pattern("[- +()0-9]+")]),
-            })
+            userSetting: this.userSetting
         });
     }
 
@@ -99,7 +105,7 @@ export class UsersAddEditComponent {
                 }
             });
         } else {
-            this.userForm.patchValue({ user: { roles: [this.userForm.getRawValue().user.roles] } });
+            this.userForm.patchValue({ user: { roles: [this.userForm.getRawValue().user.roles] }, userSetting: this.userSetting.value });
             this.userService.create(this.userForm.getRawValue()).subscribe({
                 next: () => {
                     this.isLoading$.next(false)

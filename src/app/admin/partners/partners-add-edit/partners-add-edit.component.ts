@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormGroup, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { handleError } from "../../../shared/utils/error-handling.function";
@@ -15,8 +15,10 @@ import { PartnerService } from 'src/app/core/services/partner.service';
 })
 export class PartnersAddEditComponent {
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-    partnerForm: UntypedFormGroup;
+    partnerForm: FormGroup;
+    phoneForm: FormGroup;
     id: number;
+    selectedPhoneRegionCode: string;
     partnerType = [
         { id: 1, name: 'Public', value: 'PUBLIC' },
         { id: 2, name: 'Private', value: 'PRIVATE' }
@@ -51,18 +53,22 @@ export class PartnersAddEditComponent {
     }
 
     initForm(data: PartnerModel = <PartnerModel>{}): void {
+        this.phoneForm = this.fb.group({
+            phone: this.fb.control(''),
+            phoneRegionCode: this.fb.control(''),
+        })
         this.partnerForm = this.fb.group({
-                name: this.fb.control(data?.name || '', [...createRequiredValidators()]),
-                status: this.fb.control(data?.status || '' , [...createRequiredValidators()]),
-                addrStreet: this.fb.control(data?.addrStreet || '' , [...createRequiredValidators()]),
-                addrStreetNumber: this.fb.control(data?.addrStreetNumber || '' , [...createRequiredValidators()]),
-                addrCity: this.fb.control(data?.addrCity || '' , [...createRequiredValidators()]),
-                addrCounty: this.fb.control(data?.addrCounty || '' , [...createRequiredValidators()]),
-                addrCountry: this.fb.control(data?.addrCountry || '' , [...createRequiredValidators()]),
-                addrZipCode: this.fb.control(data?.addrZipCode || '' , [...createRequiredValidators()]),
-                contactPhone: this.fb.control(data?.contactPhone || '', [...createRequiredValidators()]),
-                contactEmail: this.fb.control(data?.contactEmail || '', [...createRequiredValidators()]),
-            })
+            name: this.fb.control(data?.name || '', [...createRequiredValidators()]),
+            status: this.fb.control(data?.status || '', [...createRequiredValidators()]),
+            addrStreet: this.fb.control(data?.addrStreet || '', [...createRequiredValidators()]),
+            addrStreetNumber: this.fb.control(data?.addrStreetNumber || '', [...createRequiredValidators()]),
+            addrCity: this.fb.control(data?.addrCity || '', [...createRequiredValidators()]),
+            addrCounty: this.fb.control(data?.addrCounty || '', [...createRequiredValidators()]),
+            addrCountry: this.fb.control(data?.addrCountry || '', [...createRequiredValidators()]),
+            addrZipCode: this.fb.control(data?.addrZipCode || '', [...createRequiredValidators()]),
+            contactPhone: this.fb.control(data?.contactPhone || '', [...createRequiredValidators()]),
+            contactEmail: this.fb.control(data?.contactEmail || '', [...createRequiredValidators()]),
+        })
     }
 
 
