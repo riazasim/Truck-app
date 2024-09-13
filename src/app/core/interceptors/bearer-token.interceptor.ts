@@ -8,9 +8,6 @@ import { environment } from 'src/environments/environment';
 
 export const NO_TOKEN_REQUEST = new HttpContextToken(() => false);
 
-/**
- * Sets the Authorization header in the requests
- */
 @Injectable({
     providedIn: 'root'
 })
@@ -32,13 +29,12 @@ export class BearerTokenInterceptor implements HttpInterceptor {
                 }
             });
         }
+
         request = request.clone({
             setHeaders: {
-                'Transport-Mode':  "WATER"
+                'Transport-Mode': localStorage.getItem("appMode") || ""
             }
         });
-
-        console.log(request);
 
         return next.handle(request).pipe(
             catchError((response: any) => {
