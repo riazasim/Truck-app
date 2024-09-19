@@ -1,4 +1,4 @@
- <edit-container [headerTitle]="id ? 'Edit station' : 'Add station'">
+ <edit-container [headerTitle]="id ? 'Edit Station Details' : 'Add Station Details'">
     <app-loader *ngIf="isLoading$ | async" [isContainer]="true" [fullScreen]="false"></app-loader>
     <form [formGroup]="stationForm" *ngIf="!(isLoading$ | async)">
         <!-- <div class="flex flex-col mt-[5%] mx-auto max-w-[440px] gap-5">

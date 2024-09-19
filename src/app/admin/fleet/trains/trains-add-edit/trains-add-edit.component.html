@@ -1,4 +1,4 @@
-<edit-container [headerTitle]="id ?  'Edit train details':'Add train details'">
+<edit-container [headerTitle]="id ?  'Edit Train Details':'Add Train Details'">
     <app-loader *ngIf="(isLoading$ | async)" [isContainer]="true" [fullScreen]="false"></app-loader>
     <form [formGroup]="trainForm" *ngIf="!(isLoading$ | async)" class="min-h-full">
         <div class="flex flex-col mx-auto max-w-[440px] gap-5">
@@ -10,7 +10,7 @@
             <div>
                 <div iconic-select-wrapper leftIcon="user" >
                     <select spAccessInputRef name="type" id="type" formControlName="type" (click)="typeChanged($event)">
-                        <option value="" disabled>Select type</option>
+                        <option value="" disabled>Select Type</option>
                         <option *ngFor="let type of trainsType" value="{{type.value}}">{{type.name}}</option>
                     </select>
                 </div>
@@ -18,7 +18,7 @@
             <div *ngIf="type === 'LOCOMOTIVE'">
                 <div iconic-select-wrapper leftSvg="assets/images/engine.svg" >
                     <select spAccessInputRef name="locomotiveType" id="locomotiveType" formControlName="locomotiveType">
-                        <option value="" disabled>Locomotive type</option>
+                        <option value="" disabled>Locomotive Type</option>
                         <option *ngFor="let locomotiveType of locomotiveTypes" value="{{locomotiveType.name}}">{{locomotiveType.name}}</option>
                     </select>
                 </div>
@@ -26,7 +26,7 @@
             <div>
                 <div iconic-select-wrapper leftIcon="eye" >
                     <select spAccessInputRef name="status" id="status" formControlName="status">
-                        <option value="" disabled>Select status</option>
+                        <option value="" disabled>Select Status</option>
                         <option value="true">Active</option>
                         <option value="false">Inactive</option>
                     </select>

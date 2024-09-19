@@ -1,5 +1,5 @@
 <section *ngIf="(isLoading$ | async) || originalSource.length; else empty">
-  <material-panel-table [showSearchbar]="false" [showHeader]="true" buttonLabel="Add Product" tableTitle="Products list" (buttonClicked)="redirectAddProduct()">
+  <material-panel-table [showSearchbar]="false" [showHeader]="true" buttonLabel="Add Product" tableTitle="Products List" (buttonClicked)="redirectAddProduct()">
     <div table class="w-full shadow-lg">
       <ng-scrollbar track="horizontal" [autoHeightDisabled]="false">
         <table class="material-table no-wrap overflow-hidden" matSort (matSortChange)="sortData($event)"

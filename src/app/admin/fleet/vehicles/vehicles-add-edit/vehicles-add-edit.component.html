@@ -1,11 +1,11 @@
 <!--<edit-container [headerTitle]="step === 1 ? (id ? 'Edit ':'Add ')+'vehicle': 'Enable access to docks'">-->
-<edit-container [headerTitle]="id ?  'Edit vehicle details':'Add vehicle details'">
+<edit-container [headerTitle]="id ?  'Edit Vehicle Details':'Add Vehicle Details'">
     <app-loader *ngIf="(isLoading$ | async)" [isContainer]="true" [fullScreen]="false"></app-loader>
     <form [formGroup]="vehicleForm" *ngIf="!(isLoading$ | async)" class="min-h-full">
         <div class="flex flex-col mx-auto max-w-[440px] gap-5">
             <div>
                 <div iconic-input-wrapper leftIcon="id-badge">
-                    <input inputRef type="text" placeholder="License plate" formControlName="licensePlate">
+                    <input inputRef type="text" placeholder="License Plate" formControlName="licensePlate">
                 </div>
             </div>
             <div>
@@ -19,7 +19,7 @@
             <div>
                 <div iconic-select-wrapper leftIcon="eye" >
                     <select spAccessInputRef name="status" id="status" formControlName="status">
-                        <option value="" disabled>Select status</option>
+                        <option value="" disabled>Select Status</option>
                         <option value="true">Active</option>
                         <option value="false">Inactive</option>
                     </select>
@@ -27,7 +27,7 @@
             </div>
             <div>
                 <div iconic-input-wrapper leftIcon="location-dot">
-                    <input inputRef type="text" name="loadingCapacity" placeholder="Loading capacity (kg)"
+                    <input inputRef type="text" name="loadingCapacity" placeholder="Loading Capacity (kg)"
                         formControlName="loadingCapacity">
                 </div>
             </div>

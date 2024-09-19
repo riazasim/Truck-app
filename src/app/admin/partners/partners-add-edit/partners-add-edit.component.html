@@ -1,4 +1,4 @@
-<edit-container [headerTitle]="id ?  'Edit partner':'Add partner'">
+<edit-container [headerTitle]="id ?  'Edit Partner Details':'Add Partner Details'">
     <app-loader *ngIf="(isLoading$ | async)" [isContainer]="true" [fullScreen]="false"></app-loader>
     <form *ngIf="!(isLoading$ | async)" [formGroup]="partnerForm">
         <div>

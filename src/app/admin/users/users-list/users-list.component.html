@@ -1,6 +1,6 @@
 <section *ngIf="(isLoading$ | async) || originalSource.length; else empty">
     <material-panel-table microService [showSearchbar]="false" [showHeader]="true" buttonLabel="Add User"
-        tableTitle="Users list" (buttonClicked)="redirectAddUser()">
+        tableTitle="Users List" (buttonClicked)="redirectAddUser()">
         <div table class="w-full shadow-lg mat-elevation-z8">
             <ng-scrollbar track="horizontal" [autoHeightDisabled]="false">
                 <table class="material-table no-wrap overflow-hidden" matSort (matSortChange)="sortData($event)"

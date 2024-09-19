@@ -1,4 +1,4 @@
-<edit-container [headerTitle]="id ?  'Edit ship details':'Add ship details'">
+<edit-container [headerTitle]="id ?  'Edit Ship Details':'Add Ship Details'">
     <app-loader *ngIf="(isLoading$ | async)" [isContainer]="true" [fullScreen]="false"></app-loader>
     <form [formGroup]="shipForm" *ngIf="!(isLoading$ | async)">
         <div class="grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20 gap-y-4 pt-[100px] min-xl:px-[50px]">
@@ -7,7 +7,7 @@
                     <input inputRef type="text" placeholder="Ship name" formControlName="name" />
                 </div>
                 <div iconic-input-wrapper leftSvg="assets/images/shipRegNo.svg">
-                    <input inputRef type="text" placeholder="Ship registration number"
+                    <input inputRef type="text" placeholder="Ship Registration Number"
                         formControlName="registrationNo" />
                 </div>
                 <div iconic-input-wrapper leftSvg="assets/images/circum_gps.svg">

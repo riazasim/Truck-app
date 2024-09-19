@@ -1,6 +1,6 @@
 <section *ngIf="!isOptionSelected && !id">
     <header class="flex min-md:flex-row flex-col justify-between pb-2">
-        <h3 class="heading-3 font-bold">Add product-product details</h3>
+        <h3 class="heading-3 font-bold">Select Product Type</h3>
     </header>
 </section>
 <div *ngIf="!isOptionSelected && !id" class="flex justify-center mt-10 max-md:grid gap-8 min-lg:columns-2 max-md:columns-1">
@@ -29,15 +29,15 @@
     </div>
 </div>
 
-<edit-container *ngIf="isOptionSelected || id" [headerTitle]="id ? 'Edit product' : 'Add product'">
+<edit-container *ngIf="isOptionSelected || id" [headerTitle]="id ? 'Edit product Details' : 'Add Product Details'">
     <app-loader *ngIf="isLoading$ | async" [isContainer]="true" [fullScreen]="false"></app-loader>
     <form [formGroup]="productForm" class="p-7" *ngIf="!(isLoading$ | async)">
         <div class="flex flex-col mx-auto max-w-[440px] gap-5">
             <div iconic-input-wrapper leftSvg="assets/images/pname.svg">
-                <input inputRef type="text" formControlName="name" placeholder="Product name"/>
+                <input inputRef type="text" formControlName="name" placeholder="Product Name"/>
             </div>
             <div iconic-input-wrapper leftSvg="assets/images/pcode.svg">
-                <input inputRef type="text" formControlName="productCode" placeholder="Product code"/>
+                <input inputRef type="text" formControlName="productCode" placeholder="Product Code"/>
             </div>
             <div iconic-select-wrapper leftSvg="assets/images/pcategory.svg"  (change)="onCategoryChange($event)">
                 <select spAccessInputRef name="category" id="category" formControlName="categoryId">
@@ -53,7 +53,7 @@
             </div>
             <div iconic-select-wrapper leftIcon="eye">
                 <select spAccessInputRef name="status" id="status" formControlName="status">
-                    <option selected disabled value="">status</option>
+                    <option selected disabled value="">Status</option>
                     <option *ngFor="let status of status" [value]="status.value">{{ status.name }}</option>
                 </select>
             </div>

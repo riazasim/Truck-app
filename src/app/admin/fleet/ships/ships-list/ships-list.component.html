@@ -1,5 +1,5 @@
 <section *ngIf="(isLoading$ | async) || originalSource.length; else empty">
-  <material-panel-table [showSearchbar]="false" [showHeader]="true" buttonLabel="Add Ship" tableTitle="Ships list" (buttonClicked)="redirectAddVehicle()">
+  <material-panel-table [showSearchbar]="false" [showHeader]="true" buttonLabel="Add Ship" tableTitle="Ships List" (buttonClicked)="redirectAddVehicle()">
     <div table class="w-full shadow-lg">
       <ng-scrollbar track="horizontal" [autoHeightDisabled]="false">
         <table class="material-table no-wrap overflow-hidden" matSort (matSortChange)="sortData($event)"
@@ -24,7 +24,7 @@
           <ng-container cdkColumnDef="registrationNo">
             <th cdk-header-cell *cdkHeaderCellDef scope="col">
               <section class="flex flex-col">
-                <div mat-sort-header="registrationNo">Ship reg-no</div>
+                <div mat-sort-header="registrationNo">Ship Reg-no</div>
                 <searchbar>
                   <fa-icon icon="search"></fa-icon>
                   <input #searchRegistrationNo input type="text" (keyup)="applyFilter($event.target, 'registrationNo')">
@@ -100,7 +100,7 @@
           <ng-container cdkColumnDef="maxDraft">
             <th cdk-header-cell *cdkHeaderCellDef scope="col">
               <section class="flex flex-col">
-                <div mat-sort-header="maxDraft">Max draft (m)*</div>
+                <div mat-sort-header="maxDraft">Max Draft (m)*</div>
                 <searchbar>
                   <fa-icon icon="search"></fa-icon>
                   <input #searchAIS input type="text" (keyup)="applyFilter($event.target, 'maxDraft')">
@@ -115,7 +115,7 @@
           <ng-container cdkColumnDef="aerialGauge">
             <th cdk-header-cell *cdkHeaderCellDef scope="col">
               <section class="flex flex-col">
-                <div mat-sort-header="aerialGauge">Aerial gauge (m)*</div>
+                <div mat-sort-header="aerialGauge">Aerial Gauge (m)*</div>
                 <searchbar>
                   <fa-icon icon="search"></fa-icon>
                   <input #searchAIS input type="text" (keyup)="applyFilter($event.target, 'aerialGauge')">
@@ -130,7 +130,7 @@
           <ng-container cdkColumnDef="maxCapacity">
             <th cdk-header-cell *cdkHeaderCellDef scope="col">
               <section class="flex flex-col">
-                <div mat-sort-header="maxCapacity">Capacity max (m)*</div>
+                <div mat-sort-header="maxCapacity">Capacity Max (m)*</div>
                 <searchbar>
                   <fa-icon icon="search"></fa-icon>
                   <input #searchAIS input type="text" (keyup)="applyFilter($event.target, 'maxCapacity')">
@@ -147,7 +147,7 @@
             <th cdk-header-cell *cdkHeaderCellDef scope="col">
               <section class="flex flex-col">
                 <div>Actions</div>
-                <button type="button" class="btn btn-outline-primary">Mass update</button>
+                <button type="button" class="btn btn-outline-primary">Mass Update</button>
               </section>
             </th>
             <td cdk-cell *cdkCellDef="let row" class="flex gap-4">

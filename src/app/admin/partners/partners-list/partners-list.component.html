@@ -1,6 +1,6 @@
 <section *ngIf="(isLoading$ | async) || originalSource.length; else empty">
   <material-panel-table [showSearchbar]="false" [showHeader]="true" buttonLabel="Add Partner"
-      tableTitle="Partners list" (buttonClicked)="redirectAddPartner()">
+      tableTitle="Partners List" (buttonClicked)="redirectAddPartner()">
       <div table class="w-full shadow-lg mat-elevation-z8">
           <ng-scrollbar track="horizontal" [autoHeightDisabled]="false">
               <table class="material-table no-wrap overflow-hidden" matSort (matSortChange)="sortData($event)"

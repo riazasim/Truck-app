@@ -31,7 +31,7 @@
         </div>
     </div>
 </div> -->
-<edit-container [headerTitle]="id ?  'Edit road details':'Add road details'">
+<edit-container [headerTitle]="id ?  'Edit Road Details':'Add Road Details'">
     <app-loader *ngIf="(isLoading$ | async)" [isContainer]="true" [fullScreen]="false"></app-loader>
     <form *ngIf="!(isLoading$ | async)" [formGroup]="locationForm">
         <div>
@@ -46,7 +46,7 @@
                     </div>
                     <div class="h-[90px]">
                         <div iconic-input-wrapper leftIcon="compass">
-                            <input placeholder="Google Maps coordinates (Plus code)" inputRef type="text"
+                            <input placeholder="Google Maps Coordinates (Plus Code)" inputRef type="text"
                                 formControlName="addrCoordinates">
                         </div>
                     </div>

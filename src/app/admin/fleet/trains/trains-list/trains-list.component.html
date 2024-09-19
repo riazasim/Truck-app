@@ -1,5 +1,5 @@
 <section *ngIf="(isLoading$ | async) || originalSource.length; else empty">
-  <material-panel-table [showSearchbar]="false" [showHeader]="true" buttonLabel="Add Train" tableTitle="Trains list" (buttonClicked)="redirectAddTrain()">
+  <material-panel-table [showSearchbar]="false" [showHeader]="true" buttonLabel="Add Train" tableTitle="Trains List" (buttonClicked)="redirectAddTrain()">
     <div table class="w-full shadow-lg">
       <ng-scrollbar track="horizontal" [autoHeightDisabled]="false">
         <table class="material-table no-wrap overflow-hidden" matSort (matSortChange)="sortData($event)"
@@ -25,7 +25,7 @@
           <ng-container cdkColumnDef="registrationNumber">
             <th cdk-header-cell *cdkHeaderCellDef scope="col">
               <section class="flex flex-col">
-                <div mat-sort-header="registrationNumber">Registration No</div>
+                <div mat-sort-header="registrationNumber">Reg-no</div>
                 <searchbar>
                   <fa-icon icon="search"></fa-icon>
                   <input #searchName input type="text" (keyup)="applyFilter($event.target, 'registrationNumber')">

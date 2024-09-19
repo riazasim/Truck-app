@@ -1,5 +1,5 @@
 <!--<edit-container headerTitle="Add user - users details">-->
-<edit-container [headerTitle]="id ? 'Edit users details' : 'Add users details'">
+<edit-container [headerTitle]="id ? 'Edit Users Details' : 'Add Users Details'">
     <app-loader *ngIf="isLoading$ | async" [isContainer]="true" [fullScreen]="false"></app-loader>
     <form [formGroup]="userForm" *ngIf="!(isLoading$ | async)">
         <div class="flex flex-col mx-auto max-w-[440px] gap-5">
@@ -22,7 +22,7 @@
                 <div iconic-select-wrapper leftIcon="id-card">
                     <select spAccessInputRef name="userRole" id="userRole" formControlName="userRole"
                         (change)="onRoleChange($event)">
-                        <option value="" disabled>Select user role</option>
+                        <option value="" disabled>Select User Role</option>
                         <option value="ROLE_USER_CAPTAIN">CAPTAIN</option>
                         <option value="ROLE_USER_CONDUCTOR">CONDUCTOR</option>
                         <option value="ROLE_USER_DRIVER">DRIVER</option>
@@ -33,7 +33,7 @@
             <div formGroupName="user">
                 <div iconic-select-wrapper leftIcon="envelope">
                     <select spAccessInputRef name="status" id="status" formControlName="status">
-                        <option value="" disabled>Select status</option>
+                        <option value="" disabled>Select Status</option>
                         <option [value]="status.value" *ngFor="let status of status">{{status.name}}</option>
                         <!-- <option [value] = 'false'>Inactive</option> -->
                     </select>

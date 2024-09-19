@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { BehaviorSubject } from "rxjs";
 import { FormGroup, UntypedFormBuilder } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -30,6 +30,7 @@ export class TrainsAddEditComponent {
     appliedFilters: any = {};
     constructor(private readonly fb: UntypedFormBuilder,
         private readonly trainsService: TrainsService,
+        private readonly cd: ChangeDetectorRef,
         private readonly route: ActivatedRoute,
         private readonly router: Router,
         private snackBar : MatSnackBar) {
@@ -52,6 +53,7 @@ export class TrainsAddEditComponent {
 
     typeChanged(ev:any){
         this.type = ev.target.value;
+        this.cd.detectChanges();
     }
 
     applyFilter(target: any, column: string): void {
