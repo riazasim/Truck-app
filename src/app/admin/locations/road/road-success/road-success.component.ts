@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
-  selector: 'app-locations-success',
-  templateUrl: './locations-success.component.html',
+  selector: 'app-road-success',
+  templateUrl: './road-success.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LocationsSuccessComponent {}
+export class RoadSuccessComponent {}

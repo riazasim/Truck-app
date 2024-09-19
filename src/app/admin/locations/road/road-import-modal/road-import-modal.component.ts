@@ -12,11 +12,11 @@ import { convertExcelRowToBasicLocation, generateBasicExcel, parseExcelFile } fr
 import {LocationModel} from "src/app/core/models/location.model";
 
 @Component({
-  selector: 'app-locations-import-modal',
-  templateUrl: './locations-import-modal.component.html',
+  selector: 'app-road-import-modal',
+  templateUrl: './road-import-modal.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LocationsImportModalComponent {
+export class RoadImportModalComponent {
   @ViewChild('file') fileElement: ElementRef;
   @ViewChild('input') inputElement: ElementRef;
   isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);

@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
     selector: 'app-add-fleet',
@@ -8,10 +7,7 @@ import { ActivatedRoute, Router } from "@angular/router";
     changeDetection: ChangeDetectionStrategy.OnPush
   })
   export class AddFleetComponent {
-  constructor(
-              private readonly router: Router,
-              private readonly route: ActivatedRoute
-  ) {}
+  constructor() {}
 
    ngOnInit(): void {
   }

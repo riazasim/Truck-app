@@ -18,7 +18,7 @@ import { PageEvent } from '@angular/material/paginator';
 })
 export class StationListComponent implements OnInit {
   isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  displayedColumns = ['name', 'type', 'actions'];
+  displayedColumns = ['name', 'type', 'addrCounty', 'addrCity', 'addrCountry', 'addrZipCode', 'contact', 'actions'];
   faStarSolid: IconProp = <IconProp>faStar;
   dataSource: StationModel [] = []
   originalSource: StationModel[] = []
@@ -64,36 +64,54 @@ export class StationListComponent implements OnInit {
     this.isLoading$.next(false);
 }
 
-  applyFilter(target: any, column: string): void {
-    if (target.value) {
+applyFilter(target: any, column: string, isMultipleSearch = false): void {
+  if (target.value) {
+    if (isMultipleSearch) {
+      this.appliedFilters['contactFirstName'] = target.value;
+      this.appliedFilters['contactLastName'] = target.value;
+      this.appliedFilters['contactPhoneRegionCode'] = target.value;
+      this.appliedFilters['contactPhone'] = target.value;
+      this.appliedFilters['contactEmail'] = target.value;
+    } else {
       this.appliedFilters[column] = target.value;
+    }
+  } else {
+    if (isMultipleSearch) {
+      delete this.appliedFilters['contactFirstName']
+      delete this.appliedFilters['contactLastName']
+      delete this.appliedFilters['contactPhoneRegionCode']
+      delete this.appliedFilters['contactPhone']
+      delete this.appliedFilters['contactEmail']
     } else {
       delete this.appliedFilters[column];
     }
+  }
 
-    this.dataSource = this.originalSource.filter((el: any) => {
-      if (Object.keys(this.appliedFilters).length) {
-        let expression = false;
+  this.dataSource = this.originalSource.filter((el: any) => {
+    if (Object.keys(this.appliedFilters).length) {
+      let expression = false;
+      if (isMultipleSearch && target.value) {
+        expression =
+            el['contactFirstName'].concat(' ', el['contactLastName']).toLowerCase().includes(this.appliedFilters['contactFirstName'].toLowerCase()) ||
+            el['contactLastName'].concat(' ', el['contactFirstName']).toLowerCase().includes(this.appliedFilters['contactLastName'].toLowerCase()) ||
+            el['contactPhoneRegionCode'].toLowerCase().includes(this.appliedFilters['contactPhoneRegionCode'].toLowerCase()) ||
+            el['contactPhone'].toLowerCase().includes(this.appliedFilters['contactPhone'].toLowerCase()) ||
+            el['contactEmail'].toLowerCase().includes(this.appliedFilters['contactEmail'].toLowerCase());
+
+        return expression;
+      } else {
         for (let filter in this.appliedFilters) {
-          switch(typeof this.appliedFilters[filter]) {
-            case 'boolean':
-              expression = el[filter] === this.appliedFilters[filter];
-              break;
-            default:
-              expression = el[filter].toLowerCase().includes(this.appliedFilters[filter].toLowerCase())
-              break;
-          }
+          expression = el[filter].toLowerCase().includes(this.appliedFilters[filter].toLowerCase());
           if (!expression) break;
         }
 
         return expression;
       }
+    }
 
-      if (!target.value) return true;
-
-      return el[column]+''.toLowerCase().includes(target.value.toLowerCase());
-    });
-  }
+    return isMultipleSearch ? true : el[column].includes(target.value);
+  });
+}
 
   sortData(sort: Sort): void {
     const data = this.dataSource.slice();

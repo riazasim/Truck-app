@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LocationsAddEditComponent } from './locations-add-edit/locations-add-edit.component';
-import { LocationsListComponent } from './locations-list/locations-list.component';
-import { LocationsSuccessComponent } from './locations-success/locations-success.component';
 import { LocationsComponent } from './locations.component';
+import { AddLocationComponent } from './add-location/add-location.component';
 
 const routes: Routes = [
   {
@@ -12,24 +10,24 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'list',
+        redirectTo: 'add-location',
         pathMatch: 'full'
       },
       {
-        path: 'list',
-        component: LocationsListComponent
+        path: 'add-location',
+        component: AddLocationComponent
       },
       {
-        path: 'success',
-        component: LocationsSuccessComponent
+        path: 'roads',
+        loadChildren: () => import('./road/road.module').then(m => m.RoadModule),
       },
       {
-        path: 'add',
-        component: LocationsAddEditComponent
+        path: 'stations',
+        loadChildren: () => import('./station/station.module').then(m => m.StationModule),
       },
       {
-        path: 'edit/:id',
-        component: LocationsAddEditComponent
+        path: 'ports',
+        loadChildren: () => import('./port/port.module').then(m => m.PortModule),
       },
     ]
   }

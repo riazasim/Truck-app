@@ -42,7 +42,7 @@
             <div iconic-select-wrapper leftSvg="assets/images/pcategory.svg"  (change)="onCategoryChange($event)">
                 <select spAccessInputRef name="category" id="category" formControlName="categoryId">
                     <option selected disabled value="">Category</option>
-                    <option *ngFor="let category of category" [value]="category.attributes.id">{{ category.attributes.name }}</option>
+                    <option *ngFor="let category of category" [value]="category.id">{{ category.name}}</option>
                 </select>
             </div>
             <div iconic-select-wrapper leftSvg="assets/images/psubcategory.svg" >

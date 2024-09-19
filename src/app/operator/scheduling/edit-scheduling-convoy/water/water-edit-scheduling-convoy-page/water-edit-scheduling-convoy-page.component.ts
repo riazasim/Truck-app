@@ -100,7 +100,7 @@ export class WaterEditSchedulingConvoyPageComponent {
         console.log(this.id)
         if (this.id !== "add") {
             this.planningService.getConvoy(this.id).subscribe(response => {
-                response.planningConvoyDocuments.map((item: any) => {
+                response.planningWaterShipmentDocuments.map((item: any) => {
                     this.oldImagesId.push(item.id)
                 })
                 this.initConvoyForm(response);
@@ -185,7 +185,7 @@ export class WaterEditSchedulingConvoyPageComponent {
             lengthOverall: this.fb.control(data?.lengthOverall || null, [...createRequiredValidators()]),
             width: this.fb.control(data?.width || null, [...createRequiredValidators()]),
             maxDraft: this.fb.control(data?.maxDraft || null, [...createRequiredValidators()]),
-            maxQuantity: this.fb.control(data?.maxCapacity || null, [...createRequiredValidators()]),
+            maxQuantity: this.fb.control(data?.maxQuantity || null, [...createRequiredValidators()]),
             // agent: this.fb.control(data?.agent || '', [...createRequiredValidators()]),
             // maneuvering: this.fb.control(data?.maneuvering || '', [...createRequiredValidators()]),
             shipowner: this.fb.control(data?.shipowner || '', [...createRequiredValidators()]),

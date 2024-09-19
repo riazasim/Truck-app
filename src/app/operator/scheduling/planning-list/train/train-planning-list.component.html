@@ -14,7 +14,7 @@
                                 </section>
                             </th>
                             <td cdk-cell *cdkCellDef="let row">
-                                {{row?.planning?.rId || '-'}}
+                                {{row?.planningRailway?.rId || '-'}}
                             </td>
                             <td cdk-footer-cell *cdkFooterCellDef [colSpan]="displayedColumns.length"
                                 class="py-4 font-bold text-center">
@@ -28,7 +28,7 @@
                                 </section>
                             </th>
                             <td cdk-cell *cdkCellDef="let row">
-                                {{ row?.planning?.manevre || "-" }}
+                                {{ row?.planningRailway?.manevre || "-" }}
                             </td>
                         </ng-container>
 
@@ -39,7 +39,7 @@
                                 </section>
                             </th>
                             <td cdk-cell *cdkCellDef="let row">
-                                {{ row?.planning?.vesselId || "-" }}
+                                {{ row?.planningRailway?.vesselId || "-" }}
                             </td>
                         </ng-container> -->
 
@@ -52,7 +52,7 @@
                                 </section>
                             </th>
                             <td cdk-cell *cdkCellDef="let row">
-                                {{ row?.planning?.planningConvoys[0]?.pickUpFromCompany?.name || "-" }}
+                                {{ row?.planningRailway?.planningRailwayShipments[0]?.pickUpFromCompany?.name || "-" }}
                             </td>
                         </ng-container>
                         <ng-container cdkColumnDef="deliverToCompany">
@@ -64,7 +64,7 @@
                                 </section>
                             </th>
                             <td cdk-cell *cdkCellDef="let row;">
-                                {{ row?.planning?.planningConvoys[0]?.deliverToCompany?.name || "-" }}
+                                {{ row?.planningRailway?.planningRailwayShipments[0]?.deliverToCompany?.name || "-" }}
                             </td>
                         </ng-container>
                         <ng-container cdkColumnDef="estimatedTimeArrival">
@@ -76,7 +76,7 @@
                                 </section>
                             </th>
                             <td cdk-cell *cdkCellDef="let row">
-                                {{ row?.planning?.planningConvoys[0]?.estimatedTimePickUp || "-" }}
+                                {{ row?.planningRailway?.planningRailwayShipments[0]?.estimatedTimePickUp || "-" }}
                             </td>
                         </ng-container>
                         <ng-container cdkColumnDef="relativeTimeArrival">
@@ -88,7 +88,7 @@
                                 </section>
                             </th>
                             <td cdk-cell *cdkCellDef="let row">
-                                {{ row?.planning?.planningConvoys[0]?.estimatedTimeDeliver || "-" }}
+                                {{ row?.planningRailway?.planningRailwayShipments[0]?.estimatedTimeDeliver || "-" }}
                             </td>
                         </ng-container>
                         <ng-container cdkColumnDef="delay">
@@ -100,7 +100,7 @@
                                 </section>
                             </th>
                             <td cdk-cell *cdkCellDef="let row">
-                                {{ row?.planning?.delay || "-" }}
+                                {{ row?.planningRailway?.delay || "-" }}
                             </td>
                         </ng-container>
                         <ng-container cdkColumnDef="coordinates">
@@ -112,7 +112,7 @@
                                 </section>
                             </th>
                             <td cdk-cell *cdkCellDef="let row">
-                                {{ row?.planning?.coordinates || "-" }}
+                                {{ row?.planningRailway?.ridCoordinates || "-" }}
                             </td>
                         </ng-container> 
                         <ng-container cdkColumnDef="shipmentStatus">
@@ -124,8 +124,8 @@
                                 </section>
                             </th>
                             <td cdk-cell  *cdkCellDef="let row">
-                                <mat-chip [ngStyle]="{'background-color': row?.planning?.planningStatus?.color}">
-                                    {{ row?.planning?.planningStatus?.name }}
+                                <mat-chip [ngStyle]="{'background-color': row?.planningRailway?.planningStatus?.color}">
+                                    {{ row?.planningRailway?.planningStatus?.name }}
                                 </mat-chip>
                                 <!-- <mat-chip *ngFor="let status of status" [ngStyle]="{'background-color': status.color}">
                                     {{ status.name }}
@@ -147,15 +147,15 @@
                                             class="cursor-pointer"></a>
                                     <fa-icon icon="xmark" class="text-[#17A0B5] cursor-pointer" size="lg"
                                         *ngIf="userRole === 'ROLE_USER_TRANSPORT'"
-                                        (click)="openDeleteModal(row.planning.id)"></fa-icon>
+                                        (click)="openDeleteModal(row.planningRailway.id)"></fa-icon>
                                 </div>
                                 <div class="flex gap-4">
                                     <fa-icon icon="eye" class="text-[#17A0B5] cursor-pointer" size="lg"
                                         *ngIf="userRole === 'ROLE_USER_TRANSPORT'"
-                                        [routerLink]="['../edit', row?.planning?.id]"></fa-icon>
+                                        [routerLink]="['../edit', row?.planningRailway?.id]"></fa-icon>
                                     <img src="assets/images/carbon_train-speed.png" alt="icon" class="cursor-pointer max-w-5 max-h-5"
                                         *ngIf="userRole === 'ROLE_USER_TRANSPORT'"
-                                        [routerLink]="['../route',row?.planning?.id ,'convoy-list']">
+                                        [routerLink]="['../route',row?.planningRailway?.id ,'convoy-list']">
                                     <a class="text-primary" href="javascript:void(0)"
                                         (click)="OnEmit(row , 'shipment')"><img
                                             src="assets/images/rotate-left-list-icon.svg" alt="icon"

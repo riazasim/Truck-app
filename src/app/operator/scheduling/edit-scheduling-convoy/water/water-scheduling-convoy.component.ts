@@ -55,8 +55,8 @@ export class WaterEditSchedulingConvoyComponent {
         this.id = this.route.snapshot.params['id'];
         this.planningService.get(this.id).subscribe(response => {
             this.headerTitle = String(response?.rId)
-            this.dataSource = response.planningConvoys;
-            this.originalSource = response.planningConvoys;
+            this.dataSource = response.planningWaterShipments;
+            this.originalSource = response.planningWaterShipments;
             this.isLoading$.next(false);
         });
     }

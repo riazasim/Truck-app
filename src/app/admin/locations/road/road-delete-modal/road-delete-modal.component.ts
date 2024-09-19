@@ -2,11 +2,11 @@ import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-locations-delete-modal',
-  templateUrl: './locations-delete-modal.component.html',
+  selector: 'app-road-delete-modal',
+  templateUrl: './road-delete-modal.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LocationsDeleteModalComponent {
+export class RoadDeleteModalComponent {
   constructor(private readonly dialogRef: MatDialogRef<any>,
               @Inject(MAT_DIALOG_DATA) public data: any) {}
 

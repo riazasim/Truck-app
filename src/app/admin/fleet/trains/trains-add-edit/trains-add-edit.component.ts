@@ -65,7 +65,7 @@ export class TrainsAddEditComponent {
     initForm(data: TrainModel = <TrainModel>{}): void {
         this.trainForm = this.fb.group({
             //locomotiveId: this.fb.control(data?.id),
-            // name: this.fb.control(data?.name || '', [...createRequiredValidators()]),
+            name: this.fb.control(data?.name || ''),
             registrationNumber: this.fb.control(data?.registrationNumber || '', [...createRequiredValidators()]),
             type: this.fb.control(data?.type || '', [...createRequiredValidators()]),
             locomotiveType: this.fb.control(data?.locomotiveType || ''),

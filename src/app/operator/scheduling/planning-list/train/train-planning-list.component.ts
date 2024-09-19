@@ -25,7 +25,7 @@ export class TrainPlanningListComponent implements OnChanges {
     @Input() isTableLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     @Input() userRole: string;
     @Input() transportMode: string;
-    @Input() plannings: any[] = [];
+    @Input() plannings: any;
     @Input() length: number;
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     displayedColumns: string[] = ['id', 'pickUpFromCompany', 'deliverToCompany', 'estimatedTimeArrival', 'relativeTimeArrival', 'delay', 'coordinates', 'shipmentStatus', 'actions'];

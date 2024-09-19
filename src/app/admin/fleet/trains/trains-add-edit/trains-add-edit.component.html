@@ -9,8 +9,8 @@
             </div>
             <div>
                 <div iconic-select-wrapper leftIcon="user" >
-                    <select spAccessInputRef name="type" id="type" formControlName="type">
-                        <option value="" disabled>Select Type</option>
+                    <select spAccessInputRef name="type" id="type" formControlName="type" (click)="typeChanged($event)">
+                        <option value="" disabled>Select type</option>
                         <option *ngFor="let type of trainsType" value="{{type.value}}">{{type.name}}</option>
                     </select>
                 </div>
@@ -18,7 +18,7 @@
             <div *ngIf="type === 'LOCOMOTIVE'">
                 <div iconic-select-wrapper leftSvg="assets/images/engine.svg" >
                     <select spAccessInputRef name="locomotiveType" id="locomotiveType" formControlName="locomotiveType">
-                        <option value="" disabled>Locomotive Type</option>
+                        <option value="" disabled>Locomotive type</option>
                         <option *ngFor="let locomotiveType of locomotiveTypes" value="{{locomotiveType.name}}">{{locomotiveType.name}}</option>
                     </select>
                 </div>

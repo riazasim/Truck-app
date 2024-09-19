@@ -367,20 +367,6 @@ export class WaterAddSchedulingComponent implements OnInit {
     // });
 
     initForm(index?: any): void {
-        this.schedulingForm = this.fb.group({
-            routingDetail: this.fb.group({
-                convoyType: this.fb.control(''),
-                estimatedTimeArrival: this.fb.control(''),
-                departurePort: this.fb.control(''),
-                arrivalPort: this.fb.control(''),
-                company: this.fb.control(''),
-                pilotCompany: this.fb.control(''),
-                ridCoordinates: this.fb.control(''),
-            }),
-            convoyDetail: this.fb.control([]),
-            documents: this.fb.control([]),
-        });
-
         if (index !== 1) {
             this.stepOneForm = this.fb.group({
                 convoyType: this.fb.control('', [...createRequiredValidators()]),
@@ -392,6 +378,12 @@ export class WaterAddSchedulingComponent implements OnInit {
                 ridCoordinates: this.fb.control('', [...createRequiredValidators()]),
             });
         }
+        this.schedulingForm = this.fb.group({
+            routingDetail: this.stepOneForm,
+            convoyDetail: this.fb.control([]),
+            documents: this.fb.control([]),
+        });
+
         this.stepTwoForm = this.fb.group({
             navigationType: this.fb.control('', [...createRequiredValidators()]),
             company: this.fb.control(''),

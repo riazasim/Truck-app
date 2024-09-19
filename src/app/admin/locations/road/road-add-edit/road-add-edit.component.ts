@@ -10,14 +10,14 @@ import { handleError } from 'src/app/shared/utils/error-handling.function';
 import { createMaxLengthValidator, createMinLengthValidator, createPatternValidators, createRequiredValidators } from 'src/app/shared/validators/generic-validators';
 
 @Component({
-    selector: 'app-locations-add-edit',
-    templateUrl: './locations-add-edit.component.html'
+    selector: 'app-road-add-edit',
+    templateUrl: './road-add-edit.component.html'
 })
-export class LocationsAddEditComponent implements OnInit {
+export class RoadAddEditComponent implements OnInit {
     locationForm: FormGroup;
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     location$: BehaviorSubject<LocationModel | null> = new BehaviorSubject<LocationModel | null>(null);
-    isOptionSelected: boolean = false;
+    // isOptionSelected: boolean = false;
     id: number;
     phoneRegionCode: string;
     transportMode: string | null;
@@ -42,7 +42,7 @@ export class LocationsAddEditComponent implements OnInit {
         if (this.id) {
             this.locationService.get(this.id).subscribe(async response => {
                 this.initForm(response);
-                this.isOptionSelected = true;
+                // this.isOptionSelected = true;
                 this.location$.next({ ...response })
                 this.isLoading$.next(false);
             });
@@ -80,13 +80,13 @@ export class LocationsAddEditComponent implements OnInit {
             imgPreview: this.fb.control(data?.imgPreview || '', []),
         });
         if (data?.locationType) {
-            this.isOptionSelected = true;
+            // this.isOptionSelected = true;
         }
     }
 
     selectOption(locationType: string): void {
         this.locationForm.patchValue({ locationType });
-        this.isOptionSelected = true;
+        // this.isOptionSelected = true;
     }
 
     setImgPreview(target: any, input: any): void {

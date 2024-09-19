@@ -37,37 +37,52 @@ export class ProductsAddEditComponent {
     }
 
     ngOnInit(): void {
-        this.retrieveCategory();
+        // this.retrieveCategory();
     }
 
-    retrieveCategory(): void {
-        const data = {
-            "start": 0,
-            "length": 0,
-            "filters": ["", "", "", ""],
-            "order": [{ "dir": "DESC", "column": 0 }]
-        };
-        this.productService.getCategory(data).subscribe({
-            next: response => {
-                this.category = response;
+    // retrieveCategory(): void {
+    //     const data = {
+    //         "start": 0,
+    //         "length": 0,
+    //         "filters": ["", "", "", ""],
+    //         "order": [{ "dir": "DESC", "column": 0 }]
+    //     };
+    //     this.productService.getCategory(data).subscribe({
+    //         next: response => {
+    //             this.category = response;
+    //             this.isLoading$.next(false);
+    //         },
+    //         error: err => {
+    //             this.isLoading$.next(false);
+    //             console.error('Error fetching categories:', err);
+    //         }
+
+    //     });
+    // }
+
+    retrieveCategories(type: any): void {
+        this.productService.getCategory(type).subscribe({
+            next: res => {
+                this.category = res.map((item: any) => item.attributes) || [];
+                if (this.category.length === 0) {
+                    this.productForm.patchValue({ categoryId: null });
+                }
                 this.isLoading$.next(false);
             },
             error: err => {
                 this.isLoading$.next(false);
-                console.error('Error fetching categories:', err);
             }
-
         });
     }
 
     onCategoryChange(ev: any): void {
         this.isLoading$.next(true);
         const selectedCategoryId = Number(ev.target.value);
-        const category = this.category.find((item: any) => Number(item.attributes.id) === selectedCategoryId);
+        const category = this.category.find((item: any) => Number(item.id) === selectedCategoryId);
 
         if (category) {
-            this.productForm.patchValue({ categoryId: category.attributes.id });
-            this.retrieveSubCategories(category.attributes.id);
+            this.productForm.patchValue({ categoryId: category.id });
+            this.retrieveSubCategories(category.id);
         } else {
             this.isLoading$.next(false);
         }
@@ -94,6 +109,7 @@ export class ProductsAddEditComponent {
             combineLatest([
                 this.productService.get(this.id)
             ]).subscribe(([product]: [any]) => {
+                this.retrieveCategories(product?.type)
                 this.retrieveSubCategories(product?.category?.id)
                 this.initForm(product);
                 this.isOptionSelected = true;
@@ -165,6 +181,7 @@ export class ProductsAddEditComponent {
     }
 
     selectOption(type: string): void {
+        this.retrieveCategories(type)
         this.productForm.patchValue({ type });
         this.isOptionSelected = true;
     }

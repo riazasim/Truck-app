@@ -109,7 +109,7 @@
                             </tr>
                             }
                         </tbody> -->
-                    <tbody formArrayName="planningRouteDetails" cdkDropList (cdkDropListDropped)="drop($event)">
+                    <tbody formArrayName="planningRailwayRoutingDetails" cdkDropList (cdkDropListDropped)="drop($event)">
                         @for(point of points.controls;track point){
                         <tr [formGroupName]="$index" cdkDrag>
                             <td class="flex gap-2 items-center h-[84px]">
@@ -220,7 +220,7 @@
                     <div iconic-select-wrapper leftSvg="assets/images/bi_building-up.svg">
                         <select spAccessInputRef name="deliveryToCompany" id="deliveryToCompany"
                             formControlName="deliverToCompany">
-                            <option disabled selected value="">Delivery to compny</option>
+                            <option disabled selected value="">Deliver to compny</option>
                             <option *ngFor="let company of companiesList" [value]="company.id">
                                 {{ company.name }}
                             </option>
@@ -260,7 +260,7 @@
                             <th></th>
                         </tr>
                     </thead>
-                    <tbody formArrayName="convoyWagonDetail">
+                    <tbody formArrayName="planningRailwayShipmentWagons">
                         <tr *ngFor="
                         let wagon of wagons.controls;
                         let i = index
@@ -270,7 +270,7 @@
                             </td>
                             <td>
                                 <div iconic-input-wrapper [isTable]="true" [showValidationMessageDiv]="false">
-                                    <input inputRef type="number" class="text-center" formControlName="wagion" />
+                                    <input inputRef type="number" class="text-center" formControlName="wagon" />
                                 </div>
                             </td>
                             <td>
