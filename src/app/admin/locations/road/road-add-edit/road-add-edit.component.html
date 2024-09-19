@@ -31,7 +31,7 @@
         </div>
     </div>
 </div> -->
-<edit-container [headerTitle]="id ?  'Edit location details':'Add location details'">
+<edit-container [headerTitle]="id ?  'Edit road details':'Add road details'">
     <app-loader *ngIf="(isLoading$ | async)" [isContainer]="true" [fullScreen]="false"></app-loader>
     <form *ngIf="!(isLoading$ | async)" [formGroup]="locationForm">
         <div>
@@ -40,7 +40,7 @@
                 <div class="min-xl:columns-3">
                     <div class="h-[90px]">
                         <div iconic-input-wrapper leftIcon="location-dot">
-                            <input placeholder="Location Name" inputRef type="text" id="locationName"
+                            <input placeholder="Road Name" inputRef type="text" id="locationName"
                                 formControlName="name">
                         </div>
                     </div>
@@ -83,30 +83,30 @@
                 <h6 class="font-bold">Address</h6>
                 <div class="flex items-center gap-4 h-[110px]">
                     <div class="flex-[3]" iconic-input-wrapper leftIcon="location-crosshairs"
-                        *ngIf="transportMode === 'ROAD'">
+                        >
                         <input placeholder="Street" inputRef type="text" id="addrStreet" formControlName="addrStreet">
                     </div>
-                    <div class="flex-1" *ngIf="transportMode === 'ROAD'">
+                    <div class="flex-1" >
                         <div iconic-input-wrapper>
                             <input placeholder="No." inputRef type="text" formControlName="addrNumber">
                         </div>
                     </div>
-                    <div [ngClass]="railwayClass">
+                    <div >
                         <div iconic-input-wrapper>
                             <input placeholder="City" inputRef type="text" formControlName="addrCity">
                         </div>
                     </div>
-                    <div [ngClass]="railwayClass">
+                    <div >
                         <div iconic-input-wrapper>
                             <input placeholder="County" inputRef type="text" formControlName="addrCounty">
                         </div>
                     </div>
-                    <div class="flex-[2]">
+                    <div class="flex-[1]">
                         <div iconic-input-wrapper>
                             <input placeholder="Country" inputRef type="text" formControlName="addrCountry">
                         </div>
                     </div>
-                    <div class="flex-[2]">
+                    <div class="flex-[1]">
                         <div iconic-input-wrapper>
                             <input placeholder="Zip Code" inputRef type="text" formControlName="addrZipCode">
                         </div>

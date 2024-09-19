@@ -17,7 +17,6 @@ export class RoadAddEditComponent implements OnInit {
     locationForm: FormGroup;
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     location$: BehaviorSubject<LocationModel | null> = new BehaviorSubject<LocationModel | null>(null);
-    // isOptionSelected: boolean = false;
     id: number;
     phoneRegionCode: string;
     transportMode: string | null;
@@ -28,10 +27,7 @@ export class RoadAddEditComponent implements OnInit {
         private route: ActivatedRoute,
         private snackBar: MatSnackBar,
         private readonly orgService: OrganizationService,
-    ) {
-        this.transportMode = orgService.getAppMode();
-        this.railwayClass = this.transportMode === "ROAD" ? 'flex-1' : 'flex-[2]';
-    }
+    ) { }
 
     ngOnInit(): void {
         this.subscribeForQueryParams();
@@ -42,7 +38,6 @@ export class RoadAddEditComponent implements OnInit {
         if (this.id) {
             this.locationService.get(this.id).subscribe(async response => {
                 this.initForm(response);
-                // this.isOptionSelected = true;
                 this.location$.next({ ...response })
                 this.isLoading$.next(false);
             });
@@ -80,17 +75,14 @@ export class RoadAddEditComponent implements OnInit {
             imgPreview: this.fb.control(data?.imgPreview || '', []),
         });
         if (data?.locationType) {
-            // this.isOptionSelected = true;
         }
     }
 
     selectOption(locationType: string): void {
         this.locationForm.patchValue({ locationType });
-        // this.isOptionSelected = true;
     }
 
     setImgPreview(target: any, input: any): void {
-        // console.log(target , input)
         if (target.files.item(0)) {
             input.value = target.files.item(0).name
             this.locationForm.get('imgPreview')?.patchValue(target.files.item(0));
