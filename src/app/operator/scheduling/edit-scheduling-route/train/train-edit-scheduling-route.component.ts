@@ -27,6 +27,7 @@ export class TrainEditSchedulingRouteComponent implements OnInit {
     isRoutesLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     isStationLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+    hideEmail$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     selectedIndex: any = 0;
     locomotives: any[] = [];
     locomotiveType: any;
@@ -83,23 +84,22 @@ export class TrainEditSchedulingRouteComponent implements OnInit {
             locomotiveId: this.fb.control(data?.locomotive?.id || ''),
             conductorType: this.fb.control(data?.conductorType || ''),
             userEmail: this.fb.control(data?.userEmail || ''),
-            planningRouteDetails: this.fb.array([]),
+            planningRailwayRoutingDetails: this.fb.array([]),
         });
-
-        if (data?.planningRouteDetails) {
-            data.planningRouteDetails.forEach((point: any) => {
+        if (data?.planningRailwayRoutingDetails) {
+            data.planningRailwayRoutingDetails.forEach((point: any) => {
                 this.addPoints(point);
             });
         }
     }
 
     get points(): FormArray {
-        return this.planningForm.get('planningRouteDetails') as FormArray;
+        return this.planningForm.get('planningRailwayRoutingDetails') as FormArray;
     }
 
     addPoints(data?: any): void {
         const newPoint = this.fb.group({
-            planningRouteDetailId: [data?.id || null],
+            planningRailwayRoutingDetailId: [data?.id || null],
             pointType: [data?.pointType || ''],
             stationType: [data?.stationType || ''],
             station: [data?.station?.id || '']
@@ -114,8 +114,8 @@ export class TrainEditSchedulingRouteComponent implements OnInit {
                 this.initForm(res);
                 this.retrieveLocomotives();
                 this.locomotiveType = res?.locomotive?.type;
-                for (let i = 0; i < res?.planningRouteDetails?.length; i++) {
-                    this.retrieveStations(res?.planningRouteDetails[i]?.stationType, i);
+                for (let i = 0; i < res?.planningRailwayRoutingDetails?.length; i++) {
+                    this.retrieveStations(res?.planningRailwayRoutingDetails[i]?.stationType, i);
                 }
                 this.cd.detectChanges();
                 this.isRoutesLoading$.next(false);
@@ -158,25 +158,40 @@ export class TrainEditSchedulingRouteComponent implements OnInit {
         }
     }
 
+    hideEmail(ev: boolean) {
+        console.log(ev,'123')
+        localStorage.setItem("userEmail", String(this.planningForm.get('userEmail')))
+        if (ev) {
+            this.planningForm.get("userEmail")?.setValidators([...createRequiredValidators()]);
+            this.planningForm.get("userEmail")?.setValue(String(localStorage.getItem("userEmail")) || "");
+        }
+        else {
+            this.planningForm.get("userEmail")?.setValidators([]);
+            this.planningForm.get("userEmail")?.setValue("");
+        }
+        this.planningForm.get('userEmail')?.updateValueAndValidity();
+        this.hideEmail$.next(ev);
+    }
+
     openDeleteModal(point: any, index: any = -1) {
         this.dialogService.open(RouteDeleteModalComponent, {
             disableClose: true,
-            data: { "id": point?.value?.planningRouteDetailId, "title": "planning", "description": "" }
+            data: { "id": point?.value?.planningRailwayRoutingDetailId, "title": "planning", "description": "" }
         }).afterClosed()
             .subscribe({
                 next: (isDelete: boolean) => {
                     if (isDelete) {
-                        this.planningService.checkDeleteRoute(point?.value?.planningRouteDetailId).subscribe({
+                        this.planningService.checkDeleteRoute(point?.value?.planningRailwayRoutingDetailId).subscribe({
                             next: res => {
                                 if (res.data.attributes.message === "existedInShipment") {
                                     this.dialogService.open(RouteDeleteModalComponent, {
                                         disableClose: true,
-                                        data: { "id": point?.value?.planningRouteDetailId, "title": "route point", "description": "Shipments exists against this route point. \n Shipments against this point will also be deleted." }
+                                        data: { "id": point?.value?.planningRailwayRoutingDetailId, "title": "route point", "description": "Shipments exists against this route point. \n Shipments against this point will also be deleted." }
                                     }).afterClosed()
                                         .subscribe({
                                             next: (isDelete: boolean) => {
                                                 if (isDelete) {
-                                                    this.planningService.deleteRoute(point?.value?.planningRouteDetailId).subscribe({
+                                                    this.planningService.deleteRoute(point?.value?.planningRailwayRoutingDetailId).subscribe({
                                                         next: res => {
                                                             this.stations.splice(Number(index), 1);
                                                             this.points.removeAt(Number(index));
@@ -208,7 +223,7 @@ export class TrainEditSchedulingRouteComponent implements OnInit {
 
     retrieveStations(type: string, index?: any): void {
         this.isStationLoading$.next(true);
-        this.stationService.getStationListByType(type).subscribe({
+        this.stationService.getStationList(type).subscribe({
             next: (res) => {
                 let stationArray: any[] = [];
                 res?.forEach((item: any) => {
@@ -241,7 +256,7 @@ export class TrainEditSchedulingRouteComponent implements OnInit {
         });
 
         this.planningForm.patchValue({
-            planningRouteDetails: this.points.value
+            planningRailwayRoutingDetails: this.points.value
         });
 
         this.planningService.editRouteingDetails(this.id, this.planningForm.value).subscribe({

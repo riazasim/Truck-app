@@ -4,19 +4,18 @@ import { Sort } from '@angular/material/sort';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocationService } from 'src/app/core/services/location.service';
 import { compare } from 'src/app/shared/utils/sort.function';
-import { LocationsDeleteModalComponent } from '../locations-delete-modal/locations-delete-modal.component';
 import { LocationModel } from 'src/app/core/models/location.model';
 import {PageEvent} from "@angular/material/paginator";
 import {BehaviorSubject} from "rxjs";
-import {VehicleModel} from "../../../core/models/vehicle.model";
-import {LocationsImportModalComponent} from "../locations-import-modal/locations-import-modal.component";
+import { RoadDeleteModalComponent } from '../road-delete-modal/road-delete-modal.component';
+import { RoadImportModalComponent } from '../road-import-modal/road-import-modal.component';
 
 @Component({
-  selector: 'app-locations-list',
-  templateUrl: './locations-list.component.html',
+  selector: 'app-road-list',
+  templateUrl: './road-list.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LocationsListComponent {
+export class RoadListComponent {
   isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     displayedColumns: string[] = ['name', 'addrStreet', 'addrNumber', 'addrCounty', 'addrCity', 'addrCountry', 'addrZipCode', 'contact', 'actions'];
     dataSource: LocationModel[] = [];
@@ -75,7 +74,7 @@ export class LocationsListComponent {
     }
 
   openDeleteModal(id: number) {
-    this.dialogService.open(LocationsDeleteModalComponent, {
+    this.dialogService.open(RoadDeleteModalComponent, {
       disableClose: true,
       data: {}
     }).afterClosed()
@@ -168,7 +167,7 @@ export class LocationsListComponent {
   }
     openImportModal(): void {
         this.isLoading$.next(true);
-        this.dialogService.open(LocationsImportModalComponent, {
+        this.dialogService.open(RoadImportModalComponent, {
             disableClose: true,
             data: {}
         }).afterClosed()

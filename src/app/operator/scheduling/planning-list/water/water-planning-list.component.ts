@@ -25,12 +25,12 @@ export class WaterPlanningListComponent implements OnChanges {
     @Input() isTableLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     @Input() userRole: string;
     @Input() transportMode: string;
-    @Input() plannings: PlanningModel[] = [];
+    @Input() plannings: any;
     @Input() length: number;
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     displayedColumns: string[] = ['id', 'manevre', 'vesselId', 'berth', 'products', 'estimatedTimeArrival', 'relativeTimeArrival', 'delay', 'coordinates', 'shipmentStatus', 'actions'];
-    dataSource: PlanningModel[] = [];
-    originalSource: PlanningModel[] = [];
+    dataSource: any[] = [];
+    originalSource: any[] = [];
     appliedFilters: any = {};
     pageSizeOptions: number[] = [5, 10, 12, 15];
     pageIndex: number;

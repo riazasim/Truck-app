@@ -114,7 +114,7 @@ export class TrainEditSchedulingConvoyPageComponent {
         }
         if (this.id !== "add") {
             this.planningService.getConvoy(this.id).subscribe(response => {
-                response.planningConvoyDocuments.map((item: any) => {
+                response.planningRailwayShipmentDocuments.map((item: any) => {
                     this.oldImagesId.push(item.id)
                 })
                 this.retrieveCompanies();
@@ -162,13 +162,13 @@ export class TrainEditSchedulingConvoyPageComponent {
             deliverPoint: this.fb.control(data?.deliverPoint || ''),
             estimatedTimePickUp: this.fb.control(data?.estimatedTimePickUp || ''),
             estimatedTimeDeliver: this.fb.control(data?.estimatedTimeDeliver || ''),
-            planningConvoyWagons: this.fb.array([]),
+            planningRailwayShipmentWagons: this.fb.array([]),
             additionalOperator: this.fb.control(data?.additionalOperator || ''),
             clientComments: this.fb.control(data?.clientComments || ''),
             operatorComments: this.fb.control(data?.operatorComments),
         })
-        if (data?.planningConvoyWagons) {
-            data.planningConvoyWagons.forEach((wagon: any) => {
+        if (data?.planningRailwayShipmentWagons) {
+            data.planningRailwayShipmentWagons.forEach((wagon: any) => {
                 this.addWagons(wagon);
             });
         }
@@ -181,17 +181,18 @@ export class TrainEditSchedulingConvoyPageComponent {
     }
 
     get wagons(): any {
-        return this.convoyForm.get('planningConvoyWagons');
+        return this.convoyForm.get('planningRailwayShipmentWagons');
     }
 
     addWagons(data?: any): void {
         const newWagons = this.fb.group({
-            wagion: [data?.wagon || ''],
-            category: [data?.category || ''],
-            subCategory: [data?.subCategory || ''],
-            grossWeight: [data?.grossWeight || ''],
-            taraWeight: [data?.taraWeight || ''],
-            netWeight: [data?.netWeight || ''],
+            planningRailwayShipmentWagonId: [data?.id],
+            wagon: [data?.wagon],
+            category: [data?.category.id],
+            subCategory: [data?.subCategory.id],
+            grossWeight: [data?.grossWeight],
+            taraWeight: [data?.taraWeight],
+            netWeight: [data?.netWeight],
             seals: [data?.seals || ''],
         });
         this.wagons.push(newWagons);

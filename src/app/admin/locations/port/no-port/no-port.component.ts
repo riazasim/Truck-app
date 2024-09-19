@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
-  selector: 'no-locations',
-  templateUrl: './no-locations.component.html',
+  selector: 'no-port',
+  templateUrl: './no-port.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NoLocationsComponent {}
+export class NoPortComponent {}

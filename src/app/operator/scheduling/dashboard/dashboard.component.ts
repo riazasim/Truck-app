@@ -502,7 +502,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         };
         this.planningService.pagination(data).subscribe((response: any) => {
             this.plannings = response.items;
-            this.planning = this.plannings[0]?.planning;
+            this.planning = this.plannings;
             this.length = response.noFiltered;
             this.isTableLoading$.next(false);
             this.isCardDetailsLoading$.next(false)

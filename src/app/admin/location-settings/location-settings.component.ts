@@ -29,10 +29,10 @@ export class LocationSettingsComponent {
         name: 'Locations',
         link: '../locations'
     },
-     {
-      name: 'Stations',
-      link: '../stations'
-    },
+    //  {
+    //   name: 'Stations',
+    //   link: '../stations'
+    // },
      {
       name: 'Branding',
       link: '../branding'

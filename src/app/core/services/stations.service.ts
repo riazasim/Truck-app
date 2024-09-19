@@ -57,8 +57,8 @@ export class StationService {
             );
     }
 
-    getStationListByType(type: any): Observable<any> {
-        return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getStationListByType`, { "type": type })
+    getStationList(data: any): Observable<any> {
+        return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getStationList`, wrapJsonForRequest(data))
             .pipe(pluckItemWrapperData<any, ResponseItemWrapper<any>>(),
                 map((p: any) => {
                     return p;

@@ -5,7 +5,7 @@
             <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
                 <h4 class="font-bold">Locomotive and conductor</h4>
                 <div iconic-select-wrapper leftSvg="assets/images/carbon-train-speed.svg"
-                     (change)="onLocomotiveSelected($event)">
+                    (change)="onLocomotiveSelected($event)">
                     <select spAccessInputRef name="locomotive" id="locomotive" formControlName="locomotiveId">
                         <option disabled selected value="">
                             Locomotive registration number
@@ -27,18 +27,18 @@
                     <div class="flex justify-between">
                         <div class="flex justify-center items-center gap-1">
                             <input type="radio" name="conductorType" id="conductor" value="With Laras Conductor App"
-                                formControlName="conductorType" class="focus:!shadow-none checked:!bg-none">
-                            <label for="conductor">With Lares Conductor app</label>
+                            (click)="hideEmail(true)"   formControlName="conductorType" class="focus:!shadow-none checked:!bg-none">
+                            <label (click)="hideEmail(true)" for="conductor">With Lares Conductor app</label>
                         </div>
                         <div class="flex justify-center items-center gap-1">
-                            <input type="radio" name="conductorType" id="withoutconductor"
+                            <input type="radio" name="conductorType" id="withoutconductor" (click)="hideEmail(false)"
                                 value="Without Laras Conductor App" formControlName="conductorType"
                                 class="focus:!shadow-none checked:!bg-none">
-                            <label for="withoutconductor">Without Lares Conductor app</label>
+                            <label (click)="hideEmail(false)" for="withoutconductor">Without Lares Conductor app</label>
                         </div>
                     </div>
                 </div>
-                <div iconic-input-wrapper leftIcon="envelope">
+                <div iconic-input-wrapper leftIcon="envelope" *ngIf="hideEmail$ | async">
                     <input inputRef type="email" placeholder="User email" formControlName="userEmail" />
                 </div>
             </div>
@@ -55,7 +55,7 @@
                         <th></th>
                     </tr>
                 </thead>
-                <tbody formArrayName="planningRouteDetails">
+                <tbody formArrayName="planningRailwayRoutingDetails">
                     @for(point of points.controls;track point){
                     <tr [formGroupName]="$index">
                         <td class="flex gap-2 items-center h-[64px]">
@@ -68,20 +68,15 @@
                                 readonly />
                         </td>
                         <td>
-                            <select formControlName="stationType" (change)="onStationTypeChange($event , $index)">
-                                <option disabled selected value="">Station type</option>
-                                <option *ngFor="let stationType of stationTypes" [value]="stationType.value" disabled>
-                                    {{ stationType.name }}
-                                </option>
-                            </select>
-                        </td>
-                        <td>
-                            <select formControlName="station">
+                            <select formControlName="station" [disabled]="true">
                                 <option disabled selected value="">Station</option>
                                 <option *ngFor="let station of stations[$index]" [value]="station.id" disabled>
                                     {{ station.name }}
                                 </option>
                             </select>
+                        </td>
+                        <td>
+                            <input readonly formControlName="stationType" />
                         </td>
                         <td>
                             <a (click)="openDeleteModal(point , $index)">
@@ -92,12 +87,12 @@
                     }
                 </tbody>
 
-                 </table>
-            <div>
+            </table>
+            <!-- <div>
                 <button type="button" class="flex text-primary font-bold py-5" (click)="addPoints()">
                     <fa-icon class="mt-[1px]" icon="circle-plus"></fa-icon>&nbsp; Add point
                 </button>
-            </div>
+            </div> -->
 
         </div>
         <div class="min-xl:px-[50px] grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20 mt-4">

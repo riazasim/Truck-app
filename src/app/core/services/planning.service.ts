@@ -32,7 +32,7 @@ export class PlanningService {
             )
     }
     editConvoys(id: number, data: any): Observable<any> {
-        data.planningConvoyId = id
+        data.planningShipmentId = id
         const body = convertJsonToFormData(data, '');
         // console.log(body)
         // console.log(data)
@@ -120,7 +120,7 @@ export class PlanningService {
     }
 
     getConvoy(id: number): Observable<any> {
-        return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getPlanningConvoy`, { "planningConvoyId": id })
+        return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getPlanningConvoy`, { "planningShipmentId": id })
             .pipe(pluckItemWrapperData<any, ResponseItemWrapper<any>>(),
                 map((p: any) => {
                     return p;
@@ -129,7 +129,7 @@ export class PlanningService {
     }
 
     getPlanningRouteDetailList(id: number): Observable<any> {
-        return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getPlanningRouteDetailList`, { "planningId": id })
+        return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getPlanningRailwayRoutingDetailList`, { "planningId": id })
             .pipe(pluckItemWrapperData<any, ResponseItemWrapper<any>>(),
                 map((p: any) => {
                     return p;
@@ -143,7 +143,7 @@ export class PlanningService {
     }
 
     deleteConvoy(id: number): Observable<any> {
-        let data = { "planningConvoyId": id };
+        let data = { "planningShipmentId": id };
         return this.http.post(`${environment.apiUrl}${environment.apiVersion}/deletePlanningConvoy`, wrapJsonForRequest(data))
     }
 
@@ -355,7 +355,7 @@ export class PlanningService {
             )
     }
     convoyLogs(id: number): Observable<any> {
-        return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/planningConvoyLogList`, { "planningConvoyId": id })
+        return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/planningConvoyLogList`, { "planningShipmentId": id })
             .pipe(pluckItemWrapperData<any, ResponseItemWrapper<any>>(),
                 map((p: any) => {
                     return p;

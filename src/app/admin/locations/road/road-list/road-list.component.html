@@ -4,7 +4,7 @@
             <button routerLink="../add" [disabled]="(isLoading$ | async) || false"
                 class="bg-primary text-white hover:bg-primary-dark py-2 min-h-[35px] min-md:min-w-[120px] max-sm:w-full rounded-l max-lg:w-full"
                 type="button">
-                Add Location
+                Add Road
             </button>
             <button [disabled]="(isLoading$ | async) || false"
                 class="bg-primary text-white hover:bg-primary-dark min-h-[35px] min-md:min-w-[30px] max-sm:w-full rounded-r"
@@ -19,7 +19,7 @@
         </mat-button-toggle-group>
     </div>
     <material-panel-table microService [showSearchbar]="false"
-        [showHeader]="true" tableTitle="Locations list">
+        [showHeader]="true" tableTitle="Roads list">
         <div table class="w-full shadow-lg">
             <ng-scrollbar track="horizontal" [autoHeightDisabled]="false">
                 <table class="material-table no-wrap overflow-hidden" matSort (matSortChange)="sortData($event)"
@@ -28,7 +28,7 @@
                     <ng-container cdkColumnDef="name">
                         <th cdk-header-cell *cdkHeaderCellDef scope="col">
                             <section class="flex flex-col gap-4">
-                                <div mat-sort-header="name">Location name</div>
+                                <div mat-sort-header="name">Road name</div>
                                 <searchbar >
                                     <fa-icon icon="search"></fa-icon>
                                     <input #searchName input type="text" (keyup)="applyFilter($event.target, 'name')">
@@ -216,5 +216,5 @@
     </material-panel-table>
 </section>
 <ng-template #empty>
-    <no-locations></no-locations>
+    <no-road></no-road>
 </ng-template>

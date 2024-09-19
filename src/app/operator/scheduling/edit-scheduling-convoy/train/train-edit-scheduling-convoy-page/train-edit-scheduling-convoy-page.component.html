@@ -82,7 +82,7 @@
                             <th></th>
                         </tr>
                     </thead>
-                    <tbody formArrayName="planningConvoyWagons">
+                    <tbody formArrayName="planningRailwayShipmentWagons">
                         <tr *ngFor="
                         let wagon of wagons.controls;
                         let i = index
@@ -91,7 +91,7 @@
                                 {{i + 1}}
                             </td>
                             <td>
-                                <input type="number" class="text-center" formControlName="wagion" />
+                                <input type="number" class="text-center" formControlName="wagon" />
                             </td>
                             <td>
                                 <select name="category" id="category" formControlName="category">
@@ -133,11 +133,11 @@
                         </tr>
                     </tbody>
                 </table>
-                <div>
+                <!-- <div>
                     <button type="button" class="flex text-primary font-bold py-5" (click)="addWagons()">
                         <fa-icon icon="circle-plus"></fa-icon>&nbsp; Add wagon
                     </button>
-                </div>
+                </div> -->
             </div>
             <div class="min-xl:px-[50px] grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20 mt-4">
                 <div class="gap-y-4 mb-5 min-xl:px-[50px]">

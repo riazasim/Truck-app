@@ -64,16 +64,23 @@ export class ProductService {
       );
   }
 
-  getCategory(data: any): Observable<any> {
-    return this.http.post<any>(`${environment.apiUrl}${environment.apiVersion}/getCategoryList`, wrapJsonForRequest(data))
-      .pipe(pluckArrayPaginationWrapperData<any, ResponseArrayPaginationWrapper<any>>(),
-        map((u: any) => {
+  // getCategory(data: any): Observable<any> {
+  //   return this.http.post<any>(`${environment.apiUrl}${environment.apiVersion}/getCategoryList`, wrapJsonForRequest(data))
+  //     .pipe(pluckArrayPaginationWrapperData<any, ResponseArrayPaginationWrapper<any>>(),
+  //       map((u: any) => {
 
-          return u;
-        })
-      );
+  //         return u;
+  //       })
+  //     );
+  // }
+
+  getCategory(type: string): Observable<any> {
+    let data = {
+      "type": type
+    }
+    return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getCategoryList`, wrapJsonForRequest(data))
+      .pipe(pluckItemWrapperData<any, ResponseItemWrapper<any>>())
   }
-
   getSubCategory(id: number): Observable<any> {
     let data = {
       "categoryId": id
