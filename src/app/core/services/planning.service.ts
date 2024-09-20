@@ -33,10 +33,10 @@ export class PlanningService {
     }
     editConvoys(id: number, data: any): Observable<any> {
         data.planningShipmentId = id
-        const body = convertJsonToFormData(data, '');
+        // const body = convertJsonToFormData(data, '');
         // console.log(body)
         // console.log(data)
-        return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/updatePlanningConvoy`, body)
+        return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/updatePlanningConvoy`, wrapJsonForRequest(data))
             .pipe(pluckItemWrapperData<any, ResponseItemWrapper<any>>(),
                 map((p: any) => {
                     return p;

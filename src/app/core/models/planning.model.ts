@@ -99,7 +99,7 @@ export interface PlanningDetailModel {
     arrivalZone: string;
     departurePort: string;
     arrivalPort: number;
-    company: string;
+    company: number;
     pilotCompany: string;
     length: number;
     width: number;

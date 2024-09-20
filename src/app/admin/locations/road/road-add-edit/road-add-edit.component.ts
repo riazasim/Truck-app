@@ -58,7 +58,7 @@ export class RoadAddEditComponent implements OnInit {
     initForm(data: LocationModel = <LocationModel>{}): void {
         this.locationForm = this.fb.group({
             name: this.fb.control(data?.name || '', [...createRequiredValidators()]),
-            locationType: this.fb.control(data?.locationType || 'ROAD', [...createRequiredValidators()]),
+            locationType: this.fb.control(data?.locationType || 'ROAD',),
             addrCoordinates: this.fb.control(data?.addrCoordinates || '', [...createRequiredValidators()]),
             addrStreet: this.fb.control(data?.addrStreet || ''),
             addrNumber: this.fb.control(data?.addrNumber || ''),

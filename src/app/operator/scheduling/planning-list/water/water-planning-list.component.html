@@ -63,8 +63,8 @@
                                     </div>
                                 </section>
                             </th>
-                            <td cdk-cell *cdkCellDef="let row; let i = $index;">
-                                {{ row?.planningWater?.planningWaterShipments[i]?.productCount || "-" }}
+                            <td cdk-cell *cdkCellDef="let row;">
+                                {{ row?.planningWater?.planningWaterShipments[0]?.productCount || "-" }}
                             </td>
                         </ng-container>
                         <ng-container cdkColumnDef="estimatedTimeArrival">
