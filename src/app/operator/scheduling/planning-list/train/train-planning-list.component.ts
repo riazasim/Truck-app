@@ -18,7 +18,7 @@ import { SchedulingImportModalComponent } from '../../scheduling-import-modal/sc
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TrainPlanningListComponent implements OnChanges {
-    
+
     @Output() triggerOpenLogs: EventEmitter<{ view: string, id: number, planning: PlanningModel, modal: string }> = new EventEmitter();
     @Output() onPaginate: EventEmitter<any> = new EventEmitter();
     @Output() retrievePlannings: EventEmitter<any> = new EventEmitter();
@@ -28,7 +28,7 @@ export class TrainPlanningListComponent implements OnChanges {
     @Input() plannings: any;
     @Input() length: number;
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
-    displayedColumns: string[] = [ 'rId', 'sId', 'pickUpPoint', 'deliverPoint', 'estimatedTimePickUp', 'estimatedTimeDeliver', 'delay', 'coordinates', 'shipmentStatus', 'actions'];
+    displayedColumns: string[] = ['rId', 'sId', 'pickUpPoint', 'deliverPoint', 'estimatedTimePickUp', 'estimatedTimeDeliver', 'delay', 'coordinates', 'shipmentStatus', 'actions'];
     dataSource: any[] = [];
     originalSource: any[] = [];
     appliedFilters: any = {};
@@ -94,10 +94,6 @@ export class TrainPlanningListComponent implements OnChanges {
     OnEmit(row: any, modal: string) {
         this.triggerOpenLogs.emit({ view: 'view', id: row.planning.id, planning: row, modal: modal })
     }
-
-
-
-    
 
     openDeleteModal(id: number) {
         this.dialogService.open(SchedulingDeleteModalComponent, {

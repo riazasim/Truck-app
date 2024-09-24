@@ -57,6 +57,7 @@ export class TrainAddSchedulingComponent implements OnInit {
     selectedSlot$: BehaviorSubject<number | null> = new BehaviorSubject<number | null>(null);
     selectedCustomer$: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
     isStationLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+    isEdit$: BehaviorSubject<any> = new BehaviorSubject<any>(false);
     isLinear = true;
     customers: PartnerModel[] = [];
     areRouteDetailsDone: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
@@ -158,10 +159,13 @@ export class TrainAddSchedulingComponent implements OnInit {
     subscribeForQueryParams(): void {
         this.id = this.route.snapshot.params['id'];
         if (this.id) {
-            combineLatest([
-                this.planningService.getConvoy(this.id)
-            ]).subscribe(([shipment]: [any]) => {
-                this.initForm(shipment);
+            this.isEdit$.next(true);
+            this.planningService.getConvoy(this.id).subscribe((shipment: any) => {
+                console.log(shipment)
+                this.initForm(0, shipment);
+                if (shipment?.planningRailway?.conductorType === "Without Laras Conductor App") {
+                    this.hideEmail(false)
+                }
                 this.isLoading$.next(false);
             });
         } else {
@@ -320,30 +324,33 @@ export class TrainAddSchedulingComponent implements OnInit {
     }
 
     next(index: any): void {
-        if (this.matStepper.selectedIndex === 0) {
-        }
-        if (index === 1) {
-            if (this.points.length < 2) {
-                this.dialogService.open(WarningModalComponent, {
-                    disableClose: true,
-                })
-            }
-            else {
-                console.log("ok")
-                const newArr = this.points.value;
-                for (let i = 0; i < newArr.length; i++) {
-                    newArr[i].pointType = "Touch Point";
-                    newArr[i].stationType = this.stationTypes[i];
-                }
-                newArr[0].pointType = "Start Point";
-                newArr[newArr.length - 1].pointType = "End Point";
-                this.pickupPoints = newArr.slice(0, -1);
-                this.deliveryPoints = newArr.slice(1);
-                this.matStepper.selectedIndex = index;
-            }
+        if (index === 3 && this.isEdit$.value) {
+            this.saveScheduling()
         }
         else {
-            this.matStepper.selectedIndex = index;
+            if (index === 1) {
+                if (this.points.length < 2) {
+                    this.dialogService.open(WarningModalComponent, {
+                        disableClose: true,
+                    })
+                }
+                else {
+                    console.log("ok")
+                    const newArr = this.points.value;
+                    for (let i = 0; i < newArr.length; i++) {
+                        newArr[i].pointType = "Touch Point";
+                        newArr[i].stationType = this.stationTypes[i];
+                    }
+                    newArr[0].pointType = "Start Point";
+                    newArr[newArr.length - 1].pointType = "End Point";
+                    this.pickupPoints = newArr.slice(0, -1);
+                    this.deliveryPoints = newArr.slice(1);
+                    this.matStepper.selectedIndex = index;
+                }
+            }
+            else {
+                this.matStepper.selectedIndex = index;
+            }
         }
     }
 
@@ -409,12 +416,12 @@ export class TrainAddSchedulingComponent implements OnInit {
     //     documents: this.fb.control(data?.documents || []),
     // });
 
-    initForm(index: any = 0): void {
+    initForm(index: any = 0, data?: any): void {
         if (index !== 1) {
             this.stepOneForm = this.fb.group({
-                locomotiveId: this.fb.control('', [...createRequiredValidators()]),
-                conductorType: this.fb.control('With Laras Conductor App', [...createRequiredValidators()]),
-                userEmail: this.fb.control('', [...createRequiredValidators()]),
+                locomotiveId: this.fb.control({ value: data?.planningRailway?.locomotive?.id || '', disabled: data?.planningRailway?.locomotive?.id ? true : false }, [...createRequiredValidators()]),
+                conductorType: this.fb.control({ value: data?.planningRailway?.conductorType || 'With Laras Conductor App', disabled: data?.planningRailway?.conductorType ? true : false }, [...createRequiredValidators()]),
+                userEmail: this.fb.control({ value: data?.planningRailway?.userEmail || '', disabled: data?.planningRailway?.userEmail ? true : false }, [...createRequiredValidators()]),
                 planningRailwayRoutingDetails: this.fb.array([]),
             });
             this.schedulingForm = this.fb.group({
@@ -422,10 +429,18 @@ export class TrainAddSchedulingComponent implements OnInit {
                 convoyDetail: this.fb.control([]),
                 documents: this.fb.control([]),
             });
+
+            if (data?.planningRailway?.planningRailwayRoutingDetails.length > 0) {
+                data?.planningRailway?.planningRailwayRoutingDetails.map((item: any) => {
+                    this.stations.push(item?.station)
+                    this.stationTypes.push(item?.stationType)
+                    this.addPoints(item);
+                })
+            }
         }
         this.stepTwoForm = this.fb.group({
-            pickUpFromCompany: this.fb.control('', [...createRequiredValidators()]),
-            deliverToCompany: this.fb.control('', [...createRequiredValidators()]),
+            pickUpFromCompany: this.fb.control(data?.pickUpFromCompany?.id || '', [...createRequiredValidators()]),
+            deliverToCompany: this.fb.control(data?.deliverToCompany?.id || '', [...createRequiredValidators()]),
             pickUpPoint: this.fb.control('', [...createRequiredValidators()]),
             deliverPoint: this.fb.control('', [...createRequiredValidators()]),
             estimatedTimePickUp: this.fb.control(''),
@@ -433,10 +448,16 @@ export class TrainAddSchedulingComponent implements OnInit {
             planningRailwayShipmentWagons: this.fb.array([]),
         });
 
+        if (data?.planningRailwayShipmentWagons.length > 0) {
+            data?.planningRailwayShipmentWagons.map((item: any) => {
+                this.addWagons(item);
+            })
+        }
+
         this.stepThreeForm = this.fb.group({
-            clientComments: this.fb.control(''),
-            operatorComments: this.fb.control(''),
-            additionalOperator: this.fb.control(''),
+            clientComments: this.fb.control(data?.clientComments || ''),
+            operatorComments: this.fb.control(data?.operatorComments || ''),
+            additionalOperator: this.fb.control(data?.additionalOperator || ''),
         });
     }
 
@@ -445,12 +466,13 @@ export class TrainAddSchedulingComponent implements OnInit {
     }
 
 
-    addPoints(): void {
+    addPoints(data?: any): void {
+        console.log(data)
         const newPoint = this.fb.group({
-            planningRouteDetailId: [null],
-            pointType: [''],
-            stationType: [''],
-            station: ['', [...createRequiredValidators()]]
+            planningRouteDetailId: [data?.id || null],
+            pointType: [data?.pointType || ''],
+            stationType: [data?.stationType || ''],
+            station: [{ value: data?.station?.id || '', disabled: data?.station?.id ? true : false }, [...createRequiredValidators()]]
         });
         this.points.push(newPoint);
     }
@@ -459,15 +481,15 @@ export class TrainAddSchedulingComponent implements OnInit {
         return this.stepTwoForm.get('planningRailwayShipmentWagons');
     }
 
-    addWagons(): void {
+    addWagons(data?: any): void {
         const newWagons = this.fb.group({
-            wagon: ['', [...createRequiredValidators()]],
-            category: ['', [...createRequiredValidators()]],
-            subCategory: ['', [...createRequiredValidators()]],
-            grossWeight: ['', [...createRequiredValidators()]],
-            taraWeight: ['', [...createRequiredValidators()]],
-            netWeight: ['', [...createRequiredValidators()]],
-            seals: ['', [...createRequiredValidators()]],
+            wagon: [data?.wagon || '', [...createRequiredValidators()]],
+            category: [data?.category?.id || '', [...createRequiredValidators()]],
+            subCategory: [data?.subCategory?.id || '', [...createRequiredValidators()]],
+            grossWeight: [data?.grossWeight || '', [...createRequiredValidators()]],
+            taraWeight: [data?.taraWeight || '', [...createRequiredValidators()]],
+            netWeight: [data?.netWeight || '', [...createRequiredValidators()]],
+            seals: [data?.seals || '', [...createRequiredValidators()]],
         });
         this.wagons.push(newWagons);
     }
@@ -501,11 +523,10 @@ export class TrainAddSchedulingComponent implements OnInit {
         this.etdDateTimeVal = `${this.etdDateVal} ${this.etdTimeVal}`;
         this.stepTwoForm.patchValue({ estimatedTimePickUp: this.etpDateTimeVal, estimatedTimeDeliver: this.etdDateTimeVal });
         this.convoys.push({ ...this.stepTwoForm.value, ...this.stepThreeForm.value });
-        console.log(this.stepOneForm.value)
         this.schedulingForm.patchValue({ convoyDetail: this.convoys, documents: this.images, routingDetail: this.stepOneForm.value })
         console.log(this.schedulingForm, 'schedulingForm')
         if (this.id) {
-            this.planningService.editConvoys(this.id, (this.schedulingForm.value)).subscribe({
+            this.planningService.editConvoys(this.id, ({ ...this.stepTwoForm.value, ...this.stepThreeForm.value })).subscribe({
                 next: () => {
                     this.isLoading$.next(false)
                     this.router.navigate(['../../success'], { relativeTo: this.route });
@@ -516,17 +537,17 @@ export class TrainAddSchedulingComponent implements OnInit {
                 }
             });
         } else {
-        this.planningService.create(this.schedulingForm.value).subscribe({
-            next: () => {
-                this.router.navigate(['../success'], { relativeTo: this.route });
-            },
-            error: (body) => {
-                handleError(this.snackBar, body);
-                this.matStepper.selectedIndex = 0;
-                this.isLoading$.next(false);
-            }
-        })
-      }
+            this.planningService.create(this.schedulingForm.value).subscribe({
+                next: () => {
+                    this.router.navigate(['../success'], { relativeTo: this.route });
+                },
+                error: (body) => {
+                    handleError(this.snackBar, body);
+                    this.matStepper.selectedIndex = 0;
+                    this.isLoading$.next(false);
+                }
+            })
+        }
     }
 
     patchFile(file: File, index: number): void {

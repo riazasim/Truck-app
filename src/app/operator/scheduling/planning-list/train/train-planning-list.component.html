@@ -36,7 +36,7 @@
                                 {{'messages.there-no-more-items' | translate}}
                             </td>
                         </ng-container>
-                        
+
                         <!-- <ng-container cdkColumnDef="manevre">
                             <th cdk-header-cell *cdkHeaderCellDef scope="col" class="max-w-20">
                                 <section class="flex flex-col gap-4">
@@ -68,7 +68,7 @@
                                 </section>
                             </th>
                             <td cdk-cell *cdkCellDef="let row">
-                                {{ row?.pickUpPoint || "-" }}
+                                {{ row?.pickUpPoint?.station?.name || "-" }}
                             </td>
                         </ng-container>
                         <ng-container cdkColumnDef="deliverPoint">
@@ -80,7 +80,7 @@
                                 </section>
                             </th>
                             <td cdk-cell *cdkCellDef="let row;">
-                                {{ row?.deliverPoint || "-" }}
+                                {{ row?.deliverPoint?.station?.name || "-" }}
                             </td>
                         </ng-container>
                         <ng-container cdkColumnDef="estimatedTimePickUp">
@@ -130,7 +130,7 @@
                             <td cdk-cell *cdkCellDef="let row">
                                 {{ row?.sidCoordinates || "-" }}
                             </td>
-                        </ng-container> 
+                        </ng-container>
                         <ng-container cdkColumnDef="shipmentStatus">
                             <th cdk-header-cell *cdkHeaderCellDef scope="col" class="max-w-20">
                                 <section class="flex flex-col gap-4">
