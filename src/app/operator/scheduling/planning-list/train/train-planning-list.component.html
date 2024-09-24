@@ -7,10 +7,10 @@
                         [class.loading]="isTableLoading$ | async" aria-label="Usage Table" cdk-table
                         [dataSource]="dataSource">
 
-                        <ng-container cdkColumnDef="id">
+                        <ng-container cdkColumnDef="rId">
                             <th cdk-header-cell *cdkHeaderCellDef scope="col" class="max-w-40">
                                 <section class="flex flex-col gap-4">
-                                    <div mat-sort-header="id">RID</div>
+                                    <div mat-sort-header="rId">RID</div>
                                 </section>
                             </th>
                             <td cdk-cell *cdkCellDef="let row">
@@ -21,6 +21,22 @@
                                 {{'messages.there-no-more-items' | translate}}
                             </td>
                         </ng-container>
+
+                        <ng-container cdkColumnDef="sId">
+                            <th cdk-header-cell *cdkHeaderCellDef scope="col" class="max-w-40">
+                                <section class="flex flex-col gap-4">
+                                    <div mat-sort-header="sId">SID</div>
+                                </section>
+                            </th>
+                            <td cdk-cell *cdkCellDef="let row">
+                                {{row?.sId || '-'}}
+                            </td>
+                            <td cdk-footer-cell *cdkFooterCellDef [colSpan]="displayedColumns.length"
+                                class="py-4 font-bold text-center">
+                                {{'messages.there-no-more-items' | translate}}
+                            </td>
+                        </ng-container>
+                        
                         <!-- <ng-container cdkColumnDef="manevre">
                             <th cdk-header-cell *cdkHeaderCellDef scope="col" class="max-w-20">
                                 <section class="flex flex-col gap-4">
@@ -43,52 +59,52 @@
                             </td>
                         </ng-container> -->
 
-                         <ng-container cdkColumnDef="pickUpFromCompany">
+                         <ng-container cdkColumnDef="pickUpPoint">
                             <th cdk-header-cell *cdkHeaderCellDef scope="col" class="max-w-40">
                                 <section class="flex flex-col gap-4">
-                                    <div mat-sort-header="pickUpFromCompany">
-                                        Pick-Up Company
+                                    <div mat-sort-header="pickUpPoint">
+                                        Pick-Up Point
                                     </div>
                                 </section>
                             </th>
                             <td cdk-cell *cdkCellDef="let row">
-                                {{ row?.planningRailway?.planningRailwayShipments[0]?.pickUpFromCompany?.name || "-" }}
+                                {{ row?.pickUpPoint || "-" }}
                             </td>
                         </ng-container>
-                        <ng-container cdkColumnDef="deliverToCompany">
+                        <ng-container cdkColumnDef="deliverPoint">
                             <th cdk-header-cell *cdkHeaderCellDef scope="col" class="max-w-40">
                                 <section class="flex flex-col gap-4">
-                                    <div mat-sort-header="deliverToCompany">
-                                        Deliver Company
+                                    <div mat-sort-header="deliverPoint">
+                                        Delivery point
                                     </div>
                                 </section>
                             </th>
                             <td cdk-cell *cdkCellDef="let row;">
-                                {{ row?.planningRailway?.planningRailwayShipments[0]?.deliverToCompany?.name || "-" }}
+                                {{ row?.deliverPoint || "-" }}
                             </td>
                         </ng-container>
-                        <ng-container cdkColumnDef="estimatedTimeArrival">
+                        <ng-container cdkColumnDef="estimatedTimePickUp">
                             <th cdk-header-cell *cdkHeaderCellDef scope="col" class="max-w-20">
                                 <section class="flex flex-col gap-4">
-                                    <div mat-sort-header="estimatedTimeArrival">
+                                    <div mat-sort-header="estimatedTimePickUp">
                                         ETA
                                     </div>
                                 </section>
                             </th>
                             <td cdk-cell *cdkCellDef="let row">
-                                {{ row?.planningRailway?.planningRailwayShipments[0]?.estimatedTimePickUp || "-" }}
+                                {{ row?.estimatedTimePickUp || "-" }}
                             </td>
                         </ng-container>
-                        <ng-container cdkColumnDef="relativeTimeArrival">
+                        <ng-container cdkColumnDef="estimatedTimeDeliver">
                             <th cdk-header-cell *cdkHeaderCellDef scope="col" class="max-w-20">
                                 <section class="flex flex-col gap-4">
-                                    <div mat-sort-header="relativeTimeArrival">
+                                    <div mat-sort-header="estimatedTimeDeliver">
                                         RTA
                                     </div>
                                 </section>
                             </th>
                             <td cdk-cell *cdkCellDef="let row">
-                                {{ row?.planningRailway?.planningRailwayShipments[0]?.estimatedTimeDeliver || "-" }}
+                                {{ row?.estimatedTimeDeliver || "-" }}
                             </td>
                         </ng-container>
                         <ng-container cdkColumnDef="delay">
@@ -112,7 +128,7 @@
                                 </section>
                             </th>
                             <td cdk-cell *cdkCellDef="let row">
-                                {{ row?.planningRailway?.ridCoordinates || "-" }}
+                                {{ row?.sidCoordinates || "-" }}
                             </td>
                         </ng-container> 
                         <ng-container cdkColumnDef="shipmentStatus">
@@ -124,8 +140,8 @@
                                 </section>
                             </th>
                             <td cdk-cell  *cdkCellDef="let row">
-                                <mat-chip [ngStyle]="{'background-color': row?.planningRailway?.planningStatus?.color}">
-                                    {{ row?.planningRailway?.planningStatus?.name }}
+                                <mat-chip [ngStyle]="{'background-color': row?.planningRailwayShipmentStatus?.color}">
+                                    {{ row?.planningRailwayShipmentStatus?.name }}
                                 </mat-chip>
                                 <!-- <mat-chip *ngFor="let status of status" [ngStyle]="{'background-color': status.color}">
                                     {{ status.name }}
@@ -147,15 +163,15 @@
                                             class="cursor-pointer"></a>
                                     <fa-icon icon="xmark" class="text-[#17A0B5] cursor-pointer" size="lg"
                                         *ngIf="userRole === 'ROLE_USER_TRANSPORT'"
-                                        (click)="openDeleteModal(row.planningRailway.id)"></fa-icon>
+                                        (click)="openDeleteModal(row.id)"></fa-icon>
                                 </div>
                                 <div class="flex gap-4">
                                     <fa-icon icon="eye" class="text-[#17A0B5] cursor-pointer" size="lg"
                                         *ngIf="userRole === 'ROLE_USER_TRANSPORT'"
-                                        [routerLink]="['../edit', row?.planningRailway?.id]"></fa-icon>
-                                    <img src="assets/images/carbon_train-speed.png" alt="icon" class="cursor-pointer max-w-5 max-h-5"
+                                        [routerLink]="['../edit', row?.id]"></fa-icon>
+                                    <!-- <img src="assets/images/carbon_train-speed.png" alt="icon" class="cursor-pointer max-w-5 max-h-5"
                                         *ngIf="userRole === 'ROLE_USER_TRANSPORT'"
-                                        [routerLink]="['../route',row?.planningRailway?.id ,'convoy-list']">
+                                        [routerLink]="['../route',row?.id ,'convoy-list']"> -->
                                     <a class="text-primary" href="javascript:void(0)"
                                         (click)="OnEmit(row , 'shipment')"><img
                                             src="assets/images/rotate-left-list-icon.svg" alt="icon"

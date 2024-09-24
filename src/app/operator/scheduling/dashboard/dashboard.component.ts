@@ -293,7 +293,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
             "filters": [this.formatDate(this.filterDate), "", "", "", "", ""],
             "order": [{ "dir": "DESC", "column": 0 }]
         }
-        this.planningService.pagination(data).subscribe({
+        this.planningService.getPaginatePlanningShipment(data).subscribe({
             next: response => {
                 this.plannings = response.items;
                 this.isTableLoading$.next(false);
@@ -500,7 +500,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
             "filters": [this.formatDate(this.filterDate), "", "", "", "", "", "", ""],
             "order": [{ "dir": "DESC", "column": 0 }],
         };
-        this.planningService.pagination(data).subscribe((response: any) => {
+        this.planningService.getPaginatePlanningShipment(data).subscribe((response: any) => {
             this.plannings = response.items;
             this.planning = this.plannings;
             this.length = response.noFiltered;

@@ -166,6 +166,15 @@ export class PlanningService {
                 })
             );
     }
+    getPaginatePlanningShipment(data: any): Observable<PlanningTable> {
+        return this.http.post<ResponseArrayPaginationWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getPaginatePlanningShipment`, wrapJsonForRequest(data))
+            .pipe(pluckArrayPaginationWrapperData<any, ResponseArrayPaginationWrapper<any>>(),
+                map((u: PlanningTable) => {
+                    u.items = (<any>u.items).map(((c: CustomFieldData) => c.attributes));
+                    return u;
+                })
+            );
+    }
     getTransferData(data: any): Observable<any> {
         return this.http.post<ResponseArrayPaginationWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getUsersByUserRoleList`, wrapJsonForRequest(data));
     }

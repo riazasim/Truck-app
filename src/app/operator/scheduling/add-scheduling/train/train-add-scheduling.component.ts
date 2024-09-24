@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { CustomFieldModel } from 'src/app/core/models/custom-field.model';
 import { OperationModel } from 'src/app/core/models/operation.model';
 import { PartnerModel } from 'src/app/core/models/partner.model';
@@ -140,6 +140,7 @@ export class TrainAddSchedulingComponent implements OnInit {
         private readonly dialogService: MatDialog
     ) {
         this.getFormatHourSlot = getFormatHourSlot.bind(this);
+        this.subscribeForQueryParams()
     }
 
     ngOnInit(): void {
@@ -152,6 +153,21 @@ export class TrainAddSchedulingComponent implements OnInit {
         this.addPoints();
         this.retrieveStations();
         this.isLoading$.next(false);
+    }
+
+    subscribeForQueryParams(): void {
+        this.id = this.route.snapshot.params['id'];
+        if (this.id) {
+            combineLatest([
+                this.planningService.getConvoy(this.id)
+            ]).subscribe(([shipment]: [any]) => {
+                this.initForm(shipment);
+                this.isLoading$.next(false);
+            });
+        } else {
+            this.initForm();
+            this.isLoading$.next(false);
+        }
     }
 
     hideEmail(ev: boolean) {
@@ -488,6 +504,18 @@ export class TrainAddSchedulingComponent implements OnInit {
         console.log(this.stepOneForm.value)
         this.schedulingForm.patchValue({ convoyDetail: this.convoys, documents: this.images, routingDetail: this.stepOneForm.value })
         console.log(this.schedulingForm, 'schedulingForm')
+        if (this.id) {
+            this.planningService.editConvoys(this.id, (this.schedulingForm.value)).subscribe({
+                next: () => {
+                    this.isLoading$.next(false)
+                    this.router.navigate(['../../success'], { relativeTo: this.route });
+                },
+                error: (body: any) => {
+                    this.isLoading$.next(false)
+                    handleError(this.snackBar, body, this.isLoading$)
+                }
+            });
+        } else {
         this.planningService.create(this.schedulingForm.value).subscribe({
             next: () => {
                 this.router.navigate(['../success'], { relativeTo: this.route });
@@ -498,6 +526,7 @@ export class TrainAddSchedulingComponent implements OnInit {
                 this.isLoading$.next(false);
             }
         })
+      }
     }
 
     patchFile(file: File, index: number): void {
