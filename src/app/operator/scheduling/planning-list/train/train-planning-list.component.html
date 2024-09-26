@@ -36,29 +36,6 @@
                                 {{'messages.there-no-more-items' | translate}}
                             </td>
                         </ng-container>
-
-                        <!-- <ng-container cdkColumnDef="manevre">
-                            <th cdk-header-cell *cdkHeaderCellDef scope="col" class="max-w-20">
-                                <section class="flex flex-col gap-4">
-                                    <div mat-sort-header="manevre">Manevre</div>
-                                </section>
-                            </th>
-                            <td cdk-cell *cdkCellDef="let row">
-                                {{ row?.planningRailway?.manevre || "-" }}
-                            </td>
-                        </ng-container>
-
-                        <ng-container cdkColumnDef="vesselId">
-                            <th cdk-header-cell *cdkHeaderCellDef scope="col" class="max-w-24">
-                                <section class="flex flex-col gap-4">
-                                    <div mat-sort-header="vesselId">Vessel ID</div>
-                                </section>
-                            </th>
-                            <td cdk-cell *cdkCellDef="let row">
-                                {{ row?.planningRailway?.vesselId || "-" }}
-                            </td>
-                        </ng-container> -->
-
                          <ng-container cdkColumnDef="pickUpPoint">
                             <th cdk-header-cell *cdkHeaderCellDef scope="col" class="max-w-40">
                                 <section class="flex flex-col gap-4">
@@ -143,9 +120,6 @@
                                 <mat-chip [ngStyle]="{'background-color': row?.planningRailwayShipmentStatus?.color}">
                                     {{ row?.planningRailwayShipmentStatus?.name }}
                                 </mat-chip>
-                                <!-- <mat-chip *ngFor="let status of status" [ngStyle]="{'background-color': status.color}">
-                                    {{ status.name }}
-                                </mat-chip> -->
                             </td>
                         </ng-container>
 
@@ -169,9 +143,6 @@
                                     <fa-icon icon="eye" class="text-[#17A0B5] cursor-pointer" size="lg"
                                         *ngIf="userRole === 'ROLE_USER_TRANSPORT'"
                                         [routerLink]="['../edit', row?.id]"></fa-icon>
-                                    <!-- <img src="assets/images/carbon_train-speed.png" alt="icon" class="cursor-pointer max-w-5 max-h-5"
-                                        *ngIf="userRole === 'ROLE_USER_TRANSPORT'"
-                                        [routerLink]="['../route',row?.id ,'convoy-list']"> -->
                                     <a class="text-primary" href="javascript:void(0)"
                                         (click)="OnEmit(row , 'shipment')"><img
                                             src="assets/images/rotate-left-list-icon.svg" alt="icon"

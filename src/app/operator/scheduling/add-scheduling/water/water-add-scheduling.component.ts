@@ -44,6 +44,7 @@ export class WaterAddSchedulingComponent implements OnInit {
     showFileThree$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     isPortsLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     isPortChangeLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    isEdit$: BehaviorSubject<any> = new BehaviorSubject<any>(false);
 
     isLinear = true;
     customers: PartnerModel[] = [];
@@ -139,6 +140,7 @@ export class WaterAddSchedulingComponent implements OnInit {
         private readonly microService: MicroService,
     ) {
         this.getFormatHourSlot = getFormatHourSlot.bind(this);
+        this.subscribeForQueryParams();
     }
 
     ngOnInit(): void {
@@ -148,6 +150,27 @@ export class WaterAddSchedulingComponent implements OnInit {
         this.isLoading$.next(false);
         this.retrivePorts();
         this.retriveProducts()
+    }
+
+    subscribeForQueryParams(): void {
+        this.id = this.route.snapshot.params['id'];
+        if (this.id) {
+            this.isEdit$.next(true);
+            this.planningService.getConvoy(this.id).subscribe((shipment: any) => {
+                console.log(shipment)
+                this.retrieveShips()
+                this.retriveCompanines(shipment?.planningWater?.departurePort || 0);
+                this.initForm(0, shipment);
+                // this.locomotiveType = shipment?.planningRailway?.locomotive?.locomotiveType;
+                // if (shipment?.planningRailway?.conductorType === "Without Laras Conductor App") {
+                //     this.hideEmail(false)
+                // }
+                this.isLoading$.next(false);
+            });
+        } else {
+            this.initForm();
+            this.isLoading$.next(false);
+        }
     }
 
     formatDate(date: Date | string): string {
@@ -366,16 +389,17 @@ export class WaterAddSchedulingComponent implements OnInit {
     //     documents: this.fb.control([]),
     // });
 
-    initForm(index?: any): void {
+    initForm(index?: any, data?: any): void {
         if (index !== 1) {
+            debugger
             this.stepOneForm = this.fb.group({
-                convoyType: this.fb.control('', [...createRequiredValidators()]),
+                convoyType: this.fb.control({ value: data?.planningWater?.convoyType || '', disabled: data?.planningWater?.convoyType ? true : false }, [...createRequiredValidators()]),
                 estimatedTimeArrival: this.fb.control(''),
-                departurePort: this.fb.control('', [...createRequiredValidators()]),
-                arrivalPort: this.fb.control('', [...createRequiredValidators()]),
-                company: this.fb.control('', [...createRequiredValidators()]),
-                pilotCompany: this.fb.control('', [...createRequiredValidators()]),
-                ridCoordinates: this.fb.control('', [...createRequiredValidators()]),
+                departurePort: this.fb.control({ value: data?.planningWater?.departurePort || '', disabled: data?.planningWater?.departurePort ? true : false }, [...createRequiredValidators()]),
+                arrivalPort: this.fb.control({ value: data?.planningWater?.arrivalPort || '', disabled: data?.planningWater?.arrivalPort ? true : false }, [...createRequiredValidators()]),
+                company: this.fb.control({ value: data?.planningWater?.company || '', disabled: data?.planningWater?.company ? true : false }, [...createRequiredValidators()]),
+                pilotCompany: this.fb.control({ value: data?.planningWater?.pilotCompany || '', disabled: data?.planningWater?.pilotCompany ? true : false }, [...createRequiredValidators()]),
+                ridCoordinates: this.fb.control({ value: data?.planningWater?.ridCoordinates || '', disabled: data?.planningWater?.ridCoordinates ? true : false }, [...createRequiredValidators()]),
             });
         }
         this.schedulingForm = this.fb.group({
@@ -384,34 +408,35 @@ export class WaterAddSchedulingComponent implements OnInit {
             documents: this.fb.control([]),
         });
 
+        const ids = data?.planningWaterShipmentProducts?.map((item: any) => item?.product?.id)
         this.stepTwoForm = this.fb.group({
-            navigationType: this.fb.control('', [...createRequiredValidators()]),
-            company: this.fb.control(''),
-            ship: this.fb.control('', [...createRequiredValidators()]),
-            shipType: this.fb.control('', [...createRequiredValidators()]),
-            pavilion: this.fb.control('', [...createRequiredValidators()]),
-            enginePower: this.fb.control(0, [...createRequiredValidators()]),
-            lengthOverall: this.fb.control(0, [...createRequiredValidators()]),
-            width: this.fb.control(0, [...createRequiredValidators()]),
-            maxDraft: this.fb.control(0, [...createRequiredValidators()]),
-            maxQuantity: this.fb.control(0, [...createRequiredValidators()]),
-            shipowner: this.fb.control('', [...createRequiredValidators()]),
-            purpose: this.fb.control('', [...createRequiredValidators()]),
-            operator: this.fb.control('', [...createRequiredValidators()]),
-            trafficType: this.fb.control('', [...createRequiredValidators()]),
-            operatonType: this.fb.control('', [...createRequiredValidators()]),
-            quantity: this.fb.control(0, [...createRequiredValidators()]),
-            unitNo: this.fb.control('', [...createRequiredValidators()]),
-            observation: this.fb.control('', [...createRequiredValidators()]),
-            products: this.fb.control('', [...createRequiredValidators()]),
-            lockType: this.fb.control('', [...createRequiredValidators()]),
-            arrivalGauge: this.fb.control(0, [...createRequiredValidators()]),
+            navigationType: this.fb.control(data?.navigationType || '', [...createRequiredValidators()]),
+            // company: this.fb.control(data?.pickUpFromCompany?.id || ''),
+            ship: this.fb.control(data?.ship?.id || '', [...createRequiredValidators()]),
+            shipType: this.fb.control(data?.shipType || '', [...createRequiredValidators()]),
+            pavilion: this.fb.control(data?.pavilion || '', [...createRequiredValidators()]),
+            enginePower: this.fb.control(data?.enginePower || 0, [...createRequiredValidators()]),
+            lengthOverall: this.fb.control(data?.lengthOverall || 0, [...createRequiredValidators()]),
+            width: this.fb.control(data?.width || 0, [...createRequiredValidators()]),
+            maxDraft: this.fb.control(data?.maxDraft || 0, [...createRequiredValidators()]),
+            maxQuantity: this.fb.control(data?.maxQuantity || 0, [...createRequiredValidators()]),
+            shipowner: this.fb.control(data?.shipowner || '', [...createRequiredValidators()]),
+            purpose: this.fb.control(data?.purpose || '', [...createRequiredValidators()]),
+            operator: this.fb.control(data?.operator || '', [...createRequiredValidators()]),
+            trafficType: this.fb.control(data?.trafficType || '', [...createRequiredValidators()]),
+            operatonType: this.fb.control(data?.operatonType || '', [...createRequiredValidators()]),
+            quantity: this.fb.control(data?.quantity || 0, [...createRequiredValidators()]),
+            unitNo: this.fb.control(data?.unitNo || '', [...createRequiredValidators()]),
+            observation: this.fb.control(data?.observation || '', [...createRequiredValidators()]),
+            products: this.fb.control(ids || [], [...createRequiredValidators()]),
+            lockType: this.fb.control(data?.lockType || '', [...createRequiredValidators()]),
+            arrivalGauge: this.fb.control(data?.aerialGauge || 0, [...createRequiredValidators()]),
         });
 
         this.stepThreeForm = this.fb.group({
-            clientComments: this.fb.control(''),
-            operatorComments: this.fb.control(''),
-            additionalOperator: this.fb.control(''),
+            clientComments: this.fb.control(data?.clientComments || ''),
+            operatorComments: this.fb.control(data?.operatorComments || ''),
+            additionalOperator: this.fb.control(data?.additionalOperator || ''),
         });
 
     }
@@ -424,6 +449,19 @@ export class WaterAddSchedulingComponent implements OnInit {
         this.dateTimeVal = `${this.dateVal} ${this.timeVal}`;
         this.stepOneForm.patchValue({ estimatedTimeArrival: this.dateTimeVal })
         this.schedulingForm.patchValue({ convoyDetail: this.convoys, documents: this.images, routingDetail: { ...this.stepOneForm.value } })
+
+        if (this.id) {
+            this.planningService.editConvoys(this.id, ({ ...this.stepTwoForm.value, ...this.stepThreeForm.value })).subscribe({
+                next: () => {
+                    this.isLoading$.next(false)
+                    this.router.navigate(['../../success'], { relativeTo: this.route });
+                },
+                error: (body: any) => {
+                    this.isLoading$.next(false)
+                    handleError(this.snackBar, body, this.isLoading$)
+                }
+            });
+        } else {
         this.planningService.create(this.schedulingForm.value).subscribe({
             next: () => {
                 this.router.navigate(['../success'], { relativeTo: this.route });
@@ -434,6 +472,7 @@ export class WaterAddSchedulingComponent implements OnInit {
                 this.isLoading$.next(false);
             }
         })
+    }
     }
 
     patchFile(file: File, index: number): void {

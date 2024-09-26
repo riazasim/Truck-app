@@ -6,10 +6,9 @@ import { PageEvent } from "@angular/material/paginator";
 import { BehaviorSubject } from "rxjs";
 import { PlanningService } from 'src/app/core/services/planning.service';
 import { PlanningModel } from 'src/app/core/models/planning.model';
-import { AuthService } from 'src/app/core/services/auth.service';
-import { MatSidenav } from '@angular/material/sidenav';
 import { SchedulingDeleteModalComponent } from '../../scheduling-delete-modal/scheduling-delete-modal.component';
 import { SchedulingImportModalComponent } from '../../scheduling-import-modal/scheduling-import-modal.component';
+import { RouteDeleteModalComponent } from '../../route-delete-modal/route-delete-modal.component';
 
 @Component({
     selector: 'app-train-planning-list',
@@ -55,40 +54,10 @@ export class TrainPlanningListComponent implements OnChanges {
 
     retrievePlanningList(filterDate: string): void {
         this.retrievePlannings.emit();
-        // this.pageIndex = 0;
-        // this.pageSize = 5;
-        // let data = {
-        //     "start": this.pageIndex,
-        //     "length": this.pageSize,
-        //     "filters": [filterDate, "", "", "", "", ""],
-        //     "order": [{ "dir": "DESC", "column": 0 }]
-        // }
-        // this.planningService.pagination(data).subscribe({
-        //     next: response => {
-        //         this.dataSource = response.items;
-        //         this.originalSource = response.items;
-        //         this.length = response.noTotal;
-        //         this.cd.detectChanges();
-        //         this.isLoading$.next(false);
-        //     }
-        // })
     }
 
     onPaginateChange(event: PageEvent) {
         this.onPaginate.emit({ start: event.pageIndex ? event.pageIndex * event.pageSize : event.pageIndex, length: event.pageSize })
-        // let data = {
-        //     "start": event.pageIndex ? event.pageIndex * event.pageSize : event.pageIndex,
-        //     "length": event.pageSize,
-        //     "filters": ["", "", "", "", "", ""],
-        //     "order": [{ "dir": "DESC", "column": 0 }]
-        // }
-        // this.planningService.pagination(data).subscribe({
-        //     next: response => {
-        //         this.dataSource = response.items;
-        //         this.originalSource = response.items;
-        //         this.cd.detectChanges();
-        //     }
-        // })
     }
 
     OnEmit(row: any, modal: string) {
@@ -98,19 +67,37 @@ export class TrainPlanningListComponent implements OnChanges {
     openDeleteModal(id: number) {
         this.dialogService.open(SchedulingDeleteModalComponent, {
             disableClose: true,
-            data: { "id": id, "title": "planning" }
+            data: { "id": id, "title": "shipment" }
         }).afterClosed()
             .subscribe({
                 next: (isDelete: boolean) => {
                     if (isDelete) {
-                        this.isTableLoading$.next(true);
-                        this.planningService.deleteConvoy(id).subscribe(() => {
-                            this.retrievePlanningList('');
-                            this.cd.detectChanges();
-                        })
+                        // this.planningService.deleteConvoy(id).subscribe({
+                            // next: res => {
+                                // debugger
+                                // if (res.data.attributes.message === "lastShipment") {
+                                    // this.dialogService.open(RouteDeleteModalComponent, {
+                                        // disableClose: true,
+                                        // data: { "id": id, "title": "shipment", "description": "Route against this point will also be deleted." }
+                                    // }).afterClosed()
+                                        // .subscribe({
+                                            // next: (forceToDelete: boolean) => {
+                                                // if (forceToDelete) {
+                                                    this.isTableLoading$.next(true);
+                                                    this.planningService.deleteRailwayShipment(id).subscribe(() => {
+                                                        this.retrievePlanningList('');
+                                                        this.cd.detectChanges();
+                                                    })
+                                                // }
+                                            // }
+                                        // })
+                                // }
+                            // }
+                        // }
+                        // );
                     }
                 }
-            });
+            })
     }
 
     applyFilter(target: any, column: string, isMultipleSearch = false): void {

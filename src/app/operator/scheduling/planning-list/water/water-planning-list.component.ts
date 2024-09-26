@@ -28,7 +28,7 @@ export class WaterPlanningListComponent implements OnChanges {
     @Input() plannings: any;
     @Input() length: number;
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
-    displayedColumns: string[] = ['id', 'manevre', 'vesselId', 'berth', 'products', 'estimatedTimeArrival', 'relativeTimeArrival', 'delay', 'coordinates', 'shipmentStatus', 'actions'];
+    displayedColumns: string[] = ['rid', 'sid', 'manevre', 'vesselId', 'berth', 'products', 'estimatedTimeArrival', 'relativeTimeArrival', 'delay', 'coordinates', 'shipmentStatus', 'actions'];
     dataSource: any[] = [];
     originalSource: any[] = [];
     appliedFilters: any = {};
@@ -108,7 +108,7 @@ export class WaterPlanningListComponent implements OnChanges {
                 next: (isDelete: boolean) => {
                     if (isDelete) {
                         this.isTableLoading$.next(true);
-                        this.planningService.delete(id).subscribe(() => {
+                        this.planningService.deleteConvoy(id).subscribe(() => {
                             this.retrievePlanningList('');
                             this.cd.detectChanges();
                         })

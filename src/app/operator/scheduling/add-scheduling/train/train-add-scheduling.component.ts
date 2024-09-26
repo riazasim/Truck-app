@@ -163,6 +163,7 @@ export class TrainAddSchedulingComponent implements OnInit {
             this.planningService.getConvoy(this.id).subscribe((shipment: any) => {
                 console.log(shipment)
                 this.initForm(0, shipment);
+                this.locomotiveType = shipment?.planningRailway?.locomotive?.locomotiveType;
                 if (shipment?.planningRailway?.conductorType === "Without Laras Conductor App") {
                     this.hideEmail(false)
                 }
@@ -441,8 +442,8 @@ export class TrainAddSchedulingComponent implements OnInit {
         this.stepTwoForm = this.fb.group({
             pickUpFromCompany: this.fb.control(data?.pickUpFromCompany?.id || '', [...createRequiredValidators()]),
             deliverToCompany: this.fb.control(data?.deliverToCompany?.id || '', [...createRequiredValidators()]),
-            pickUpPoint: this.fb.control('', [...createRequiredValidators()]),
-            deliverPoint: this.fb.control('', [...createRequiredValidators()]),
+            pickUpPoint: this.fb.control(data?.pickUpPoint?.pointType || '', [...createRequiredValidators()]),
+            deliverPoint: this.fb.control(data?.deliverPoint?.pointType || '', [...createRequiredValidators()]),
             estimatedTimePickUp: this.fb.control(''),
             estimatedTimeDeliver: this.fb.control(''),
             planningRailwayShipmentWagons: this.fb.array([]),

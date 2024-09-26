@@ -20,6 +20,17 @@ export class MicroService {
                 })
             );
     }
+
+    paginatePorts(data: any): Observable<any> {
+        return this.http.post<ResponseArrayPaginationWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getPaginatePorts`, wrapJsonForRequest(data))
+            .pipe(pluckArrayPaginationWrapperData<any, ResponseArrayPaginationWrapper<any>>(),
+                map((u: any) => {
+                    u.items = (<any>u.items).map(((c: CustomFieldData) => c.attributes));
+                    return u;
+                })
+            );
+    }
+
     getPorts(id: any = {}): Observable<any> {
         return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getPorts`, { "organizationId": id })
             .pipe(pluckItemWrapperData<any, ResponseItemWrapper<any>>(),

@@ -147,6 +147,11 @@ export class PlanningService {
         return this.http.post(`${environment.apiUrl}${environment.apiVersion}/deletePlanningConvoy`, wrapJsonForRequest(data))
     }
 
+    deleteRailwayShipment(id: number, forceToDelete: boolean = true): Observable<any> {
+        let data = { "planningShipmentId": id , "forceToDelete":  forceToDelete };
+        return this.http.post(`${environment.apiUrl}${environment.apiVersion}/deletePlanningConvoy`, wrapJsonForRequest(data))
+    }
+
     checkDeleteRoute(id: number): Observable<any> {
         let data = { "planningRouteDetailId": id };
         return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/checkPlanningRouteDetailExistedInShipemntAlertElseDelete`, data)

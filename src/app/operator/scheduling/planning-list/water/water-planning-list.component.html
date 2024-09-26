@@ -7,14 +7,28 @@
                         [class.loading]="isTableLoading$ | async" aria-label="Usage Table" cdk-table
                         [dataSource]="dataSource">
 
-                        <ng-container cdkColumnDef="id">
+                        <ng-container cdkColumnDef="rid">
                             <th cdk-header-cell *cdkHeaderCellDef scope="col" class="max-w-40">
                                 <section class="flex flex-col gap-4">
-                                    <div mat-sort-header="id">RID</div>
+                                    <div mat-sort-header="rid">RID</div>
                                 </section>
                             </th>
                             <td cdk-cell *cdkCellDef="let row">
                                 {{row?.planningWater?.rId || '-'}}
+                            </td>
+                            <td cdk-footer-cell *cdkFooterCellDef [colSpan]="displayedColumns.length"
+                                class="py-4 font-bold text-center">
+                                {{'messages.there-no-more-items' | translate}}
+                            </td>
+                        </ng-container>
+                        <ng-container cdkColumnDef="sid">
+                            <th cdk-header-cell *cdkHeaderCellDef scope="col" class="max-w-40">
+                                <section class="flex flex-col gap-4">
+                                    <div mat-sort-header="sid">SID</div>
+                                </section>
+                            </th>
+                            <td cdk-cell *cdkCellDef="let row">
+                                {{row?.sId || '-'}}
                             </td>
                             <td cdk-footer-cell *cdkFooterCellDef [colSpan]="displayedColumns.length"
                                 class="py-4 font-bold text-center">
@@ -52,7 +66,7 @@
                                 </section>
                             </th>
                             <td cdk-cell *cdkCellDef="let row">
-                                {{ row?.planningWater?.berth?.name || "-" }}
+                                {{ row?.berth || "-" }}
                             </td>
                         </ng-container>
                         <ng-container cdkColumnDef="products">
@@ -64,7 +78,7 @@
                                 </section>
                             </th>
                             <td cdk-cell *cdkCellDef="let row;">
-                                {{ row?.planningWater?.planningWaterShipments[0]?.productCount || "-" }}
+                                {{ row?.productCount || "-" }}
                             </td>
                         </ng-container>
                         <ng-container cdkColumnDef="estimatedTimeArrival">
@@ -112,7 +126,7 @@
                                 </section>
                             </th>
                             <td cdk-cell *cdkCellDef="let row">
-                                {{ row?.planningWater?.ridCoordinates || "-" }}
+                                {{ row?.sidCoordinates || "-" }}
                             </td>
                         </ng-container>
                         <ng-container cdkColumnDef="shipmentStatus">
@@ -124,8 +138,8 @@
                                 </section>
                             </th>
                             <td cdk-cell *cdkCellDef="let row">
-                                <mat-chip [ngStyle]="{'background-color': row?.planningWater?.planningStatus?.color}">
-                                    {{ row?.planningWater?.planningStatus?.name }}
+                                <mat-chip [ngStyle]="{'background-color': row?.planningWaterShipmentStatus?.color}">
+                                    {{ row?.planningWaterShipmentStatus?.name }}
                                     <!-- {{ row?.planningWater?.planningWaterStatus?.color }} -->
                                 </mat-chip>
                             </td>
@@ -145,15 +159,15 @@
                                             class="cursor-pointer"></a>
                                     <fa-icon icon="xmark" class="text-[#17A0B5] cursor-pointer" size="lg"
                                         *ngIf="userRole === 'ROLE_USER_TRANSPORT'"
-                                        (click)="openDeleteModal(row.planningWater.id)"></fa-icon>
+                                        (click)="openDeleteModal(row.id)"></fa-icon>
                                 </div>
                                 <div class="flex gap-4">
                                     <fa-icon icon="eye" class="text-[#17A0B5] cursor-pointer" size="lg"
                                         *ngIf="userRole === 'ROLE_USER_TRANSPORT'"
-                                        [routerLink]="['../edit', row?.planningWater?.id]"></fa-icon>
-                                    <img src="assets/images/boat.svg" alt="icon" class="cursor-pointer max-w-5 max-h-5"
+                                        [routerLink]="['../edit', row?.id]"></fa-icon>
+                                    <!-- <img src="assets/images/boat.svg" alt="icon" class="cursor-pointer max-w-5 max-h-5"
                                         *ngIf="userRole === 'ROLE_USER_TRANSPORT'"
-                                        [routerLink]="['../route',row?.planningWater?.id ,'convoy-list']">
+                                        [routerLink]="['../route',row?.planningWater?.id ,'convoy-list']"> -->
                                     <a class="text-primary" href="javascript:void(0)"
                                         (click)="OnEmit(row , 'shipment')"><img
                                             src="assets/images/rotate-left-list-icon.svg" alt="icon"
