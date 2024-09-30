@@ -369,7 +369,7 @@ export class PlanningService {
             )
     }
     convoyLogs(id: number): Observable<any> {
-        return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/planningConvoyLogList`, { "planningShipmentId": id })
+        return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/planningConvoyLog`, { "planningShipmentId": id })
             .pipe(pluckItemWrapperData<any, ResponseItemWrapper<any>>(),
                 map((p: any) => {
                     return p;

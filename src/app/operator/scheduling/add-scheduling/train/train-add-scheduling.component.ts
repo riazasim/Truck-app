@@ -153,6 +153,7 @@ export class TrainAddSchedulingComponent implements OnInit {
         this.addWagons();
         this.addPoints();
         this.retrieveStations();
+        this.cd.detectChanges()
         this.isLoading$.next(false);
     }
 
@@ -430,12 +431,12 @@ export class TrainAddSchedulingComponent implements OnInit {
                 convoyDetail: this.fb.control([]),
                 documents: this.fb.control([]),
             });
-
             if (data?.planningRailway?.planningRailwayRoutingDetails.length > 0) {
                 data?.planningRailway?.planningRailwayRoutingDetails.map((item: any) => {
-                    this.stations.push(item?.station)
-                    this.stationTypes.push(item?.stationType)
+                    // this.stations.push(item?.station)
+                    // this.stationTypes.push(item?.stationType)
                     this.addPoints(item);
+                    this.cd.detectChanges()
                 })
             }
         }
@@ -452,6 +453,7 @@ export class TrainAddSchedulingComponent implements OnInit {
         if (data?.planningRailwayShipmentWagons.length > 0) {
             data?.planningRailwayShipmentWagons.map((item: any) => {
                 this.addWagons(item);
+                this.cd.detectChanges()
             })
         }
 

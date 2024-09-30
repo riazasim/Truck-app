@@ -181,7 +181,7 @@
             </div>
             <div class="min-xl:px-[50px] grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20 mt-4">
                 <div class="gap-y-4 mb-5 min-xl:px-[50px]">
-                    <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]" routerLink="../">
+                    <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]" [routerLink]="id ? '../../' : '../'">
                         {{ "button.back" | translate }}
                     </button>
                 </div>

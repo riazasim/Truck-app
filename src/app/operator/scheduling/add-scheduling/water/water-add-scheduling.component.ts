@@ -391,7 +391,6 @@ export class WaterAddSchedulingComponent implements OnInit {
 
     initForm(index?: any, data?: any): void {
         if (index !== 1) {
-            debugger
             this.stepOneForm = this.fb.group({
                 convoyType: this.fb.control({ value: data?.planningWater?.convoyType || '', disabled: data?.planningWater?.convoyType ? true : false }, [...createRequiredValidators()]),
                 estimatedTimeArrival: this.fb.control(''),

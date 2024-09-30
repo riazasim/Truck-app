@@ -12,6 +12,7 @@ import { handleError } from 'src/app/shared/utils/error-handling.function';
 import { RolesService } from 'src/app/core/services/roles.service';
 import html2canvas from 'html2canvas';
 import jspdf from 'jspdf';
+import { OrganizationService } from 'src/app/core/services/organization.service';
 
 @Component({
     selector: 'scheduling-view-modal',
@@ -37,49 +38,52 @@ export class SchedulingViewModalComponent implements OnChanges {
     @Input() id: number;
     @Input() modal: string;
     @Input() sidenav: MatSidenav;
-    @Input() planning$: BehaviorSubject<any | null>;
+    @Input() planning: any;
     userIds: any[] = [];
-    planning: any;
     shipmentLogs: any[];
     step$: BehaviorSubject<number> = new BehaviorSubject<number>(1);
     displayedColumns: string[] = ['select', 'name'];
     transferData: any[];
     dataSource: MatTableDataSource<any>
     selection: any;
-    userRole : string;
-    selectedRole : string;
+    userRole: string;
+    selectedRole: string;
+    trasnportmode: any
 
     constructor(
         private readonly planningService: PlanningService,
         private readonly dialog: MatDialog,
         private readonly snackBar: MatSnackBar,
-        private readonly roleService : RolesService
+        private readonly roleService: RolesService,
+        private readonly organizationService: OrganizationService,
     ) {
         this.getUser();
+        this.trasnportmode = organizationService.getAppModeId()
+        console.log(this.trasnportmode, 'transportmode')
     }
 
-    convertToPDF(){  
-    var data = document.getElementById('content')!;
-    html2canvas(data).then(canvas => {  
-        var imgWidth = 208;   
-        var pageHeight = 295;    
-        var imgHeight = canvas.height * imgWidth / canvas.width;  
-        var heightLeft = imgHeight;  
+    convertToPDF() {
+        var data = document.getElementById('content')!;
+        html2canvas(data).then(canvas => {
+            var imgWidth = 208;
+            var pageHeight = 295;
+            var imgHeight = canvas.height * imgWidth / canvas.width;
+            var heightLeft = imgHeight;
 
-        const contentDataURL = canvas.toDataURL('image/png')  
-        let pdf = new jspdf('p', 'mm', 'a4'); // A4 size page of PDF  
-        var position = 0;  
-        pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight)  
-        pdf.save('RID-logs.pdf');   
-    });  
-}
+            const contentDataURL = canvas.toDataURL('image/png')
+            let pdf = new jspdf('p', 'mm', 'a4'); // A4 size page of PDF  
+            var position = 0;
+            pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight)
+            pdf.save('RID-logs.pdf');
+        });
+    }
 
     ngOnChanges(): void {
-        if(this.modal === "shipment")
-        this.retrieveLogHistory();
+        if (this.modal === "shipment")
+            this.retrieveLogHistory();
     }
 
-    getUser(){
+    getUser() {
         this.userRole = this.roleService.getUserRoles();
     }
 
@@ -91,8 +95,8 @@ export class SchedulingViewModalComponent implements OnChanges {
     onRoleSelect(userRole: string): void {
         this.isLoading$.next(true)
         const data = {
-            "planningId" : this.id,
-            "userRole" : userRole
+            "planningId": this.id,
+            "userRole": userRole
         }
         this.planningService.getTransferData(data).subscribe((response: any) => {
             this.isLoading$.next(false)
@@ -105,10 +109,27 @@ export class SchedulingViewModalComponent implements OnChanges {
     }
 
     retrieveLogHistory(): void {
-        this.planningService.listLogs(this.id).subscribe(response => {
-            this.planning = response[0].attributes
-            this.isLoading$.next(false);
-        })
+        console.log(this.planning , this.trasnportmode)
+    //     this.planningService.convoyLogs(this.id).subscribe(response => {
+    //         let  logData;
+    // //   debugger
+    //     if (this.trasnportmode === 1) {
+    //         logData = response[0]?.attributes;
+    //     } 
+    //     else if (this.trasnportmode === 2) {
+    //         logData = response[0]?.attributes;
+    //     } 
+    //     else if (this.trasnportmode === 3) {
+    //         logData = response[0]?.attributes;
+    //     }
+
+    //     if (logData) {
+    //         this.planning = logData;
+    //         this.isLoading$.next(false);
+    //     } else {
+    //         console.error("No log data found for the selected transport mode.");
+    //     }
+    // });
     }
     onUserSelect(id: any): void {
         if (!this.userIds) {
@@ -134,7 +155,7 @@ export class SchedulingViewModalComponent implements OnChanges {
                 this.step$.next(1);
                 handleSuccess(this.snackBar, { message: "Assigned successfully" }, this.isLoading$);
             },
-            error : (body) =>{
+            error: (body) => {
                 this.isLoading$.next(false)
                 this.step$.next(1)
                 handleError(this.snackBar, body, this.isLoading$);

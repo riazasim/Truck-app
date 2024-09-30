@@ -55,44 +55,17 @@ export class WaterPlanningListComponent implements OnChanges {
 
     retrievePlanningList(filterDate: string): void {
         this.retrievePlannings.emit();
-        // this.pageIndex = 0;
-        // this.pageSize = 5;
-        // let data = {
-        //     "start": this.pageIndex,
-        //     "length": this.pageSize,
-        //     "filters": [filterDate, "", "", "", "", ""],
-        //     "order": [{ "dir": "DESC", "column": 0 }]
-        // }
-        // this.planningService.pagination(data).subscribe({
-        //     next: response => {
-        //         this.dataSource = response.items;
-        //         this.originalSource = response.items;
-        //         this.length = response.noTotal;
-        //         this.cd.detectChanges();
-        //         this.isLoading$.next(false);
-        //     }
-        // })
     }
 
     onPaginateChange(event: PageEvent) {
         this.onPaginate.emit({ start: event.pageIndex ? event.pageIndex * event.pageSize : event.pageIndex, length: event.pageSize })
-        // let data = {
-        //     "start": event.pageIndex ? event.pageIndex * event.pageSize : event.pageIndex,
-        //     "length": event.pageSize,
-        //     "filters": ["", "", "", "", "", ""],
-        //     "order": [{ "dir": "DESC", "column": 0 }]
-        // }
-        // this.planningService.pagination(data).subscribe({
-        //     next: response => {
-        //         this.dataSource = response.items;
-        //         this.originalSource = response.items;
-        //         this.cd.detectChanges();
-        //     }
-        // })
     }
 
     OnEmit(row: any, modal: string) {
-        this.triggerOpenLogs.emit({ view: 'view', id: row.planning.id, planning: row, modal: modal })
+        this.planningService.convoyLogs(row.id).subscribe(response => {
+            this.triggerOpenLogs.emit({ view: 'view', id: row.id, planning: response, modal: modal })
+        }
+        )
     }
 
 

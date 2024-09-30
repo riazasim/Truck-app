@@ -1,12 +1,12 @@
 <mat-sidenav-container [ngClass]="{ '!absolute top-0 bottom-0 left-0 right-0': sidenav.opened }" autosize>
     <mat-sidenav #sidenav mode="over" position="end" fullscreen>
         <ng-container [ngSwitch]="componentName$ | async">
-            <scheduling-edit-plan *ngSwitchCase="'edit'" [sidenav]="sidenav" [isLoading]="!!(isLoading$ | async)"
+            <!-- <scheduling-edit-plan *ngSwitchCase="'edit'" [sidenav]="sidenav" [isLoading]="!!(isLoading$ | async)"
                 [planning$]="editPlanning$" (triggerUpdatePlanning)="openPlanEditModal($event)"
-                [filterDate]="filterDate" (triggerFetchPlannings)="handleDateChange($event)"></scheduling-edit-plan>
-            <scheduling-view-modal [planning$]="editPlanning$" [id]="logId" *ngSwitchCase="'view'" [modal]="logModal"
+                [filterDate]="filterDate" (triggerFetchPlannings)="handleDateChange($event)"></scheduling-edit-plan> -->
+            <scheduling-view-modal [planning]="planning" [id]="logId" *ngSwitchCase="'view'" [modal]="logModal"
                 [sidenav]="sidenav"></scheduling-view-modal>
-            <scheduling-send-message [planning$]="editPlanning$" *ngSwitchCase="'mess'" [sidenav]="sidenav"
+            <scheduling-send-message [planning$]="planning" *ngSwitchCase="'mess'" [sidenav]="sidenav"
                 (triggerPlanUpgradeWarning)="handleOpenPlanUpgradeWarning()"></scheduling-send-message>
         </ng-container>
     </mat-sidenav>

@@ -120,7 +120,7 @@ import { NoConvoyComponent } from './no-convoy/no-convoy.component';
         TrainAddSchedulingComponent,
         WaterAddSchedulingComponent,
         RouteDeleteModalComponent,
-        NoConvoyComponent
+        NoConvoyComponent,
     ],
     imports: [
         CommonModule,

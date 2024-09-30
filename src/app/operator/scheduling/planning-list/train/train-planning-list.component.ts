@@ -5,10 +5,8 @@ import { compare } from 'src/app/shared/utils/sort.function';
 import { PageEvent } from "@angular/material/paginator";
 import { BehaviorSubject } from "rxjs";
 import { PlanningService } from 'src/app/core/services/planning.service';
-import { PlanningModel } from 'src/app/core/models/planning.model';
 import { SchedulingDeleteModalComponent } from '../../scheduling-delete-modal/scheduling-delete-modal.component';
 import { SchedulingImportModalComponent } from '../../scheduling-import-modal/scheduling-import-modal.component';
-import { RouteDeleteModalComponent } from '../../route-delete-modal/route-delete-modal.component';
 
 @Component({
     selector: 'app-train-planning-list',
@@ -18,7 +16,7 @@ import { RouteDeleteModalComponent } from '../../route-delete-modal/route-delete
 })
 export class TrainPlanningListComponent implements OnChanges {
 
-    @Output() triggerOpenLogs: EventEmitter<{ view: string, id: number, planning: PlanningModel, modal: string }> = new EventEmitter();
+    @Output() triggerOpenLogs: EventEmitter<{ view: string, id: number, planning: any, modal: string }> = new EventEmitter();
     @Output() onPaginate: EventEmitter<any> = new EventEmitter();
     @Output() retrievePlannings: EventEmitter<any> = new EventEmitter();
     @Input() isTableLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
@@ -61,7 +59,10 @@ export class TrainPlanningListComponent implements OnChanges {
     }
 
     OnEmit(row: any, modal: string) {
-        this.triggerOpenLogs.emit({ view: 'view', id: row.planning.id, planning: row, modal: modal })
+        this.planningService.convoyLogs(row.id).subscribe(response => {
+            this.triggerOpenLogs.emit({ view: 'view', id: row.id, planning: response, modal: modal })
+        }
+        )
     }
 
     openDeleteModal(id: number) {
@@ -73,26 +74,26 @@ export class TrainPlanningListComponent implements OnChanges {
                 next: (isDelete: boolean) => {
                     if (isDelete) {
                         // this.planningService.deleteConvoy(id).subscribe({
-                            // next: res => {
-                                // debugger
-                                // if (res.data.attributes.message === "lastShipment") {
-                                    // this.dialogService.open(RouteDeleteModalComponent, {
-                                        // disableClose: true,
-                                        // data: { "id": id, "title": "shipment", "description": "Route against this point will also be deleted." }
-                                    // }).afterClosed()
-                                        // .subscribe({
-                                            // next: (forceToDelete: boolean) => {
-                                                // if (forceToDelete) {
-                                                    this.isTableLoading$.next(true);
-                                                    this.planningService.deleteRailwayShipment(id).subscribe(() => {
-                                                        this.retrievePlanningList('');
-                                                        this.cd.detectChanges();
-                                                    })
-                                                // }
-                                            // }
-                                        // })
-                                // }
-                            // }
+                        // next: res => {
+                        // debugger
+                        // if (res.data.attributes.message === "lastShipment") {
+                        // this.dialogService.open(RouteDeleteModalComponent, {
+                        // disableClose: true,
+                        // data: { "id": id, "title": "shipment", "description": "Route against this point will also be deleted." }
+                        // }).afterClosed()
+                        // .subscribe({
+                        // next: (forceToDelete: boolean) => {
+                        // if (forceToDelete) {
+                        this.isTableLoading$.next(true);
+                        this.planningService.deleteRailwayShipment(id).subscribe(() => {
+                            this.retrievePlanningList('');
+                            this.cd.detectChanges();
+                        })
+                        // }
+                        // }
+                        // })
+                        // }
+                        // }
                         // }
                         // );
                     }

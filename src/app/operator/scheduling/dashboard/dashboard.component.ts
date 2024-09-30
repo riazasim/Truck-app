@@ -502,7 +502,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         };
         this.planningService.getPaginatePlanningShipment(data).subscribe((response: any) => {
             this.plannings = response.items;
-            this.planning = this.plannings;
             this.length = response.noFiltered;
             this.isTableLoading$.next(false);
             this.isCardDetailsLoading$.next(false)
@@ -613,7 +612,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
             });
     }
 
-    toggleSidenav(data: { view: string, id: number, planning?: PlanningModel, modal: string }) {
+    toggleSidenav(data: { view: string, id: number, planning?: any, modal: string }) {
         if (!this.sidenav) {
             console.error('Sidenav is not initialized');
             return;
@@ -628,8 +627,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
                 break;
             case 'view':
                 this.logId = data.id;
-                const planning = data.planning ? data.planning : this.plannings.find(p => p.id === data.id) || null;
-                this.editPlanning$.next(planning)
+                this.planning = data.planning ? data.planning : this.plannings.find(p => p.id === data.id) || null;
                 this.componentName$.next(data.view);
                 this.sidenav.open();
                 break;
