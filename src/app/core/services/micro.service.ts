@@ -12,7 +12,7 @@ import { CustomFieldData } from "../models/custom-field.model";
 export class MicroService {
     constructor(private readonly http: HttpClient) { }
     getMicroPlanningConvoyes(data: any): Observable<any> {
-        return this.http.post<ResponseArrayPaginationWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getPlanningConvoyes`, wrapJsonForRequest(data))
+        return this.http.post<ResponseArrayPaginationWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getPaginatePlanningShipment`, wrapJsonForRequest(data))
             .pipe(pluckArrayPaginationWrapperData<any, ResponseArrayPaginationWrapper<any>>(),
                 map((u: any) => {
                     u.items = (<any>u.items).map(((c: CustomFieldData) => c.attributes));

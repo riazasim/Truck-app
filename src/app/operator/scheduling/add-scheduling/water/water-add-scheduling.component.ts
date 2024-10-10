@@ -106,9 +106,8 @@ export class WaterAddSchedulingComponent implements OnInit {
     arrivalZone: any[] = [];
     companies: any[];
     shipType = [
-        { id: 1, name: 'ship type1' },
-        { id: 2, name: 'ship type2' },
-        { id: 3, name: 'ship type3' },
+        { id: 1, name: 'SELF PROPELLED' },
+        { id: 2, name: 'WITHOUT PROPULSION' },
     ];
     agent = [
         { id: 1, name: 'agent1' },
@@ -116,9 +115,19 @@ export class WaterAddSchedulingComponent implements OnInit {
         { id: 3, name: 'agent3' },
     ];
     trafficType = [
-        { id: 1, name: 'traffic type1' },
-        { id: 2, name: 'traffic type2' },
-        { id: 3, name: 'traffic type3' },
+        { id: 1, name: 'Export' },
+        { id: 2, name: 'Import' },
+        { id: 3, name: 'Tranzit' },
+        { id: 4, name: 'Cabotaj' },
+    ];
+    purpose = [
+        { id: 1, name: 'Towage' },
+        { id: 2, name: 'Unloading' },
+        { id: 3, name: 'Loading' },
+    ];
+    convoyType = [
+        { id: 1, name: 'Arrival' },
+        { id: 2, name: 'Departure' },
     ];
 
 
@@ -145,6 +154,10 @@ export class WaterAddSchedulingComponent implements OnInit {
         this.isLoading$.next(false);
         this.retrivePorts();
         this.retriveProducts()
+    }
+
+    temp() {
+        console.log(this.stepTwoForm.value, this.stepTwoForm.valid)
     }
 
     subscribeForQueryParams(): void {
@@ -263,7 +276,7 @@ export class WaterAddSchedulingComponent implements OnInit {
             if (Number(item.id) === Number(ev.target.value)) departurePort = item;
         })
         if (departurePort) {
-            this.stepOneForm.patchValue({ ridCoordinates: departurePort?.addrCoordinates })
+            this.stepOneForm.patchValue({ ridCoordinates: departurePort?.addrCoordinates || "44.179249,28.649940" })
             // console.log(departurePort?.zones);
             // this.departureZone = departurePort?.zones;
             this.retriveCompanines(departurePort.id);
@@ -344,7 +357,9 @@ export class WaterAddSchedulingComponent implements OnInit {
                 maxDraft: selectedShip.attributes.maxDraft || '',
                 maxQuantity: selectedShip.attributes.maxCapacity || '',
                 arrivalGauge: selectedShip.attributes.aerialGauge || '',
-                lockType: selectedShip.attributes.lockType || ''
+                lockType: selectedShip.attributes.lockType || '',
+                shipType: selectedShip.attributes.propulsionType || '',
+
             });
         }
     }
@@ -438,8 +453,9 @@ export class WaterAddSchedulingComponent implements OnInit {
         });
 
         const ids = data?.planningWaterShipmentProducts?.map((item: any) => item?.product?.id)
+        this.productsList = ids;
         this.stepTwoForm = this.fb.group({
-            navigationType: this.fb.control(data?.navigationType || '', [...createRequiredValidators()]),
+            navigationType: this.fb.control("Fluvial", [...createRequiredValidators()]),
             // company: this.fb.control(data?.pickUpFromCompany?.id || ''),
             ship: this.fb.control(data?.ship?.id || '', [...createRequiredValidators()]),
             shipType: this.fb.control(data?.shipType || '', [...createRequiredValidators()]),
@@ -458,8 +474,8 @@ export class WaterAddSchedulingComponent implements OnInit {
             unitNo: this.fb.control(data?.unitNo || '', [...createRequiredValidators()]),
             observation: this.fb.control(data?.observation || '', [...createRequiredValidators()]),
             products: this.fb.control(ids || [], [...createRequiredValidators()]),
-            lockType: this.fb.control(data?.lockType || '', [...createRequiredValidators()]),
-            arrivalGauge: this.fb.control(data?.aerialGauge || '', [...createRequiredValidators()]),
+            lockType: this.fb.control(data?.lockType || ''),
+            arrivalGauge: this.fb.control(data?.aerialGauge || ''),
         });
 
         this.stepThreeForm = this.fb.group({

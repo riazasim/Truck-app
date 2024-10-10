@@ -108,7 +108,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     getTransportMode() {
         this.transportMode = this.organizationService.getAppMode();
-        console.log(this.transportMode)
     }
 
     getCardDetails(item: any = 0) {

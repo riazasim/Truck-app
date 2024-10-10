@@ -4,8 +4,16 @@
         <form [formGroup]="stepOneForm" *ngIf="!(isLoading$ | async)" class="flex flex-col items-center">
             <div class="grid grid-cols-1 gap-x-10 w-full place-items-center gap-y-4 pt-[100px] min-xl:px-[50px]">
                 <div class="flex flex-col gap-y-4 min-xl:px-[50px] min-md:w-[640px] w-[90%]">
-                    <div [loading]="(isPortsLoading$ | async)" iconic-input-wrapper leftIcon="user">
+                    <!-- <div [loading]="(isPortsLoading$ | async)" iconic-input-wrapper leftIcon="user">
                         <input inputRef type="text" placeholder="Convoy Type" formControlName="convoyType" />
+                    </div> -->
+                    <div [loading]="(isPortsLoading$ | async)" iconic-select-wrapper leftSvg="assets/images/scheduling_trafic_type.svg">
+                        <select spAccessInputRef name="convoyType" id="convoyType" formControlName="convoyType">
+                            <option disabled value="">Convoy Type*</option>
+                            <option *ngFor="let convoyType of convoyType" [value]="convoyType.id">
+                                {{ convoyType.name }}
+                            </option>
+                        </select>
                     </div>
                     <div class="grid grid-cols-2 gap-x-8 gap-y-4 mb-5">
                         <datepicker [loading]="(isPortsLoading$ | async)" matTooltipClass="drop-shadow-lg"
@@ -90,7 +98,7 @@
                     </div>
                     <div [loading]="(isPortsLoading$ | async)" iconic-input-wrapper
                         leftSvg="assets/images/scheduling_port.svg">
-                        <input inputRef type="text" placeholder="Pilot Company" formControlName="pilotCompany" />
+                        <input inputRef type="text" placeholder="Pilot Company" formControlName="pilotCompany" (keydown)="temp()" />
                     </div>
                     <!-- <div [loading]="(isPortsLoading$ | async)" iconic-input-wrapper
                         leftSvg="assets/images/scheduling_length.svg" formGroupName="routingDetail">
@@ -126,7 +134,8 @@
             </div>
             <div class="grid grid-cols-1 gap-x-10 mt-4 min-md:w-[640px] w-[90%]">
                 <div class="gap-y-4 mb-5 min-xl:px-[50px]">
-                    <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]" [routerLink]="id ? '../../' : '../'">
+                    <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]"
+                        [routerLink]="id ? '../../' : '../'">
                         {{ "button.back" | translate }}
                     </button>
                 </div>
@@ -162,14 +171,15 @@
                         </select>
                     </div>
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_navigation.svg">
-                        <input inputRef type="text" placeholder="Navigation type*" formControlName="navigationType" />
+                        <input readonly inputRef type="text" placeholder="Navigation type*"
+                            formControlName="navigationType" />
                     </div>
 
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_ship_owner.svg">
                         <input inputRef type="text" placeholder="Ship owner" formControlName="shipowner" />
                     </div>
-                    <mat-select class="mb-6" placeholder="Products" multiple
-                        (selectionChange)="onProductChange($event)" [value]="productsList">
+                    <mat-select class="mb-6" placeholder="Products" multiple (selectionChange)="onProductChange($event)"
+                        [value]="productsList">
                         <searchbar>
                             <fa-icon icon="search" leftIcon></fa-icon>
                             <input input type="text" (keyup)="onInputChange($event)">
@@ -183,8 +193,16 @@
                             <p class="text-center text-columnCell">No Product Found</p>
                         </div>
                     </mat-select>
-                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_purpose.svg">
+                    <!-- <div iconic-input-wrapper leftSvg="assets/images/scheduling_purpose.svg">
                         <input inputRef type="text" placeholder="Purpose" formControlName="purpose" />
+                    </div> -->
+                    <div iconic-select-wrapper leftSvg="assets/images/scheduling_trafic_type.svg">
+                        <select spAccessInputRef name="purpose" id="purpose" formControlName="purpose">
+                            <option disabled value="">Purpose*</option>
+                            <option *ngFor="let purpose of purpose" [value]="purpose.id">
+                                {{ purpose.name }}
+                            </option>
+                        </select>
                     </div>
                     <div iconic-select-wrapper leftSvg="assets/images/scheduling_trafic_type.svg">
                         <select spAccessInputRef name="trafficType" id="trafficType" formControlName="trafficType">
@@ -208,9 +226,6 @@
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_observation.svg">
                         <input inputRef type="text" placeholder="Observation" formControlName="observation" />
                     </div>
-                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_port.svg">
-                        <input inputRef type="text" maxlength="4" placeholder="Pavilion*" formControlName="pavilion" />
-                    </div>
                 </div>
                 <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
                     <div iconic-select-wrapper leftIcon="grid-2">
@@ -222,10 +237,11 @@
                             </option>
                         </select>
                     </div>
+
                     <div iconic-select-wrapper leftSvg="assets/images/scheduling_ship_type.svg">
                         <select spAccessInputRef name="shipType" id="shipType" formControlName="shipType">
-                            <option disabled value="">Ship type*</option>
-                            <option *ngFor="let shipType of shipType" [value]="shipType.id">
+                            <option disabled value="">Propulsion Type*</option>
+                            <option *ngFor="let shipType of shipType" [value]="shipType.name">
                                 {{ shipType.name }}
                             </option>
                         </select>
@@ -247,9 +263,9 @@
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_weight.svg">
                         <input inputRef type="number" placeholder="C.max (t)*" formControlName="maxQuantity" />
                     </div>
-                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_convoy.svg">
+                    <!-- <div iconic-input-wrapper leftSvg="assets/images/scheduling_convoy.svg">
                         <input inputRef type="number" placeholder="Aerial Guage (M)*" formControlName="arrivalGauge" />
-                    </div>
+                    </div> -->
                     <!-- <div iconic-select-wrapper
                         leftSvg="assets/images/scheduling_lock.svg" >
                         <select spAccessInputRef name="typeOfLock" id="typeOfLock" formControlName="lockType">
@@ -259,11 +275,14 @@
                             </option>
                         </select>
                     </div> -->
-                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_lock.svg">
+                    <!-- <div iconic-input-wrapper leftSvg="assets/images/scheduling_lock.svg">
                         <input inputRef type="text" placeholder="Type of lock" formControlName="lockType" />
-                    </div>
+                    </div> -->
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_weight.svg">
                         <input inputRef type="number" placeholder="Quantity (t)" formControlName="quantity" />
+                    </div>
+                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_port.svg">
+                        <input inputRef type="text" maxlength="4" placeholder="Pavilion*" formControlName="pavilion" />
                     </div>
 
                 </div>
@@ -291,8 +310,8 @@
                     [formGroup]="stepThreeForm">
                     <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
                         <div iconic-input-wrapper leftIcon="user">
-                            <input readonly inputRef type="text" placeholder="Operator" formControlName="additionalOperator"
-                                class="text-center" />
+                            <input readonly inputRef type="text" placeholder="Operator"
+                                formControlName="additionalOperator" class="text-center" />
                         </div>
                         <mat-button-toggle-group class="flex w-full justify-end items-center mb-[21px]">
                             <button
@@ -376,16 +395,22 @@
                         {{ "button.back" | translate }}
                     </button>
                 </div>
-                <div class="gap-y-4 mb-5 min-xl:px-[50px]">
+                <div class="gap-y-4 mb-5 min-xl:px-[50px]" *ngIf="!id">
                     <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]" (click)="next(3)"
                         [disabled]="!(stepThreeForm.valid)">
                         {{ "button.next" | translate }}
                     </button>
                 </div>
+                <div class="gap-y-4 mb-5 min-xl:px-[50px]" *ngIf="id">
+                    <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]" (click)="saveScheduling()"
+                        [disabled]="!(stepThreeForm.valid)">
+                        Update
+                    </button>
+                </div>
             </div>
         </div>
     </mat-step>
-    <mat-step label="Save or Extend">
+    <mat-step label="Save or Extend" *ngIf="!id">
         <app-loader *ngIf="isLoading$ | async" [isContainer]="true" [fullScreen]="false"></app-loader>
         <div class="flex flex-col justify-center" *ngIf="!(isLoading$ | async)">
             <div class="flex-1 flex justify-center gap-10 w-full max-lg:flex-col cursor-pointer">

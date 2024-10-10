@@ -3,7 +3,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
 import { Row } from 'read-excel-file';
-import { BehaviorSubject, combineLatest, map, switchMap } from 'rxjs';
+import { BehaviorSubject, combineLatest, from, map, switchMap } from 'rxjs';
 import { BookingModel } from 'src/app/core/models/booking.model';
 import { DockService } from 'src/app/core/services/dock.service';
 import { LocationService } from 'src/app/core/services/location.service';
@@ -47,7 +47,17 @@ export class SchedulingImportModalComponent {
       return;
     }
 
-    console.log(parseExcelToJson(this.fileElement.nativeElement.files[0]))
+    from(parseExcelToJson(this.fileElement.nativeElement.files[0])).subscribe((res: any) => {
+      this.planningService.importPlannings(res).subscribe({
+        next: () => {
+          this.dialogRef.close(true);
+        },
+        error: (body) => {
+          handleError(this.snackBar, body, this.isLoading$);
+          this.dialogRef.close(true);
+        }
+      })
+    })
     // parseExcelFile(this.fileElement.nativeElement.files[0])
     //   .pipe(
     //     map(rowsWithHeader => rowsWithHeader.slice(1)),

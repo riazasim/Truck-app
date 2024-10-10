@@ -148,7 +148,7 @@ export class PlanningService {
     }
 
     deleteRailwayShipment(id: number, forceToDelete: boolean = true): Observable<any> {
-        let data = { "planningShipmentId": id , "forceToDelete":  forceToDelete };
+        let data = { "planningShipmentId": id, "forceToDelete": forceToDelete };
         return this.http.post(`${environment.apiUrl}${environment.apiVersion}/deletePlanningConvoy`, wrapJsonForRequest(data))
     }
 
@@ -358,7 +358,7 @@ export class PlanningService {
 
     importPlannings(list: any[]): Observable<any> {
         console.log(list)
-        return this.http.post(`${environment.apiUrl}${environment.apiVersion}${this.route}/importPlanningByJson`, wrapJsonListForRequest('planning', list));
+        return this.http.post(`${environment.apiUrl}${environment.apiVersion}/importPlanningByJson`, list);
     }
 
     listLogs(id: number): Observable<any> {
