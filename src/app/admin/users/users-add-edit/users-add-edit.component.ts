@@ -1,13 +1,12 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FormGroup, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { FormGroup, UntypedFormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
-import { UserModel } from 'src/app/core/models/user.model';
 import { UserService } from 'src/app/core/services/user.service';
 import { handleError } from "../../../shared/utils/error-handling.function";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { createMaxLengthValidator, createMinLengthValidator, createRequiredValidators } from 'src/app/shared/validators/generic-validators';
+import { createRequiredValidators } from 'src/app/shared/validators/generic-validators';
 
 @Component({
     selector: 'app-users-add-edit',
@@ -28,7 +27,8 @@ import { createMaxLengthValidator, createMinLengthValidator, createRequiredValid
     ]
 })
 export class UsersAddEditComponent {
-    isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+    isPhoneLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     selectedRole$: BehaviorSubject<string> = new BehaviorSubject<string>('');
     userForm: FormGroup;
     userSetting: FormGroup;
@@ -44,6 +44,7 @@ export class UsersAddEditComponent {
         private route: ActivatedRoute,
         private router: Router,
         private fb: UntypedFormBuilder,
+        private readonly cd: ChangeDetectorRef,
         private snackBar: MatSnackBar) {
         this.subscribeForQueryParams();
     }
@@ -88,6 +89,10 @@ export class UsersAddEditComponent {
             }),
             userSetting: this.userSetting
         });
+    }
+
+    phoneDone(ev: any) {
+        this.isPhoneLoading$.next(false)
     }
 
 

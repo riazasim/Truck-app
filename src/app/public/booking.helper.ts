@@ -1,4 +1,4 @@
-import { FormGroup, ValidatorFn } from "@angular/forms";
+import { AbstractControl, FormGroup, ValidationErrors, ValidatorFn } from "@angular/forms";
 import { TranslateService } from "@ngx-translate/core";
 import { RxwebValidators } from "@rxweb/reactive-form-validators";
 import { CountryModel } from "../core/models/location.model";
@@ -93,13 +93,29 @@ export const pasteFormatIdentityDocumentNumber = (event: ClipboardEvent, form: F
 // min 2 char
 // max 34 char
 export const phoneNumberRegex = /^[0-9\-\+\s]{2,34}$/;
-export const phoneNumberValidation = (translate: TranslateService, country: CountryModel): ValidatorFn => RxwebValidators.compose({
-    validators: [RxwebValidators.digit()],
-    conditionalExpression: (x: any) => {
-     return (x?.phoneNumber?.length||null) !== (country.code ==='ro' ? country.mask.length+2: country.mask.length)
-    },
-    message:  country.code ==='ro' ? 
-    translate.translations[translate.currentLang]['messages']['phone-number-error'].replace('{{length}}', extractPhoneNumber(country.mask).length+1) :
-    translate.translations[translate.currentLang]['messages']['phone-number-error'].replace('{{length}}', extractPhoneNumber(country.mask).length)
-})
+export function phoneNumberValidation(
+    translate: TranslateService,
+    country: CountryModel
+  ) {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value: string = control.value || '';
+      if (!country || !country.mask) {
+        // If country or mask is undefined, consider it invalid
+        return { invalidCountry: true };
+      }
+  
+      // Remove non-digit characters
+      const normalized = value.replace(/\D/g, '');
+  
+      // Example validation: check if the number matches the mask length
+      const maskDigits = (country.mask.match(/0/g) || []).length;
+      if (normalized.length !== maskDigits) {
+        return { invalidPhoneNumber: true };
+      }
+  
+      // Additional validations can be added here
+  
+      return null; // No errors
+    };
+  }
 /* END PHONE NUMBER */

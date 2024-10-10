@@ -59,10 +59,16 @@ export class TrainPlanningListComponent implements OnChanges {
     }
 
     OnEmit(row: any, modal: string) {
-        this.planningService.convoyLogs(row.id).subscribe(response => {
-            this.triggerOpenLogs.emit({ view: 'view', id: row.id, planning: response, modal: modal })
+        
+        if(modal === 'shipment'){
+            this.planningService.convoyLogs(row.id).subscribe(response => {
+                this.triggerOpenLogs.emit({ view: 'view', id: row.id, planning: response, modal: modal })
+            }
+            )
         }
-        )
+        else{
+            this.triggerOpenLogs.emit({ view: 'view', id: row.planningRailway.id, planning: row, modal: modal })
+        }
     }
 
     openDeleteModal(id: number) {

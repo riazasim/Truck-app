@@ -169,7 +169,7 @@
                         <input inputRef type="text" placeholder="Ship owner" formControlName="shipowner" />
                     </div>
                     <mat-select class="mb-6" placeholder="Products" multiple
-                        (selectionChange)="onProductChange($event)">
+                        (selectionChange)="onProductChange($event)" [value]="productsList">
                         <searchbar>
                             <fa-icon icon="search" leftIcon></fa-icon>
                             <input input type="text" (keyup)="onInputChange($event)">
@@ -291,7 +291,7 @@
                     [formGroup]="stepThreeForm">
                     <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
                         <div iconic-input-wrapper leftIcon="user">
-                            <input inputRef type="text" placeholder="Operator" formControlName="additionalOperator"
+                            <input readonly inputRef type="text" placeholder="Operator" formControlName="additionalOperator"
                                 class="text-center" />
                         </div>
                         <mat-button-toggle-group class="flex w-full justify-end items-center mb-[21px]">

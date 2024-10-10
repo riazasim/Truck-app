@@ -64,6 +64,7 @@ export class LoginComponent {
         this.auth.signin(this.loginForm.getRawValue()).subscribe({
             next: (response) => {
                 this.auth.saveAuth(response);
+                localStorage.setItem("userName" , response.user)
                 this.rolesService.setAuthRoles([response.roles]);
                 this.rolesService.setUserRoles([response.roles]);
                 this.organizationService.setAppMode(response?.transportModeSetting?.transportMode || "");

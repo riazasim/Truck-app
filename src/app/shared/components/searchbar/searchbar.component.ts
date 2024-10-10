@@ -26,6 +26,8 @@ export class SearchbarComponent implements OnInit {
   @Input()
   public borderRadius: string | null = null;
 
+  @Input() isConstantWidth: boolean;
+
   @Input() leftIcon: IconProp;
   @Input() rightIcon: IconProp;
 

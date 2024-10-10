@@ -116,6 +116,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         if (item !== 0) {
             this.planningService.get(item.planning.id).subscribe({
                 next: (res) => {
+                    console.log(res)
                     this.planning = res
                     this.isCardDetailsLoading$.next(false)
                 },
@@ -287,6 +288,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
     onPaginateChange(ev: any) {
         this.isTableLoading$.next(true);
+        this.pageSettings = ev;
         let data = {
             "start": ev.start,
             "length": ev.length,

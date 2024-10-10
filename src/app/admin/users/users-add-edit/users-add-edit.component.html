@@ -1,6 +1,6 @@
 <!--<edit-container headerTitle="Add user - users details">-->
 <edit-container [headerTitle]="id ? 'Edit Users Details' : 'Add Users Details'">
-    <app-loader *ngIf="isLoading$ | async" [isContainer]="true" [fullScreen]="false"></app-loader>
+    <app-loader *ngIf="(isLoading$ | async)" [isContainer]="true" [fullScreen]="false"></app-loader>
     <form [formGroup]="userForm" *ngIf="!(isLoading$ | async)">
         <div class="flex flex-col mx-auto max-w-[440px] gap-5">
             <div [formGroup]="userSetting">
@@ -66,9 +66,9 @@
             </div> -->
             <!-- <phonenumber [formGroup]="userSetting" /> -->
 
-            <phonenumber [buttonPlaceholder]="'button.select' | translate"
+            <phonenumber [buttonPlaceholder]="'button.select' | translate" [loading]="isPhoneLoading$"
                 [placeholder]="'contact.phone-nr' | translate" containerClass="tw-w-[140px]" [formGroup]="userSetting"
-                buttonField="phoneRegionCode" [selectedPhoneRegionCode]="selectedPhoneRegionCode" field="phone">
+                buttonField="phoneRegionCode" [selectedPhoneRegionCode]="selectedPhoneRegionCode" field="phone" (doneInit)="phoneDone($event)">
             </phonenumber>
 
             <!-- <div formGroupName="userSetting">

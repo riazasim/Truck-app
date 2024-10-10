@@ -356,8 +356,9 @@ export class PlanningService {
         return this.http.get(`/assets/${lang === 'en' ? 'basic_EN.xlsx' : 'basic_RO.xlsx'}`, { observe: 'response', responseType: 'blob' });
     }
 
-    importPlannings(list: BookingModel[]): Observable<any> {
-        return this.http.post(`${environment.apiUrl}${environment.apiVersion}${this.route}/import-json`, wrapJsonListForRequest('planning', list));
+    importPlannings(list: any[]): Observable<any> {
+        console.log(list)
+        return this.http.post(`${environment.apiUrl}${environment.apiVersion}${this.route}/importPlanningByJson`, wrapJsonListForRequest('planning', list));
     }
 
     listLogs(id: number): Observable<any> {

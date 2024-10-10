@@ -340,11 +340,10 @@
                                     <input inputRef type="text" class="text-center" formControlName="seals" />
                                 </div>
                             </td>
-                            <!-- <td> -->
-                            <!-- <fa-icon  icon="pen" class="text-primary cursor-pointer"></fa-icon> -->
-                            <!-- <fa-icon icon="trash"
-                                    class="text-primary cursor-pointer"></fa-icon>
-                            </td> -->
+                            <td>
+                            <fa-icon icon="trash"
+                                    class="text-primary cursor-pointer mr-2" (click)="removeWagon(i)"></fa-icon>
+                            </td>
                         </tr>
                     </tbody>
                 </table>

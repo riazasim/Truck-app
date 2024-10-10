@@ -13,7 +13,7 @@
                 <div iconic-input-wrapper leftSvg="assets/images/circum_gps.svg">
                     <input inputRef type="text" placeholder="AIS" formControlName="ais" />
                 </div>
-                <div iconic-select-wrapper leftSvg="assets/images/engine.svg" >
+                <div iconic-select-wrapper leftSvg="assets/images/engine.svg">
                     <select spAccessInputRef name="propulsionType" id="propulsionType" formControlName="propulsionType">
                         <option value="" disabled selected>Propulsion Type</option>
                         <option *ngFor="let item of propulsionType" [value]="item.name">
@@ -21,7 +21,7 @@
                         </option>
                     </select>
                 </div>
-                <div iconic-select-wrapper leftSvg="assets/images/scheduling_lock.svg"
+                <!-- <div iconic-select-wrapper leftSvg="assets/images/scheduling_lock.svg"
                     >
                     <select spAccessInputRef name="lockType" id="lockType" formControlName="lockType">
                         <option value="" disabled selected>Type of lock</option>
@@ -29,7 +29,21 @@
                             {{ item.name }}
                         </option>
                     </select>
-                </div>
+                </div> -->
+                <mat-select class="mb-6" formControlName="lockType" placeholder="Type Of Lock">
+                    <searchbar>
+                        <fa-icon icon="search" leftIcon></fa-icon>
+                        <input input type="text" (keyup)="onInputChange($event)">
+                    </searchbar>
+                    <hr class="my-1 ">
+                    <mat-option *ngFor="let item of (typeOfLock | filter: search : 'name'); let i = index;"
+                        [value]="item.id">
+                        {{item.name}}
+                    </mat-option>
+                    <div class="w-full" *ngIf="(typeOfLock | filter: search : 'name').length === 0">
+                        <p class="text-center text-columnCell">No Item Found</p>
+                    </div>
+                </mat-select>
             </div>
             <div class="flex flex-col gap-x-10 gap-y-4 px-[50px]">
                 <div iconic-input-wrapper leftSvg="assets/images/scheduling_length.svg">
@@ -45,7 +59,7 @@
                     <input inputRef type="number" placeholder="Aerial Guage (M)*" formControlName="aerialGauge" />
                 </div>
                 <div iconic-input-wrapper leftSvg="assets/images/scheduling_weight.svg">
-                    <input inputRef type="number" placeholder="Capacity max (m)*" formControlName="maxCapacity" />
+                    <input inputRef type="number" placeholder="Capacity Max (m)*" formControlName="maxCapacity" />
                 </div>
             </div>
         </div>

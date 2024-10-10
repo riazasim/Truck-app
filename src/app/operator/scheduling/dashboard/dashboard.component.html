@@ -90,7 +90,7 @@
                             <!-- {{ "plane" | translate }}
                         </menu>
                     </mat-menu> -->
-                    <fa-icon icon="grid-2" size="2x" matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
+                    <!-- <fa-icon icon="grid-2" size="2x" matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
                         [matTooltip]="'table' | translate" *ngIf="!(isTableView$ | async)" [ngClass]="{
                             'text-[#17A0B5]': !(isTableView$ | async),
                             'mx-2 cursor-pointer': true
@@ -103,7 +103,7 @@
                             'text-[#17A0B5]': (isTableView$ | async),
                             'mx-2 cursor-pointer': true
                         }" (click)="isTableView$.next(false)">
-                    </fa-icon>
+                    </fa-icon> -->
                 </div>
             </div>
             <div *ngIf="!(isTableView$ | async)"

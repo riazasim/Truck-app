@@ -486,6 +486,7 @@ export class TrainAddSchedulingComponent implements OnInit {
 
     addWagons(data?: any): void {
         const newWagons = this.fb.group({
+            planningRailwayShipmentWagonId: [data?.id],
             wagon: [data?.wagon || '', [...createRequiredValidators()]],
             category: [data?.category?.id || '', [...createRequiredValidators()]],
             subCategory: [data?.subCategory?.id || '', [...createRequiredValidators()]],
@@ -495,6 +496,12 @@ export class TrainAddSchedulingComponent implements OnInit {
             seals: [data?.seals || '', [...createRequiredValidators()]],
         });
         this.wagons.push(newWagons);
+    }
+
+    removeWagon(index: any){
+        if (this.wagons.length > 0) {
+            this.wagons.removeAt(Number(index));
+        }
     }
 
     // onCategoryChange(ev: any, index?: any) {

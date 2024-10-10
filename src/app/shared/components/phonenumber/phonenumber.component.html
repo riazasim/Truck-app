@@ -17,9 +17,9 @@
             </menu>
         </mat-menu>
     </div>
-    <div iconic-input-wrapper class="w-full" [ngClass]="{'disabled': !(selectedCountry$ | async)}">
-        <input type="text" inputRef [readonly]="!(selectedCountry$ | async)" (paste)="parsePasteNumber($event)"
-            autocomplete="off" [placeholder]="placeholder" [formControlName]="field"
+    <div iconic-input-wrapper class="w-full" [ngClass]="{'disabled': !(selectedCountry$ | async)}" [loading]="loading | async">
+        <input type="text" inputRef [readonly]="!(selectedCountry$ | async)"
+            (paste)="parsePasteNumber($event)" autocomplete="off" [placeholder]="placeholder" [formControlName]="field"
             [maxlength]="(selectedCountry$ | async) ? (selectedCountry$ | async)!.code === 'ro'? (selectedCountry$ | async)!.mask!.length+2:(selectedCountry$ | async)!.mask!.length:34"
             [value]="formGroup.get(field)?.value | mask: (selectedCountry$ | async)?.mask ?? '000-000-000-000' : { prefix: (selectedCountry$ | async)?.code === 'ro'? '0 ': ''}"
             onkeypress="return event.key >= '0' && event.key <= '9'" class="text-center" />

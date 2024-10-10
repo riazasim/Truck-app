@@ -103,7 +103,8 @@ export const MY_FORMATS = {
         SelectRefDirective,
         MultiselectsearchComponent,
         WarningModalComponent,
-        PhonenumberComponent
+        PhonenumberComponent,
+        
     ],
     imports: [
         FontAwesomeModule,
@@ -187,7 +188,8 @@ export const MY_FORMATS = {
         CdkDropList,
         CdkDrag,
         WarningModalComponent,
-        PhonenumberComponent
+        PhonenumberComponent,
+        MatMenuModule
     ],
     providers: [
         provideNgxMask(),

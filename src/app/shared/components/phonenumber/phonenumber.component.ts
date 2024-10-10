@@ -4,9 +4,9 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { CountryModel } from 'src/app/core/models/location.model';
 import { LocationService } from 'src/app/core/services/location.service';
 import { TranslateService } from '@ngx-translate/core';
-import { setupCountries } from '../../utils/array.functions copy';
 import { phoneNumberValidation, requiredValidation } from 'src/app/public/booking.helper';
 import { NgxMaskPipe } from 'ngx-mask';
+import { setupCountries } from '../../utils/af-array.functions';
 
 @Component({
     selector: 'phonenumber',
@@ -15,6 +15,10 @@ import { NgxMaskPipe } from 'ngx-mask';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PhonenumberComponent implements OnInit {
+
+    @Output() doneInit: EventEmitter<any> = new EventEmitter();
+
+
     @Input() containerClass: string;
 
     @Input() selectedCountry: string; // Moldova
@@ -27,6 +31,7 @@ export class PhonenumberComponent implements OnInit {
     @Input() buttonField: string;
     @Input() buttonPlaceholder: string;
     @Input() placeholder: string;
+    @Input() public loading: any;
 
     @Output() readonly phoneSelected: EventEmitter<CountryModel> = new EventEmitter();
 
@@ -45,6 +50,7 @@ export class PhonenumberComponent implements OnInit {
         this.countries$.subscribe((response) => {
             this.countries = setupCountries(response);
             this.initializeSelectedCountry();
+            this.doneInit.emit(true)
         })
     }
 
@@ -95,8 +101,8 @@ export class PhonenumberComponent implements OnInit {
             this.selectedCountry$.next(country!);
             return;
         }
-        console.log(this.formGroup.get(this.field))
 
+        console.log(this.formGroup.get(this.field))
         this.setValidation();
     }
 

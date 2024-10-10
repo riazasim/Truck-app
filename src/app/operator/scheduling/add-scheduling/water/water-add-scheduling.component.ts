@@ -22,6 +22,7 @@ import { createRequiredValidators } from 'src/app/shared/validators/generic-vali
 import { MicroService } from 'src/app/core/services/micro.service';
 import { PageEvent } from '@angular/material/paginator';
 import { ProductService } from 'src/app/core/services/product.service';
+import { OperationService } from 'src/app/core/services/operation.service';
 
 @Component({
     selector: 'water-app-add-scheduling',
@@ -59,6 +60,8 @@ export class WaterAddSchedulingComponent implements OnInit {
     customFieldAdditionalData: SchedulingCustomField[] = [];
 
     products: ProductModel[] = [];
+    operationType: OperationModel[] = [];
+    operator: any[] = [];
     // listProducts: ProductModel[] = [];
     docks: DockModel[] = [];
     buildings: BuildingModel[] = [];
@@ -112,21 +115,12 @@ export class WaterAddSchedulingComponent implements OnInit {
         { id: 2, name: 'agent2' },
         { id: 3, name: 'agent3' },
     ];
-    operator = [
-        { id: 1, name: 'operator1' },
-        { id: 2, name: 'operator2' },
-        { id: 3, name: 'operator3' },
-    ];
     trafficType = [
         { id: 1, name: 'traffic type1' },
         { id: 2, name: 'traffic type2' },
         { id: 3, name: 'traffic type3' },
     ];
-    operationType = [
-        { id: 1, name: 'operation type1' },
-        { id: 2, name: 'operation type2' },
-        { id: 3, name: 'operation type3' },
-    ];
+
 
     constructor(
         private readonly fb: FormBuilder,
@@ -138,6 +132,7 @@ export class WaterAddSchedulingComponent implements OnInit {
         private readonly shipsService: ShipsService,
         private readonly productService: ProductService,
         private readonly microService: MicroService,
+        private readonly operationService: OperationService,
     ) {
         this.getFormatHourSlot = getFormatHourSlot.bind(this);
         this.subscribeForQueryParams();
@@ -212,6 +207,34 @@ export class WaterAddSchedulingComponent implements OnInit {
         })
     }
 
+    retriveOperations() {
+        this.isLoading$.next(true);
+        let data = {
+            "start": 0,
+            "length": 0,
+            "filters": ["", "", "", ""],
+            "order": [{ "dir": "DESC", "column": 0 }]
+        }
+        this.operationService.pagination(data).subscribe(response => {
+            this.operationType = response.items;
+            this.isLoading$.next(false);
+        })
+    }
+
+    retriveOperators() {
+        this.isLoading$.next(true);
+        const data = {
+            "userRole": "ROLE_USER_OPERATOR"
+        }
+        this.planningService.getTransferData(data).subscribe((response: any) => {
+            this.operator = response?.data?.attributes.map((item: any) => {
+                return { id: item?.attributes?.user?.id, name: item.attributes?.firstName + " " + item.attributes?.lastName }
+
+            })
+            this.isLoading$.next(false)
+        })
+    }
+
     onInputChange(ev: any) {
         this.search = ev?.target?.value
     }
@@ -283,6 +306,8 @@ export class WaterAddSchedulingComponent implements OnInit {
     next(index: any): void {
         if (this.matStepper.selectedIndex === 0) {
             this.retrieveShips();
+            this.retriveOperations();
+            this.retriveOperators();
         }
         this.matStepper.selectedIndex = index;
     }
@@ -326,7 +351,12 @@ export class WaterAddSchedulingComponent implements OnInit {
 
     onProductChange(ev: any) {
         this.productsList = (ev?.source?.value)
-        this.stepTwoForm.patchValue({ products: `[${this.productsList}]` })
+        if (this.id) {
+            this.stepTwoForm.patchValue({ products: this.productsList })
+        }
+        else {
+            this.stepTwoForm.patchValue({ products: `[${this.productsList}]` })
+        }
     }
 
 
@@ -414,28 +444,28 @@ export class WaterAddSchedulingComponent implements OnInit {
             ship: this.fb.control(data?.ship?.id || '', [...createRequiredValidators()]),
             shipType: this.fb.control(data?.shipType || '', [...createRequiredValidators()]),
             pavilion: this.fb.control(data?.pavilion || '', [...createRequiredValidators()]),
-            enginePower: this.fb.control(data?.enginePower || 0, [...createRequiredValidators()]),
-            lengthOverall: this.fb.control(data?.lengthOverall || 0, [...createRequiredValidators()]),
-            width: this.fb.control(data?.width || 0, [...createRequiredValidators()]),
-            maxDraft: this.fb.control(data?.maxDraft || 0, [...createRequiredValidators()]),
-            maxQuantity: this.fb.control(data?.maxQuantity || 0, [...createRequiredValidators()]),
+            enginePower: this.fb.control(data?.enginePower || '', [...createRequiredValidators()]),
+            lengthOverall: this.fb.control(data?.lengthOverall || '', [...createRequiredValidators()]),
+            width: this.fb.control(data?.width || '', [...createRequiredValidators()]),
+            maxDraft: this.fb.control(data?.maxDraft || '', [...createRequiredValidators()]),
+            maxQuantity: this.fb.control(data?.maxQuantity || '', [...createRequiredValidators()]),
             shipowner: this.fb.control(data?.shipowner || '', [...createRequiredValidators()]),
             purpose: this.fb.control(data?.purpose || '', [...createRequiredValidators()]),
             operator: this.fb.control(data?.operator || '', [...createRequiredValidators()]),
             trafficType: this.fb.control(data?.trafficType || '', [...createRequiredValidators()]),
             operatonType: this.fb.control(data?.operatonType || '', [...createRequiredValidators()]),
-            quantity: this.fb.control(data?.quantity || 0, [...createRequiredValidators()]),
+            quantity: this.fb.control(data?.quantity || '', [...createRequiredValidators()]),
             unitNo: this.fb.control(data?.unitNo || '', [...createRequiredValidators()]),
             observation: this.fb.control(data?.observation || '', [...createRequiredValidators()]),
             products: this.fb.control(ids || [], [...createRequiredValidators()]),
             lockType: this.fb.control(data?.lockType || '', [...createRequiredValidators()]),
-            arrivalGauge: this.fb.control(data?.aerialGauge || 0, [...createRequiredValidators()]),
+            arrivalGauge: this.fb.control(data?.aerialGauge || '', [...createRequiredValidators()]),
         });
 
         this.stepThreeForm = this.fb.group({
             clientComments: this.fb.control(data?.clientComments || ''),
             operatorComments: this.fb.control(data?.operatorComments || ''),
-            additionalOperator: this.fb.control(data?.additionalOperator || ''),
+            additionalOperator: this.fb.control(localStorage.getItem("userName")),
         });
 
     }
@@ -450,6 +480,7 @@ export class WaterAddSchedulingComponent implements OnInit {
         this.schedulingForm.patchValue({ convoyDetail: this.convoys, documents: this.images, routingDetail: { ...this.stepOneForm.value } })
 
         if (this.id) {
+            console.log(this.stepTwoForm.value)
             this.planningService.editConvoys(this.id, ({ ...this.stepTwoForm.value, ...this.stepThreeForm.value })).subscribe({
                 next: () => {
                     this.isLoading$.next(false)
@@ -461,17 +492,17 @@ export class WaterAddSchedulingComponent implements OnInit {
                 }
             });
         } else {
-        this.planningService.create(this.schedulingForm.value).subscribe({
-            next: () => {
-                this.router.navigate(['../success'], { relativeTo: this.route });
-            },
-            error: (body) => {
-                handleError(this.snackBar, body);
-                this.matStepper.selectedIndex = 0;
-                this.isLoading$.next(false);
-            }
-        })
-    }
+            this.planningService.create(this.schedulingForm.value).subscribe({
+                next: () => {
+                    this.router.navigate(['../success'], { relativeTo: this.route });
+                },
+                error: (body) => {
+                    handleError(this.snackBar, body);
+                    this.matStepper.selectedIndex = 0;
+                    this.isLoading$.next(false);
+                }
+            })
+        }
     }
 
     patchFile(file: File, index: number): void {

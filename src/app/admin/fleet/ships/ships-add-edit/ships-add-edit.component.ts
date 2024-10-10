@@ -11,12 +11,49 @@ import { createRequiredValidators } from 'src/app/shared/validators/generic-vali
 @Component({
     selector: "app-ships-add-edit",
     templateUrl: './ships-add-edit.component.html',
+    styles:
+        `
+    .mat-mdc-select-arrow-wrapper {
+    height: 24px;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    margin-right: 7px;
+}
+::ng-deep.mat-mdc-select-arrow svg {
+    fill: black !important;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+::ng-deep div.mat-mdc-select-panel {
+    scrollbar-width: none;
+    padding: 8px !important;
+}
+::ng-deep.mat-mdc-select {
+    appearance: none;
+    background-color: #fff;
+    border-color: #a0a0a0;
+    border-width: 1px;
+    border-radius: 3px;
+    padding-top: 1rem;
+    padding-right: 1rem;
+    padding-bottom: 1rem;
+    padding-left: 1rem;
+    font-size: var(--form-control-font-size);
+    line-height: 1.5rem;
+    --tw-shadow: 0 0 #0000;
+}
+    `,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ShipsAddEditComponent {
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     shipForm: FormGroup;
     id: number;
+    search: any
     appliedFilters: any = {};
 
     propulsionType = [
@@ -33,7 +70,7 @@ export class ShipsAddEditComponent {
         private readonly shipService: ShipsService,
         private readonly route: ActivatedRoute,
         private readonly router: Router,
-        private snackBar : MatSnackBar) {
+        private snackBar: MatSnackBar) {
         this.subscribeForQueryParams();
     }
 
@@ -58,6 +95,12 @@ export class ShipsAddEditComponent {
         } else {
             delete this.appliedFilters[column];
         }
+    }
+
+
+
+    onInputChange(ev: any) {
+        this.search = ev?.target?.value
     }
 
     initForm(data: ShipModel = <ShipModel>{}): void {
