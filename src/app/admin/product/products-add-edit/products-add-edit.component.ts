@@ -19,6 +19,7 @@ export class ProductsAddEditComponent {
     appliedFilters: any = {};
     category: any;
     subCategory: any;
+    search: any;
     isOptionSelected: boolean = false;
 
     status = [
@@ -36,29 +37,11 @@ export class ProductsAddEditComponent {
         this.subscribeForQueryParams();
     }
 
-    ngOnInit(): void {
-        // this.retrieveCategory();
+    ngOnInit(): void {}
+
+    onInputChange(ev: any) {
+        this.search = ev?.target?.value
     }
-
-    // retrieveCategory(): void {
-    //     const data = {
-    //         "start": 0,
-    //         "length": 0,
-    //         "filters": ["", "", "", ""],
-    //         "order": [{ "dir": "DESC", "column": 0 }]
-    //     };
-    //     this.productService.getCategory(data).subscribe({
-    //         next: response => {
-    //             this.category = response;
-    //             this.isLoading$.next(false);
-    //         },
-    //         error: err => {
-    //             this.isLoading$.next(false);
-    //             console.error('Error fetching categories:', err);
-    //         }
-
-    //     });
-    // }
 
     retrieveCategories(type: any): void {
         this.productService.getCategory(type).subscribe({
@@ -74,6 +57,7 @@ export class ProductsAddEditComponent {
             }
         });
     }
+    
 
     onCategoryChange(ev: any): void {
         this.isLoading$.next(true);

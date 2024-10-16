@@ -39,12 +39,26 @@
             <div iconic-input-wrapper leftSvg="assets/images/pcode.svg">
                 <input inputRef type="text" formControlName="productCode" placeholder="Product Code"/>
             </div>
-            <div iconic-select-wrapper leftSvg="assets/images/pcategory.svg"  (change)="onCategoryChange($event)">
+            <!-- <div iconic-select-wrapper leftSvg="assets/images/pcategory.svg"  (change)="onCategoryChange($event)">
                 <select spAccessInputRef name="category" id="category" formControlName="categoryId">
                     <option selected disabled value="">Category</option>
                     <option *ngFor="let category of category" [value]="category.id">{{ category.name}}</option>
                 </select>
-            </div>
+            </div> -->
+            <mat-select class="mb-6" formControlName="categoryId" placeholder="Category">
+                <searchbar>
+                    <fa-icon icon="search" leftIcon></fa-icon>
+                    <input input type="text" (keyup)="onInputChange($event)">
+                </searchbar>
+                <hr class="my-1 ">
+                <mat-option *ngFor="let item of (category | filter: search : 'name'); let i = index;"
+                    [value]="item.id">
+                    {{item.name}}
+                </mat-option>
+                <div class="w-full" *ngIf="(category | filter: search : 'name').length === 0">
+                    <p class="text-center text-columnCell">No Item Found</p>
+                </div>
+            </mat-select>
             <div iconic-select-wrapper leftSvg="assets/images/psubcategory.svg" >
                 <select spAccessInputRef name="subCategory" id="subCategory" formControlName="subCategoryId">
                     <option selected disabled value="">Sub Category</option>

@@ -189,7 +189,12 @@ export class AddSchedulingComponent implements OnInit {
     }
 
     retrivePorts() {
-        this.microService.getPorts().subscribe({
+        let data = {
+            "start": 0,
+            "length": 20,
+            "filter": ""
+        }
+        this.microService.getPorts(data).subscribe({
             next: res => {
                 if (res.length > 0) {
                     res?.forEach((item: any) => {

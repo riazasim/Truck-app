@@ -56,6 +56,10 @@ export class ShipsAddEditComponent {
     search: any
     appliedFilters: any = {};
 
+    shipTypes = [
+        { id: 1, name: 'Cargo Ship' },
+        { id: 2, name: 'Container Ship' },
+    ]
     propulsionType = [
         { id: 1, name: 'SELF PROPELLED' },
         { id: 2, name: 'WITHOUT PROPULSION' },
@@ -115,6 +119,10 @@ export class ShipsAddEditComponent {
             maxDraft: this.fb.control(data?.maxDraft || '', [...createRequiredValidators()]),
             aerialGauge: this.fb.control(data?.aerialGauge || '', [...createRequiredValidators()]),
             maxCapacity: this.fb.control(data?.maxCapacity || '', [...createRequiredValidators()]),
+            shipType: this.fb.control(data?.shipType || '', [...createRequiredValidators()]),
+            pavilion: this.fb.control(data?.pavilion || '', [...createRequiredValidators()]),
+            enginePower: this.fb.control(data?.enginePower || '', [...createRequiredValidators()]),
+            shipowner: this.fb.control(data?.shipowner || '', [...createRequiredValidators()]),
         });
     }
 

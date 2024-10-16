@@ -75,7 +75,12 @@ export class SearchComponent {
     }
 
     retrivePorts() {
-        this.microService.getPorts().subscribe({
+        let data = {
+            "start": 0,
+            "length": 20,
+            "filter": ""
+        }
+        this.microService.getPorts(data).subscribe({
             next: res => {
                 res?.forEach((item: any) => {
                     this.ports.push(item?.attributes);

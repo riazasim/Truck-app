@@ -60,6 +60,7 @@ import { CdkDropList, CdkDrag } from '@angular/cdk/drag-drop';
 import { WarningModalComponent } from './components/modals/warning-modal/warning-modal.component';
 import { PhonenumberComponent } from './components/phonenumber/phonenumber.component';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
+import { IconicSelectSearchComponent } from './components/select-search/iconic-select-search.component';
 
 export const MY_FORMATS = {
     parse: {
@@ -104,7 +105,7 @@ export const MY_FORMATS = {
         MultiselectsearchComponent,
         WarningModalComponent,
         PhonenumberComponent,
-        
+        IconicSelectSearchComponent,
     ],
     imports: [
         FontAwesomeModule,
@@ -127,6 +128,7 @@ export const MY_FORMATS = {
         CdkDrag,
         NgxMaskDirective,
         NgxMaskPipe,
+        MatSelectModule,
 
     ],
     exports: [
@@ -189,7 +191,8 @@ export const MY_FORMATS = {
         CdkDrag,
         WarningModalComponent,
         PhonenumberComponent,
-        MatMenuModule
+        MatMenuModule,
+        IconicSelectSearchComponent
     ],
     providers: [
         provideNgxMask(),
