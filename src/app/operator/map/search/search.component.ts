@@ -94,8 +94,13 @@ export class SearchComponent {
     }
 
     retriveCompanines() {
-        this.portId = '';
-        this.microService.getCompanies(this.portId).subscribe({
+        let data = {
+            "portId":"",
+            "start": 0,
+            "length": 20,
+            "filter": "",
+        }
+        this.microService.getCompanies(data).subscribe({
             next: res => {
                 if (res.length !== 0 && res.length !== undefined) {
                     res?.forEach((item: any) => {

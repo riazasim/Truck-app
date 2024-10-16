@@ -300,7 +300,13 @@ export class WaterAddSchedulingComponent implements OnInit {
     }
 
     retriveCompanines(portId: any) {
-        this.microService.getCompanies(portId).subscribe({
+       let data = {
+            "portId":portId,
+            "start": 0,
+            "length": 20,
+            "filter": "",
+        }
+        this.microService.getCompanies(data).subscribe({
             next: res => {
                 this.companies = [];
                 if (res?.status !== 'error') {
@@ -476,7 +482,7 @@ export class WaterAddSchedulingComponent implements OnInit {
             operator: this.fb.control(data?.operator || '', [...createRequiredValidators()]),
             trafficType: this.fb.control(data?.trafficType || '', [...createRequiredValidators()]),
             operatonType: this.fb.control(data?.operatonType || '', [...createRequiredValidators()]),
-            quantity: this.fb.control(data?.quantity || '', [...createRequiredValidators()]),
+            // quantity: this.fb.control(data?.quantity || '', [...createRequiredValidators()]),
             unitNo: this.fb.control(data?.unitNo || '', [...createRequiredValidators()]),
             observation: this.fb.control(data?.observation || '', [...createRequiredValidators()]),
             products: this.fb.control(ids || [], [...createRequiredValidators()]),

@@ -41,7 +41,7 @@ export class MicroService {
     // }
 
     getPorts(data: any ): Observable<any> {
-        return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getPortList`, { data })
+        return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getPortList`, data )
             .pipe(pluckItemWrapperData<any, ResponseItemWrapper<any>>(),
                 map((p: any) => {
                     return p;
@@ -49,8 +49,8 @@ export class MicroService {
             )
     }
     
-    getCompanies(id: any): Observable<any> {
-        return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getCompanies`, { "portId": id })
+    getCompanies(data: any): Observable<any> {
+        return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getCompanyList`, data )
             .pipe(pluckItemWrapperData<any, ResponseItemWrapper<any>>(),
                 map((p: any) => {
                     return p;

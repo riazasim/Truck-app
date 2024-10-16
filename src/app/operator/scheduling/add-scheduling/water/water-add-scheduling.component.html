@@ -203,7 +203,7 @@
                         </select>
                     </div> -->
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_operator.svg">
-                        <input readonly inputRef type="text" placeholder="Operator"
+                        <input inputRef type="text" placeholder="Operator"
                             formControlName="operator" />
                     </div>
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_navigation.svg">
@@ -248,18 +248,33 @@
                                 </option>
                             </select>
                         </div>
-                        <div iconic-select-wrapper leftSvg="assets/images/scheduling_ship_type.svg">
+                        <!-- <div iconic-select-wrapper leftSvg="assets/images/scheduling_ship_type.svg">
                             <select spAccessInputRef name="shipType" id="shipType" formControlName="shipType">
                                 <option disabled value="">Ship Type*</option>
                                 <option *ngFor="let shipType of shipType" [value]="shipType.name">
                                     {{ shipType.name }}
                                 </option>
                             </select>
-                        </div>
+                        </div> -->
 
-                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_ship_owner.svg">
-                        <input inputRef type="text" placeholder="Ship owner" formControlName="shipowner" />
+                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_ship_type.svg">
+                        <input inputRef readonly type="text" placeholder="Ship Type" formControlName="shipType" />
                     </div>
+                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_ship_owner.svg">
+                        <input inputRef readonly type="text" placeholder="Ship owner" formControlName="shipowner" />
+                    </div>
+                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_ship_owner.svg">
+                        <input inputRef readonly type="text" placeholder="Propulsion Type" formControlName="shipType" />
+                    </div>
+
+                    <!-- <div iconic-select-wrapper leftSvg="assets/images/scheduling_ship_type.svg">
+                        <select spAccessInputRef name="shipType" id="shipType" formControlName="shipType">
+                            <option disabled value="">Propulsion Type*</option>
+                            <option *ngFor="let shipType of shipType" [value]="shipType.name">
+                                {{ shipType.name }}
+                            </option>
+                        </select>
+                    </div> -->
                     <!-- <mat-select class="mb-6" placeholder="Products" multiple (selectionChange)="onProductChange($event)"
                         [value]="productsList">
                         <searchbar>
@@ -283,32 +298,21 @@
                     
                 </div>
                 <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
-                    
-
-                    <div iconic-select-wrapper leftSvg="assets/images/scheduling_ship_type.svg">
-                        <select spAccessInputRef name="shipType" id="shipType" formControlName="shipType">
-                            <option disabled value="">Propulsion Type*</option>
-                            <option *ngFor="let shipType of shipType" [value]="shipType.name">
-                                {{ shipType.name }}
-                            </option>
-                        </select>
-                    </div>
-
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_engine.svg">
-                        <input inputRef type="number" placeholder="Engine power" formControlName="enginePower" />
+                        <input inputRef readonly type="number" placeholder="Engine power" formControlName="enginePower" />
                     </div>
 
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_file.svg">
-                        <input inputRef type="number" placeholder="LOA" formControlName="lengthOverall" />
+                        <input inputRef readonly type="number" placeholder="LOA" formControlName="lengthOverall" />
                     </div>
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_width.svg">
-                        <input inputRef type="number" placeholder="Width (m)*" formControlName="width" />
+                        <input inputRef readonly type="number" placeholder="Width (m)*" formControlName="width" />
                     </div>
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_depth.svg">
-                        <input inputRef type="number" placeholder="Max draft (m)*" formControlName="maxDraft" />
+                        <input inputRef readonly type="number" placeholder="Max draft (m)*" formControlName="maxDraft" />
                     </div>
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_weight.svg">
-                        <input inputRef type="number" placeholder="C.max (t)*" formControlName="maxQuantity" />
+                        <input inputRef readonly type="number" placeholder="C.max (t)*" formControlName="maxQuantity" />
                     </div>
                     <!-- <div iconic-input-wrapper leftSvg="assets/images/scheduling_convoy.svg">
                         <input inputRef type="number" placeholder="Aerial Guage (M)*" formControlName="arrivalGauge" />
@@ -325,14 +329,14 @@
                     <!-- <div iconic-input-wrapper leftSvg="assets/images/scheduling_lock.svg">
                         <input inputRef type="text" placeholder="Type of lock" formControlName="lockType" />
                     </div> -->
-                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_weight.svg">
-                        <input inputRef type="number" placeholder="Quantity (t)" formControlName="quantity" />
-                    </div>
+                    <!-- <div iconic-input-wrapper leftSvg="assets/images/scheduling_weight.svg">
+                        <input inputRef readonly type="number" placeholder="Quantity (t)" formControlName="quantity" />
+                    </div> -->
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_port.svg">
-                        <input inputRef type="text" maxlength="4" placeholder="Pavilion*" formControlName="pavilion" />
+                        <input inputRef readonly type="text" maxlength="4" placeholder="Pavilion*" formControlName="pavilion" />
                     </div>
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_unit.svg">
-                        <input inputRef type="text" placeholder="Unit.no" formControlName="unitNo" />
+                        <input inputRef type="text" placeholder="Number of Compartments" formControlName="unitNo" />
                     </div>
                     <div iconic-input-wrapper leftSvg="assets/images/scheduling_observation.svg">
                         <input inputRef type="text" placeholder="Observation" formControlName="observation" />
