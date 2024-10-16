@@ -30,9 +30,18 @@ export class MicroService {
                 })
             );
     }
+    // getPorts(data: any): Observable<any> {
+    //     return this.http.post<ResponseArrayPaginationWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getPorts`, wrapJsonForRequest(data))
+    //         .pipe(pluckArrayPaginationWrapperData<any, ResponseArrayPaginationWrapper<any>>(),
+    //             map((u: any) => {
+    //                 u.items = (<any>u.items).map(((c: CustomFieldData) => c.attributes));
+    //                 return u;
+    //             })
+    //         );
+    // }
 
-    getPorts(id: any = {}): Observable<any> {
-        return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getPorts`, { "organizationId": id })
+    getPorts(data: any ): Observable<any> {
+        return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getPortList`, { data })
             .pipe(pluckItemWrapperData<any, ResponseItemWrapper<any>>(),
                 map((p: any) => {
                     return p;

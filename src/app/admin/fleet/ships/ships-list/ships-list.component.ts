@@ -18,7 +18,7 @@ import { ShipModel } from 'src/app/core/models/ship.model';
 })
 export class ShipsListComponent implements OnInit {
   isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
-  displayedColumns: string[] = ['name', 'registrationNo', 'ais', 'dock', 'length', 'width', 'maxDraft', 'aerialGauge', 'maxCapacity', 'actions'];
+  displayedColumns: string[] = ['name', 'registrationNo', 'ais', 'length', 'width', 'maxDraft', 'aerialGauge', 'maxCapacity', 'actions'];
   faStarSolid: IconProp = <IconProp>faStar;
   dataSource: ShipModel[] = [];
   originalSource: ShipModel[] = [];

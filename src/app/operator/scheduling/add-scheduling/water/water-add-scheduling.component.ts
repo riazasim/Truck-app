@@ -253,7 +253,12 @@ export class WaterAddSchedulingComponent implements OnInit {
     }
 
     retrivePorts() {
-        this.microService.getPorts().subscribe({
+        let data = {
+            "start": 0,
+            "length": 20,
+            "filter": ""
+        }
+        this.microService.getPorts(data).subscribe({
             next: res => {
                 if (res.length > 0) {
                     res?.forEach((item: any) => {
@@ -270,10 +275,11 @@ export class WaterAddSchedulingComponent implements OnInit {
 
 
     onDeparturePortChange(ev: any) {
+        // console.log(ev)
         this.isPortChangeLoading$.next(true);
         let departurePort: any;
         this.ports.filter((item: any) => {
-            if (Number(item.id) === Number(ev.target.value)) departurePort = item;
+            if (Number(item.id) === Number(ev.value)) departurePort = item;
         })
         if (departurePort) {
             this.stepOneForm.patchValue({ ridCoordinates: departurePort?.addrCoordinates || "44.179249,28.649940" })
@@ -437,7 +443,7 @@ export class WaterAddSchedulingComponent implements OnInit {
     initForm(index?: any, data?: any): void {
         if (index !== 1) {
             this.stepOneForm = this.fb.group({
-                convoyType: this.fb.control({ value: data?.planningWater?.convoyType || '', disabled: data?.planningWater?.convoyType ? true : false }, [...createRequiredValidators()]),
+                // convoyType: this.fb.control({ value: data?.planningWater?.convoyType || '', disabled: data?.planningWater?.convoyType ? true : false }, [...createRequiredValidators()]),
                 estimatedTimeArrival: this.fb.control(''),
                 departurePort: this.fb.control({ value: data?.planningWater?.departurePort || '', disabled: data?.planningWater?.departurePort ? true : false }, [...createRequiredValidators()]),
                 arrivalPort: this.fb.control({ value: data?.planningWater?.arrivalPort || '', disabled: data?.planningWater?.arrivalPort ? true : false }, [...createRequiredValidators()]),

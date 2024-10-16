@@ -97,7 +97,12 @@ export class EditSchedulingRouteComponent implements OnInit {
     }
 
     retrivePorts(zoneName: any = "", zone: any = "dep") {
-        this.microService.getPorts().subscribe({
+        let data = {
+            "start": 0,
+            "length": 20,
+            "filter": ""
+        }
+        this.microService.getPorts(data).subscribe({
             next: res => {
                 if (res.length > 0) {
                     res?.forEach((item: any) => {

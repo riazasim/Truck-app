@@ -133,4 +133,38 @@ html {
     --mat-paginator-select-trigger-text-size: 14px;
 }
 
+.mat-mdc-select-arrow-wrapper {
+    height: 24px;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    margin-right: 7px;
+}
+::ng-deep.mat-mdc-select-arrow svg {
+    fill: black !important;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+::ng-deep div.mat-mdc-select-panel {
+    scrollbar-width: none;
+    padding: 8px !important;
+}
+::ng-deep.mat-mdc-select {
+    appearance: none;
+    background-color: #fff;
+    border-color: #a0a0a0;
+    border-width: 1px;
+    border-radius: 3px;
+    padding-top: 1rem;
+    padding-right: 1rem;
+    padding-bottom: 1rem;
+    padding-left: 1rem;
+    font-size: var(--form-control-font-size);
+    line-height: 1.5rem;
+    --tw-shadow: 0 0 #0000;
+}
+
 /* Paginator fixing end*/

@@ -52,21 +52,6 @@
             </th>
             <td cdk-cell *cdkCellDef="let row">{{row.ais}}</td>
           </ng-container>
-          <ng-container cdkColumnDef="dock">
-            <th cdk-header-cell *cdkHeaderCellDef scope="col">
-              <section class="flex flex-col">
-                <div mat-sort-header="dock">Dock</div>
-                <searchbar>
-                  <fa-icon icon="search"></fa-icon>
-                  <input #searchAIS input type="text" (keyup)="applyFilter($event.target, 'dock')">
-                  <div *ngIf="searchAIS.value" close (click)="searchAIS.value=''; applyFilter({ value: '' }, 'dock')">
-                    <fa-icon icon="close"></fa-icon>
-                  </div>
-                </searchbar>
-              </section>
-            </th>
-            <td cdk-cell *cdkCellDef="let row">{{row.dock || '-'}}</td>
-          </ng-container>
           <ng-container cdkColumnDef="length">
             <th cdk-header-cell *cdkHeaderCellDef scope="col">
               <section class="flex flex-col">

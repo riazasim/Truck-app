@@ -3,8 +3,21 @@
     <form [formGroup]="shipForm" *ngIf="!(isLoading$ | async)">
         <div class="grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20 gap-y-4 pt-[100px] min-xl:px-[50px]">
             <div class="flex flex-col  gap-y-4 px-[50px]">
-                <div iconic-input-wrapper leftIcon="user">
+                <div iconic-input-wrapper leftSvg="assets/images/ship-name.svg">
                     <input inputRef type="text" placeholder="Ship name" formControlName="name" />
+                </div>
+                <div iconic-select-wrapper leftSvg="assets/images/ship-name.svg"
+                    >
+                    <select spAccessInputRef name="shipType" id="shipType" formControlName="shipType">
+                        <option value="" disabled selected>Ship Type</option>
+                        <option *ngFor="let item of shipTypes" [value]="item.id">
+                            {{ item.name }}
+                        </option>
+                    </select>
+                </div>
+                <div iconic-input-wrapper leftIcon="user">
+                    <input inputRef type="text" placeholder="Ship Owner"
+                        formControlName="shipowner" />
                 </div>
                 <div iconic-input-wrapper leftSvg="assets/images/shipRegNo.svg">
                     <input inputRef type="text" placeholder="Ship Registration Number"
@@ -21,7 +34,7 @@
                         </option>
                     </select>
                 </div>
-                <!-- <div iconic-select-wrapper leftSvg="assets/images/scheduling_lock.svg"
+                <div iconic-select-wrapper leftSvg="assets/images/scheduling_lock.svg"
                     >
                     <select spAccessInputRef name="lockType" id="lockType" formControlName="lockType">
                         <option value="" disabled selected>Type of lock</option>
@@ -29,8 +42,8 @@
                             {{ item.name }}
                         </option>
                     </select>
-                </div> -->
-                <mat-select class="mb-6" formControlName="lockType" placeholder="Type Of Lock">
+                </div>
+                <!-- <mat-select class="mb-6" formControlName="lockType" placeholder="Type Of Lock">
                     <searchbar>
                         <fa-icon icon="search" leftIcon></fa-icon>
                         <input input type="text" (keyup)="onInputChange($event)">
@@ -43,9 +56,15 @@
                     <div class="w-full" *ngIf="(typeOfLock | filter: search : 'name').length === 0">
                         <p class="text-center text-columnCell">No Item Found</p>
                     </div>
-                </mat-select>
+                </mat-select> -->
             </div>
             <div class="flex flex-col gap-x-10 gap-y-4 px-[50px]">
+                <div iconic-input-wrapper leftSvg="assets/images/pavillion.svg">
+                    <input inputRef type="text" placeholder="Pavilion" formControlName="pavilion" />
+                </div>
+                <div iconic-input-wrapper leftSvg="assets/images/engine.svg">
+                    <input inputRef type="text" placeholder="Engine Power" formControlName="enginePower" />
+                </div>
                 <div iconic-input-wrapper leftSvg="assets/images/scheduling_length.svg">
                     <input inputRef type="number" placeholder="Length (m)*" formControlName="length" />
                 </div>
