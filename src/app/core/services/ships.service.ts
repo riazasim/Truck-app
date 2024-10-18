@@ -55,14 +55,23 @@ export class ShipsService {
                         })
             );
   }
-  getShipList(data: any): Observable<ShipTable> {
-    return this.http.post<ResponseArrayPaginationWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getShipList`, wrapJsonForRequest(data))
-        .pipe(pluckArrayPaginationWrapperData<any, ResponseArrayPaginationWrapper<any>>(),
-        //                 map((u: ShipTable) => {
-        //                      u.items = (<any>u.items).map(((c: CustomFieldData) => c.attributes));
-        //                     return u;
-        //                 })
-             );
-  }
+  // getShipList(data: any): Observable<ShipTable> {
+  //   return this.http.post<ResponseArrayPaginationWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getShipList`, wrapJsonForRequest(data))
+  //       .pipe(pluckArrayPaginationWrapperData<any, ResponseArrayPaginationWrapper<any>>(),
+  //       //                 map((u: ShipTable) => {
+  //       //                      u.items = (<any>u.items).map(((c: CustomFieldData) => c.attributes));
+  //       //                     return u;
+  //       //                 })
+  //            );
+  // }
+
+  getShipList(data: any ): Observable<any> {
+    return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getShipList`, data )
+        .pipe(pluckItemWrapperData<any, ResponseItemWrapper<any>>(),
+            map((p: any) => {
+                return p;
+            })
+        )
+}
 
 }

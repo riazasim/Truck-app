@@ -3,6 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faCaretDown } from '@fortawesome/pro-solid-svg-icons';
 import { GenericWrapperComponent } from '../generic-wrapper/generic-wrapper.component';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
     selector: 'app-search-select',
@@ -10,10 +11,11 @@ import { GenericWrapperComponent } from '../generic-wrapper/generic-wrapper.comp
     styleUrl: 'iconic-select-search.component.scss'
 })
 export class IconicSelectSearchComponent extends GenericWrapperComponent<any, any> {
-    search: any = "";
-
     @Output() selected: EventEmitter<any> = new EventEmitter();
+    @Output() searchQuery: EventEmitter<any> = new EventEmitter();
+    @Output() scrollChange: EventEmitter<any> = new EventEmitter();
 
+    @ViewChild('select', { static: false }) selectComponent: any;
 
     @Input() formGroup: FormGroup;
 
@@ -25,16 +27,22 @@ export class IconicSelectSearchComponent extends GenericWrapperComponent<any, an
     public leftSvg: string | undefined;
 
     @Input()
+    public search: string;
+
+    @Input()
     public formControlName: string;
 
     @Input()
     public dashboardInp: boolean;
 
     @Input()
+    public contentLoading: any = new BehaviorSubject(false);
+
+    @Input()
     public isTable: boolean;
 
     @Input()
-    public items: any;
+    public items: any = [];
 
     @Input()
     public loading: boolean | any;
@@ -60,14 +68,46 @@ export class IconicSelectSearchComponent extends GenericWrapperComponent<any, an
     @Input()
     public value: any;
 
+    typingTimeout: any;
+
     onInputChange(ev: any) {
-        this.search = ev?.target?.value
+        clearTimeout(this.typingTimeout);
+        this.typingTimeout = setTimeout(() => {
+            this.contentLoading.next(true);
+            this.triggerSearch(ev?.target?.value);
+        }, 300);
+    }
+
+    triggerSearch(search: String) {
+        this.searchQuery.emit(search);
     }
 
     onSelectionChange(ev: any) {
-        console.log(ev)
         this.selected.emit(ev)
     }
+
+    onOpenedChange(event: any) {
+        if (event && this.selectComponent) {
+            this.selectComponent.panel.nativeElement.addEventListener('scroll', (event: any) => {
+                const panelElement = this.selectComponent.panel.nativeElement;
+                if (panelElement.scrollTop === panelElement.scrollHeight - panelElement.offsetHeight) {
+                    setTimeout(() => {
+                        panelElement.scrollTop = 1;
+                        this.contentLoading.next(true);
+                        this.scrollChange.emit(20);
+                    }, 500)
+                }
+                if (panelElement.scrollTop === 0) {
+                    setTimeout(() => {
+                        panelElement.scrollTop = 740;
+                        this.contentLoading.next(true);
+                        this.scrollChange.emit(-20);
+                    }, 500)
+                }
+            });
+        }
+    }
+
 
     @ViewChild('select')
     override set inputRef(ref: any) {

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { BehaviorSubject, combineLatest } from "rxjs";
 import { FormGroup, UntypedFormBuilder, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -14,13 +14,17 @@ import { handleError } from 'src/app/shared/utils/error-handling.function';
 })
 export class ProductsAddEditComponent {
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+    isContentLoading$: BehaviorSubject<any> = new BehaviorSubject<any>(false);
     productForm: FormGroup;
     id: number;
     appliedFilters: any = {};
-    category: any;
+    category: any = new BehaviorSubject<any>([]);
     subCategory: any;
     search: any;
     isOptionSelected: boolean = false;
+    type: string = "";
+    categoryStart: number = 0;
+    categoryQuery: string = "";
 
     status = [
         { id: 1, name: 'Active', value: 'ACTIVE' },
@@ -31,6 +35,7 @@ export class ProductsAddEditComponent {
         private readonly fb: UntypedFormBuilder,
         private readonly productService: ProductService,
         private readonly route: ActivatedRoute,
+        private readonly cd: ChangeDetectorRef,
         private readonly router: Router,
         private snackBar: MatSnackBar
     ) {
@@ -43,20 +48,54 @@ export class ProductsAddEditComponent {
         this.search = ev?.target?.value
     }
 
-    retrieveCategories(type: any): void {
-        this.productService.getCategory(type).subscribe({
+    retrieveCategories(query?: any, len?: any, type?: any): void {
+        this.isContentLoading$.next(true);
+        this.type = type !== undefined ? String(type) : "";
+        this.categoryQuery = query !== undefined ? String(query) : "";
+        this.categoryStart += len !== undefined ? Number(len) : 0;
+
+        let data = {
+            "type": this.type,
+            "start": this.categoryStart > 0 ? this.categoryStart : 0,
+            "length":  20,
+            "filter": this.categoryQuery
+        }
+        this.productService.getCategoryList(data).subscribe({
             next: res => {
-                this.category = res.map((item: any) => item.attributes) || [];
+                if (res.length > 0) {
+                    let temp: any[] = [];
+                    res?.forEach((item: any) => {
+                        temp.push(item?.attributes);
+                    });
+                    this.category.next(temp);
+                    this.cd.detectChanges();
+                }
                 if (this.category.length === 0) {
                     this.productForm.patchValue({ categoryId: null });
                 }
-                this.isLoading$.next(false);
+                this.isContentLoading$.next(false);
             },
             error: err => {
-                this.isLoading$.next(false);
+                this.isContentLoading$.next(false);
+                throw err
             }
-        });
+        })
     }
+
+    // retrieveCategories(type: any): void {
+    //     this.productService.getCategoryList(type).subscribe({
+    //         next: res => {
+    //             this.category = res.map((item: any) => item.attributes) || [];
+    //             if (this.category.length === 0) {
+    //                 this.productForm.patchValue({ categoryId: null });
+    //             }
+    //             this.isLoading$.next(false);
+    //         },
+    //         error: err => {
+    //             this.isLoading$.next(false);
+    //         }
+    //     });
+    // }
     
 
     onCategoryChange(ev: any): void {
@@ -165,7 +204,7 @@ export class ProductsAddEditComponent {
     }
 
     selectOption(type: string): void {
-        this.retrieveCategories(type)
+        this.retrieveCategories("",0,type)
         this.productForm.patchValue({ type });
         this.isOptionSelected = true;
     }

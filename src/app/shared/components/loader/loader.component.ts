@@ -18,6 +18,9 @@ export class LoaderComponent {
     public isOverlay = false;
 
     @Input()
+    public isOverlayWhite = false;
+
+    @Input()
     public isContainer = false;
 
     @Input()

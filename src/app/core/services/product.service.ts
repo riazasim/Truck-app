@@ -64,6 +64,15 @@ export class ProductService {
       );
   }
 
+  getProductList(data: any ): Observable<any> {
+    return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getProductList`, data )
+        .pipe(pluckItemWrapperData<any, ResponseItemWrapper<any>>(),
+            map((p: any) => {
+                return p;
+            })
+        )
+}
+
   // getCategory(data: any): Observable<any> {
   //   return this.http.post<any>(`${environment.apiUrl}${environment.apiVersion}/getCategoryList`, wrapJsonForRequest(data))
   //     .pipe(pluckArrayPaginationWrapperData<any, ResponseArrayPaginationWrapper<any>>(),
@@ -74,13 +83,21 @@ export class ProductService {
   //     );
   // }
 
-  getCategory(type: string): Observable<any> {
-    let data = {
-      "type": type
-    }
-    return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getCategoryList`, wrapJsonForRequest(data))
-      .pipe(pluckItemWrapperData<any, ResponseItemWrapper<any>>())
-  }
+  // getCategory(type: string): Observable<any> {
+  //   let data = {
+  //     "type": type
+  //   }
+  //   return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getCategoryList`, wrapJsonForRequest(data))
+  //     .pipe(pluckItemWrapperData<any, ResponseItemWrapper<any>>())
+  // }
+  getCategoryList(data: any ): Observable<any> {
+    return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getCategoryList`, data )
+        .pipe(pluckItemWrapperData<any, ResponseItemWrapper<any>>(),
+            map((p: any) => {
+                return p;
+            })
+        )
+}
   getSubCategory(id: number): Observable<any> {
     let data = {
       "categoryId": id
