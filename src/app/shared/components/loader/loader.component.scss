@@ -13,6 +13,10 @@
         background: var(--loader-fullscreen-bg, rgba(0, 0, 0, .8));
     }
 
+    &.overlay.white{
+        background: var(--loader-fullscreen-bg, rgba(255, 255, 255, .65));
+    }
+
 }
 
 .body-container {
