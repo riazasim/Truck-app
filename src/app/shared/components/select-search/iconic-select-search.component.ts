@@ -87,25 +87,25 @@ export class IconicSelectSearchComponent extends GenericWrapperComponent<any, an
     }
 
     onOpenedChange(event: any) {
-        if (event && this.selectComponent) {
-            this.selectComponent.panel.nativeElement.addEventListener('scroll', (event: any) => {
-                const panelElement = this.selectComponent.panel.nativeElement;
-                if (panelElement.scrollTop === panelElement.scrollHeight - panelElement.offsetHeight) {
-                    setTimeout(() => {
-                        panelElement.scrollTop = 1;
-                        this.contentLoading.next(true);
-                        this.scrollChange.emit(20);
-                    }, 500)
-                }
-                if (panelElement.scrollTop === 0) {
-                    setTimeout(() => {
-                        panelElement.scrollTop = 740;
-                        this.contentLoading.next(true);
-                        this.scrollChange.emit(-20);
-                    }, 500)
-                }
-            });
-        }
+        // if (event && this.selectComponent) {
+        //     this.selectComponent.panel.nativeElement.addEventListener('scroll', (event: any) => {
+        //         const panelElement = this.selectComponent.panel.nativeElement;
+        //         if (panelElement.scrollTop === panelElement.scrollHeight - panelElement.offsetHeight) {
+        //             setTimeout(() => {
+        //                 panelElement.scrollTop = 1;
+        //                 this.contentLoading.next(true);
+        //                 this.scrollChange.emit(20);
+        //             }, 500)
+        //         }
+        //         if (panelElement.scrollTop === 0) {
+        //             setTimeout(() => {
+        //                 panelElement.scrollTop = 740;
+        //                 this.contentLoading.next(true);
+        //                 this.scrollChange.emit(-20);
+        //             }, 500)
+        //         }
+        //     });
+        // }
     }
 
 

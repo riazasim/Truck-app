@@ -52,6 +52,21 @@
             </th>
             <td cdk-cell *cdkCellDef="let row">{{row.ais}}</td>
           </ng-container>
+          <ng-container cdkColumnDef="bargeType">
+            <th cdk-header-cell *cdkHeaderCellDef scope="col">
+              <section class="flex flex-col">
+                <div mat-sort-header="bargeType">Barge Type</div>
+                <searchbar>
+                  <fa-icon icon="search"></fa-icon>
+                  <input #searchBargeType input type="text" (keyup)="applyFilter($event.target, 'bargeType')">
+                  <div *ngIf="searchBargeType.value" close (click)="searchBargeType.value=''; applyFilter({ value: '' }, 'bargeType')">
+                    <fa-icon icon="close"></fa-icon>
+                  </div>
+                </searchbar>
+              </section>
+            </th>
+            <td cdk-cell *cdkCellDef="let row">{{row.bargeType}}</td>
+          </ng-container>
           <ng-container cdkColumnDef="length">
             <th cdk-header-cell *cdkHeaderCellDef scope="col">
               <section class="flex flex-col">

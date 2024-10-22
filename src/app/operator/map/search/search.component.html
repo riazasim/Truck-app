@@ -17,14 +17,21 @@
                             *ngIf="companiesFilterForm.valid" (click)="onCompaniesChange($event, 'delete')"></fa-icon>
                     </div>
                     <!-- <app-loader *ngIf="isPortsLoading$ | async"></app-loader> -->
-                    <div iconic-select-wrapper [dashboardInp]="true" [showValidation]="false"
+                    <app-search-select [formGroup]="companiesFilterForm"
+                        formControlName="companyId" (searchQuery)="retriveCompanines($event)" [search]="companyQuery"
+                        [dashboardInp]="true" [showValidation]="false"
+                        [contentLoading]="isContentLoading$"
+                        (selected)="onCompaniesChange($event)"
+                        [items]="companies | async" placeholder="Companies"
+                         ngDefaultControl></app-search-select>
+                    <!-- <div iconic-select-wrapper [dashboardInp]="true" [showValidation]="false"
                         [loading]="(isCompaniesLoading$ | async)" >
                         <select spAccessInputRef name="company" id="company" (change)="onCompaniesChange($event)"
                             formControlName="companyId">
                             <option value="" disabled selected>company</option>
                             <option [value]="company?.id" *ngFor="let company of companies">{{company?.name}}</option>
                         </select>
-                    </div>
+                    </div> -->
                     <!-- <div iconic-select-wrapper [dashboardInp]="true" [showValidation]="false"
                         [class.hidden]="isCompaniesLoading$ | async" >
                         <select spAccessInputRef name="company" id="company" (change)="onCompaniesChange($event)"
@@ -136,7 +143,14 @@
                             [height]="26" (dateChanged)="OnDateChange($event)">
                         </datepicker>
                     </div>
-                    <div [loading]="(isPortsLoading$ | async)" iconic-select-wrapper [dashboardInp]="true"
+
+                    <app-search-select [formGroup]="sidFilterForm" [loading]="(isPortsLoading$ | async)"
+                        formControlName="departurePort" (searchQuery)="retrivePorts($event)" [search]="portQuery"
+                        [contentLoading]="isContentLoading$"
+                        (selected)="onSIDChange($event, 'dp')"
+                        [items]="departurePorts | async" placeholder="Departure Port"
+                         ngDefaultControl></app-search-select>
+                    <!-- <div [loading]="(isPortsLoading$ | async)" iconic-select-wrapper [dashboardInp]="true"
                         [showValidation]="false" >
                         <select spAccessInputRef formControlName="departurePort" (change)="onSIDChange($event , 'dp')">
                             <option value="" disabled selected>
@@ -144,14 +158,20 @@
                             </option>
                             <option [value]="port?.id" *ngFor="let port of ports">{{port?.name}}</option>
                         </select>
-                    </div>
-                    <div [loading]="(isPortsLoading$ | async)" iconic-select-wrapper [dashboardInp]="true"
+                    </div> -->
+                    <app-search-select [formGroup]="sidFilterForm" [loading]="(isPortsLoading$ | async)"
+                        formControlName="arrivalPort" (searchQuery)="retrivePorts($event)" [search]="portQuery"
+                         [contentLoading]="isContentLoading$"
+                         (selected)="onSIDChange($event, 'ap' )"
+                        [items]="arrivalPorts | async" placeholder="Arrival Port"
+                         ngDefaultControl></app-search-select>
+                    <!-- <div [loading]="(isPortsLoading$ | async)" iconic-select-wrapper [dashboardInp]="true"
                         [showValidation]="false" >
                         <select spAccessInputRef formControlName="arrivalPort" (change)="onSIDChange($event, 'ap')">
                             <option value="" disabled selected>Arival port</option>
                             <option [value]="port?.id" *ngFor="let port of ports">{{port?.name}}</option>
                         </select>
-                    </div>
+                    </div> -->
                     <!-- <div iconic-input-wrapper [dashboardInp]="true" [showValidation]="false">
                         <input placeholder="Agent Company" inputRef type="text" />
                     </div> -->

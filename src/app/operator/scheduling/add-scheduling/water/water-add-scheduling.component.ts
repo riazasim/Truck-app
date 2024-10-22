@@ -115,15 +115,6 @@ export class WaterAddSchedulingComponent implements OnInit {
     arrivalZone: any[] = [];
     departureCompanies: any[];
     arrivalCompanies: any[];
-    shipType = [
-        { id: 1, name: 'SELF PROPELLED' },
-        { id: 2, name: 'WITHOUT PROPULSION' },
-    ];
-    agent = [
-        { id: 1, name: 'agent1' },
-        { id: 2, name: 'agent2' },
-        { id: 3, name: 'agent3' },
-    ];
     trafficType = [
         { id: 1, name: 'Export' },
         { id: 2, name: 'Import' },
@@ -161,7 +152,6 @@ export class WaterAddSchedulingComponent implements OnInit {
     ngOnInit(): void {
         this.id = this.route.snapshot.params['id'];
         this.initForm();
-        // this.initConvoyForm();
         this.isLoading$.next(false);
         this.retrivePorts();
         this.retrivePorts("", 0, "arr");
@@ -214,7 +204,6 @@ export class WaterAddSchedulingComponent implements OnInit {
         this.tempImg = [];
         this.productsList = [];
         this.initForm(1);
-        // this.initConvoyForm()
         this.matStepper.selectedIndex = index;
     }
 
@@ -260,19 +249,6 @@ export class WaterAddSchedulingComponent implements OnInit {
             }
         })
     }
-    // retriveProducts() {
-    //     this.isLoading$.next(true);
-    //     let data = {
-    //         "start": 0,
-    //         "length": 0,
-    //         "filters": ["", "", "", ""],
-    //         "order": [{ "dir": "DESC", "column": 0 }]
-    //     }
-    //     this.productService.pagination(data).subscribe(response => {
-    //         this.products = response.items;
-    //         this.isLoading$.next(false);
-    //     })
-    // }
 
     retriveOperations() {
         this.isLoading$.next(true);
@@ -332,8 +308,8 @@ export class WaterAddSchedulingComponent implements OnInit {
                     }
                     this.cd.detectChanges();
                 }
-                this.onDeparturePortChange({ value: 58 })
-                this.onArrivalPortChange({ value: 58 })
+                // this.onDeparturePortChange({ value: 58 })
+                // this.onArrivalPortChange({ value: 58 })
                 this.isContentLoading$.next(false);
                 this.isPortsLoading$.next(false);
             },
@@ -578,8 +554,8 @@ export class WaterAddSchedulingComponent implements OnInit {
             this.stepOneForm = this.fb.group({
                 // convoyType: this.fb.control({ value: data?.planningWater?.convoyType || '', disabled: data?.planningWater?.convoyType ? true : false }, [...createRequiredValidators()]),
                 estimatedTimeArrival: this.fb.control(''),
-                departurePort: this.fb.control({ value: data?.planningWater?.departurePort || 58, disabled: data?.planningWater?.departurePort ? true : false }, [...createRequiredValidators()]),
-                arrivalPort: this.fb.control({ value: data?.planningWater?.arrivalPort || 58, disabled: data?.planningWater?.arrivalPort ? true : false }, [...createRequiredValidators()]),
+                departurePort: this.fb.control({ value: data?.planningWater?.departurePort || '', disabled: data?.planningWater?.departurePort ? true : false }, [...createRequiredValidators()]),
+                arrivalPort: this.fb.control({ value: data?.planningWater?.arrivalPort || '', disabled: data?.planningWater?.arrivalPort ? true : false }, [...createRequiredValidators()]),
                 departureCompany: this.fb.control({ value: data?.planningWater?.departureCompany || '', disabled: data?.planningWater?.departureCompany ? true : false }),
                 arrivalCompany: this.fb.control({ value: data?.planningWater?.arrivalCompany || '', disabled: data?.planningWater?.arrivalCompany ? true : false }),
                 departureCompanyName: this.fb.control({ value: data?.planningWater?.departureCompany || '', disabled: data?.planningWater?.departureCompany ? true : false }),
@@ -608,7 +584,7 @@ export class WaterAddSchedulingComponent implements OnInit {
             maxQuantity: this.fb.control(data?.maxQuantity || ''),
             shipowner: this.fb.control(data?.shipowner || ''),
             purpose: this.fb.control(data?.purpose || '', [...createRequiredValidators()]),
-            operator: this.fb.control(data?.operator || '', [...createRequiredValidators()]),
+            operator: this.fb.control(data?.operator || ''),
             trafficType: this.fb.control(data?.trafficType || '', [...createRequiredValidators()]),
             operatonType: this.fb.control(data?.operatonType || '', [...createRequiredValidators()]),
             // quantity: this.fb.control(data?.quantity || '', [...createRequiredValidators()]),

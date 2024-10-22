@@ -3,7 +3,7 @@
     <google-map [center]="center" [zoom]="zoom" height="750px" width="100%">
         <map-marker *ngFor="let marker of myMarkerPositions" icon="assets/images/marker_red.png" [position]="marker.position" [title]="marker.title">
         </map-marker>
-        <map-marker *ngFor="let marker of otherMarkerPositions" icon="assets/images/marker_grey.png" [position]="marker.position" [title]="marker.title">
+        <map-marker *ngFor="let marker of otherMarkerPositions" icon="assets/images/marker_yellow.png" [position]="marker.position" [title]="marker.title">
         </map-marker>
     </google-map>
     <app-search id="search" (results)="retrieveMapData($event)" (mapLoading$)="mapLoading($event)"></app-search>

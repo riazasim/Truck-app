@@ -47,9 +47,9 @@
                         <p class="text-center text-columnCell">No Item Found</p>
                     </div>
                 </mat-select>
-                <fa-icon *ngIf="isValid && withCheckmark && (isTouched || withoutTouched)" [icon]="checkmark" size="lg"
+                <fa-icon *ngIf="isValid && withCheckmark && (isTouched || withoutTouched) && showValidation" [icon]="checkmark" size="lg"
                     class="icon valid"></fa-icon>
-                <fa-icon *ngIf="!isValid && isTouched" [icon]="xmark" size="lg" class="icon invalid">
+                <fa-icon *ngIf="!isValid && isTouched && showValidation" [icon]="xmark" size="lg" class="icon invalid">
                 </fa-icon>
             </div>
             <div *ngIf="showValidation && showValidationMessageDiv" class="errors-container" [class.!hidden]="loading"
