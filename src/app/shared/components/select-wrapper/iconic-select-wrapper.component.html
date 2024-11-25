@@ -8,7 +8,7 @@
     <div class="input-container" [class.!hidden]="loading">
         <img *ngIf="leftSvg" [src]="leftSvg" alt="icon" class="mx-[10px] max-h-5 max-w-5">
         <fa-icon *ngIf="leftIcon" [icon]="leftIcon" size="lg" class="icon"></fa-icon>
-        <div class="select-container">
+        <div class="select-container flex items-center	">
             <ng-content select="select[spAccessInputRef]"></ng-content>
             <fa-icon *ngIf="rightIcon" [icon]="rightIcon" size="lg"
                 class="icon select-decoration {{dashboardInp ? '!text-[#C6C6C6]' : ''}}"></fa-icon>

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, catchError, concatMap, finalize, Observable, shareReplay, tap, throwError } from 'rxjs';
 import { CustomFieldModel } from 'src/app/core/models/custom-field.model';
 import { OperationModel } from 'src/app/core/models/operation.model';
 import { PartnerModel } from 'src/app/core/models/partner.model';
@@ -43,7 +43,8 @@ export class WaterAddSchedulingComponent implements OnInit {
     convoyForm: FormGroup;
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     showFileThree$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-    isPortsLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+    isDeparturePortsLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+    isArrivalPortsLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     isDeparturePortChangeLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     isArrivalPortChangeLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     isEdit$: BehaviorSubject<any> = new BehaviorSubject<any>(false);
@@ -95,8 +96,14 @@ export class WaterAddSchedulingComponent implements OnInit {
     filterDate: Date = new Date();
     filterTime = '00:00:00'
 
-    portStart: number = 0;
-    portQuery: string = "";
+    selctedProductId: number = 0;
+    selctedShipId: number = 0;
+    selctedDeparturePortId: number = 0;
+    departurePortStart: number = 0;
+    departurePortQuery: string = "";
+    selctedArrivalPortId: number = 0;
+    arrivalPortStart: number = 0;
+    arrivalPortQuery: string = "";
     shipStart: number = 0;
     shipQuery: string = "";
     productStart: number = 0;
@@ -132,6 +139,7 @@ export class WaterAddSchedulingComponent implements OnInit {
     ];
 
 
+
     constructor(
         private readonly fb: FormBuilder,
         private readonly planningService: PlanningService,
@@ -151,38 +159,167 @@ export class WaterAddSchedulingComponent implements OnInit {
 
     ngOnInit(): void {
         this.id = this.route.snapshot.params['id'];
-        this.initForm();
-        this.isLoading$.next(false);
-        this.retrivePorts();
-        this.retrivePorts("", 0, "arr");
-        this.retriveProducts()
+        // this.initForm();
+        // this.isLoading$.next(false);
+        // this.retriveProducts()
     }
 
     temp() {
         console.log(this.stepTwoForm.value, this.stepTwoForm.valid)
     }
 
-    subscribeForQueryParams(): void {
+    async subscribeForQueryParams(): Promise<void> {
         this.id = this.route.snapshot.params['id'];
+    
         if (this.id) {
             this.isEdit$.next(true);
-            this.planningService.getConvoy(this.id).subscribe((shipment: any) => {
-                console.log(shipment)
-                this.retrieveShips()
-                this.retriveDepartureCompanines(shipment?.planningWater?.departurePort || 0);
-                this.retriveArrivalCompanines(shipment?.planningWater?.departurePort || 0);
-                this.initForm(0, shipment);
-                // this.locomotiveType = shipment?.planningRailway?.locomotive?.locomotiveType;
-                // if (shipment?.planningRailway?.conductorType === "Without Laras Conductor App") {
-                //     this.hideEmail(false)
-                // }
-                this.isLoading$.next(false);
-            });
+            const shipment = await this.planningService.getConvoy(this.id).toPromise();
+            console.log(shipment);
+    
+            await this.retriveDeparturePorts("", 0, shipment?.planningWater?.departurePort || null);
+            await this.retriveArrivalPorts("", 0, shipment?.planningWater?.arrivalPort || null);
+            this.retriveDepartureCompanines(shipment?.planningWater?.departurePort || 0);
+                    this.retriveArrivalCompanines(shipment?.planningWater?.arrivalPort || 0);
+                    this.retriveProducts("", 0, shipment?.planningWaterShipmentProducts?.id || null);
+                    this.retrieveShips("", 0, shipment?.ship?.id || null);
+    
+            this.initForm(0, shipment);
+            this.isLoading$.next(false);
         } else {
+            await this.retriveDeparturePorts();
+            await this.retriveArrivalPorts();
+            this.retriveProducts("", 0, null);
+                         this.retrieveShips("", 0, null);
+            
+                         // Initialize the form
+                         this.initForm();
+    
             this.initForm();
             this.isLoading$.next(false);
         }
     }
+    
+
+    // subscribeForQueryParams(): void {
+    //     this.id = this.route.snapshot.params['id'];
+    
+    //     if (this.id) {
+    //         this.isEdit$.next(true);
+    //         this.planningService.getConvoy(this.id).subscribe((shipment: any) => {
+    //             console.log(shipment);
+    
+    //             // Call retriveDeparturePorts and add a 1-second delay before continuing
+    //             this.retriveDeparturePorts("", 0, shipment?.planningWater?.departurePort || null);
+    //             setTimeout(() => {
+    //                 this.retriveArrivalPorts("", 0, shipment?.planningWater?.arrivalPort || null);
+    //                 this.retriveDepartureCompanines(shipment?.planningWater?.departurePort || 0);
+    //                 this.retriveArrivalCompanines(shipment?.planningWater?.arrivalPort || 0);
+    //                 this.retriveProducts("", 0, shipment?.planningWaterShipmentProducts?.id || null);
+    //                 this.retrieveShips("", 0, shipment?.ship?.id || null);
+    
+    //                 // Initialize the form
+    //                 this.initForm(0, shipment);
+    //                 this.isLoading$.next(false);
+    //             }, 1000); // 1-second delay
+    //         });
+    //     } else {
+    //         // Non-edit mode scenario
+    //         this.retriveDeparturePorts();
+    //         setTimeout(() => {
+    //             this.retriveArrivalPorts();
+    //             this.retriveProducts("", 0, null);
+    //             this.retrieveShips("", 0, null);
+    
+    //             // Initialize the form
+    //             this.initForm();
+    //             this.isLoading$.next(false);
+    //         }, 1000); // 1-second delay
+    //     }
+    // }
+    
+
+
+    // subscribeForQueryParams(): void {
+    //     this.id = this.route.snapshot.params['id'];
+    //     if (this.id) {
+    //         this.isEdit$.next(true);
+    //         this.planningService.getConvoy(this.id).subscribe((shipment: any) => {
+    //             console.log(shipment);
+
+    //             // Use concatMap to handle sequential requests for retrivePorts
+    //             debugger
+    //             this.retrivePorts(shipment?.planningWater?.departurePort || "", "", 0, "")
+    //                 .pipe(
+    //                     concatMap(async () => this.retrivePorts(shipment?.planningWater?.arrivalPort || "", "", 0, "arr")
+    //                     )
+    //                 )
+    //                 .subscribe(() => {
+    //                     // Continue with other service calls after sequential port requests
+    //                     this.retriveDepartureCompanines(shipment?.planningWater?.departurePort || 0);
+    //                     this.retriveArrivalCompanines(shipment?.planningWater?.arrivalPort || 0);
+    //                     this.retriveProducts();
+    //                     this.retrieveShips();
+
+    //                     // Initialize the form
+    //                     this.initForm(0, shipment);
+    //                     this.isLoading$.next(false);
+
+    //                     // Uncomment and handle conditional logic as needed
+    //                     // this.locomotiveType = shipment?.planningRailway?.locomotive?.locomotiveType;
+    //                     // if (shipment?.planningRailway?.conductorType === "Without Laras Conductor App") {
+    //                     //     this.hideEmail(false);
+    //                     // }
+    //                 });
+    //         });
+    //     } else {
+    //         // Non-edit mode scenario
+    //         this.retriveProducts();
+    //         this.retrieveShips();
+
+    //         // Sequentially call retrivePorts with concatMap
+    //         this.retrivePorts("", "", 0, "")
+    //             .pipe(
+    //                 concatMap(async () => this.retrivePorts("", "", 0, "arr"))
+    //             )
+    //             .subscribe(() => {
+    //                 // Initialize the form after sequential port requests in non-edit mode
+    //                 this.initForm();
+    //                 this.isLoading$.next(false);
+    //             });
+    //     }
+    // }
+
+
+    // subscribeForQueryParams(): void {
+    //     this.id = this.route.snapshot.params['id'];
+    //     if (this.id) {
+    //         this.isEdit$.next(true);
+    //         this.planningService.getConvoy(this.id).subscribe((shipment: any) => {
+    //             console.log(shipment)
+    //             this.retrivePorts(shipment?.planningWater?.departurePort || "", "", 0, "");
+    //             this.retrivePorts(shipment?.planningWater?.arrivalPort || "", "", 0, "arr");
+    //             this.retriveDepartureCompanines(shipment?.planningWater?.departurePort || 0);
+    //             this.retriveArrivalCompanines(shipment?.planningWater?.arrivalPort || 0);
+    //             this.retriveProducts()
+    //             this.retrieveShips()
+
+    //             this.initForm(0, shipment);
+    //             this.isLoading$.next(false);
+    //             // this.locomotiveType = shipment?.planningRailway?.locomotive?.locomotiveType;
+    //             // if (shipment?.planningRailway?.conductorType === "Without Laras Conductor App") {
+    //             //     this.hideEmail(false)
+    //             // }
+    //         });
+    //     } else {
+    //         this.retriveProducts();
+    //         this.retrieveShips();
+    //         this.retrivePorts("", "", 0, "");
+    //         this.retrivePorts("", "", 0, "arr");
+    //         this.initForm();
+    //         this.isLoading$.next(false);
+    //     }
+
+    // }
 
     formatDate(date: Date | string): string {
         let formattedDate = '';
@@ -207,23 +344,15 @@ export class WaterAddSchedulingComponent implements OnInit {
         this.matStepper.selectedIndex = index;
     }
 
-    onCompanyChange(type: any = 'dep') {
-        if (type === "arr") {
-            this.stepOneForm.patchValue({ arrivalCompanyName: this.arrivalCompanies.find((item: any) => Number(item.id) === Number(this.stepOneForm.get("arrivalCompany")?.value))?.name || "" })
-        }
-        else {
 
-            this.stepOneForm.patchValue({ departureCompanyName: this.departureCompanies.find((item: any) => Number(item.id) === Number(this.stepOneForm.get("departureCompany")?.value))?.name || "" })
-        }
-    }
-
-
-    retriveProducts(query?: any, len?: any): void {
+    retriveProducts(query?: any, len?: any, productIds?: any): void {
         this.isContentLoading$.next(true);
+        this.selctedProductId = productIds !== undefined ? Number(productIds) : 0;
         this.productQuery = query !== undefined ? String(query) : ""
         this.productStart += len !== undefined ? Number(len) : 0
-
+        // debugger
         let data = {
+            "selectedId": this.selctedProductId,
             "start": this.productStart > 0 ? this.productStart : 0,
             "length": 20,
             "filter": this.productQuery
@@ -269,6 +398,7 @@ export class WaterAddSchedulingComponent implements OnInit {
         const data = {
             "userRole": "ROLE_USER_OPERATOR"
         }
+
         this.planningService.getTransferData(data).subscribe((response: any) => {
             this.operator = response?.data?.attributes.map((item: any) => {
                 return { id: item?.attributes?.user?.id, name: item.attributes?.firstName + " " + item.attributes?.lastName }
@@ -282,47 +412,177 @@ export class WaterAddSchedulingComponent implements OnInit {
         this.search = ev?.target?.value
     }
 
-    retrivePorts(query?: any, len?: any, type: any = "dep") {
+    // retrivePorts(query?: any, len?: any, type: any = "dep", portId?: any) {
+    //     this.isContentLoading$.next(true);
+
+    //     // Set or reset the state values properly
+    //     this.selctedPortId = portId !== undefined ? Number(portId) : 0;
+    //     this.portQuery = query !== undefined ? String(query) : "";
+    //     this.portStart = len !== undefined ? Number(len) : 0;  // Reset portStart each time
+    //     // debugger
+    //     const data = {
+    //         selectedId: this.selctedPortId,
+    //         start: this.portStart > 0 ? this.portStart : 0,
+    //         length: 20,
+    //         filter: this.portQuery,
+    //     };
+
+    //     this.microService.getPorts(data).subscribe({
+    //         next: res => {
+    //             if (res.length > 0) {
+    //                 let temp: any[] = [];
+    //                 res?.forEach((item: any) => {
+    //                     temp.push(item?.attributes);
+    //                 });
+    //                 if (type === "arr") {
+    //                     this.arrivalPorts.next(temp)
+    //                 }
+    //                 else {
+    //                     this.departurePorts.next(temp);
+    //                 }
+    //                 this.cd.detectChanges();
+    //             }
+    //             // this.onDeparturePortChange({ value: 58 })
+    //             // this.onArrivalPortChange({ value: 58 })
+    //             this.isContentLoading$.next(false);
+    //             this.isPortsLoading$.next(false);
+    //         },
+    //         error: err => {
+    //             this.isContentLoading$.next(false);
+    //             throw err;
+    //         }
+    //     })
+    // }
+
+    // retriveDeparturePorts(query?: any, len?: any, portId?: any) {
+    //     this.isContentLoading$.next(true);
+    //     this.selctedDeparturePortId = portId !== undefined ? Number(portId) : 0;
+    //     this.departurePortQuery = query !== undefined ? String(query) : "";
+    //     this.departurePortStart = len !== undefined ? Number(len) : 0; 
+    //     const data = {
+    //         selectedId: this.selctedDeparturePortId,
+    //         start: this.departurePortStart > 0 ? this.departurePortStart : 0,
+    //         length: 20,
+    //         filter: this.departurePortQuery,
+    //     };
+
+    //     this.microService.getPorts(data).subscribe({
+    //         next: res => {
+    //             if (res.length > 0) {
+    //                 let temp: any[] = [];
+    //                 res?.forEach((item: any) => {
+    //                     temp.push(item?.attributes);
+    //                 });
+    //                     this.departurePorts.next(temp)
+                    
+    //                 this.cd.detectChanges();
+    //             }
+    //             this.isContentLoading$.next(false);
+    //             this.isDeparturePortsLoading$.next(false);
+    //         },
+    //         error: err => {
+    //             this.isContentLoading$.next(false);
+    //             throw err;
+    //         }
+    //     })
+    // }
+    
+    // retriveArrivalPorts(query?: any, len?: any, portId?: any) {
+    //     this.isContentLoading$.next(true);
+    //     this.selctedArrivalPortId = portId !== undefined ? Number(portId) : 0;
+    //     this.arrivalPortQuery = query !== undefined ? String(query) : "";
+    //     this.arrivalPortStart = len !== undefined ? Number(len) : 0; 
+    //     const data = {
+    //         selectedId: this.selctedArrivalPortId,
+    //         start: this.arrivalPortStart > 0 ? this.arrivalPortStart : 0,
+    //         length: 20,
+    //         filter: this.arrivalPortQuery,
+    //     };
+
+    //     this.microService.getPorts(data).subscribe({
+    //         next: res => {
+    //             if (res.length > 0) {
+    //                 let temp: any[] = [];
+    //                 res?.forEach((item: any) => {
+    //                     temp.push(item?.attributes);
+    //                 });
+    //                     this.arrivalPorts.next(temp)
+                    
+    //                 this.cd.detectChanges();
+    //             }
+    //             this.isContentLoading$.next(false);
+    //             this.isArrivalPortsLoading$.next(false);
+    //         },
+    //         error: err => {
+    //             this.isContentLoading$.next(false);
+    //             throw err;
+    //         }
+    //     })
+    // }
+    async retriveDeparturePorts(query?: any, len?: any, portId?: any): Promise<void> {
         this.isContentLoading$.next(true);
-        this.portQuery = query !== undefined ? String(query) : ""
-        this.portStart += len !== undefined ? Number(len) : 0
-
-
-        let data = {
-            "start": this.portStart > 0 ? this.portStart : 0,
-            "length": 20,
-            "filter": this.portQuery
-        }
-        this.microService.getPorts(data).subscribe({
-            next: res => {
-                if (res.length > 0) {
-                    let temp: any[] = [];
-                    res?.forEach((item: any) => {
-                        temp.push(item?.attributes);
-                    });
-                    if (type === "arr") {
-                        this.arrivalPorts.next(temp)
-                    }
-                    else {
-                        this.departurePorts.next(temp);
-                    }
-                    this.cd.detectChanges();
-                }
-                // this.onDeparturePortChange({ value: 58 })
-                // this.onArrivalPortChange({ value: 58 })
-                this.isContentLoading$.next(false);
-                this.isPortsLoading$.next(false);
-            },
-            error: err => {
-                this.isContentLoading$.next(false);
-                throw err;
+        this.selctedDeparturePortId = portId !== undefined ? Number(portId) : 0;
+        this.departurePortQuery = query !== undefined ? String(query) : "";
+        this.departurePortStart = len !== undefined ? Number(len) : 0;
+    
+        const data = {
+            selectedId: this.selctedDeparturePortId,
+            start: this.departurePortStart > 0 ? this.departurePortStart : 0,
+            length: 20,
+            filter: this.departurePortQuery,
+        };
+    
+        try {
+            const res = await this.microService.getPorts(data).toPromise();
+            if (res.length > 0) {
+                const temp = res.map((item: any) => item?.attributes);
+                this.departurePorts.next(temp);
+                this.cd.detectChanges();
             }
-        })
+        } catch (err) {
+            console.error('Error in retriveDeparturePorts:', err);
+            throw err;
+        } finally {
+            this.isContentLoading$.next(false);
+            this.isDeparturePortsLoading$.next(false);
+        }
     }
+
+    async retriveArrivalPorts(query?: any, len?: any, portId?: any): Promise<void> {
+        this.isContentLoading$.next(true);
+        this.selctedArrivalPortId = portId !== undefined ? Number(portId) : 0;
+        this.arrivalPortQuery = query !== undefined ? String(query) : "";
+        this.arrivalPortStart = len !== undefined ? Number(len) : 0;
+    
+        const data = {
+            selectedId: this.selctedArrivalPortId,
+            start: this.arrivalPortStart > 0 ? this.arrivalPortStart : 0,
+            length: 20,
+            filter: this.arrivalPortQuery,
+        };
+    
+        try {
+            const res = await this.microService.getPorts(data).toPromise();
+            if (res.length > 0) {
+                const temp = res.map((item: any) => item?.attributes);
+                this.arrivalPorts.next(temp);
+                this.cd.detectChanges();
+            }
+        } catch (err) {
+            console.error('Error in retriveArrivalPorts:', err);
+            throw err;
+        } finally {
+            this.isContentLoading$.next(false);
+            this.isArrivalPortsLoading$.next(false);
+        }
+    }
+    
+    
 
 
     onDeparturePortChange(ev: any) {
         // console.log(ev)
+        // debugger
         this.isDeparturePortChangeLoading$.next(true);
         let departurePort: any;
         this.departurePorts.value.forEach((item: any) => {
@@ -401,11 +661,27 @@ export class WaterAddSchedulingComponent implements OnInit {
         })
     }
 
+    // onCompanyChange(type: any = 'dep') {
+    //     if (type === "arr") {
+    //         this.stepOneForm.patchValue({ arrivalCompanyName: this.arrivalCompanies.find((item: any) => Number(item.id) === Number(this.stepOneForm.get("arrivalCompany")?.value))?.name || "" })
+    //     }
+    //     else {
+
+    //         this.stepOneForm.patchValue({ departureCompanyName: this.departureCompanies.find((item: any) => Number(item.id) === Number(this.stepOneForm.get("departureCompany")?.value))?.name || "" })
+    //     }
+    // }
+    onDepartureCompanyChange() {
+        this.stepOneForm.patchValue({ arrivalCompanyName: this.arrivalCompanies.find((item: any) => Number(item.id) === Number(this.stepOneForm.get("arrivalCompany")?.value))?.name || "" })  
+      }
+    onArrivalCompanyChange() {
+            this.stepOneForm.patchValue({ arrivalCompanyName: this.arrivalCompanies.find((item: any) => Number(item.id) === Number(this.stepOneForm.get("arrivalCompany")?.value))?.name || "" }) 
+    }
+
 
 
     next(index: any): void {
         if (this.matStepper.selectedIndex === 0) {
-            this.retrieveShips();
+            // this.retrieveShips();
             this.retriveOperations();
             this.retriveOperators();
         }
@@ -421,12 +697,14 @@ export class WaterAddSchedulingComponent implements OnInit {
         this.timeVal = value
     }
 
-    retrieveShips(query?: any, len?: any): void {
+    retrieveShips(query?: any, len?: any, shipId?: any): void {
         this.isContentLoading$.next(true);
+        this.selctedShipId = shipId !== undefined ? Number(shipId) : 0;
         this.shipQuery = query !== undefined ? String(query) : ""
         this.shipStart += len !== undefined ? Number(len) : 0
-
+        // debugger
         let data = {
+            "selectedId": this.selctedShipId,
             "start": this.shipStart > 0 ? this.shipStart : 0,
 
             "length": 20,
@@ -461,16 +739,16 @@ export class WaterAddSchedulingComponent implements OnInit {
         if (selectedShip) {
             console.log(selectedShip)
             this.stepTwoForm.patchValue({
-                width: selectedShip.width || '',
-                maxDraft: selectedShip.maxDraft || '',
-                maxQuantity: selectedShip.maxCapacity || '',
-                aerialGauge: selectedShip.aerialGauge || '',
+                width: selectedShip.width || 0,
+                maxDraft: selectedShip.maxDraft || 0,
+                maxQuantity: selectedShip.maxCapacity || 0,
+                aerialGauge: selectedShip.aerialGauge || 0,
                 lockType: selectedShip.lockType || '',
                 shipType: selectedShip.shipType || '',
                 registrationNo: selectedShip?.registrationNo || '',
                 ais: selectedShip?.ais || '',
                 propulsionType: selectedShip?.propulsionType || '',
-                lengthOverall: selectedShip?.['length'] || '',
+                lengthOverall: selectedShip?.['length'] || 0,
                 pavilion: selectedShip?.pavilion || '',
                 enginePower: selectedShip?.enginePower || '',
                 shipowner: selectedShip?.shipowner || '',
@@ -553,9 +831,13 @@ export class WaterAddSchedulingComponent implements OnInit {
         if (index !== 1) {
             this.stepOneForm = this.fb.group({
                 // convoyType: this.fb.control({ value: data?.planningWater?.convoyType || '', disabled: data?.planningWater?.convoyType ? true : false }, [...createRequiredValidators()]),
-                estimatedTimeArrival: this.fb.control(''),
-                departurePort: this.fb.control({ value: data?.planningWater?.departurePort || '', disabled: data?.planningWater?.departurePort ? true : false }, [...createRequiredValidators()]),
-                arrivalPort: this.fb.control({ value: data?.planningWater?.arrivalPort || '', disabled: data?.planningWater?.arrivalPort ? true : false }, [...createRequiredValidators()]),
+                // estimatedTimeArrival: this.fb.control(''),
+                departurePort: this.fb.control({ value: Number(data?.planningWater?.departurePort) || '', disabled: Number(data?.planningWater?.departurePort) ? true : false }, [...createRequiredValidators()]),
+                arrivalPort: this.fb.control({ value: Number(data?.planningWater?.arrivalPort) || '', disabled: Number(data?.planningWater?.arrivalPort) ? true : false }, [...createRequiredValidators()]),
+                departurePortName: this.fb.control({ value: data?.planningWater?.departurePortName || '', disabled: data?.planningWater?.departurePortName ? true : false }),
+                arrivalPortName: this.fb.control({ value: data?.planningWater?.arrivalPortName || '', disabled: data?.planningWater?.arrivalPortName ? true : false }),
+                departureTime: this.fb.control({ value: data?.planningWater?.departureTime || '', disabled: data?.planningWater?.departureTime ? true : false }),
+                arrivalTime: this.fb.control({ value: data?.planningWater?.arrivalTime || '', disabled: data?.planningWater?.arrivalTime ? true : false }),
                 departureCompany: this.fb.control({ value: data?.planningWater?.departureCompany || '', disabled: data?.planningWater?.departureCompany ? true : false }),
                 arrivalCompany: this.fb.control({ value: data?.planningWater?.arrivalCompany || '', disabled: data?.planningWater?.arrivalCompany ? true : false }),
                 departureCompanyName: this.fb.control({ value: data?.planningWater?.departureCompany || '', disabled: data?.planningWater?.departureCompany ? true : false }),
@@ -563,7 +845,7 @@ export class WaterAddSchedulingComponent implements OnInit {
                 pilotCompany: this.fb.control({ value: data?.planningWater?.pilotCompany || '', disabled: data?.planningWater?.pilotCompany ? true : false }, [...createRequiredValidators()]),
                 ridCoordinates: this.fb.control({ value: data?.planningWater?.ridCoordinates || '', disabled: data?.planningWater?.ridCoordinates ? true : false }, [...createRequiredValidators()]),
             });
-        }
+        } 
         this.schedulingForm = this.fb.group({
             routingDetail: this.stepOneForm,
             convoyDetail: this.fb.control([]),
@@ -588,7 +870,7 @@ export class WaterAddSchedulingComponent implements OnInit {
             trafficType: this.fb.control(data?.trafficType || '', [...createRequiredValidators()]),
             operatonType: this.fb.control(data?.operatonType || '', [...createRequiredValidators()]),
             // quantity: this.fb.control(data?.quantity || '', [...createRequiredValidators()]),
-            unitNo: this.fb.control(data?.unitNo || '', [...createRequiredValidators()]),
+            numberOfCompartments: this.fb.control(data?.numberOfCompartments || '', [...createRequiredValidators()]),
             observation: this.fb.control(data?.observation || '', [...createRequiredValidators()]),
             products: this.fb.control(ids || [], [...createRequiredValidators()]),
             lockType: this.fb.control(data?.lockType || ''),
@@ -605,7 +887,7 @@ export class WaterAddSchedulingComponent implements OnInit {
             additionalOperator: this.fb.control(localStorage.getItem("userName")),
         });
 
-    }
+    } 
 
     saveScheduling(): void {
         this.isLoading$.next(true);
@@ -613,7 +895,8 @@ export class WaterAddSchedulingComponent implements OnInit {
         if (this.dateVal === undefined) this.dateVal = this.formatDate(this.filterDate);
         if (this.timeVal === undefined) this.timeVal = String(this.filterTime);
         this.dateTimeVal = `${this.dateVal} ${this.timeVal}`;
-        this.stepOneForm.patchValue({ estimatedTimeArrival: this.dateTimeVal })
+        this.stepOneForm.patchValue({ departureTime: this.dateTimeVal, arrivalTime: this.dateTimeVal });
+        // this.stepOneForm.patchValue({ estimatedTimeArrival: this.dateTimeVal })
         this.schedulingForm.patchValue({ convoyDetail: this.convoys, documents: this.images, routingDetail: { ...this.stepOneForm.value } })
 
         if (this.id) {

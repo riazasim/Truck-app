@@ -38,6 +38,10 @@ export class LocationSettingsComponent {
       link: '../branding'
     },
      {
+      name: 'Integration',
+      link: '../integrations'
+    },
+     {
       name: 'Products',
       link: '../products'
     },

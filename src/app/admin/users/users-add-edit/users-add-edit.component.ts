@@ -85,7 +85,7 @@ export class UsersAddEditComponent {
             user: this.fb.group({
                 email: this.fb.control(data?.user?.email || '', [...createRequiredValidators()]),
                 userRole: this.fb.control(data?.user?.userRole || '', [...createRequiredValidators()]),
-                status: this.fb.control(data?.user?.status || true, [...createRequiredValidators()]),
+                status: this.fb.control(data?.user?.status, [...createRequiredValidators()]),
             }),
             userSetting: this.userSetting
         });
@@ -114,7 +114,7 @@ export class UsersAddEditComponent {
             this.userService.create(this.userForm.getRawValue()).subscribe({
                 next: () => {
                     this.isLoading$.next(false)
-                    this.router.navigate(['../../success'], { relativeTo: this.route });
+                    this.router.navigate(['../success'], { relativeTo: this.route });
                 },
                 error: (body: any) => {
                     this.isLoading$.next(false)

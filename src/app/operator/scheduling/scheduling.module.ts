@@ -75,6 +75,7 @@ import { WaterEditSchedulingConvoyPageComponent } from './edit-scheduling-convoy
 import { WaterEditSchedulingConvoyComponent } from './edit-scheduling-convoy/water/water-scheduling-convoy.component';
 import { RouteDeleteModalComponent } from './route-delete-modal/route-delete-modal.component';
 import { NoConvoyComponent } from './no-convoy/no-convoy.component';
+import { FeatureModulesModule } from 'src/app/shared/feature-modules/feature-modules.module';
 
 
 @NgModule({
@@ -82,13 +83,13 @@ import { NoConvoyComponent } from './no-convoy/no-convoy.component';
         DashboardComponent,
         SchedulingComponent,
         SchedulingCardComponent,
-        SchedulingTableComponent,
+        // SchedulingTableComponent,
         AddSchedulingComponent,
         SchedulingSuccessComponent,
         SchedulingImportModalComponent,
         SchedulingPlanModalComponent,
-        SchedulingEditPlanComponent,
-        SchedulingViewModalComponent,
+        // SchedulingEditPlanComponent,
+        // SchedulingViewModalComponent,
         SchedulingSendMessageComponent,
         SchedulingDeleteModalComponent,
         NoSchedulingComponent,
@@ -99,7 +100,7 @@ import { NoConvoyComponent } from './no-convoy/no-convoy.component';
         SchedulingRejectModalComponent,
         SchedulingCheckinCheckoutModalComponent,
         SchedulingShowClientSupplierCardLabelsComponent,
-        SchedulingSearchBarComponent,
+        // SchedulingSearchBarComponent,
         PlanningListComponent,
         TrainPlanningListComponent,
         WaterPlanningListComponent,
@@ -160,7 +161,8 @@ import { NoConvoyComponent } from './no-convoy/no-convoy.component';
         MatFormFieldModule,
         MatInputModule,
         MatDatepickerModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        FeatureModulesModule
     ],
     providers: [{provide: Window, useValue: window}]
 })

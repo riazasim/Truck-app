@@ -7,7 +7,7 @@
             <div class="input-container" [ngStyle]="styles" [class.!hidden]="loading">
                 <img *ngIf="leftSvg" [src]="leftSvg" alt="icon" class="mx-[10px] max-h-5 max-w-5">
                 <fa-icon *ngIf="leftIcon" [icon]="leftIcon" size="lg" class="icon"></fa-icon>
-                <mat-select class="relative !pt-0" [formControlName]="formControlName" *ngIf="!multiple"
+                <mat-select class="relative !pt-0" [formControlName]="formControlName" *ngIf="!multiple"  [value]="value"
                     (openedChange)="onOpenedChange($event)" placeholder="{{placeholder}}" #select
                     (selectionChange)="onSelectionChange($event)">
                     <div class="sticky top-0 z-10 bg-white !pt-2">

@@ -39,9 +39,9 @@
             <div iconic-input-wrapper leftSvg="assets/images/pcode.svg">
                 <input inputRef type="text" formControlName="productCode" placeholder="Product Code"/>
             </div>
-            <app-search-select [formGroup]="productForm" formControlName="categoryId"
+            <app-search-select [formGroup]="productForm" formControlName="categoryId" leftSvg="assets/images/pcategory.svg"
                     (searchQuery)="retrieveCategories($event)" [search]="categoryQuery" (selected)="onCategoryChange($event)" [contentLoading]="isContentLoading$"
-                    [items]="category | async" placeholder="Category"
+                    [items]="category | async" placeholder="Category" (keyup)="onInputChange($event)"
                     (scrollChange)="retrieveCategories(categoryQuery,$event)" ngDefaultControl></app-search-select>
             <!-- <div iconic-select-wrapper leftSvg="assets/images/pcategory.svg"  (change)="onCategoryChange($event)">
                 <select spAccessInputRef name="category" id="category" formControlName="categoryId">

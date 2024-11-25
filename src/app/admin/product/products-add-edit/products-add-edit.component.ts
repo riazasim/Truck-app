@@ -45,6 +45,7 @@ export class ProductsAddEditComponent {
     ngOnInit(): void {}
 
     onInputChange(ev: any) {
+        // debugger
         this.search = ev?.target?.value
     }
 
@@ -100,8 +101,9 @@ export class ProductsAddEditComponent {
 
     onCategoryChange(ev: any): void {
         this.isLoading$.next(true);
-        const selectedCategoryId = Number(ev.target.value);
-        const category = this.category.find((item: any) => Number(item.id) === selectedCategoryId);
+        debugger
+        const selectedCategoryId = Number(ev.value);
+        const category = this.category.value.find((item: any) => Number(item.id) === selectedCategoryId);
 
         if (category) {
             this.productForm.patchValue({ categoryId: category.id });
