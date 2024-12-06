@@ -33,6 +33,9 @@ export class IconicSelectSearchComponent extends GenericWrapperComponent<any, an
     public formControlName: string;
 
     @Input()
+    public formGroupName: string | number;
+
+    @Input()
     public dashboardInp: boolean;
 
     @Input()
@@ -69,6 +72,11 @@ export class IconicSelectSearchComponent extends GenericWrapperComponent<any, an
     public value: any;
 
     typingTimeout: any;
+
+    constructor() {
+        super(
+        );
+    }
 
     onInputChange(ev: any) {
         clearTimeout(this.typingTimeout);
@@ -109,9 +117,14 @@ export class IconicSelectSearchComponent extends GenericWrapperComponent<any, an
     }
 
 
+
+
+
     @ViewChild('select')
     override set inputRef(ref: any) {
         this._inputRef = ref.ngControl;
+        console.log(this.formGroup, this.formControlName)
+
     }
 
 }

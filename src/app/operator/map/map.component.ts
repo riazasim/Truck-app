@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { MapInfoWindow } from '@angular/google-maps';
 import { BehaviorSubject } from 'rxjs';
+import { OrganizationService } from 'src/app/core/services/organization.service';
 
 declare var google: any;
 @Component({
@@ -11,6 +12,7 @@ declare var google: any;
 export class MapComponent {
     map: google.maps.Map;
     @ViewChild(MapInfoWindow) infoWindow: MapInfoWindow | undefined;
+    transportMode: any;
     myMarkerPositions: any[] = [];
     otherMarkerPositions: any[] = [];
     display: any;
@@ -34,7 +36,15 @@ export class MapComponent {
     };
 
 
-    constructor() { }
+    constructor(
+        private readonly organizationService: OrganizationService,
+    ) { 
+        this.getTransportMode();
+    }
+
+    getTransportMode() {
+        this.transportMode = this.organizationService.getAppMode();
+    }
 
     retrieveMapData(results: any): void {
         if (results.length <= 0) {

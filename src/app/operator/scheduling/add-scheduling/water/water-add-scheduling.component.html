@@ -17,13 +17,16 @@
                             </option>
                         </select>
                     </div> -->
-                    <app-search-select [formGroup]="stepOneForm" 
+                    <app-search-select [formGroup]="stepOneForm"  [matTooltip]="'Departure Port'"
+                    matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
                         [loading]="(isDeparturePortsLoading$ | async)" leftSvg="assets/images/scheduling_ship_type.svg"
                         formControlName="departurePort" (searchQuery)="retriveDeparturePorts($event)" [search]="departurePortQuery"
                         (selected)="onDeparturePortChange($event)" [contentLoading]="isContentLoading$"
                         [items]="departurePorts | async" placeholder="Departure Port"
                         (scrollChange)="retriveDeparturePorts(departurePortQuery,$event)" ngDefaultControl></app-search-select>
                     <div [loading]="(isDeparturePortsLoading$ | async) || (isDeparturePortChangeLoading$ | async)"
+                    [matTooltip]="'Departure Company'"
+                    matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
                         iconic-select-wrapper leftIcon="grid-2">
                         <select spAccessInputRef name="departureCompany" (change)="onDepartureCompanyChange()"
                             id="departureCompany" formControlName="departureCompany">
@@ -35,12 +38,12 @@
                     </div>
                     <div class="grid grid-cols-2 gap-x-8 gap-y-4 mb-5">
                         <datepicker [loading]="(isDeparturePortsLoading$ | async)" matTooltipClass="drop-shadow-lg"
-                            matTooltipPosition="above" [matTooltip]="'Departure Date' | translate" [model]="filterDate"
-                            [isHeaderPosition]="true" [height]="52" (dateChanged)="OnDateChange($event)">
+                            matTooltipPosition="above" [matTooltip]="'Departure Date' | translate" [model]="departureDateModal"
+                            [isHeaderPosition]="true" [height]="52" (dateChanged)="OnDepartureDateChange($event)">
                         </datepicker>
                         <timepicker [loading]="(isDeparturePortsLoading$ | async)" matTooltipClass="drop-shadow-lg"
                             matTooltipPosition="above" [matTooltip]="'Departure Time' | translate" [height]="52"
-                            [model]="filterTime" (modelChange)="OnTimeChange($event)"></timepicker>
+                            [model]="departureTimeVal" (modelChange)="OnDepartureTimeChange($event)"></timepicker>
                     </div>
                     <!-- <div [loading]="(isPortsLoading$ | async)" iconic-input-wrapper leftIcon="location-dot"
                         formGroupName="routingDetail">
@@ -101,7 +104,8 @@
                 <div class="flex flex-col gap-y-4 min-xl:px-[50px] min-md:w-[640px] w-[90%]">
                     <!-- <p>&nbsp;</p> -->
                     <h4 class="font-bold">Arrival Details</h4>
-                    <app-search-select [formGroup]="stepOneForm" [loading]="(isArrivalPortsLoading$ | async)"
+                    <app-search-select [formGroup]="stepOneForm" [matTooltip]="'Arrival Port'"
+                    matTooltipClass="drop-shadow-lg" matTooltipPosition="above" [loading]="(isArrivalPortsLoading$ | async)"
                         leftSvg="assets/images/arival-port.png" formControlName="arrivalPort"
                         (searchQuery)="retriveDeparturePorts($event)" [search]="arrivalPortQuery"
                         (selected)="onArrivalPortChange($event)" [contentLoading]="isContentLoading$"
@@ -117,6 +121,8 @@
                         </select>
                     </div> -->
                     <div [loading]="(isArrivalPortsLoading$ | async) || (isArrivalPortChangeLoading$ | async)"
+                    [matTooltip]="'Arrival Company'"
+                    matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
                         iconic-select-wrapper leftIcon="grid-2">
                         <select spAccessInputRef name="arrivalCompany" id="arrivalCompany"
                             (change)="onArrivalCompanyChange()" formControlName="arrivalCompany">
@@ -128,12 +134,12 @@
                     </div>
                     <div class="grid grid-cols-2 gap-x-8 gap-y-4 mb-5">
                         <datepicker [loading]="(isArrivalPortsLoading$ | async)" matTooltipClass="drop-shadow-lg"
-                            matTooltipPosition="above" [matTooltip]="'Arrival Date' | translate" [model]="filterDate"
-                            [isHeaderPosition]="true" [height]="52" (dateChanged)="OnDateChange($event)">
+                            matTooltipPosition="above" [matTooltip]="'Arrival Date' | translate" [model]="arrivalDateModal"
+                            [isHeaderPosition]="true" [height]="52" (dateChanged)="OnArrivalDateChange($event)">
                         </datepicker>
                         <timepicker [loading]="(isArrivalPortsLoading$ | async)" matTooltipClass="drop-shadow-lg"
                             matTooltipPosition="above" [matTooltip]="'Arrival Time' | translate" [height]="52"
-                            [model]="filterTime" (modelChange)="OnTimeChange($event)"></timepicker>
+                            [model]="arrivalTimeVal" (modelChange)="OnArrivalTimeChange($event)"></timepicker>
                     </div>
 
 
@@ -151,6 +157,8 @@
                     </div> -->
 
                     <div [loading]="(isArrivalPortsLoading$ | async)" iconic-input-wrapper
+                    [matTooltip]="'Pilot Company'"
+                    matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
                         leftSvg="assets/images/scheduling_port.svg">
                         <input inputRef type="text" placeholder="Pilot Company" formControlName="pilotCompany"
                             (keydown)="temp()" />
@@ -209,20 +217,24 @@
             <div
                 class="grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20 gap-y-4 pt-[100px] min-xl:px-[50px]">
                 <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
-                    <div iconic-input-wrapper leftSvg="assets/images/input-operator.svg">
+                    <div iconic-input-wrapper [matTooltip]="'Data Input Operator'"
+                    matTooltipClass="drop-shadow-lg" matTooltipPosition="above" leftSvg="assets/images/input-operator.svg">
                         <input inputRef type="text" placeholder="Data Input Operator" formControlName="operator" />
                     </div>
-                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_navigation.svg">
-                        <input readonly inputRef type="text" placeholder="Navigation type*"
+                    <div iconic-input-wrapper [matTooltip]="'Navigation Type'"
+                    matTooltipClass="drop-shadow-lg" matTooltipPosition="above" leftSvg="assets/images/scheduling_navigation.svg">
+                        <input readonly inputRef type="text" placeholder="Navigation Type*"
                             formControlName="navigationType" />
                     </div>
 
-                    <app-search-select [formGroup]="stepTwoForm" formControlName="products" [multiple]="true"
+                    <app-search-select [formGroup]="stepTwoForm" formControlName="products" [multiple]="true" [matTooltip]="'Products'"
+                    matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
                         leftSvg="assets/images/product-variant.svg" [contentLoading]="isContentLoading$" (searchQuery)="retriveProducts($event)" [search]="productQuery" (selected)="onProductChange($event)"
                         [value]="productsList" [items]="products | async" placeholder="Products"
                         ngDefaultControl></app-search-select>
 
-                    <div iconic-select-wrapper leftSvg="assets/images/scheduling_trafic_type.svg">
+                    <div iconic-select-wrapper [matTooltip]="'Purpose'"
+                    matTooltipClass="drop-shadow-lg" matTooltipPosition="above" leftSvg="assets/images/scheduling_trafic_type.svg">
                         <select spAccessInputRef name="purpose" id="purpose" formControlName="purpose">
                             <option disabled value="">Purpose*</option>
                             <option *ngFor="let purpose of purpose" [value]="purpose.id">
@@ -232,15 +244,17 @@
                     </div>
                 </div>
                 <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
-                    <div iconic-select-wrapper leftSvg="assets/images/scheduling_trafic_type.svg">
+                    <div iconic-select-wrapper [matTooltip]="'Traffic Type'"
+                    matTooltipClass="drop-shadow-lg" matTooltipPosition="above" leftSvg="assets/images/scheduling_trafic_type.svg">
                         <select spAccessInputRef name="trafficType" id="trafficType" formControlName="trafficType">
-                            <option disabled value="">Traffic type</option>
+                            <option disabled value="">Traffic Type</option>
                             <option *ngFor="let trafficType of trafficType" [value]="trafficType.id">
                                 {{ trafficType.name }}
                             </option>
                         </select>
                     </div>
-                    <div iconic-select-wrapper leftSvg="assets/images/scheduling_operation_type.svg">
+                    <div iconic-select-wrapper [matTooltip]="'Operation Type'"
+                    matTooltipClass="drop-shadow-lg" matTooltipPosition="above" leftSvg="assets/images/scheduling_operation_type.svg">
                         <select spAccessInputRef name="operationType" id="operationType" formControlName="operatonType">
                             <option disabled value="">Operation Type</option>
                             <option *ngFor="let operationType of operationType" [value]="operationType.id">
@@ -248,11 +262,13 @@
                             </option>
                         </select>
                     </div>
-                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_unit.svg">
+                    <div iconic-input-wrapper [matTooltip]="'Number of Compartments'"
+                    matTooltipClass="drop-shadow-lg" matTooltipPosition="above" leftSvg="assets/images/scheduling_unit.svg">
                         <input inputRef type="text" placeholder="Number of Compartments"
                             formControlName="numberOfCompartments" />
                     </div>
-                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_observation.svg">
+                    <div iconic-input-wrapper [matTooltip]="'Observation'"
+                    matTooltipClass="drop-shadow-lg" matTooltipPosition="above" leftSvg="assets/images/scheduling_observation.svg">
                         <input inputRef type="text" placeholder="Observation" formControlName="observation" />
                     </div>
                 </div>
@@ -324,53 +340,67 @@
                     <!-- <div iconic-input-wrapper leftSvg="assets/images/scheduling_purpose.svg">
                         <input inputRef type="text" placeholder="Purpose" formControlName="purpose" />
                     </div> -->
-                    <app-search-select [formGroup]="stepTwoForm" formControlName="ship"
+                    <app-search-select [formGroup]="stepTwoForm" formControlName="ship" [matTooltip]="'Ship'"
+                    matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
                         leftSvg="assets/images/ship-name.svg" (searchQuery)="retrieveShips($event)" [search]="shipQuery"
                         (selected)="onShipSelected($event)" [contentLoading]="isContentLoading$"
                         [items]="shipsList | async" placeholder="Ship" (scrollChange)="retrieveShips(shipQuery,$event)"
                         ngDefaultControl></app-search-select>
-                    <div iconic-input-wrapper leftSvg="assets/images/shipRegNo.svg">
+                    <div iconic-input-wrapper [matTooltip]="'Registration No'"
+                    matTooltipClass="drop-shadow-lg" matTooltipPosition="above" leftSvg="assets/images/shipRegNo.svg">
                         <input inputRef readonly type="text" placeholder="Registration No"
                             formControlName="registrationNo" />
                     </div>
-                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_ship_type.svg">
+                    <div iconic-input-wrapper [matTooltip]="'Ship Type'"
+                    matTooltipClass="drop-shadow-lg" matTooltipPosition="above" leftSvg="assets/images/scheduling_ship_type.svg">
                         <input inputRef readonly type="text" placeholder="Ship Type" formControlName="shipType" />
                     </div>
-                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_ship_owner.svg">
+                    <div iconic-input-wrapper [matTooltip]="'Ship owner'"
+                    matTooltipClass="drop-shadow-lg" matTooltipPosition="above" leftSvg="assets/images/scheduling_ship_owner.svg">
                         <input inputRef readonly type="text" placeholder="Ship owner" formControlName="shipowner" />
                     </div>
-                    <div iconic-input-wrapper leftSvg="assets/images/engine.svg">
+                    <div iconic-input-wrapper [matTooltip]="'Propulsion Type'"
+                    matTooltipClass="drop-shadow-lg" matTooltipPosition="above" leftSvg="assets/images/engine.svg">
                         <input inputRef readonly type="text" placeholder="Propulsion Type"
                             formControlName="propulsionType" />
                     </div>
-                    <div iconic-input-wrapper leftSvg="assets/images/circum_gps.svg">
+                    <div iconic-input-wrapper [matTooltip]="'AIS'"
+                    matTooltipClass="drop-shadow-lg" matTooltipPosition="above" leftSvg="assets/images/circum_gps.svg">
                         <input inputRef readonly type="text" placeholder="AIS" formControlName="ais" />
                     </div>
-                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_engine.svg">
+                    <div iconic-input-wrapper [matTooltip]="'Engine Power'"
+                    matTooltipClass="drop-shadow-lg" matTooltipPosition="above" leftSvg="assets/images/scheduling_engine.svg">
                         <input inputRef readonly type="text" placeholder="Engine Power" formControlName="enginePower" />
                     </div>
                 </div>
                 <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
                     <p>&nbsp;</p>
-                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_length.svg">
+                    <div iconic-input-wrapper [matTooltip]="'LOA'"
+                    matTooltipClass="drop-shadow-lg" matTooltipPosition="above" leftSvg="assets/images/scheduling_length.svg">
                         <input inputRef readonly type="text" placeholder="LOA" formControlName="lengthOverall" />
                     </div>
-                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_width.svg">
+                    <div iconic-input-wrapper [matTooltip]="'Width (m)'"
+                    matTooltipClass="drop-shadow-lg" matTooltipPosition="above" leftSvg="assets/images/scheduling_width.svg">
                         <input inputRef readonly type="text" placeholder="Width (m)" formControlName="width" />
                     </div>
-                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_weight.svg">
+                    <div iconic-input-wrapper [matTooltip]="'C.Max (t)'"
+                    matTooltipClass="drop-shadow-lg" matTooltipPosition="above" leftSvg="assets/images/scheduling_weight.svg">
                         <input inputRef readonly type="text" placeholder="C.Max (t)" formControlName="maxQuantity" />
                     </div>
-                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_depth.svg">
+                    <div iconic-input-wrapper [matTooltip]="'Max Draft (m)'"
+                    matTooltipClass="drop-shadow-lg" matTooltipPosition="above" leftSvg="assets/images/scheduling_depth.svg">
                         <input inputRef readonly type="text" placeholder="Max Draft (m)" formControlName="maxDraft" />
                     </div>
-                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_convoy.svg">
+                    <div iconic-input-wrapper [matTooltip]="'Aerial Guage (m)'"
+                    matTooltipClass="drop-shadow-lg" matTooltipPosition="above" leftSvg="assets/images/scheduling_convoy.svg">
                         <input inputRef readonly type="number" placeholder="Aerial Guage (m)" formControlName="aerialGauge" />
                     </div>
-                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_lock.svg">
+                    <div iconic-input-wrapper [matTooltip]="'Type of lock'"
+                    matTooltipClass="drop-shadow-lg" matTooltipPosition="above" leftSvg="assets/images/scheduling_lock.svg">
                         <input inputRef readonly type="text" placeholder="Type of lock" formControlName="lockType" />
                     </div>
-                    <div iconic-input-wrapper leftSvg="assets/images/scheduling_port.svg">
+                    <div iconic-input-wrapper [matTooltip]="'Pavilion'"
+                    matTooltipClass="drop-shadow-lg" matTooltipPosition="above" leftSvg="assets/images/scheduling_port.svg">
                         <input inputRef readonly type="text" placeholder="Pavilion" formControlName="pavilion" />
                     </div>
                     <!-- <div iconic-select-wrapper
@@ -382,7 +412,8 @@
                             </option>
                         </select>
                     </div> -->
-                    <!-- <div iconic-input-wrapper leftSvg="assets/images/scheduling_lock.svg">
+                    <!-- <div iconic-input-wrapper [matTooltip]="'Operation Type'"
+                    matTooltipClass="drop-shadow-lg" matTooltipPosition="above" leftSvg="assets/images/scheduling_lock.svg">
                         <input inputRef type="text" placeholder="Type of lock" formControlName="lockType" />
                     </div> -->
                     <!-- <div iconic-input-wrapper leftSvg="assets/images/scheduling_weight.svg">

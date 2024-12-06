@@ -101,7 +101,7 @@ export class ProductsAddEditComponent {
 
     onCategoryChange(ev: any): void {
         this.isLoading$.next(true);
-        debugger
+        // debugger
         const selectedCategoryId = Number(ev.value);
         const category = this.category.value.find((item: any) => Number(item.id) === selectedCategoryId);
 

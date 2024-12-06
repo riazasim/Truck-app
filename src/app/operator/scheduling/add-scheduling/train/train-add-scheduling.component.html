@@ -6,11 +6,12 @@
                 class="grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20 gap-y-4 pt-[50px] min-xl:px-[50px]">
                 <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
                     <h4 class="font-bold">Locomotive and conductor</h4>
-                    <div iconic-select-wrapper leftSvg="assets/images/carbon-train-speed.svg"
+                    <div iconic-select-wrapper leftSvg="assets/images/carbon-train-speed.svg" [matTooltip]="'Locomotive Registration Number'"
+                    matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
                         (change)="onLocomotiveSelected($event)">
                         <select spAccessInputRef name="locomotiveId" id="locomotiveId" formControlName="locomotiveId">
                             <option disabled selected value="">
-                                Locomotive registration number
+                                Locomotive Registration Number
                             </option>
                             <option *ngFor="let locomotive of locomotives" [value]="locomotive.id">
                                 {{
@@ -22,8 +23,9 @@
                             </option>
                         </select>
                     </div>
-                    <div iconic-input-wrapper leftSvg="assets/images/carbon-train-speed.svg">
-                        <input readonly inputRef type="text" placeholder="Locomotive type" [value]="locomotiveType" />
+                    <div iconic-input-wrapper [matTooltip]="'Locomotive Type'"
+                    matTooltipClass="drop-shadow-lg" matTooltipPosition="above" leftSvg="assets/images/carbon-train-speed.svg">
+                        <input readonly inputRef type="text" placeholder="Locomotive Type" [value]="locomotiveType" />
                     </div>
                 </div>
                 <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
@@ -45,7 +47,8 @@
                             </div>
                         </div>
                     </div>
-                    <div iconic-input-wrapper leftIcon="envelope" *ngIf="hideEmail$ | async">
+                    <div iconic-input-wrapper [matTooltip]="'User Email'"
+                    matTooltipClass="drop-shadow-lg" matTooltipPosition="above" leftIcon="envelope" *ngIf="hideEmail$ | async">
                         <input inputRef type="email" placeholder="User email" formControlName="userEmail" />
                     </div>
                 </div>
@@ -73,37 +76,6 @@
                                 <td>
                                     <input class="text-center" readonly
                                         [value]="rows.indexOf(row) === 0 ? 'Start point' : rows.indexOf(row) === (rows.length - 1) ? 'End point' : 'Touch point ' + '( ' + $index + ' )'" />
-                                </td>
-                                <td>
-                                    <div iconic-select-wrapper [showValidation]="false"
-                                        >
-                                        <select name="stationType" id="stationType" spAccessInputRef
-                                            (change)="onStationTypeChange($event , $index)"
-                                            [value]="points[$index]?.stationType || ''">
-                                            <option disabled selected value="">
-                                                Station type
-                                            </option>
-                                            <option *ngFor="let stationType of stationTypes"
-                                                [value]="stationType.value">
-                                                {{ stationType.name }}
-                                            </option>
-                                        </select>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div iconic-select-wrapper [showValidation]="false"
-                                        >
-                                        <select name="station" id="station" (change)="onStationChange($event, $index)"
-                                            [value]="points[$index]?.station || ''" spAccessInputRef
-                                            [disabled]="(isStationLoading$ | async) && $index === selectedIndex">
-                                            <option disabled selected value="">
-                                                Station
-                                            </option>
-                                            <option *ngFor="let station of stations[$index]" [value]="station.id">
-                                                {{ station.name }}
-                                            </option>
-                                        </select>
-                                    </div>
                                 </td>
                                 <td>
                                     <a (click)="onRowDelete($index)"><fa-icon icon="trash"
@@ -148,18 +120,8 @@
                                         </option>
                                     </select>
                                 </div>
-                                <!-- <select formControlName="station" (change)="OnStationChange($event , $index)">
-                                    <option disabled selected value="">Station</option>
-                                    <option *ngFor="let station of stations" [value]="station.id">
-                                        {{ station.name }}
-                                    </option>
-                                </select> -->
                             </td>
                             <td>
-                                <!-- <div iconic-input-wrapper [showValidation]="false">
-                                    <input class="text-center" inputRef formControlName="stationType"
-                                        [value]="stationTypes[$index]" readonly />
-                                </div> -->
                                 <input class="text-center" [value]="
                                         stationTypes[$index] || 'Station Type'
                                     " readonly />
@@ -181,7 +143,8 @@
             </div>
             <div class="min-xl:px-[50px] grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20 mt-4">
                 <div class="gap-y-4 mb-5 min-xl:px-[50px]">
-                    <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]" [routerLink]="id ? '../../' : '../'">
+                    <button type="button" class="btn btn-primary w-full min-h-[50px] !text-[18px]"
+                        [routerLink]="id ? '../../' : '../'">
                         {{ "button.back" | translate }}
                     </button>
                 </div>
@@ -200,8 +163,10 @@
             <div
                 class="grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20 gap-y-4 pt-[50px] min-xl:px-[50px]">
                 <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
-                    <h4 class="font-bold">ShipmentID details</h4>
-                    <div iconic-select-wrapper leftSvg="assets/images/bi_building-down.svg">
+                    <h4 class="font-bold">ShipmentID Details</h4>
+                    
+                    <div iconic-select-wrapper [matTooltip]="'Pick-up from company'"
+                    matTooltipClass="drop-shadow-lg" matTooltipPosition="above" leftSvg="assets/images/bi_building-down.svg">
                         <select spAccessInputRef name="pickUpFromCompany" id="pickUpFromCompany"
                             formControlName="pickUpFromCompany">
                             <option disabled selected value="">
@@ -212,10 +177,11 @@
                             </option>
                         </select>
                     </div>
-                    <div iconic-select-wrapper leftSvg="assets/images/location_on_black_24dp.svg">
+                    <div iconic-select-wrapper [matTooltip]="'Pick-up Point'"
+                    matTooltipClass="drop-shadow-lg" matTooltipPosition="above" leftSvg="assets/images/location_on_black_24dp.svg">
                         <select spAccessInputRef name="pickUpPoint" id="pickUpPoint" formControlName="pickUpPoint">
                             <option disabled selected value="">
-                                Pick-up point
+                                Pick-up Point
                             </option>
                             <option *ngFor="let point of pickupPoints" [value]="point.pointType">
                                 {{ point.pointType }}
@@ -224,31 +190,42 @@
                     </div>
                     <div class="grid grid-cols-2 gap-x-8 gap-y-4 mb-5">
                         <datepicker matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
-                            [matTooltip]="'Pick-up ETA date' | translate" [model]="etpDate" [isHeaderPosition]="true"
+                            [matTooltip]="'Pick-up date' | translate" [model]="etpDateModal" [isHeaderPosition]="true"
                             [height]="52" (dateChanged)="OnETPDateChange($event)">
                         </datepicker>
                         <timepicker matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
-                            [matTooltip]="'Pick-up ETA time' | translate" [height]="52" [model]="etpTime"
+                            [matTooltip]="'Pick-up time' | translate" [height]="52" [model]="etpTimeVal"
                             (modelChange)="OnETPTimeChange($event)"></timepicker>
+                    </div>
+                    <div (change)="onOperationSelected($event)" iconic-select-wrapper [matTooltip]="'Operation'"
+                    matTooltipClass="drop-shadow-lg" matTooltipPosition="above" leftSvg="assets/images/scheduling_operation_type.svg">
+                        <select  spAccessInputRef name="operationType" id="operationType" formControlName="operation">
+                            <option disabled value="">Operation</option>
+                            <option *ngFor="let operationType of operationType" [value]="operationType.id">
+                                {{ operationType.name }}
+                            </option>
+                        </select>
                     </div>
                 </div>
                 <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
                     <p>&nbsp;</p>
-                    <div iconic-select-wrapper leftSvg="assets/images/bi_building-up.svg">
+                    <div iconic-select-wrapper [matTooltip]="'Deliver to Company'"
+                    matTooltipClass="drop-shadow-lg" matTooltipPosition="above" leftSvg="assets/images/bi_building-up.svg">
                         <select spAccessInputRef name="deliveryToCompany" id="deliveryToCompany"
                             formControlName="deliverToCompany">
                             <option disabled selected value="">
-                                Deliver to compny
+                                Deliver to Company
                             </option>
                             <option *ngFor="let company of companiesList" [value]="company.id">
                                 {{ company.name }}
                             </option>
                         </select>
                     </div>
-                    <div iconic-select-wrapper leftSvg="assets/images/location_on_black_24dp.svg">
+                    <div iconic-select-wrapper [matTooltip]="'Delivery Point'"
+                    matTooltipClass="drop-shadow-lg" matTooltipPosition="above" leftSvg="assets/images/location_on_black_24dp.svg">
                         <select spAccessInputRef name="deliveryPoint" id="deliveryPoint" formControlName="deliverPoint">
                             <option disabled selected value="">
-                                Delivery point
+                                Delivery Point
                             </option>
                             <option *ngFor="let point of deliveryPoints" [value]="point.pointType">
                                 {{ point.pointType }}
@@ -257,11 +234,11 @@
                     </div>
                     <div class="grid grid-cols-2 gap-x-8 gap-y-4 mb-5">
                         <datepicker matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
-                            [matTooltip]="'Delivery ETA date' | translate" [model]="etdDate" [isHeaderPosition]="true"
+                            [matTooltip]="'Delivery date' | translate" [model]="etdDateModal" [isHeaderPosition]="true"
                             [height]="52" (dateChanged)="OnETDDateChange($event)">
                         </datepicker>
                         <timepicker matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
-                            [matTooltip]="'Delivery ETA time' | translate" [height]="52" [model]="etdTime"
+                            [matTooltip]="'Delivery time' | translate" [height]="52" [model]="etdTimeVal"
                             (modelChange)="OnETDTimeChange($event)"></timepicker>
                     </div>
                 </div>
@@ -292,18 +269,11 @@
                                 </div>
                             </td>
                             <td>
-                                <div [isTable]="true" iconic-select-wrapper [showValidationMessageDiv]="false">
-                                    <select spAccessInputRef name="category" id="category" formControlName="category">
-                                        <option disabled value="">
-                                            Category
-                                        </option>
-                                        <option *ngFor="
-                                                let category of categoryList
-                                            " [value]="category.id">
-                                            {{ category.name }}
-                                        </option>
-                                    </select>
-                                </div>
+                                <app-search-select [isTable]="true" (searchQuery)="retrieveCategories($event)" [showValidationMessageDiv]="false" [search]="categoryQuery"
+                                    (selected)="onCategoryChange($event,i)" [contentLoading]="isContentLoading$"
+                                    [items]="category | async" placeholder="Category" [formGroup]="wagon"
+                                    formControlName="category"
+                                    (keyup)="onInputChange($event)" ngDefaultControl></app-search-select>
                             </td>
                             <td>
                                 <div [isTable]="true" iconic-select-wrapper [showValidationMessageDiv]="false">
@@ -313,7 +283,7 @@
                                             Subcategory
                                         </option>
                                         <option *ngFor="
-                                                let subCategory of subCategoryList
+                                                let subCategory of subCategoryLists[i] || []
                                             " [value]="subCategory.id">
                                             {{ subCategory.name }}
                                         </option>
@@ -341,8 +311,8 @@
                                 </div>
                             </td>
                             <td>
-                            <fa-icon icon="trash"
-                                    class="text-primary cursor-pointer mr-2" (click)="removeWagon(i)"></fa-icon>
+                                <fa-icon icon="trash" class="text-primary cursor-pointer mr-2"
+                                    (click)="removeWagon(i)"></fa-icon>
                             </td>
                         </tr>
                     </tbody>

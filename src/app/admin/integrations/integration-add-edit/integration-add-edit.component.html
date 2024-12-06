@@ -74,7 +74,7 @@
                     </div>
                     <div class="mt-2">
                         <label for="port">{{'location.title' | translate}}</label>
-                        <div iconic-select-wrapper [rightIcon]="['fas', 'caret-down']">
+                        <div iconic-select-wrapper>
                             <select inputRef name="port" id="port" formControlName="portId">
                                 <option value="null" disabled>{{'button.select-name' | translate: {'name': 'location.title' | translate | lowercase } }}</option>
                                 <option *ngFor="let location of ($locations | async)" [value]="location.id">{{location.name}}</option>

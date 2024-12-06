@@ -154,6 +154,7 @@ html {
 }
 ::ng-deep.mat-mdc-select {
     appearance: none;
+    width: 90% !important;
     background-color: #fff;
     border-color: #a0a0a0;
     border-width: 1px;

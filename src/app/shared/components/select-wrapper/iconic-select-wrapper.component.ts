@@ -26,8 +26,8 @@ import { faCaretDown } from '@fortawesome/pro-solid-svg-icons';
 export class IconicSelectWrapperComponent extends GenericWrapperComponent<HTMLSelectElement, SelectRefDirective> {
 
     @Input()
-    // public readonly rightIcon: IconProp = faCaretDown;
-    public rightIcon: IconProp | undefined;
+    public readonly rightIcon: IconProp = faCaretDown;
+    // public rightIcon: IconProp | undefined;
 
     @Input()
     public leftSvg: string | undefined;

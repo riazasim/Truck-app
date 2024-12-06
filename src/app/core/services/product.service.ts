@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { pluckArrayPaginationWrapperData, pluckArrayWrapperData, pluckItemWrapperData, wrapJsonForRequest } from 'src/app/shared/utils/api.functions';
+import { pluckArrayPaginationWrapperData, pluckArrayWrapperData, pluckItemWrapperData, pluckSubCategoriesData, wrapJsonForRequest } from 'src/app/shared/utils/api.functions';
 import { environment } from 'src/environments/environment';
 import { ProductModel, WarehouseAvailablityResponse } from '../models/product.model';
 import { ResponseArrayPaginationWrapper, ResponseArrayWrapper, ResponseDataItem, ResponseItemWrapper } from '../models/response-wrappers.types';
@@ -104,6 +104,15 @@ export class ProductService {
     }
     return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getSubCategoryList`, wrapJsonForRequest(data))
       .pipe(pluckItemWrapperData<any, ResponseItemWrapper<any>>())
+  }
+
+  getSubCategoryList(data: any): Observable<any> {
+    return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getSubCategoryArrayList`, data )
+        .pipe(pluckSubCategoriesData<any>(),
+            map((p: any) => {
+                return p;
+            })
+        )
   }
 
   delete(id: number): Observable<any> {

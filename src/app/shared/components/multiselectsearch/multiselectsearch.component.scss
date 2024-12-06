@@ -1,5 +1,5 @@
 mat-form-field.mat-form-field {
-  width: 100%;
+  // width: 100%;
   border-radius: 12px;
 
   ::ng-deep > div.mat-form-field-wrapper > div.mat-form-field-flex {
@@ -37,3 +37,14 @@ mat-select.mat-select {
 .select-container {
   margin-top: 10px;
 }
+
+// mat-select.mat-mdc-select {
+//   display: inline-block;
+//   width: 90% !important;
+// }
+// mat-select.mat-mdc-select-trigger {
+//   width: 90% !important;
+// }
+// mat-select.mat-mdc-select-value {
+//   width: 86% !important;
+// }

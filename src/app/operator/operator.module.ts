@@ -25,6 +25,7 @@ import { MapComponent } from './map/map.component';
 import { SearchComponent } from './map/search/search.component';
 import { ActivityLogComponent } from '../shared/components/activity-log/activity-log.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { TrainSearchComponent } from './map/search/train/train-search.component';
 
 
 
@@ -37,6 +38,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     OperatorLayoutComponent,
     MapComponent,
     SearchComponent,
+    TrainSearchComponent
   ],
     imports: [
         CommonModule,

@@ -6,11 +6,11 @@ import { MicroService } from 'src/app/core/services/micro.service';
 import { createRequiredValidators } from 'src/app/shared/validators/generic-validators';
 
 @Component({
-    selector: 'app-search',
-    templateUrl: './search.component.html',
-    styleUrl: './search.component.scss'
+    selector: 'app-train-search',
+    templateUrl: './train-search.component.html',
+    styleUrl: './train-search.component.scss'
 })
-export class SearchComponent {
+export class TrainSearchComponent {
 
     @Output() results: EventEmitter<any> = new EventEmitter()
     @Output() mapLoading$: EventEmitter<boolean> = new EventEmitter(true)

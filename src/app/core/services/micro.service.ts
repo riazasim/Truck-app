@@ -1,9 +1,9 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { map, Observable } from "rxjs";
-import { ResponseArrayPaginationWrapper, ResponseItemWrapper } from "../models/response-wrappers.types";
+import { ResponseArrayPaginationWrapper, ResponseArrayWrapper, ResponseItemWrapper } from "../models/response-wrappers.types";
 import { environment } from "src/environments/environment";
-import { pluckArrayPaginationWrapperData, pluckItemWrapperData, wrapJsonForRequest } from "src/app/shared/utils/api.functions";
+import { pluckArrayPaginationWrapperData, pluckArrayWrapperData, pluckItemWrapperData, wrapJsonForRequest } from "src/app/shared/utils/api.functions";
 import { CustomFieldData } from "../models/custom-field.model";
 
 @Injectable({
@@ -12,7 +12,7 @@ import { CustomFieldData } from "../models/custom-field.model";
 export class MicroService {
     constructor(private readonly http: HttpClient) { }
     getMicroPlanningConvoyes(data: any): Observable<any> {
-        return this.http.post<ResponseArrayPaginationWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getPaginatePlanningShipment`, wrapJsonForRequest(data))
+        return this.http.post<ResponseArrayPaginationWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getPlanningConvoyes`, wrapJsonForRequest(data))
             .pipe(pluckArrayPaginationWrapperData<any, ResponseArrayPaginationWrapper<any>>(),
                 map((u: any) => {
                     u.items = (<any>u.items).map(((c: CustomFieldData) => c.attributes));
@@ -65,5 +65,18 @@ export class MicroService {
                 })
             )
     }
+
+    // getOperations(): Observable<any> {
+    //     return this.http.get<ResponseArrayPaginationWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/paginateOperations`)
+    //       .pipe(pluckArrayPaginationWrapperData<any, ResponseArrayPaginationWrapper<any>>(),
+    //         map((u: any) => {
+    //           u.items = (<any>u.items).map(((c: CustomFieldData) => c.attributes));
+    //           return u;
+    //         })
+    //       );
+    //   }
+      getOperations(): Observable<any[]> {
+        return this.http.get<ResponseArrayWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getOperations`).pipe(pluckArrayWrapperData<any, ResponseArrayWrapper<any>>())
+      }
     
 }

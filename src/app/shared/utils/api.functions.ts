@@ -83,6 +83,22 @@ export function pluckArrayWrapperData<X, T extends ResponseArrayWrapper<X>>(): O
   );
 }
 
+export function pluckSubCategoriesData<X>(): OperatorFunction<any, X> {
+  return (source) =>
+      source.pipe(
+          map((response: any) => {
+              // Flatten the response into a single array of subcategories
+              const subcategories = response.flatMap((category: any) =>
+                  Object.values(category).flat()
+              );
+
+              // Return the processed array
+              return subcategories as X;
+          })
+      );
+}
+
+
 ///////// Asim ///////////////
 
 export function pluckArrayPaginationWrapperData<X, T extends ResponseArrayPaginationWrapper<X>>(): OperatorFunction<T, X> {

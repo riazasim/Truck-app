@@ -7,7 +7,7 @@
             <div class="input-container" [ngStyle]="styles" [class.!hidden]="loading">
                 <img *ngIf="leftSvg" [src]="leftSvg" alt="icon" class="mx-[10px] max-h-5 max-w-5">
                 <fa-icon *ngIf="leftIcon" [icon]="leftIcon" size="lg" class="icon"></fa-icon>
-                <mat-select class="relative !pt-0" [formControlName]="formControlName" *ngIf="!multiple"  [value]="value"
+                <mat-select class="relative !pt-0" [formControlName]="formControlName" *ngIf="!multiple" [value]="value"
                     (openedChange)="onOpenedChange($event)" placeholder="{{placeholder}}" #select
                     (selectionChange)="onSelectionChange($event)">
                     <div class="sticky top-0 z-10 bg-white !pt-2">
@@ -47,8 +47,8 @@
                         <p class="text-center text-columnCell">No Item Found</p>
                     </div>
                 </mat-select>
-                <fa-icon *ngIf="isValid && withCheckmark && (isTouched || withoutTouched) && showValidation" [icon]="checkmark" size="lg"
-                    class="icon valid"></fa-icon>
+                <fa-icon *ngIf="isValid && withCheckmark && (isTouched || withoutTouched) && showValidation"
+                    [icon]="checkmark" size="lg" class="icon valid"></fa-icon>
                 <fa-icon *ngIf="!isValid && isTouched && showValidation" [icon]="xmark" size="lg" class="icon invalid">
                 </fa-icon>
             </div>
@@ -68,22 +68,24 @@
         [class.invalid]="isInvalid || !isValid && (isTouched || withoutTouched)" [class.disabled]="isDisabled"
         [class.dashboard]="dashboardInp" [class.loading]="loading" class="iconic-layout-wrapper relative">
         <div class="loader absolute top-0 right-0 left-0 bottom-0 hidden z-10"></div>
-        <div class="input-container" [ngStyle]="styles" [class.!hidden]="loading">
-            <fa-icon icon="calendar-days" size="lg" class="icon cursor-pointer"></fa-icon>
-            <mat-select class="mb-6" placeholder="{{placeholder}}" (selectionChange)="onSelectionChange($event)"
-                (openedChange)="onOpenedChange($event)" #select [multiple]="multiple">
+        <div class="input-container !min-h-[35px] !border-none" [ngStyle]="styles" [class.!hidden]="loading">
+            <!-- <fa-icon icon="calendar-days" size="lg" class="icon cursor-pointer"></fa-icon> -->
+            <select class="w-full" (selectionChange)="onSelectionChange($event)" (openedChange)="onOpenedChange($event)"
+                #select [multiple]="multiple">
                 <searchbar>
                     <fa-icon icon="search" leftIcon></fa-icon>
                     <input input type="text" (keyup)="onInputChange($event)">
                 </searchbar>
                 <hr class="my-1 ">
-                <mat-option *ngFor="let item of (items | filter: search : 'name'); let i = index;" [value]="item.id">
+                <option *ngFor="let item of (items | filter: search : 'name'); let i = index;" [value]="item.id">
                     {{item.name}}
-                </mat-option>
+                </option>
                 <div class="w-full" *ngIf="(items | filter: search : 'name').length === 0">
                     <p class="text-center text-columnCell">No Item Found</p>
                 </div>
-            </mat-select>
+            </select>
+            <fa-icon *ngIf="rightIcon" [icon]="rightIcon" size="lg"
+                class="icon select-decoration {{dashboardInp ? '!text-[#C6C6C6]' : ''}}"></fa-icon>
         </div>
     </div>
 </ng-template>
