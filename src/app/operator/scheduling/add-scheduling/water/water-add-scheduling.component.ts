@@ -294,6 +294,14 @@ export class WaterAddSchedulingComponent implements OnInit {
     }
 
     addPlanning(index: number) {
+        const selectedShipId = this.stepTwoForm.value.ship; 
+    if (selectedShipId) {
+        const updatedShipsList = this.shipsList.value.filter(
+            (ship: any) => Number(ship.id) !== Number(selectedShipId)
+        );
+
+        this.shipsList.next(updatedShipsList);
+    }
         this.convoys.push({
             ...this.stepTwoForm.value,
             ...this.stepThreeForm.value,
@@ -556,11 +564,11 @@ export class WaterAddSchedulingComponent implements OnInit {
     }
     onDepartureCompanyChange() {
         this.stepOneForm.patchValue({
-            arrivalCompanyName:
-                this.arrivalCompanies.find(
+            departureCompanyName:
+                this.departureCompanies.find(
                     (item: any) =>
                         Number(item.id) ===
-                        Number(this.stepOneForm.get('arrivalCompany')?.value)
+                        Number(this.stepOneForm.get('departureCompany')?.value)
                 )?.name || '',
         });
     }

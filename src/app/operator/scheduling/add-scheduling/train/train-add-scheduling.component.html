@@ -6,9 +6,9 @@
                 class="grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20 gap-y-4 pt-[50px] min-xl:px-[50px]">
                 <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
                     <h4 class="font-bold">Locomotive and conductor</h4>
-                    <div iconic-select-wrapper leftSvg="assets/images/carbon-train-speed.svg" [matTooltip]="'Locomotive Registration Number'"
-                    matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
-                        (change)="onLocomotiveSelected($event)">
+                    <div iconic-select-wrapper leftSvg="assets/images/carbon-train-speed.svg"
+                        [matTooltip]="'Locomotive Registration Number'" matTooltipClass="drop-shadow-lg"
+                        matTooltipPosition="above" (change)="onLocomotiveSelected($event)">
                         <select spAccessInputRef name="locomotiveId" id="locomotiveId" formControlName="locomotiveId">
                             <option disabled selected value="">
                                 Locomotive Registration Number
@@ -23,8 +23,8 @@
                             </option>
                         </select>
                     </div>
-                    <div iconic-input-wrapper [matTooltip]="'Locomotive Type'"
-                    matTooltipClass="drop-shadow-lg" matTooltipPosition="above" leftSvg="assets/images/carbon-train-speed.svg">
+                    <div iconic-input-wrapper [matTooltip]="'Locomotive Type'" matTooltipClass="drop-shadow-lg"
+                        matTooltipPosition="above" leftSvg="assets/images/carbon-train-speed.svg">
                         <input readonly inputRef type="text" placeholder="Locomotive Type" [value]="locomotiveType" />
                     </div>
                 </div>
@@ -47,8 +47,8 @@
                             </div>
                         </div>
                     </div>
-                    <div iconic-input-wrapper [matTooltip]="'User Email'"
-                    matTooltipClass="drop-shadow-lg" matTooltipPosition="above" leftIcon="envelope" *ngIf="hideEmail$ | async">
+                    <div iconic-input-wrapper [matTooltip]="'User Email'" matTooltipClass="drop-shadow-lg"
+                        matTooltipPosition="above" leftIcon="envelope" *ngIf="hideEmail$ | async">
                         <input inputRef type="email" placeholder="User email" formControlName="userEmail" />
                     </div>
                 </div>
@@ -164,9 +164,9 @@
                 class="grid min-lg:grid-cols-2 grid-cols-1 gap-x-10 min-3xl:gap-x-20 gap-y-4 pt-[50px] min-xl:px-[50px]">
                 <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
                     <h4 class="font-bold">ShipmentID Details</h4>
-                    
-                    <div iconic-select-wrapper [matTooltip]="'Pick-up from company'"
-                    matTooltipClass="drop-shadow-lg" matTooltipPosition="above" leftSvg="assets/images/bi_building-down.svg">
+
+                    <div iconic-select-wrapper [matTooltip]="'Pick-up from company'" matTooltipClass="drop-shadow-lg"
+                        matTooltipPosition="above" leftSvg="assets/images/bi_building-down.svg">
                         <select spAccessInputRef name="pickUpFromCompany" id="pickUpFromCompany"
                             formControlName="pickUpFromCompany">
                             <option disabled selected value="">
@@ -177,8 +177,8 @@
                             </option>
                         </select>
                     </div>
-                    <div iconic-select-wrapper [matTooltip]="'Pick-up Point'"
-                    matTooltipClass="drop-shadow-lg" matTooltipPosition="above" leftSvg="assets/images/location_on_black_24dp.svg">
+                    <div iconic-select-wrapper [matTooltip]="'Pick-up Point'" matTooltipClass="drop-shadow-lg"
+                        matTooltipPosition="above" leftSvg="assets/images/location_on_black_24dp.svg">
                         <select spAccessInputRef name="pickUpPoint" id="pickUpPoint" formControlName="pickUpPoint">
                             <option disabled selected value="">
                                 Pick-up Point
@@ -187,6 +187,14 @@
                                 {{ point.pointType }}
                             </option>
                         </select>
+                        <!-- <select spAccessInputRef name="pickupPoint" id="pickupPoint" formControlName="pickUpPoint">
+                            <option disabled selected value="">
+                                Select Pickup Point
+                            </option>
+                            <option *ngFor="let point of pickupPoints; index as i" [value]="i + ':' + point.pointType">
+                                {{ point.pointType }}
+                            </option>
+                        </select> -->
                     </div>
                     <div class="grid grid-cols-2 gap-x-8 gap-y-4 mb-5">
                         <datepicker matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
@@ -198,8 +206,9 @@
                             (modelChange)="OnETPTimeChange($event)"></timepicker>
                     </div>
                     <div (change)="onOperationSelected($event)" iconic-select-wrapper [matTooltip]="'Operation'"
-                    matTooltipClass="drop-shadow-lg" matTooltipPosition="above" leftSvg="assets/images/scheduling_operation_type.svg">
-                        <select  spAccessInputRef name="operationType" id="operationType" formControlName="operation">
+                        matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
+                        leftSvg="assets/images/scheduling_operation_type.svg">
+                        <select spAccessInputRef name="operationType" id="operationType" formControlName="operation">
                             <option disabled value="">Operation</option>
                             <option *ngFor="let operationType of operationType" [value]="operationType.id">
                                 {{ operationType.name }}
@@ -209,8 +218,8 @@
                 </div>
                 <div class="flex flex-col gap-y-4 min-xl:px-[50px]">
                     <p>&nbsp;</p>
-                    <div iconic-select-wrapper [matTooltip]="'Deliver to Company'"
-                    matTooltipClass="drop-shadow-lg" matTooltipPosition="above" leftSvg="assets/images/bi_building-up.svg">
+                    <div iconic-select-wrapper [matTooltip]="'Deliver to Company'" matTooltipClass="drop-shadow-lg"
+                        matTooltipPosition="above" leftSvg="assets/images/bi_building-up.svg">
                         <select spAccessInputRef name="deliveryToCompany" id="deliveryToCompany"
                             formControlName="deliverToCompany">
                             <option disabled selected value="">
@@ -221,8 +230,8 @@
                             </option>
                         </select>
                     </div>
-                    <div iconic-select-wrapper [matTooltip]="'Delivery Point'"
-                    matTooltipClass="drop-shadow-lg" matTooltipPosition="above" leftSvg="assets/images/location_on_black_24dp.svg">
+                    <div iconic-select-wrapper [matTooltip]="'Delivery Point'" matTooltipClass="drop-shadow-lg"
+                        matTooltipPosition="above" leftSvg="assets/images/location_on_black_24dp.svg">
                         <select spAccessInputRef name="deliveryPoint" id="deliveryPoint" formControlName="deliverPoint">
                             <option disabled selected value="">
                                 Delivery Point
@@ -231,6 +240,14 @@
                                 {{ point.pointType }}
                             </option>
                         </select>
+                        <!-- <select spAccessInputRef name="deliveryPoint" id="deliveryPoint" formControlName="deliverPoint">
+                            <option disabled selected value="">
+                                Select Delivery Point
+                            </option>
+                            <option *ngFor="let point of deliveryPoints; index as i" [value]="i + ':' + point.pointType">
+                                {{ point.pointType }}
+                            </option>
+                        </select> -->
                     </div>
                     <div class="grid grid-cols-2 gap-x-8 gap-y-4 mb-5">
                         <datepicker matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
@@ -269,11 +286,12 @@
                                 </div>
                             </td>
                             <td>
-                                <app-search-select [isTable]="true" (searchQuery)="retrieveCategories($event)" [showValidationMessageDiv]="false" [search]="categoryQuery"
+                                <app-search-select [isTable]="true" (searchQuery)="retrieveCategories($event)"
+                                    [showValidationMessageDiv]="false" [search]="categoryQuery"
                                     (selected)="onCategoryChange($event,i)" [contentLoading]="isContentLoading$"
                                     [items]="category | async" placeholder="Category" [formGroup]="wagon"
-                                    formControlName="category"
-                                    (keyup)="onInputChange($event)" ngDefaultControl></app-search-select>
+                                    formControlName="category" (keyup)="onInputChange($event)"
+                                    ngDefaultControl></app-search-select>
                             </td>
                             <td>
                                 <div [isTable]="true" iconic-select-wrapper [showValidationMessageDiv]="false">

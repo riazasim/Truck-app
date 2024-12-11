@@ -356,6 +356,23 @@ export class TrainAddSchedulingComponent implements OnInit {
             estimatedTimePickUp: this.etpDateTimeVal,
             estimatedTimeDeliver: this.etdDateTimeVal,
         });
+
+    //     debugger
+    //     const selectedPickupPoint = this.stepTwoForm.value.pickUpPoint; // e.g., "0:Start Point"
+    // const selectedDeliveryPoint = this.stepTwoForm.value.deliverPoint; // e.g., "1:Touch Point"
+
+    // if (selectedPickupPoint) {
+    //     const [pickupIndex, pickupPointType] = selectedPickupPoint.split(':');
+    //     this.pickupPoints.splice(Number(pickupIndex), 1); // Remove by index
+    //     console.log(`Pickup Point Selected: ${pickupPointType}`);
+    // }
+
+    // if (selectedDeliveryPoint) {
+    //     const [deliveryIndex, deliveryPointType] = selectedDeliveryPoint.split(':');
+    //     this.deliveryPoints.splice(Number(deliveryIndex), 1); // Remove by index
+    //     console.log(`Delivery Point Selected: ${deliveryPointType}`);
+    // }
+
         this.convoys.push({
             ...this.stepTwoForm.value,
             ...this.stepThreeForm.value,
@@ -479,6 +496,8 @@ export class TrainAddSchedulingComponent implements OnInit {
                     newArr[newArr.length - 1].pointType = 'End Point';
                     this.pickupPoints = newArr.slice(0, -1);
                     this.deliveryPoints = newArr.slice(1);
+                    console.log(this.pickupPoints)
+                    console.log(this.deliveryPoints)
                     this.matStepper.selectedIndex = index;
                 }
             } else {

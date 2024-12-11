@@ -51,3 +51,29 @@ select {
 .mat-mdc-select {
     width: 90%;
 }
+.mat-mdc-select {
+    width: 100%;
+    color: inherit;
+    font-family: var(--app-font-family);
+    line-height: var(--mat-select-trigger-text-line-height);
+    font-size: var(--form-control-font-size); 
+    font-weight: inherit;
+    letter-spacing: var(--mat-select-trigger-text-tracking);
+}
+.mat-mdc-option .mdc-list-item__primary-text {
+    white-space: normal;
+    font-size: var(--form-control-font-size);
+    font-weight: inherit;
+    letter-spacing: inherit;
+    line-height: inherit;
+    font-family: var(--app-font-family);
+    text-decoration: inherit;
+    text-transform: inherit;
+    margin-right: auto;
+}
+::ng-deep.mat-mdc-select-arrow-wrapper {
+    height: 24px;
+    flex-shrink: 0;
+    display: none;
+    align-items: center;
+}
