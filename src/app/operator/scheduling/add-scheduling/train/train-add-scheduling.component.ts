@@ -258,12 +258,12 @@ export class TrainAddSchedulingComponent implements OnInit {
             this.stepOneForm.get('userEmail')?.setValue(''); // Reset value
         }
         this.stepOneForm.get('userEmail')?.updateValueAndValidity();
-    
+
         // Ensure form validation consistency
         this.stepOneForm.updateValueAndValidity();
         this.hideEmail$.next(ev);
     }
-    
+
 
     // hideEmail(ev: boolean) {
     //     debugger
@@ -357,21 +357,21 @@ export class TrainAddSchedulingComponent implements OnInit {
             estimatedTimeDeliver: this.etdDateTimeVal,
         });
 
-    //     debugger
-    //     const selectedPickupPoint = this.stepTwoForm.value.pickUpPoint; // e.g., "0:Start Point"
-    // const selectedDeliveryPoint = this.stepTwoForm.value.deliverPoint; // e.g., "1:Touch Point"
+        //     debugger
+        //     const selectedPickupPoint = this.stepTwoForm.value.pickUpPoint; // e.g., "0:Start Point"
+        // const selectedDeliveryPoint = this.stepTwoForm.value.deliverPoint; // e.g., "1:Touch Point"
 
-    // if (selectedPickupPoint) {
-    //     const [pickupIndex, pickupPointType] = selectedPickupPoint.split(':');
-    //     this.pickupPoints.splice(Number(pickupIndex), 1); // Remove by index
-    //     console.log(`Pickup Point Selected: ${pickupPointType}`);
-    // }
+        // if (selectedPickupPoint) {
+        //     const [pickupIndex, pickupPointType] = selectedPickupPoint.split(':');
+        //     this.pickupPoints.splice(Number(pickupIndex), 1); // Remove by index
+        //     console.log(`Pickup Point Selected: ${pickupPointType}`);
+        // }
 
-    // if (selectedDeliveryPoint) {
-    //     const [deliveryIndex, deliveryPointType] = selectedDeliveryPoint.split(':');
-    //     this.deliveryPoints.splice(Number(deliveryIndex), 1); // Remove by index
-    //     console.log(`Delivery Point Selected: ${deliveryPointType}`);
-    // }
+        // if (selectedDeliveryPoint) {
+        //     const [deliveryIndex, deliveryPointType] = selectedDeliveryPoint.split(':');
+        //     this.deliveryPoints.splice(Number(deliveryIndex), 1); // Remove by index
+        //     console.log(`Delivery Point Selected: ${deliveryPointType}`);
+        // }
 
         this.convoys.push({
             ...this.stepTwoForm.value,
@@ -496,8 +496,8 @@ export class TrainAddSchedulingComponent implements OnInit {
                     newArr[newArr.length - 1].pointType = 'End Point';
                     this.pickupPoints = newArr.slice(0, -1);
                     this.deliveryPoints = newArr.slice(1);
-                    console.log(this.pickupPoints)
-                    console.log(this.deliveryPoints)
+                    console.log(this.pickupPoints, 'p')
+                    console.log(this.deliveryPoints, 'd')
                     this.matStepper.selectedIndex = index;
                 }
             } else {
@@ -516,6 +516,8 @@ export class TrainAddSchedulingComponent implements OnInit {
 
     OnETPDateChange(value: any) {
         let filterDate = value instanceof Date ? value : new Date(value);
+        this.etdDate = filterDate;
+        this.etdDateVal = this.formatDate(filterDate);
         this.etpDateVal = this.formatDate(filterDate);
     }
 
@@ -699,7 +701,7 @@ export class TrainAddSchedulingComponent implements OnInit {
         query?: any,
         len?: any,
         type?: any,
-        categoryIds?: any[] 
+        categoryIds?: any[]
     ): void {
         this.isContentLoading$.next(true);
         this.selectedCategoryIds = Array.isArray(categoryIds) ? categoryIds : [];
@@ -708,7 +710,7 @@ export class TrainAddSchedulingComponent implements OnInit {
         this.categoryStart += len !== undefined ? Number(len) : 0;
 
         let data = {
-            selectedIds: this.selectedCategoryIds, 
+            selectedIds: this.selectedCategoryIds,
             type: this.type,
             start: this.categoryStart > 0 ? this.categoryStart : 0,
             length: 20,
@@ -797,24 +799,24 @@ export class TrainAddSchedulingComponent implements OnInit {
         this.isContentLoading$.next(true); // Start loading indicator
         let data = {
             "categoryIds": categoryIds
-          }
+        }
         // debugger
-        this.productService.getSubCategoryList( data ).subscribe({
+        this.productService.getSubCategoryList(data).subscribe({
             next: (response: any[]) => {
+                console.log(response, "cat train")
                 // Clear the subCategoryLists array
                 this.subCategoryLists = [];
                 // Process response to map subcategories to the correct index
                 categoryIds.forEach((id, index) => {
                     // Find the corresponding subcategories for the current category ID
-                    const subCategories = response.find((item) => item[id])?.[id] || [];
-    
+
                     // Map subcategories for this category ID
-                    this.subCategoryLists[index] = subCategories.map((sub:any) => sub.name);
-    
+                    this.subCategoryLists[index] = response[index];
+
                     // Access the FormArray and its control
                     const wagonsArray = this.wagons as FormArray;
                     const wagonControl = wagonsArray.at(index);
-    
+
                     if (wagonControl) {
                         // Reset the subCategory field if no subcategories are found
                         if (this.subCategoryLists[index].length === 0) {
@@ -822,7 +824,7 @@ export class TrainAddSchedulingComponent implements OnInit {
                         }
                     }
                 });
-    
+                console.log(this.subCategoryLists)
                 this.isContentLoading$.next(false); // Stop loading indicator
             },
             error: (err: any) => {
@@ -831,7 +833,7 @@ export class TrainAddSchedulingComponent implements OnInit {
             },
         });
     }
-    
+
 
     // initConvoyForm(data?: any): void {
     //     this.convoyForm = this.fb.group({
@@ -931,8 +933,8 @@ export class TrainAddSchedulingComponent implements OnInit {
                 data?.operation || '',
                 [...createRequiredValidators()]
             ),
-            operationName: this.fb.control( 
-                data?.operationName || '' 
+            operationName: this.fb.control(
+                data?.operationName || ''
             ),
             pickUpPoint: this.fb.control(data?.pickUpPoint?.pointType || '', [
                 ...createRequiredValidators(),

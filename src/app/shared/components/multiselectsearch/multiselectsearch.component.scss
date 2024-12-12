@@ -38,13 +38,12 @@ mat-select.mat-select {
   margin-top: 10px;
 }
 
-// mat-select.mat-mdc-select {
-//   display: inline-block;
-//   width: 90% !important;
-// }
-// mat-select.mat-mdc-select-trigger {
-//   width: 90% !important;
-// }
-// mat-select.mat-mdc-select-value {
-//   width: 86% !important;
-// }
+.mat-mdc-select-trigger {
+  display: inline-flex
+;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  box-sizing: border-box;
+  width: 85%;
+}

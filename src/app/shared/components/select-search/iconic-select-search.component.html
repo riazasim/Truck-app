@@ -47,6 +47,8 @@
                         <p class="text-center text-columnCell">No Item Found</p>
                     </div>
                 </mat-select>
+                <fa-icon *ngIf="rightIcon" [icon]="rightIcon" size="lg"
+                class="icon select-decoration"></fa-icon>
                 <fa-icon *ngIf="isValid && withCheckmark && (isTouched || withoutTouched) && showValidation"
                     [icon]="checkmark" size="lg" class="icon valid"></fa-icon>
                 <fa-icon *ngIf="!isValid && isTouched && showValidation" [icon]="xmark" size="lg" class="icon invalid">
@@ -64,9 +66,10 @@
     </form>
 </ng-container>
 <ng-template #simple>
-    <div [class.valid]="isValid === true && (isTouched || withoutTouched)" [class.tableInp]="isTable"
+    <!-- <div [class.valid]="isValid === true && (isTouched || withoutTouched)" [class.tableInp]="isTable"
         [class.invalid]="isInvalid || !isValid && (isTouched || withoutTouched)" [class.disabled]="isDisabled"
-        [class.dashboard]="dashboardInp" [class.loading]="loading" class="iconic-layout-wrapper relative">
+        [class.dashboard]="dashboardInp" [class.loading]="loading" class="iconic-layout-wrapper relative"> -->
+    <div class="iconic-layout-wrapper relative">
         <div class="loader absolute top-0 right-0 left-0 bottom-0 hidden z-10"></div>
         <div class="input-container !min-h-[35px] !border-none" [ngStyle]="styles" [class.!hidden]="loading">
             <!-- <fa-icon icon="calendar-days" size="lg" class="icon cursor-pointer"></fa-icon> -->

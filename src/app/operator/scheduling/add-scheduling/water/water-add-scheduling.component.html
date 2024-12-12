@@ -38,7 +38,7 @@
                     </div>
                     <div class="grid grid-cols-2 gap-x-8 gap-y-4 mb-5">
                         <datepicker [loading]="(isDeparturePortsLoading$ | async)" matTooltipClass="drop-shadow-lg"
-                            matTooltipPosition="above" [matTooltip]="'Departure Date' | translate" [model]="departureDateModal"
+                            matTooltipPosition="above" [minDate]="departureDateModal" [matTooltip]="'Departure Date' | translate" [model]="departureDateModal"
                             [isHeaderPosition]="true" [height]="52" (dateChanged)="OnDepartureDateChange($event)">
                         </datepicker>
                         <timepicker [loading]="(isDeparturePortsLoading$ | async)" matTooltipClass="drop-shadow-lg"
@@ -133,7 +133,7 @@
                         </select>
                     </div>
                     <div class="grid grid-cols-2 gap-x-8 gap-y-4 mb-5">
-                        <datepicker [loading]="(isArrivalPortsLoading$ | async)" matTooltipClass="drop-shadow-lg"
+                        <datepicker [minDate]="arrivalDateModal" [loading]="(isArrivalPortsLoading$ | async)" matTooltipClass="drop-shadow-lg"
                             matTooltipPosition="above" [matTooltip]="'Arrival Date' | translate" [model]="arrivalDateModal"
                             [isHeaderPosition]="true" [height]="52" (dateChanged)="OnArrivalDateChange($event)">
                         </datepicker>
