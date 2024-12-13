@@ -146,7 +146,8 @@
 
                     <app-search-select [formGroup]="sidFilterForm" [loading]="(isPortsLoading$ | async)"
                         formControlName="departurePort" (searchQuery)="retrivePorts($event)" [search]="portQuery"
-                        [contentLoading]="isContentLoading$"
+                        [contentLoading]="isContentLoading$" [dashboardInp]="true"
+                        [showValidation]="false"
                         (selected)="onSIDChange($event, 'dp')"
                         [items]="departurePorts | async" placeholder="Departure Port"
                          ngDefaultControl></app-search-select>
@@ -161,7 +162,8 @@
                     </div> -->
                     <app-search-select [formGroup]="sidFilterForm" [loading]="(isPortsLoading$ | async)"
                         formControlName="arrivalPort" (searchQuery)="retrivePorts($event)" [search]="portQuery"
-                         [contentLoading]="isContentLoading$"
+                         [contentLoading]="isContentLoading$" [dashboardInp]="true"
+                         [showValidation]="false"
                          (selected)="onSIDChange($event, 'ap' )"
                         [items]="arrivalPorts | async" placeholder="Arrival Port"
                          ngDefaultControl></app-search-select>

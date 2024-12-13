@@ -34,7 +34,7 @@
                 <input onkeydown="return false" [ngStyle]="{'textAlign': textAlign}" (click)="picker.open()" type="text"
                        [placeholder]="placeholder" [min]="minDate" [formControlName]="field" [matDatepicker]="picker">
                 <fa-icon (click)="formGroup.get(field)?.patchValue(null)" *ngIf="formGroup.get(field)?.value" icon="close" size="lg" class="icon cursor-pointer"></fa-icon>
-                <mat-datepicker #picker ></mat-datepicker>
+                <mat-datepicker #picker></mat-datepicker>
             </div>
         </div>
     </form>
@@ -46,7 +46,7 @@
             <fa-icon (click)="picker.open()" icon="calendar-days" size="lg" class="icon cursor-pointer"></fa-icon>
             <input onkeydown="return false" [ngStyle]="{'textAlign': textAlign}"
                    (click)="picker.open()" type="text"
-                   [placeholder]="placeholder" [min]="minDate" [ngModel]="model" (ngModelChange)="dateChanged.emit($event)" [matDatepicker]="picker">
+                   [placeholder]="placeholder" [min]="minDate" [ngModel]="model" (ngModelChange)="dateChanged.emit($event)" [matDatepicker]="picker" class="py-0">
             <fa-icon (click)="model = ''; dateRemoved.emit(true)" *ngIf="model" icon="close" size="lg" class="icon cursor-pointer"></fa-icon>
             <mat-datepicker #picker ></mat-datepicker>
         </div>

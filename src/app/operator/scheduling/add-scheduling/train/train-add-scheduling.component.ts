@@ -105,7 +105,8 @@ export class TrainAddSchedulingComponent implements OnInit {
     getFormatHourSlot: Function;
     pickupPoints: any[] = [];
     deliveryPoints: any[] = [];
-    id: number;
+    id: BehaviorSubject<number> =
+        new BehaviorSubject<number>(0);
     shipsList: any;
     etpDate: Date = new Date();
     etpTime = '00:00:00';
@@ -186,7 +187,8 @@ export class TrainAddSchedulingComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.id = this.route.snapshot.params['id'];
+        this.id.next(this.route.snapshot.params['id']);
+        console.log(this.id)
         this.initForm();
         // this.initConvoyForm();
         this.retriveOperations();
@@ -196,15 +198,15 @@ export class TrainAddSchedulingComponent implements OnInit {
         this.addPoints();
         this.retrieveStations();
         this.cd.detectChanges();
-        this.isLoading$.next(false);
     }
 
     subscribeForQueryParams(): void {
-        this.id = this.route.snapshot.params['id'];
-        if (this.id) {
+        this.isLoading$.next(true);
+        this.id.next(this.route.snapshot.params['id']);
+        if (this.id.value) {
             this.isEdit$.next(true);
             this.planningService
-                .getConvoy(this.id)
+                .getConvoy(this.id.value)
                 .subscribe((shipment: any) => {
                     console.log(shipment);
                     // debugger
@@ -219,12 +221,6 @@ export class TrainAddSchedulingComponent implements OnInit {
                     this.etpTimeVal = etpTimeDateModal[1];
                     this.locomotiveType =
                         shipment?.planningRailway?.locomotive?.locomotiveType;
-                    if (
-                        shipment?.planningRailway?.conductorType ===
-                        'Without Laras Conductor App'
-                    ) {
-                        this.hideEmail(false);
-                    }
 
                     const categoryIds = shipment?.planningRailwayShipmentWagons.map(
                         (wagon: any) => wagon.category?.id
@@ -235,6 +231,13 @@ export class TrainAddSchedulingComponent implements OnInit {
 
                     // this.retrieveCategories();
                     this.initForm(0, shipment);
+                    if (
+                        shipment?.planningRailway?.conductorType ===
+                        'Without Laras Conductor App'
+                    ) {
+                        console.log("ok 3")
+                        this.hideEmail(false);
+                    }
                     this.isLoading$.next(false);
                 });
         } else {
@@ -393,7 +396,6 @@ export class TrainAddSchedulingComponent implements OnInit {
         };
         this.trainsService.pagination(data).subscribe((response) => {
             this.locomotives = response?.items;
-            this.isLoading$.next(false);
         });
     }
 
@@ -409,7 +411,6 @@ export class TrainAddSchedulingComponent implements OnInit {
     }
 
     retrieveCompanies() {
-        this.isLoading$.next(true);
         let data = {
             start: 0,
             length: 0,
@@ -418,7 +419,6 @@ export class TrainAddSchedulingComponent implements OnInit {
         };
         this.partnerService.pagination(data).subscribe((response) => {
             this.companiesList = response.items;
-            this.isLoading$.next(false);
         });
     }
 
@@ -457,10 +457,8 @@ export class TrainAddSchedulingComponent implements OnInit {
     }
 
     retriveOperations() {
-        this.isLoading$.next(true);
         this.microService.getOperations().subscribe((response) => {
             this.operationType = response;
-            this.isLoading$.next(false);
         });
     }
 
@@ -486,7 +484,7 @@ export class TrainAddSchedulingComponent implements OnInit {
                         disableClose: true,
                     });
                 } else {
-                    console.log('ok');
+                    console.log(this.points.value);
                     const newArr = this.points.value;
                     for (let i = 0; i < newArr.length; i++) {
                         newArr[i].pointType = 'Touch Point';
@@ -758,6 +756,7 @@ export class TrainAddSchedulingComponent implements OnInit {
     retrieveSubCategories(categoryId: any, rowIndex: number): void {
         this.productService.getSubCategory(categoryId).subscribe({
             next: (res: any) => {
+                console.log(res, "res train")
                 this.subCategoryLists[rowIndex] =
                     res.map((item: any) => item.attributes) || [];
 
@@ -811,7 +810,7 @@ export class TrainAddSchedulingComponent implements OnInit {
                     // Find the corresponding subcategories for the current category ID
 
                     // Map subcategories for this category ID
-                    this.subCategoryLists[index] = response[index];
+                    this.subCategoryLists[index] = response[index][id];
 
                     // Access the FormArray and its control
                     const wagonsArray = this.wagons as FormArray;
@@ -936,10 +935,10 @@ export class TrainAddSchedulingComponent implements OnInit {
             operationName: this.fb.control(
                 data?.operationName || ''
             ),
-            pickUpPoint: this.fb.control(data?.pickUpPoint?.pointType || '', [
+            pickUpPoint: this.fb.control(`${data?.pickUpPoint?.pointType || ''} (${data?.pickUpPoint?.station?.id || ''})` || '', [
                 ...createRequiredValidators(),
             ]),
-            deliverPoint: this.fb.control(data?.deliverPoint?.pointType || '', [
+            deliverPoint: this.fb.control(`${data?.deliverPoint?.pointType || ''} (${data?.pickUpPoint?.station?.id || ''})` || '', [
                 ...createRequiredValidators(),
             ]),
             estimatedTimePickUp: this.fb.control(''),
@@ -968,6 +967,7 @@ export class TrainAddSchedulingComponent implements OnInit {
             operatorComments: this.fb.control(data?.operatorComments || ''),
             additionalOperator: this.fb.control(data?.additionalOperator || ''),
         });
+        console.log(`${data?.pickUpPoint?.pointType || ''} (${data?.pickUpPoint?.station?.id || ''})`)
     }
 
     get points(): FormArray {
@@ -982,12 +982,8 @@ export class TrainAddSchedulingComponent implements OnInit {
             planningRouteDetailId: [data?.id || null],
             pointType: [data?.pointType || ''],
             stationType: [data?.stationType || ''],
-            station: [
-                {
-                    value: data?.station?.id || '',
-                    disabled: data?.station?.id ? true : false,
-                },
-                [...createRequiredValidators()],
+            station: [data?.station?.id || '',
+            [...createRequiredValidators()],
             ],
         });
         this.points.push(newPoint);
@@ -1062,9 +1058,9 @@ export class TrainAddSchedulingComponent implements OnInit {
             routingDetail: this.stepOneForm.value,
         });
         console.log(this.schedulingForm, 'schedulingForm');
-        if (this.id) {
+        if (this.id.value) {
             this.planningService
-                .editConvoys(this.id, {
+                .editConvoys(this.id.value, {
                     ...this.stepTwoForm.value,
                     ...this.stepThreeForm.value,
                 })

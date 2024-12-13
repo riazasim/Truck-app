@@ -64,14 +64,14 @@ export class ProductService {
       );
   }
 
-  getProductList(data: any ): Observable<any> {
-    return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getProductList`, data )
-        .pipe(pluckItemWrapperData<any, ResponseItemWrapper<any>>(),
-            map((p: any) => {
-                return p;
-            })
-        )
-}
+  getProductList(data: any): Observable<any> {
+    return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getProductList`, data)
+      .pipe(pluckItemWrapperData<any, ResponseItemWrapper<any>>(),
+        map((p: any) => {
+          return p;
+        })
+      )
+  }
 
   // getCategory(data: any): Observable<any> {
   //   return this.http.post<any>(`${environment.apiUrl}${environment.apiVersion}/getCategoryList`, wrapJsonForRequest(data))
@@ -90,14 +90,14 @@ export class ProductService {
   //   return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getCategoryList`, wrapJsonForRequest(data))
   //     .pipe(pluckItemWrapperData<any, ResponseItemWrapper<any>>())
   // }
-  getCategoryList(data: any ): Observable<any> {
-    return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getCategoryList`, data )
-        .pipe(pluckItemWrapperData<any, ResponseItemWrapper<any>>(),
-            map((p: any) => {
-                return p;
-            })
-        )
-}
+  getCategoryList(data: any): Observable<any> {
+    return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getCategoryList`, data)
+      .pipe(pluckItemWrapperData<any, ResponseItemWrapper<any>>(),
+        map((p: any) => {
+          return p;
+        })
+      )
+  }
   getSubCategory(id: number): Observable<any> {
     let data = {
       "categoryId": id
@@ -107,12 +107,15 @@ export class ProductService {
   }
 
   getSubCategoryList(data: any): Observable<any> {
-    return this.http.post<ResponseItemWrapper<any>>(`${environment.apiUrl}${environment.apiVersion}/getSubCategoryArrayList`, data )
-        .pipe(pluckSubCategoriesData<any>(),
-            map((p: any) => {
-                return p;
-            })
-        )
+    return this.http.post<any>(`${environment.apiUrl}${environment.apiVersion}/getSubCategoryArrayList`, data)
+      // .pipe(((data): any => { 
+      //   console.log(data)
+      //   return data
+      // })(),
+      //   map((p: any) => {
+      //     return p;
+      //   })
+      // )
   }
 
   delete(id: number): Observable<any> {

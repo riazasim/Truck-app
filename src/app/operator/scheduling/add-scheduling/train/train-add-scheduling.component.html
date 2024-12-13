@@ -111,7 +111,8 @@
                                 <div [isTable]="true" iconic-select-wrapper [showValidationMessageDiv]="false">
                                     <select formControlName="station" spAccessInputRef (change)="
                                             OnStationChange($event, $index)
-                                        ">
+                                        "
+                                        [class.pointer-events-none]="(((id | async) ?? 0) > 0 && (id | async) !== undefined)">
                                         <option disabled selected value="">
                                             Station
                                         </option>
@@ -183,8 +184,9 @@
                             <option disabled selected value="">
                                 Pick-up Point
                             </option>
-                            <option *ngFor="let point of pickupPoints" [value]="point.pointType">
-                                {{ point.pointType }} 
+                            <option *ngFor="let point of pickupPoints"
+                                [value]="point.pointType + ' (' + point.station + ')'">
+                                {{ point.pointType }}
                             </option>
                         </select>
                         <!-- <select spAccessInputRef name="pickupPoint" id="pickupPoint" formControlName="pickUpPoint">
@@ -236,8 +238,8 @@
                             <option disabled selected value="">
                                 Delivery Point
                             </option>
-                            <option *ngFor="let point of deliveryPoints" [value]="point.pointType">
-                                {{ point.pointType }} 
+                            <option *ngFor="let point of deliveryPoints" [value]="point.pointType + ' (' + point.station + ')'">
+                                {{ point.pointType }}
                             </option>
                         </select>
                         <!-- <select spAccessInputRef name="deliveryPoint" id="deliveryPoint" formControlName="deliverPoint">
@@ -467,7 +469,7 @@
         <app-loader *ngIf="isLoading$ | async" [isContainer]="true" [fullScreen]="false"></app-loader>
         <div class="flex flex-col justify-center" *ngIf="!(isLoading$ | async)">
             <div class="flex-1 flex justify-center gap-10 w-full max-lg:flex-col cursor-pointer">
-                
+
                 <div (click)="addPlanning()" *ngIf="addNewWagon$ | async"
                     class="flex min-lg:flex-col justify-evenly gap-5 items-center w-full min-lg:w-[400px] h-[520px] rounded-[10px] border border-transparent shadow-md cursor-pointer">
                     <div class="flex flex-col gap-2 items-center cursor-pointer">
@@ -486,23 +488,23 @@
                     </div>
                 </div>
                 <div (click)="saveScheduling()"
-                class="flex min-lg:flex-col gap-5 items-center justify-evenly w-full min-lg:w-[400px] h-[520px] rounded-[10px] border border-transparent shadow-md cursor-pointer">
-                <div class="flex flex-col gap-2 items-center cursor-pointer">
-                    <div
-                        class="border border-[#B7B7B7] rounded-full flex justify-center items-center w-[155px] h-[155px] cursor-pointer">
-                        <img src="assets/images/scheduling_flag.svg" alt="Flag" />
+                    class="flex min-lg:flex-col gap-5 items-center justify-evenly w-full min-lg:w-[400px] h-[520px] rounded-[10px] border border-transparent shadow-md cursor-pointer">
+                    <div class="flex flex-col gap-2 items-center cursor-pointer">
+                        <div
+                            class="border border-[#B7B7B7] rounded-full flex justify-center items-center w-[155px] h-[155px] cursor-pointer">
+                            <img src="assets/images/scheduling_flag.svg" alt="Flag" />
+                        </div>
+                        <h2 class="text-4xl text-[#696969] font-bold cursor-pointer">
+                            Train ended
+                        </h2>
                     </div>
-                    <h2 class="text-4xl text-[#696969] font-bold cursor-pointer">
-                        Train ended
-                    </h2>
+                    <div class="w-[335px] mx-[auto] text-center cursor-pointer">
+                        <p class="text-3xl text-[#696969] font-normal cursor-pointer">
+                            Click this button if you added all the wagons of the
+                            train.
+                        </p>
+                    </div>
                 </div>
-                <div class="w-[335px] mx-[auto] text-center cursor-pointer">
-                    <p class="text-3xl text-[#696969] font-normal cursor-pointer">
-                        Click this button if you added all the wagons of the
-                        train.
-                    </p>
-                </div>
-            </div>
             </div>
             <div class="flex justify-center mt-8">
                 <button type="button" class="btn btn-primary w-[440px] min-h-[50px] !text-[18px]" matStepperPrevious>
