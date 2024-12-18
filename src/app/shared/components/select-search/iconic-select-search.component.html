@@ -48,8 +48,11 @@
                     </div>
                 </mat-select>
                 <fa-icon *ngIf="rightIcon" [icon]="rightIcon" size="lg"
-                class="icon select-decoration"></fa-icon>
+                [style.margin-right.px]="dashboardInp ? 1 : 7"
+                [ngStyle]="{ display: (isValid && withCheckmark && (isTouched || withoutTouched) && showValidation) ? 'contents' : 'inline-flex' }"
+                class="icon select-decoration" ></fa-icon>
                 <fa-icon *ngIf="isValid && withCheckmark && (isTouched || withoutTouched) && showValidation"
+                [style.margin-left.px]="10"
                     [icon]="checkmark" size="lg" class="icon valid"></fa-icon>
                 <fa-icon *ngIf="!isValid && isTouched && showValidation" [icon]="xmark" size="lg" class="icon invalid">
                 </fa-icon>
