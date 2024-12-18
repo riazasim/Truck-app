@@ -5,6 +5,9 @@ import { Observable, map, catchError, throwError } from 'rxjs';
 import { SESSION_TOKEN } from '../constants/auth.constant';
 import { BearerTokenService } from '../services/bearer-token.service';
 import { environment } from 'src/environments/environment';
+import { AppState } from 'src/app/store/app.state';
+import { Store } from '@ngrx/store';
+import { modeNameSelector } from 'src/app/store/app-mode/appMode.selector';
 
 export const NO_TOKEN_REQUEST = new HttpContextToken(() => false);
 
@@ -14,9 +17,17 @@ export const NO_TOKEN_REQUEST = new HttpContextToken(() => false);
 export class BearerTokenInterceptor implements HttpInterceptor {
 
     private readonly authorizationHeaderName = 'Authorization';
+    mode$: Observable<any> = new Observable<any>();
+    mode: string = "";
 
     constructor(private readonly tokenService: BearerTokenService,
-        private readonly router: Router) {
+        private readonly router: Router,
+        private readonly store: Store<AppState>
+    ) {
+        this.mode$ = this.store.select(modeNameSelector)
+        this.mode$.subscribe(mode => {
+            this.mode = mode ?? ""
+        });
     }
 
     intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
@@ -32,7 +43,7 @@ export class BearerTokenInterceptor implements HttpInterceptor {
 
         request = request.clone({
             setHeaders: {
-                'Transport-Mode': localStorage.getItem("appMode") || ""
+                'Transport-Mode': this.mode || ""
             }
         });
 

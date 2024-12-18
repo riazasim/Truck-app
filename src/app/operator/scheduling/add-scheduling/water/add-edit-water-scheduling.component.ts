@@ -41,9 +41,9 @@ import { ProductService } from 'src/app/core/services/product.service';
 import { OperationService } from 'src/app/core/services/operation.service';
 
 @Component({
-    selector: 'water-app-add-scheduling',
-    templateUrl: './water-add-scheduling.component.html',
-    styleUrls: ['./water-add-scheduling.component.scss'],
+    selector: 'app-add-edit-water-scheduling',
+    templateUrl: './add-edit-water-scheduling.component.html',
+    styleUrls: ['./add-edit-water-scheduling.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WaterAddSchedulingComponent implements OnInit {
@@ -294,14 +294,14 @@ export class WaterAddSchedulingComponent implements OnInit {
     }
 
     addPlanning(index: number) {
-        const selectedShipId = this.stepTwoForm.value.ship; 
-    if (selectedShipId) {
-        const updatedShipsList = this.shipsList.value.filter(
-            (ship: any) => Number(ship.id) !== Number(selectedShipId)
-        );
+        const selectedShipId = this.stepTwoForm.value.ship;
+        if (selectedShipId) {
+            const updatedShipsList = this.shipsList.value.filter(
+                (ship: any) => Number(ship.id) !== Number(selectedShipId)
+            );
 
-        this.shipsList.next(updatedShipsList);
-    }
+            this.shipsList.next(updatedShipsList);
+        }
         this.convoys.push({
             ...this.stepTwoForm.value,
             ...this.stepThreeForm.value,

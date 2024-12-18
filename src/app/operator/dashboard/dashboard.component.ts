@@ -1,8 +1,11 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { ChangeDetectionStrategy, Component, OnInit, HostListener } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { Color, LegendPosition, ScaleType } from '@swimlane/ngx-charts';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { StatsService } from 'src/app/core/services/stats.service';
+import { modeSelector } from 'src/app/store/app-mode/appMode.selector';
+import { AppState } from 'src/app/store/app.state';
 
 interface pieData {
     name: string;
@@ -17,6 +20,7 @@ interface pieData {
 })
 export class DashboardComponent implements OnInit {
     innerWidth: any;
+    mode$: Observable<any> = new Observable<any>();
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     dashboardData: any;
     sidsByStatus: pieData[] = [];
@@ -34,8 +38,16 @@ export class DashboardComponent implements OnInit {
         this.updateView();
     }
 
-    constructor(private readonly bpo: BreakpointObserver,
-                private readonly statService: StatsService) { }
+    constructor(
+        private readonly bpo: BreakpointObserver,
+        private readonly statService: StatsService,
+        private readonly store: Store<AppState>
+    ) {
+        this.mode$ = this.store.select(modeSelector);
+        this.mode$.subscribe(() => {
+            this.getDashboardData();
+        });
+    }
 
     ngOnInit(): void {
         this.updateView();
@@ -62,13 +74,13 @@ export class DashboardComponent implements OnInit {
                     value: status.count || 0,
                     color: status.statusColor
                 })) || [];
-                
+
                 this.timeBreakDown = this.dashboardData?.timeBreakDown?.map((status: any) => ({
                     name: status.name,
                     value: status.time || 0,
                     color: status.color
                 })) || [];
-                
+
                 this.isLoading$.next(false);
             },
             error: () => {

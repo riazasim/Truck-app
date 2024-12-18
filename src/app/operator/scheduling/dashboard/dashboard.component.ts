@@ -4,7 +4,7 @@ import { SchedulingImportModalComponent } from '../scheduling-import-modal/sched
 import { SchedulingPlanModalComponent } from '../scheduling-plan-modal/scheduling-plan-modal.component';
 import { PlanningService } from 'src/app/core/services/planning.service';
 import { PlanningModel, UpdatePlanningDock } from 'src/app/core/models/planning.model';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { SchedulingDeleteModalComponent } from '../scheduling-delete-modal/scheduling-delete-modal.component';
 import { MatSidenav } from '@angular/material/sidenav';
 import { ComvexPlanningList } from 'src/app/core/models/scheduling.model';
@@ -25,6 +25,9 @@ import { PageSettingsModel } from 'src/app/core/models/page.model';
 import defaultPageSettings from '../../../core/constants/page.constant';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { RolesService } from 'src/app/core/services/roles.service';
+import { AppState } from 'src/app/store/app.state';
+import { Store } from '@ngrx/store';
+import { modeSelector } from 'src/app/store/app-mode/appMode.selector';
 
 @Component({
     selector: 'app-dashboard',
@@ -34,6 +37,7 @@ import { RolesService } from 'src/app/core/services/roles.service';
 })
 export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     @ViewChild('sidenav') sidenav: MatSidenav;
+    mode$: Observable<any> = new Observable<any>();
     readonly isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     readonly isCardDetailsLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     readonly cardLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
@@ -82,10 +86,19 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         private readonly statusListService: StatusListService,
         private readonly cd: ChangeDetectorRef,
         private readonly organizationService: OrganizationService,
-        private readonly roleService: RolesService
+        private readonly roleService: RolesService,
+        private readonly store: Store<AppState>
     ) {
         this.getUserRole();
         this.getTransportMode();
+        this.mode$ = this.store.select(modeSelector);
+        this.mode$.subscribe(() => {
+            this.retrievePlanningList();
+            this.subscribeForLocationChange(true);
+            this.subscribeForSortByChanges(true);
+            this.subscribeForSortOrderChanges(true);
+            this.subscribeForOrganizationChanges();
+        })
     }
 
     ngOnInit(): void {

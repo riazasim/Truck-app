@@ -21,7 +21,7 @@ export class TrainPlanningListComponent implements OnChanges {
     @Output() retrievePlannings: EventEmitter<any> = new EventEmitter();
     @Input() isTableLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     @Input() userRole: string;
-    @Input() transportMode: string;
+    @Input() mode: string;
     @Input() plannings: any;
     @Input() length: number;
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
@@ -59,14 +59,14 @@ export class TrainPlanningListComponent implements OnChanges {
     }
 
     OnEmit(row: any, modal: string) {
-        
-        if(modal === 'shipment'){
+
+        if (modal === 'shipment') {
             this.planningService.convoyLogs(row.id).subscribe(response => {
                 this.triggerOpenLogs.emit({ view: 'view', id: row.id, planning: response, modal: modal })
             }
             )
         }
-        else{
+        else {
             this.triggerOpenLogs.emit({ view: 'view', id: row.planningRailway.id, planning: row, modal: modal })
         }
     }

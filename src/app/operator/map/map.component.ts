@@ -1,7 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
 import { MapInfoWindow } from '@angular/google-maps';
-import { BehaviorSubject } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { OrganizationService } from 'src/app/core/services/organization.service';
+import { modeSelector } from 'src/app/store/app-mode/appMode.selector';
+import { AppState } from 'src/app/store/app.state';
 
 declare var google: any;
 @Component({
@@ -10,6 +13,8 @@ declare var google: any;
     styleUrl: './map.component.scss'
 })
 export class MapComponent {
+    mode$: Observable<any> = new Observable<any>();
+
     map: google.maps.Map;
     @ViewChild(MapInfoWindow) infoWindow: MapInfoWindow | undefined;
     transportMode: any;
@@ -37,13 +42,9 @@ export class MapComponent {
 
 
     constructor(
-        private readonly organizationService: OrganizationService,
-    ) { 
-        this.getTransportMode();
-    }
-
-    getTransportMode() {
-        this.transportMode = this.organizationService.getAppMode();
+        private readonly store: Store<AppState>
+    ) {
+        this.mode$ = this.store.select(modeSelector);
     }
 
     retrieveMapData(results: any): void {
