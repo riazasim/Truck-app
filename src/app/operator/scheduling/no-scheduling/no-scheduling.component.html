@@ -1,4 +1,4 @@
-<full-empty-container *ngIf="transportMode !== 'RAILWAY'">
+<full-empty-container *ngIf="mode !== '2'">
     <div class="flex justify-center">
         <!-- <fa-icon icon="comment-lines" class="text-primary text-[160px]"></fa-icon> -->
         <img src="assets/images/plannin-boat.svg" alt="Flag">
@@ -16,7 +16,7 @@
         </div>
     </div>
 </full-empty-container>
-<full-empty-container *ngIf="transportMode === 'RAILWAY'">
+<full-empty-container *ngIf="mode === '2'">
     <div class="flex justify-center">
         <img src="assets/images/carbon_train-speed.png" alt="Flag">
     </div>

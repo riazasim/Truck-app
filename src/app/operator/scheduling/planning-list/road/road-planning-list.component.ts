@@ -6,25 +6,25 @@ import { PageEvent } from "@angular/material/paginator";
 import { BehaviorSubject } from "rxjs";
 import { PlanningService } from 'src/app/core/services/planning.service';
 import { PlanningModel } from 'src/app/core/models/planning.model';
-import { SchedulingDeleteModalComponent } from '../scheduling-delete-modal/scheduling-delete-modal.component';
-import { SchedulingImportModalComponent } from '../scheduling-import-modal/scheduling-import-modal.component';
+import { SchedulingDeleteModalComponent } from '../../scheduling-delete-modal/scheduling-delete-modal.component';
+import { SchedulingImportModalComponent } from '../../scheduling-import-modal/scheduling-import-modal.component';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
-    selector: 'app-planning-list',
-    templateUrl: './planning-list.component.html',
-    styleUrl: './planning-list.component.scss',
+    selector: 'app-road-planning-list',
+    templateUrl: './road-planning-list.component.html',
+    styleUrl: './road-planning-list.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PlanningListComponent implements OnChanges {
-    
+export class RoadPlanningListComponent implements OnChanges {
+
     @Output() triggerOpenLogs: EventEmitter<{ view: string, id: number, planning: PlanningModel, modal: string }> = new EventEmitter();
     @Output() onPaginate: EventEmitter<any> = new EventEmitter();
     @Output() retrievePlannings: EventEmitter<any> = new EventEmitter();
     @Input() isTableLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     @Input() userRole: string;
-    @Input() transportMode: string;
+    @Input() mode: string;
     @Input() plannings: PlanningModel[] = [];
     @Input() length: number;
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
@@ -97,7 +97,7 @@ export class PlanningListComponent implements OnChanges {
 
 
 
-    
+
 
     openDeleteModal(id: number) {
         this.dialogService.open(SchedulingDeleteModalComponent, {

@@ -42,9 +42,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { WarningModalComponent } from 'src/app/shared/components/modals/warning-modal/warning-modal.component';
 
 @Component({
-    selector: 'train-app-add-scheduling',
-    templateUrl: './train-add-scheduling.component.html',
-    styleUrls: ['./train-add-scheduling.component.scss'],
+    selector: 'app-add-edit-train-scheduling',
+    templateUrl: './add-edit-train-scheduling.component.html',
+    styleUrls: ['./add-edit-train-scheduling.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TrainAddSchedulingComponent implements OnInit {

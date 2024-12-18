@@ -47,7 +47,7 @@ import { NgScrollbarReachedModule } from 'ngx-scrollbar/reached-event';
 import { SchedulingShowClientSupplierCardLabelsComponent } from './scheduling-show-client-supplier-card-labels/scheduling-show-client-supplier-card-labels.component';
 import { SchedulingSearchBarComponent } from './scheduling-search-bar/scheduling-search-bar.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { PlanningListComponent } from './planning-list/planning-list.component';
+import { RoadPlanningListComponent } from './planning-list/road/road-planning-list.component';
 import { MaterialPanelTableModule } from 'src/app/shared/components/tables/material-panel-table/material-panel-table.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
@@ -63,8 +63,8 @@ import { RestrictionsComponent } from './restrictions/restrictions.component';
 import { ProductsComponent } from './products/products.component';
 import { ProductsTabsComponent } from './products/products-tab/products.-tabcomponent';
 import { ConvoyLogsModal } from './convoy-logs-modal/convoy-logs-modal.component';
-import { TrainAddSchedulingComponent } from './add-scheduling/train/train-add-scheduling.component';
-import { WaterAddSchedulingComponent } from './add-scheduling/water/water-add-scheduling.component';
+import { TrainAddSchedulingComponent } from './add-scheduling/train/add-edit-train-scheduling.component';
+import { WaterAddSchedulingComponent } from './add-scheduling/water/add-edit-water-scheduling.component';
 import { TrainPlanningListComponent } from './planning-list/train/train-planning-list.component';
 import { WaterPlanningListComponent } from './planning-list/water/water-planning-list.component';
 import { TrainEditSchedulingRouteComponent } from './edit-scheduling-route/train/train-edit-scheduling-route.component';
@@ -76,6 +76,7 @@ import { WaterEditSchedulingConvoyComponent } from './edit-scheduling-convoy/wat
 import { RouteDeleteModalComponent } from './route-delete-modal/route-delete-modal.component';
 import { NoConvoyComponent } from './no-convoy/no-convoy.component';
 import { FeatureModulesModule } from 'src/app/shared/feature-modules/feature-modules.module';
+import { AddEditRoadSchedulingComponent } from './add-scheduling/road/add-edit-road-scheduling.component';
 
 
 @NgModule({
@@ -101,7 +102,7 @@ import { FeatureModulesModule } from 'src/app/shared/feature-modules/feature-mod
         SchedulingCheckinCheckoutModalComponent,
         SchedulingShowClientSupplierCardLabelsComponent,
         // SchedulingSearchBarComponent,
-        PlanningListComponent,
+        RoadPlanningListComponent,
         TrainPlanningListComponent,
         WaterPlanningListComponent,
         EditSchedulingRouteComponent,
@@ -122,6 +123,7 @@ import { FeatureModulesModule } from 'src/app/shared/feature-modules/feature-mod
         WaterAddSchedulingComponent,
         RouteDeleteModalComponent,
         NoConvoyComponent,
+        AddEditRoadSchedulingComponent
     ],
     imports: [
         CommonModule,
@@ -164,6 +166,6 @@ import { FeatureModulesModule } from 'src/app/shared/feature-modules/feature-mod
         MatCheckboxModule,
         FeatureModulesModule
     ],
-    providers: [{provide: Window, useValue: window}]
+    providers: [{ provide: Window, useValue: window }]
 })
 export class SchedulingModule { }

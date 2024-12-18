@@ -36,7 +36,7 @@
                                 {{'messages.there-no-more-items' | translate}}
                             </td>
                         </ng-container>
-                         <ng-container cdkColumnDef="pickUpPoint">
+                        <ng-container cdkColumnDef="pickUpPoint">
                             <th cdk-header-cell *cdkHeaderCellDef scope="col" class="max-w-40">
                                 <section class="flex flex-col gap-4">
                                     <div mat-sort-header="pickUpPoint">
@@ -116,7 +116,7 @@
                                     </div>
                                 </section>
                             </th>
-                            <td cdk-cell  *cdkCellDef="let row">
+                            <td cdk-cell *cdkCellDef="let row">
                                 <mat-chip [ngStyle]="{'background-color': row?.planningRailwayShipmentStatus?.color}">
                                     {{ row?.planningRailwayShipmentStatus?.name }}
                                 </mat-chip>
@@ -176,6 +176,6 @@
         </material-panel-table>
     </section>
     <ng-template #empty class="mt-12">
-        <no-scheduling [userRole]="userRole" [transportMode]="transportMode"></no-scheduling>
+        <no-scheduling [userRole]="userRole" [mode]="mode"></no-scheduling>
     </ng-template>
 </section>

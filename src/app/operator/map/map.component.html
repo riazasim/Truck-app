@@ -6,6 +6,6 @@
         <map-marker *ngFor="let marker of otherMarkerPositions" icon="assets/images/marker_yellow.png" [position]="marker.position" [title]="marker.title">
         </map-marker>
     </google-map>
-    <app-train-search *ngIf="transportMode === 'RAILWAY'" id="search" (results)="retrieveMapData($event)" (mapLoading$)="mapLoading($event)"></app-train-search>
-    <app-search *ngIf="transportMode === 'WATER'" id="search" (results)="retrieveMapData($event)" (mapLoading$)="mapLoading($event)"></app-search>
+    <app-train-search *ngIf="(mode$ | async) === '2'" id="search" (results)="retrieveMapData($event)" (mapLoading$)="mapLoading($event)"></app-train-search>
+    <app-search *ngIf="(mode$ | async) !== '2'" id="search" (results)="retrieveMapData($event)" (mapLoading$)="mapLoading($event)"></app-search>
 </div>

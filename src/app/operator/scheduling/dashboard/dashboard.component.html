@@ -85,9 +85,9 @@
                             {{ "train" | translate }}
                         </menu>
                         <menu mat-menu-item> -->
-                            <!-- <fa-icon icon="plane" size="1x" class="mx-2 cursor-pointer hover:text-primary">
+                    <!-- <fa-icon icon="plane" size="1x" class="mx-2 cursor-pointer hover:text-primary">
                                     </fa-icon> -->
-                            <!-- {{ "plane" | translate }}
+                    <!-- {{ "plane" | translate }}
                         </menu>
                     </mat-menu> -->
                     <!-- <fa-icon icon="grid-2" size="2x" matTooltipClass="drop-shadow-lg" matTooltipPosition="above"
@@ -133,7 +133,7 @@
                                 [fullScreen]="false"></app-loader>
                         </ng-container>
                         <no-scheduling *ngIf="!(isLoading$ | async) && !plannings.length" [userRole]="userRole"
-                            [transportMode]="transportMode"></no-scheduling>
+                            [mode]="mode$ | async"></no-scheduling>
                     </div>
                 </ng-scrollbar>
                 <!-- <div *ngIf="(isMobileCardList$ | async)" class="flex flex-col gap-4 card-container">
@@ -250,20 +250,24 @@
                         <no-scheduling *ngIf="
                                 !(isCardDetailsLoading$ | async) &&
                                 !plannings.length
-                            " [userRole]="userRole" [transportMode]="transportMode"></no-scheduling>
+                            " [userRole]="userRole" [mode]="mode$ |async"></no-scheduling>
                     </div>
                 </div>
             </div>
             <div class="grid mt-4" *ngIf="isTableView$ | async">
                 <!-- <app-loader *ngIf="isLoading$ | async" [isContainer]="true" [fullScreen]="false"></app-loader> -->
-                <app-water-planning-list *ngIf="transportMode === 'WATER'" (triggerOpenLogs)="toggleSidenav($event)" [userRole]="userRole"
-                    [plannings]="plannings" [length]="length" [isTableLoading$]="isTableLoading$"
+                <app-water-planning-list *ngIf="(mode$ | async) === '3'" (triggerOpenLogs)="toggleSidenav($event)"
+                    [userRole]="userRole" [plannings]="plannings" [length]="length" [isTableLoading$]="isTableLoading$"
                     (onPaginate)="onPaginateChange($event)" (retrievePlannings)="retrievePlanningList()"
-                    [transportMode]="transportMode"></app-water-planning-list>
-                <app-train-planning-list *ngIf="transportMode === 'RAILWAY'" (triggerOpenLogs)="toggleSidenav($event)" [userRole]="userRole"
-                    [plannings]="plannings" [length]="length" [isTableLoading$]="isTableLoading$"
+                    [mode]="mode$ | async"></app-water-planning-list>
+                <app-train-planning-list *ngIf="(mode$ | async) === '2'" (triggerOpenLogs)="toggleSidenav($event)"
+                    [userRole]="userRole" [plannings]="plannings" [length]="length" [isTableLoading$]="isTableLoading$"
                     (onPaginate)="onPaginateChange($event)" (retrievePlannings)="retrievePlanningList()"
-                    [transportMode]="transportMode"></app-train-planning-list>
+                    [mode]="mode$ | async"></app-train-planning-list>
+                <app-road-planning-list *ngIf="(mode$ | async) === '1'" (triggerOpenLogs)="toggleSidenav($event)"
+                    [userRole]="userRole" [plannings]="plannings" [length]="length" [isTableLoading$]="isTableLoading$"
+                    (onPaginate)="onPaginateChange($event)" (retrievePlannings)="retrievePlanningList()"
+                    [mode]="mode$ | async"></app-road-planning-list>
             </div>
         </div>
     </mat-sidenav-content>
