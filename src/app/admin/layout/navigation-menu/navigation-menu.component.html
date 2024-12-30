@@ -1,6 +1,6 @@
 <div class="layout-wrapper slide-in-left">
     <a [routerLink]="logoRedirect" class="logo">
-        <img *ngIf="logoSrc; else iconLogo" [src]="logoSrc" alt="logo" />
+        <img *ngIf="(modeLogo$ | async); else iconLogo" [src]="modeLogo$ | async" alt="logo" />
         <ng-template #iconLogo>
             <fa-icon icon="truck-fast" size="3x" class="text-primary"></fa-icon>
         </ng-template>

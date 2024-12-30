@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { modeChange, modeChangeSuccess } from './appMode.action';
+import { modeChange, modeChangeSuccess, modeLoad } from './appMode.action';
 
 export interface AppMode {
     id: string;
@@ -15,20 +15,29 @@ export interface AppModeState {
     isLoading: boolean;
 }
 
+const localMode = (JSON.parse(localStorage.getItem("appMode") || "{}") as AppMode | null) || {
+    "id": "3",
+    "name": "WATER",
+    "description": null,
+    "transportModeDefaultLogo": {
+        "fullpath": "https:\/\/transport.lares.ro\/uploads\/logos1726032170-transportModeLogo-66e1292a229bd.jpg"
+    }
+};
+
 export const initialState: AppModeState = {
-    mode: {
-        "id": "3",
-        "name": "WATER",
-        "description": null,
-        "transportModeDefaultLogo": {
-            "fullpath": "https:\/\/transport.lares.ro\/uploads\/logos1726032170-transportModeLogo-66e1292a229bd.jpg"
-        }
-    },
+    mode: localMode,
     isLoading: false
 };
 
 export const appModeReducer = createReducer(
     initialState,
     on(modeChange, (state) => ({ ...state, isLoading: true })),
-    on(modeChangeSuccess, (state, { mode }) => ({ ...state, mode: { ...mode, id: String(mode?.id) }, isLoading: false })),
+    on(modeChangeSuccess, (state, { mode }) => {
+        localStorage.setItem("appMode", JSON.stringify({ ...mode, id: String(mode?.id) }));
+        return { ...state, mode: { ...mode, id: String(mode?.id) }, isLoading: false }
+    }),
+    on(modeLoad, (state, { mode }) => {
+        localStorage.setItem("appMode", JSON.stringify({ ...mode, id: String(mode?.id) }));
+        return { ...state, mode: { ...mode, id: String(mode?.id) }, isLoading: false }
+    }),
 );
