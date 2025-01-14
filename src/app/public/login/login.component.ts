@@ -11,6 +11,9 @@ import { handleError } from 'src/app/shared/utils/error-handling.function';
 import { handleSuccess } from "../../shared/utils/success-handling.function";
 import { createEmailValidator, createRequiredValidators } from 'src/app/shared/validators/generic-validators';
 import { OrganizationService } from 'src/app/core/services/organization.service';
+import { AppState } from 'src/app/store/app.state';
+import { Store } from '@ngrx/store';
+import { modeLoad } from 'src/app/store/app-mode/appMode.action';
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
@@ -37,6 +40,7 @@ export class LoginComponent {
         private readonly rolesService: RolesService,
         private ref: ChangeDetectorRef,
         private organizationService: OrganizationService,
+        private readonly store: Store<AppState>
     ) {
         this.preCompleteSignIn();
     }
@@ -64,10 +68,12 @@ export class LoginComponent {
         this.auth.signin(this.loginForm.getRawValue()).subscribe({
             next: (response) => {
                 this.auth.saveAuth(response);
-                localStorage.setItem("userName" , response.user)
+                localStorage.setItem("userName", response.user)
                 this.rolesService.setAuthRoles([response.roles]);
                 this.rolesService.setUserRoles([response.roles]);
-                this.organizationService.setAppMode(response?.transportModeSetting?.transportMode || "");
+                this.store.dispatch(modeLoad({ mode: response?.transportModeSetting?.transportMode }));
+                // this.organizationService.setAppMode(response?.transportModeSetting?.transportMode || "");
+
                 // this.router.navigate(
                 //                                          ////operator/dashboard
                 //     [isTutorialTrue ? '/admin' : '../admin/dashboard'], { relativeTo: this.route }
